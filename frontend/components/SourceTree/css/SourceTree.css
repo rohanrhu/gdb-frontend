@@ -1,0 +1,144 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.SourceTree {
+    font-size: 13px;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    user-select: none;
+}
+
+/* ---------------------- */
+
+.SourceTree_content {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+/* ---------------------- */
+
+.SourceTree.SourceTree__passive .SourceTree_box {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.SourceTree_box_closeBtn {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 20px;
+    height: 18px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 100ms;
+}
+
+.SourceTree_box_closeBtn:hover {
+    color: #909090;
+}
+
+/* ---------------------- */
+
+.SourceTree_title {
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.SourceTree_items {
+    flex-grow: 1;
+    min-height: 100%;
+    white-space: nowrap;
+}
+
+.SourceTree_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.SourceTree_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.SourceTree_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.SourceTree_items_item {
+    line-height: 15px;
+    cursor: pointer;
+    padding: 5px 5px;
+}
+
+.SourceTree_items_item_icon {
+    display: none;
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon__closedDir {
+    display: inline-block;
+}
+
+.SourceTree_items_item__dir.SourceTree__opened .SourceTree_items_item_icon__openedDir {
+    display: inline-block;
+}
+
+.SourceTree_items_item__dir.SourceTree__opened .SourceTree_items_item_icon__closedDir {
+    display: none;
+}
+
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_icon__file {
+    display: inline-block;
+}
+
+.SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_icon__closedDir {
+    display: inline-block;
+}
+
+.SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_icon__openedDir {
+    display: none;
+}
+
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_icon__openedDir {
+    display: none;
+}
+
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_icon__closedDir {
+    display: none;
+}
+
+.SourceTree_items_item_name {
+    display: inline-block;
+}
+
+.SourceTree_items_item_name.SourceTree__dir {
+    font-weight: bold;
+}
+
+.SourceTree_items_item:hover {
+    background: rgba(255,255,255,0.025);
+}
+
+.SourceTree_items_item_items {
+    margin-left: 5px;
+    border-left: 1px dashed rgba(255,255,255,0.1);
+}
+
+/* ---------------------- */

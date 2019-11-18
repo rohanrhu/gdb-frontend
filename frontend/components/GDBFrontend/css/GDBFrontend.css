@@ -1,0 +1,342 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+ *
+ */
+
+.GDBFrontend {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+.GDBFrontend_terminal {
+    height: 100%;
+}
+
+.GDBFrontend_terminal_iframe {
+    border: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_load {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.GDBFrontend_load_loadBtn {
+    cursor: pointer;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_load_connectBtn {
+    display: inline-block;
+    position: relative;
+}
+
+.GDBFrontend_load_connectBtn:hover .GDBFrontend_load_connectBtn_box {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.GDBFrontend_load_connectBtn_openable {
+    position: absolute;
+    left: 0px;
+    top: 34px;
+    background: #1a3252;
+    padding: 10px;
+    white-space: nowrap;
+    display: none;
+}
+
+.GDBFrontend_load_connectBtn:hover .GDBFrontend_load_connectBtn_openable {
+    display: block;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_runtimeControls {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0px;
+}
+
+.GDBFrontend_runtimeControls_btn {
+    display: inline-block;
+    vertical-align: middle;
+    height: 34px;
+    line-height: 34px;
+    font-size: 20px;
+    padding: 0px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgba(0,0,0,0.5);
+}
+
+/* ---------------------- */
+
+.GDBFrontend_layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.GDBFrontend_layout_top {
+    user-select: none;
+    flex-shrink: 0;
+    height: 50px;
+    background: #3465a4;
+    position: relative;
+    z-index: 2500;
+}
+
+.GDBFrontend_layout_top_logo {
+    display: inline-block;
+    vertical-align: middle;
+    user-select: none;
+}
+
+.GDBFrontend_layout_top_logo_img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 38px;
+    padding-left: 10px;
+}
+
+.GDBFrontend_layout_top_left {
+    height: 100%;
+    float: left;
+}
+
+.GDBFrontend_layout_top_right {
+    height: 100%;
+    float: right;
+}
+
+.GDBFrontend_layout_top .GDBFrontend_mainMenu {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.GDBFrontend_layout_middle {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.GDBFrontend_layout_middle_center {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+.GDBFrontend_layout_middle_left {
+    width: 210px;
+    overflow: hidden;
+    border-right: 1px solid rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.1);
+}
+
+.GDBFrontend_layout_middle_right {
+    width: 250px;
+    overflow: hidden;
+    border-left: 1px solid rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.GDBFrontend_layout_middle_right_content {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.GDBFrontend_layout_bottom {
+    flex-shrink: 0;
+    height: 200px;
+    overflow: hidden;
+}
+
+.GDBFrontend_layout_top_menuBtn {
+    position: relative;
+    height: 100%;
+    width: 50px;
+    user-select: none;
+    display: inline-block;
+}
+
+.GDBFrontend_layout_top_menuBtn_label {
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    width: 200px;
+    background: #3465a4;
+    display: none;
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_openable {
+    display: block;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items {
+
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item,
+a.GDBFrontend_layout_top_menuBtn_openable_items_item,
+a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    display: block;
+    color: white;
+    padding: 10px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.GDBFrontend_layout_top_menuBtn_label:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+.GDBFrontend_layout_top_exitBtn {
+    font-size: 20px;
+    cursor: pointer;
+    height: 100%;
+    padding: 0px 20px;
+    user-select: none;
+    display: inline-block;
+}
+
+.GDBFrontend_layout_top_exitBtn:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+/* ---------------------- */
+
+.GDBFrontend_sources {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.GDBFrontend_sources_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.GDBFrontend_sourceTreeComp {
+    height: 100%;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_fileTabsComp {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_breakpoints {
+
+}
+
+.GDBFrontend_breakpoints_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------- */
+
+.GDBFrontend_threads {
+
+}
+
+.GDBFrontend_threads_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------- */
+
+.GDBFrontend_stack {
+
+}
+
+.GDBFrontend_stack_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------- */
+
+.GDBFrontend_variables {
+
+}
+
+.GDBFrontend_variables_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}

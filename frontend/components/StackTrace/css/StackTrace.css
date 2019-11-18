@@ -1,0 +1,128 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.StackTrace {
+    text-align: center;
+    font-size: 12px;
+    overflow-y: auto;
+    text-align: left;
+    height: 100%;
+}
+
+/* ---------------------- */
+
+.StackTrace_cr {
+    height: 100%;
+}
+
+.StackTrace_cr_c {
+    height: 100%;
+}
+
+.StackTrace_content {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* ---------------------- */
+
+.StackTrace.StackTrace__passive {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.StackTrace_items {
+    height: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    user-select: none;
+}
+
+.StackTrace_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.StackTrace_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.StackTrace_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.StackTrace_items_item {
+    display: flex;
+    flex-direction: row;
+    line-height: 15px;
+    cursor: pointer;
+    height: 25px;
+    white-space: nowrap;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.1);
+}
+
+.StackTrace_items_item:not(.StackTrace__current):hover {
+    background: rgba(255,255,255,0.025);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgba(58, 195, 48, 0.5);
+}
+
+.StackTrace_items_item_num_val {
+    font-weight: bold;
+}
+
+.StackTrace_items_item_name {
+    flex: 1 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+.StackTrace_items_item_num {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    color: #cacaca;
+}
+
+.StackTrace_items_item_name {
+    flex: 1 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+.StackTrace_items_item_function {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    color: #ffff6e;
+}
+
+.StackTrace_items_item_location {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+/* ---------------------- */

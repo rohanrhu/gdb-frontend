@@ -1,0 +1,11 @@
+.__proto,
+a.__proto {
+    display: none;
+}
+
+.__invisible {
+    height: 0px;
+    width: 0px;
+    overflow: hidden;
+    visibility: hidden;
+}

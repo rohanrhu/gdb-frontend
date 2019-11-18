@@ -1,0 +1,97 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.Checkbox {
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+}
+
+.Checkbox.Checkbox__passive {
+    opacity: 0.5;
+}
+
+/* ---------------------- */
+
+.Checkbox_content {
+    font-size: 0px;
+}
+
+/* ---------------------- */
+
+.Checkbox_content_side1 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0px;
+}
+
+/* ---------------------- */
+
+.Checkbox_content_side2 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+/* ---------------------- */
+
+.Checkbox_icon {
+    font-size: 18px;
+}
+
+.Checkbox_icon_img {
+    display: block;
+}
+
+/* ---------------------- */
+
+.Checkbox_icon__checked {
+    display: none;
+    color: rgb(59, 200, 48);
+    animation-duration: 310ms
+}
+
+.Checkbox:not(.Checkbox__wo_animation) .Checkbox_icon__checked {
+    animation-name: Checkbox_animation1;
+}
+
+.Checkbox.Checkbox__checked .Checkbox_icon__checked {
+    display: block;
+}
+
+/* ---------------------- */
+
+.Checkbox_icon__not_checked {
+    display: block;
+    color: #6a6a6a;;
+}
+
+.Checkbox.Checkbox__checked .Checkbox_icon__not_checked {
+    display: none;
+}
+
+/* ---------------------- */
+
+.Checkbox_checker {
+    cursor: pointer;
+}
+
+.Checkbox.Checkbox__passive .Checkbox_checker {
+    cursor: default;
+}
+
+/* ---------------------- */

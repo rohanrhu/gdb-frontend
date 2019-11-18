@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>GDBFrontend</title>
+
+    <link rel="shortcut icon" href="/images/bug.png" />
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+
+    <script type="text/javascript">
+        {js_init}
+    </script>
+
+    {gui_scripts}
+
+    <script type="text/javascript" src="/thirdparty/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript" src="/thirdparty/ace/ace.js"></script>
+    <script type="text/javascript" src="/thirdparty/ace/ext-modelist.js"></script>
+
+    <script type="text/javascript" src="/js/lib/AsynchronousSemaphore.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    <script type="text/javascript" src="/components/GDBFrontend/js/GDBFrontend.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/GDBFrontend/css/GDBFrontend.css" />
+
+    <link rel="stylesheet" type="text/css" href="/css/override.css" />
+
+    <script type="text/javascript">
+        GDBFrontend.gui_mode = {gui_mode};
+    </script>
+</head>
+<body>
+    <script type="text/javascript" src="/components/MessageBox/js/MessageBox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/MessageBox/css/MessageBox.css" />
+
+    <script type="text/javascript" src="/components/Checkbox/js/Checkbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/Checkbox/css/Checkbox.css" />
+
+    <script type="text/javascript" src="/components/FileBrowser/js/FileBrowser.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/FileBrowser/css/FileBrowser.css" />
+
+    <script type="text/javascript" src="/components/SourceTree/js/SourceTree.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/SourceTree/css/SourceTree.css" />
+
+    <script type="text/javascript" src="/components/FileTabs/js/FileTabs.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/FileTabs/css/FileTabs.css" />
+
+    <script type="text/javascript" src="/components/BreakpointsEditor/js/BreakpointsEditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/BreakpointsEditor/css/BreakpointsEditor.css" />
+
+    <script type="text/javascript" src="/components/ThreadsEditor/js/ThreadsEditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/ThreadsEditor/css/ThreadsEditor.css" />
+
+    <script type="text/javascript" src="/components/StackTrace/js/StackTrace.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/StackTrace/css/StackTrace.css" />
+
+    <script type="text/javascript" src="/components/VariablesExplorer/js/VariablesExplorer.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/VariablesExplorer/css/VariablesExplorer.css" />
+
+    <script type="text/javascript" src="/components/AboutDialog/js/AboutDialog.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/AboutDialog/css/AboutDialog.css" />
+
+    <link rel="stylesheet" type="text/css" href="/css/override.css" />
+
+    <div class="GDBFrontend">
+        <div class="GDBFrontend_layout">
+            <div class="GDBFrontend_layout_top">
+                <div class="GDBFrontend_layout_top_left">
+                    <div class="table">
+                        <div class="table_td">
+                            <div class="GDBFrontend_layout_top_logo">
+                                <img class="GDBFrontend_layout_top_logo_img" src="/images/bug.png" alt="GDBFrontend" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_mainMenu">
+                                <div class="GDBFrontend_load">
+                                    <div class="GDBFrontend_load_loadBtn button1">
+                                        📄 Load File
+                                    </div>
+                                    <div class="GDBFrontend_load_connectBtn">
+                                        <div class="GDBFrontend_load_connectBtn_box button1">
+                                            ⚡ Connect
+                                        </div>
+                                        <div class="GDBFrontend_load_connectBtn_openable">
+                                            <input class="GDBFrontend_load_connectBtn_openable_addressInput input1" placeholder="127.0.0.1:2345" />
+                                            <div class="GDBFrontend_load_connectBtn_openable_connectBtn button1">
+                                                Connect
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="GDBFrontend_runtimeControls">
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__run">
+                                        ▶
+                                    </div>
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__continue">
+                                        ⏯
+                                    </div>
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__pause">
+                                        ⏸
+                                    </div>
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__n">
+                                        ⮑
+                                    </div>
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__s">
+                                        ⮓
+                                    </div>
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__si">
+                                        ⯯
+                                    </div>
+                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__t">
+                                        ⏹
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="GDBFrontend_layout_top_right">
+                    <div class="GDBFrontend_layout_top_menuBtn">
+                        <div class="GDBFrontend_layout_top_menuBtn_label">
+                            ☰
+                        </div>
+                        <div class="GDBFrontend_layout_top_menuBtn_openable">
+                            <div class="GDBFrontend_layout_top_menuBtn_openable_items">
+                                <a class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_menuBtn_openable_items_item__help" target="_blank" href="https://github.com/rohanrhu/gdb-frontend/wiki">
+                                    Help
+                                </a>
+                                <a class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_menuBtn_openable_items_item__help" target="_blank" href="https://github.com/rohanrhu/gdb-frontend/issues">
+                                    Issue Tracker
+                                </a>
+                                <div class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_menuBtn_openable_items_item__about" onclick="showAboutDialog()">
+                                    About GDBFrontend
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="GDBFrontend_layout_middle">
+                <div class="GDBFrontend_layout_middle_left">
+                    <div class="GDBFrontend_sources">
+                        <div class="GDBFrontend_sources_title">
+                            Sources
+                        </div>
+                        <div class="GDBFrontend_sourceTreeComp">
+                            {html_sourceTree}
+                        </div>
+                    </div>
+                </div>
+                <div class="GDBFrontend_layout_middle_center">
+                    <div class="GDBFrontend_fileTabsComp">
+                        {html_fileTabs}
+                    </div>
+                </div>
+                <div class="GDBFrontend_layout_middle_right">
+                    <div class="GDBFrontend_layout_middle_right_content">
+                        <div class="GDBFrontend_breakpoints">
+                            <div class="GDBFrontend_breakpoints_title">
+                                Breakpoints
+                            </div>
+                            <div class="GDBFrontend_breakpointsEditorComp">
+                                {html_breakpointsEditor}
+                            </div>
+                        </div>
+                        <div class="GDBFrontend_threads">
+                            <div class="GDBFrontend_threads_title">
+                                Threads
+                            </div>
+                            <div class="GDBFrontend_threadsEditorComp">
+                                {html_threadsEditor}
+                            </div>
+                        </div>
+                        <div class="GDBFrontend_stack">
+                            <div class="GDBFrontend_stack_title">
+                                Call Stack
+                            </div>
+                            <div class="GDBFrontend_stackTraceComp">
+                                {html_stackTrace}
+                            </div>
+                        </div>
+                        <div class="GDBFrontend_variables">
+                            <div class="GDBFrontend_variables_title">
+                                Variables
+                            </div>
+                            <div class="GDBFrontend_variablesExplorerComp">
+                                {html_variablesExplorer}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="GDBFrontend_layout_bottom">
+                <div class="GDBFrontend_terminal">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {html_fileBrowser}
+    {html_messageBox}
+    {html_aboutDialog}
+</body>
+</html>

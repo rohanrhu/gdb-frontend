@@ -1,0 +1,113 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.BreakpointsEditor {
+    text-align: center;
+    font-size: 12px;
+    overflow-y: auto;
+    text-align: left;
+    height: 100%;
+}
+
+/* ---------------------- */
+
+.BreakpointsEditor_cr {
+    height: 100%;
+}
+
+.BreakpointsEditor_cr_c {
+    height: 100%;
+}
+
+.BreakpointsEditor_content {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* ---------------------- */
+
+.BreakpointsEditor.BreakpointsEditor__passive {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.BreakpointsEditor_items {
+    height: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    user-select: none;
+}
+
+.BreakpointsEditor_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.BreakpointsEditor_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.BreakpointsEditor_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.BreakpointsEditor_items_item {
+    line-height: 15px;
+    cursor: pointer;
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.05);
+}
+
+.BreakpointsEditor_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.1);
+}
+
+.BreakpointsEditor_items_item_loc {
+    padding: 5px 5px;
+    display: inline-block;
+    flex-grow: 1;
+}
+
+.BreakpointsEditor_items_item:hover {
+    background: rgba(255,255,255,0.025);
+}
+
+/* ---------------------- */
+
+.BreakpointsEditor_items_item_check {
+    padding: 5px 5px;
+}
+
+.BreakpointsEditor_items_item_check .Checkbox_icon_img {
+    width: 13px;
+}
+
+/* ---------------------- */
+
+.BreakpointsEditor_items_item_remove {
+    background: rgb(14, 27, 52);
+    color: white;
+    transition: opacity 250ms;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 25px;
+}
+
+.BreakpointsEditor_items_item_remove:hover {
+    background: #ff4c4c;
+}
+/* ---------------------- */

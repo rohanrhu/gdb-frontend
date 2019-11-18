@@ -1,0 +1,193 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.VariablesExplorer {
+    text-align: center;
+    font-size: 12px;
+    overflow-y: auto;
+    text-align: left;
+    height: 100%;
+}
+
+/* ---------------------- */
+
+.VariablesExplorer_cr {
+    height: 100%;
+}
+
+.VariablesExplorer_cr_c {
+    height: 100%;
+}
+
+.VariablesExplorer_content {
+    max-height: 400px;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* ---------------------- */
+
+.VariablesExplorer.VariablesExplorer__passive {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.VariablesExplorer_items {
+    height: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    user-select: none;
+}
+
+.VariablesExplorer_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.VariablesExplorer_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.VariablesExplorer_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.VariablesExplorer_items_item {
+    
+}
+
+.VariablesExplorer_items_item_button {
+    display: flex;
+    flex-direction: row;
+    line-height: 15px;
+    cursor: pointer;
+    height: 25px;
+    white-space: nowrap;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0,0,0,0.1);
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed .VariablesExplorer_items_item_button {
+    transition: all 500ms cubic-bezier(0.030, 1.490, 1.000, -0.600);
+    transition-timing-function: cubic-bezier(0.030, 1.490, 1.000, -0.600);
+    background: rgba(255, 0, 0, 0.5) !important;
+}
+
+.VariablesExplorer_items_item:not(.VariablesExplorer__changed) .VariablesExplorer_items_item_button:hover {
+    background: rgba(255,255,255,0.025);
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed .VariablesExplorer_items_item_button_type {
+    color: white;
+}
+
+.VariablesExplorer_items_item_button_name {
+    flex: 1 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+.VariablesExplorer_items_item_button_openBtn {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    color: #cacaca;
+}
+
+.VariablesExplorer_items_item_button_openBtn_icon {
+    display: none;
+}
+
+.VariablesExplorer_items_item_button_openBtn_icon__notOpenable {
+    display: block;
+}
+
+.VariablesExplorer_items_item_button_isPointer {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    background: rgb(0,0,0,0.1);
+    color: #cacaca;
+    font-size: 9px;
+    flex-basis: 20px;
+    justify-content: center;
+}
+
+.VariablesExplorer_items_item_button_isNotPointer {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    flex-basis: 20px;
+    justify-content: center;
+}
+
+.VariablesExplorer_items_item_button_preType {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    font-size: 9px;
+    padding: 0px 3px;
+    justify-content: center;
+    background: rgba(0,0,0,0.1);
+    color: #cacaca;
+}
+
+.VariablesExplorer_items_item_button_type {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    color: #ff4c4c;
+}
+
+.VariablesExplorer_items_item_button_name {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    color: #ffff6e;
+}
+
+.VariablesExplorer_items_item_button_value {
+    flex: 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+/* ---------------------- */
+
+.VariablesExplorer_items_item_openable {
+    display: none;
+}
+
+.VariablesExplorer_items_item_openable_content {
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 1px dashed rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+}
+
+.VariablesExplorer_items_item_openable_items {
+}
+
+.VariablesExplorer_items_item_openable_loading {
+    
+}
+
+/* ---------------------- */

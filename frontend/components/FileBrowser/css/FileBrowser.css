@@ -1,0 +1,170 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.FileBrowser {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 10000;
+    font-size: 12px;
+    padding: 10px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.FileBrowser_window {
+    text-align: left;
+}
+
+.FileBrowser_window_box {
+    position: relative;
+    z-index: 200;
+    background: black;
+    margin: auto;
+    width: 600px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    box-shadow:
+        0px 0px 15px 0px rgba(0,0,0,0.25),
+        0px 0px 40px 0px rgba(0,0,0,0.15)
+    ;
+    box-shadow: ;
+    transition: opacity 500ms;
+}
+
+.FileBrowser_window_box_header {
+}
+
+.FileBrowser_window_box_header_title {
+    padding-left: 160px;
+    padding-top: 82px;
+    font-family: 'Verdana';
+    font-size: 18px;
+}
+
+.FileBrowser_window_box_header_line {
+    background: #3465a4;
+    position: relative;
+    padding: 10px 10px;
+    height: 18px;
+    color: white;
+    line-height: 18px;
+}
+
+/* ---------------------- */
+
+.FileBrowser_cr_c {
+    color: #dbdbdb;
+}
+
+/* ---------------------- */
+
+.FileBrowser.FileBrowser__passive .FileBrowser_window_box {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.FileBrowser_window_box_closeBtn {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 40px;
+    height: 100%;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 100ms;
+}
+
+.FileBrowser_window_box_closeBtn:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+/* ---------------------- */
+
+.FileBrowser_items {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.FileBrowser_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.FileBrowser_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.FileBrowser_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.FileBrowser_items_item {
+    line-height: 15px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.FileBrowser_items_item_icon {
+    display: inline-block;
+}
+
+.FileBrowser_items_item_name {
+    display: inline-block;
+}
+
+.FileBrowser_items_item_name.FileBrowser__dir {
+    font-weight: bold;
+}
+
+.FileBrowser_items_item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.FileBrowser_items_item_location {
+    margin-top: 5px;
+    color: #8c8c8c;
+}
+
+.FileBrowser_items_parentBtn {
+    line-height: 15px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.FileBrowser_items_parentBtn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* ---------------------- */
+
+.FileBrowser_total {
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+}
+
+.FileBrowser_total_number {
+    display: inline;
+}
+
+/* ---------------------- */
+
+.FileBrowser_path {
+    display: inline-block;
+    color: rgba(255,255,255,0.5);
+}
+
+/* ---------------------- */

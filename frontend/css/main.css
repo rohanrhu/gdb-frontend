@@ -1,0 +1,207 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under MIT
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    color: white;
+    text-align: left;
+    line-height: 100%;
+    background: #142648;
+    font-family: 'Consolas';
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+textarea {
+    font-family: 'Consolas';
+}
+
+a, a:visited {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.clear {
+    clear: both;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content_center {
+    text-align: center;
+}
+
+.content_left {
+    text-align: left;
+}
+
+.content_right {
+    text-align: right;
+}
+
+img {
+    border: 0px;
+}
+
+.table {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.table_td {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.main_width {
+    padding: 0px 25px;
+}
+
+/* ------------------------------------------------- */
+
+.button1 {
+    height: 34px;
+    line-height: 34px;
+    padding: 0px 10px;
+    background: rgba(0,0,0,0.5);
+    display: inline-block;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 100ms;
+}
+
+.button1:hover {
+    background: rgba(0,0,0,0.75);
+}
+
+.button1:active {
+    outline: 1;
+}
+
+/* ------------------------------------------------- */
+
+.input1 {
+    border: 0px;
+    height: 34px;
+    line-height: 34px;
+    padding: 0px 10px;
+    background: rgba(0,0,0,0.5);
+    display: inline-block;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 100ms;
+    outline: none;
+    cursor: initial;
+    color: white;
+    box-sizing: border-box;
+}
+
+.input1:focus {
+    box-shadow: 0px 0px 0px 1px rgba(255,255,255,0.25);
+}
+
+/* ------------------------------------------------- */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+} 
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.7);
+}
+
+::-webkit-scrollbar-track {
+}
+
+/* ------------------------------------------------- */
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 20px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 3px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 3px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 13px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 22px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(9px, 0);
+  }
+}
+
+
+/* ------------------------------------------------- */
