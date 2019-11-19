@@ -8,8 +8,9 @@
 # Licensed under MIT
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
+import socketserver
 import http
 import http.server
 
-class GDBFrontendHTTPServer(http.server.ThreadingHTTPServer):
+class GDBFrontendHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
     pass
