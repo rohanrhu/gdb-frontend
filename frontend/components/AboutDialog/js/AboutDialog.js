@@ -88,6 +88,7 @@
             });
 
             data.init = function () {
+                $aboutDialog.find('.AboutDialog_version').html(GDBFrontend.version);
             };
 
             data.init();

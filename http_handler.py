@@ -10,15 +10,16 @@
 
 import os
 import urllib
+import re
 import http
 import http.server
 import mimetypes
 
 import config
 import util
-import url
+import plugin
 
-url = url.URL(config.urls)
+url = None
 
 class RequestHandler(http.server.BaseHTTPRequestHandler):
     def __init__(self, request, client_address, server):
@@ -51,24 +52,17 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
 
         fs_path = util.webFSPath(file_path[1:])
 
-        if os.path.exists(fs_path):
-            http_status = 200
+        is_path_exists = False
 
-            fd = open(fs_path, 'rb')
-            html = fd.read()
-            fd.close()
+        def check_path(self, fs_path):
+            nonlocal http_status
+            nonlocal http_content_type
+            nonlocal is_path_exists
 
-            self.send_response(http_status)
-            if http_content_type:
-                self.send_header("Content-Type", http_content_type)
-            self.end_headers()
-            self.wfile.write(html)
-        else:
-            if not url.runModule(request=self):
-                http_status = 404
-                http_content_type = False
+            if os.path.exists(fs_path):
+                http_status = 200
 
-                fd = open(util.appPath("frontend/404.html"), 'rb')
+                fd = open(fs_path, 'rb')
                 html = fd.read()
                 fd.close()
 
@@ -77,6 +71,34 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
                     self.send_header("Content-Type", http_content_type)
                 self.end_headers()
                 self.wfile.write(html)
+
+                is_path_exists = True
+
+                return True
+
+            return False
+
+
+        if not check_path(self, fs_path) and file_path[:9] == "/plugins/":
+            for _plugin_name, _plugin in plugin.plugins.items():
+                if check_path(self, plugin.webFSPath(_plugin_name, file_path[10+len(_plugin_name):])):
+                    break
+        
+        if not is_path_exists and not url.runModule(request=self):
+            http_status = 404
+            http_content_type = False
+
+            fd = open(util.appPath("frontend/404.html"), 'rb')
+            html = fd.read()
+            fd.close()
+
+            self.send_response(http_status)
+
+            if http_content_type:
+                self.send_header("Content-Type", http_content_type)
+
+            self.end_headers()
+            self.wfile.write(html)
 
     def do_GET(self):
         self.handleRequest()

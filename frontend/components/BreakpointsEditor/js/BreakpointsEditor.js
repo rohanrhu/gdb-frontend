@@ -59,18 +59,18 @@
         t_init.parameters = parameters;
 
         $elements.each(function () {
-            var $breakpointEditor = $(this);
+            var $breakpointsEditor = $(this);
 
-            $breakpointEditor.off('.BreakpointsEditor');
-            $breakpointEditor.find('*').off('.BreakpointsEditor');
+            $breakpointsEditor.off('.BreakpointsEditor');
+            $breakpointsEditor.find('*').off('.BreakpointsEditor');
 
             var data = {};
-            $breakpointEditor.data('BreakpointsEditor', data);
-            data.$breakpointEditor = $breakpointEditor;
+            $breakpointsEditor.data('BreakpointsEditor', data);
+            data.$breakpointsEditor = $breakpointsEditor;
 
-            data.$breakpointEditor_noItems = $breakpointEditor.find('.BreakpointsEditor_noItems');
-            data.$breakpointEditor_items = $breakpointEditor.find('.BreakpointsEditor_items');
-            data.$breakpointEditor_items_item__proto = data.$breakpointEditor_items.find('.BreakpointsEditor_items_item.__proto');
+            data.$breakpointsEditor_noItems = $breakpointsEditor.find('.BreakpointsEditor_noItems');
+            data.$breakpointsEditor_items = $breakpointsEditor.find('.BreakpointsEditor_items');
+            data.$breakpointsEditor_items_item__proto = data.$breakpointsEditor_items.find('.BreakpointsEditor_items_item.__proto');
 
             data.animation_duration = 100;
 
@@ -95,12 +95,12 @@
                     parameters = {};
                 }
 
-                data.$breakpointEditor_items.find('.BreakpointsEditor_items_item:not(.__proto)').remove();
+                data.$breakpointsEditor_items.find('.BreakpointsEditor_items_item:not(.__proto)').remove();
 
                 data.breakpoints.forEach(function (breakpoint, breakpoint_i) {
-                    var $item = data.$breakpointEditor_items_item__proto.clone();
+                    var $item = data.$breakpointsEditor_items_item__proto.clone();
                     $item.removeClass('__proto');
-                    $item.appendTo(data.$breakpointEditor_items);
+                    $item.appendTo(data.$breakpointsEditor_items);
 
                     breakpoint.$item = $item;
                     breakpoint.$item_check = $item.find('.BreakpointsEditor_items_item_check');
@@ -120,7 +120,7 @@
                     breakpoint.$item_check_checkboxComp_checkbox.on('Checkbox_changed.BreakpointsEditor', function (event, parameters) {
                         is_enabled = parameters.is_checked;
 
-                        $breakpointEditor.trigger('BreakpointsEditor_breakpoint_enabled_changed', {
+                        $breakpointsEditor.trigger('BreakpointsEditor_breakpoint_enabled_changed', {
                             breakpoint: breakpoint,
                             is_enabled: breakpoint.item_check_checkboxComp_checkbox.is_checked
                         });
@@ -131,24 +131,24 @@
                     breakpoint.$item_loc_val.html(loc);
 
                     breakpoint.$item_loc.on('click.BreakpointsEditor', function (event) {
-                        $breakpointEditor.trigger('BreakpointsEditor_breakpoint_selected', {
+                        $breakpointsEditor.trigger('BreakpointsEditor_breakpoint_selected', {
                             breakpoint: breakpoint
                         });
                     });
 
                     breakpoint.$item_remove.on('click.BreakpointsEditor', function (event) {
-                        $breakpointEditor.trigger('BreakpointsEditor_breakpoint_removed', {
+                        $breakpointsEditor.trigger('BreakpointsEditor_breakpoint_removed', {
                             breakpoint: breakpoint
                         });
                     });
                 });
             };
 
-            $breakpointEditor.on('BreakpointsEditor_initialize.BreakpointsEditor', function (event) {
+            $breakpointsEditor.on('BreakpointsEditor_initialize.BreakpointsEditor', function (event) {
                 data.init();
             });
 
-            $breakpointEditor.on('BreakpointsEditor_comply.BreakpointsEditor', function (event) {
+            $breakpointsEditor.on('BreakpointsEditor_comply.BreakpointsEditor', function (event) {
                 data.comply();
             });
 
@@ -172,14 +172,4 @@
             $.error('Method '+method+' does not exist on jQuery.BreakpointsEditor');
         }
     };
-
-    $.fn.BreakpointsEditor.TREE_ITEM_NAME = 0;
-    $.fn.BreakpointsEditor.TREE_ITEM_ITEMS = 1;
-    $.fn.BreakpointsEditor.TREE_ITEM_LEVEL = 2;
-    $.fn.BreakpointsEditor.TREE_ITEM_PATH = 3;
-    $.fn.BreakpointsEditor.TREE_ITEM_TYPE = 4;
-    $.fn.BreakpointsEditor.TREE_ITEM_ITEM = 5;
-
-    $.fn.BreakpointsEditor.TREE_ITEM_TYPE__DIR = 1;
-    $.fn.BreakpointsEditor.TREE_ITEM_TYPE__FILE = 2;
 })(jQuery);

@@ -8,12 +8,15 @@
 # Licensed under MIT
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
+import os
 import json
 import urllib
 
 import config
 import statics
+import urls
 import util
+import plugin
 
 def run(request, params):
     if params is None: params = {}
@@ -21,8 +24,25 @@ def run(request, params):
     url_path = urllib.parse.urlparse(request.path)
     qs_params = urllib.parse.parse_qs(url_path.query)
 
+    load_plugins = []
+
+    for _plugin_name, _plugin in plugin.plugins.items():
+        serializable = {}
+        serializable["name"] = _plugin_name
+        serializable["is_loaded"] = _plugin.is_loaded
+        serializable["location"] = _plugin.location
+
+        serializable["config"] = {}
+        serializable["DESCRIPTION"] = _plugin.config.DESCRIPTION
+        serializable["AUTHOR"] = _plugin.config.AUTHOR
+        serializable["HOMEPAGE"] = _plugin.config.HOMEPAGE
+        serializable["VERSION"] = _plugin.config.VERSION
+
+        load_plugins.append(serializable)
+
     js_init = """
     GDBFrontend = {};
+    GDBFrontend.version = '"""+util.versionString(statics.VERSION)+"""';
     GDBFrontend.config = {};
     GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
     GDBFrontend.config.http_port = """+str(config.HTTP_PORT)+""";
@@ -31,7 +51,21 @@ def run(request, params):
     GDBFrontend.config.app_path = '"""+str(config.app_path)+"""';
     GDBFrontend.config.plugins_dir = '"""+str(config.PLUGINS_DIR)+"""';
     GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
+    GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
+    GDBFrontend.load_plugins = JSON.parse('"""+json.dumps(load_plugins)+"""');
     """
+
+    plugin_htmls = ""
+
+    for _plugin_name, _plugin in plugin.plugins.items():
+        _html_path = _plugin.webFSPath(os.path.join("html", _plugin_name+".html"))
+
+        if os.path.exists(_html_path):
+            fd = open(_html_path, 'r')
+            _plugin_html = fd.read()
+            fd.close()
+
+            plugin_htmls += "\n" + _plugin_html
 
     if "layout" not in params.keys():
         gui_mode = statics.GUI_MODE_WEB
@@ -59,6 +93,7 @@ def run(request, params):
     html_breakpointsEditor = util.readFile(util.webFSPath("/components/BreakpointsEditor/html/BreakpointsEditor.html")).format(**vars())
     html_stackTrace = util.readFile(util.webFSPath("/components/StackTrace/html/StackTrace.html")).format(**vars())
     html_variablesExplorer = util.readFile(util.webFSPath("/components/VariablesExplorer/html/VariablesExplorer.html")).format(**vars())
+    html_watches = util.readFile(util.webFSPath("/components/Watches/html/Watches.html")).format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

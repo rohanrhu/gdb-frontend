@@ -29,6 +29,7 @@
 
             var data = {};
             $gdbFrontend.data('GDBFrontend', data);
+            data.$gdbFrontend = $gdbFrontend;
 
             var $gdbFrontend_layout = $gdbFrontend.find('.GDBFrontend_layout');
             var $gdbFrontend_layout_top = $gdbFrontend.find('.GDBFrontend_layout_top');
@@ -61,6 +62,10 @@
             data.$gdbFrontend_sourceTreeComp = data.$gdbFrontend_sources.find('.GDBFrontend_sourceTreeComp');
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
+
+            data.$gdbFrontend_watchesComp = $gdbFrontend.find('.GDBFrontend_watchesComp');
+            data.$gdbFrontend_watches = data.$gdbFrontend_watchesComp.find('> .Watches');
+            data.gdbFrontend_watches = null;
 
             data.$gdbFrontend_fileTabsComp = $gdbFrontend.find('.GDBFrontend_fileTabsComp');
             data.$gdbFrontend_fileTabs = data.$gdbFrontend_fileTabsComp.find('> .FileTabs');
@@ -127,7 +132,7 @@
                         success: function (result_json) {
                         },
                         error: function () {
-                            showMessageBox({text: 'An error occured.'});
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace('An error occured.');
                         }
                     });
@@ -149,7 +154,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -200,12 +205,12 @@
                             if (result_json.error) {
                                 if (result_json.error.not_exists) {
                                     var msg = 'Source file not found. ('+_file.path+')'
-                                    showMessageBox({text: msg});
+                                    GDBFrontend.showMessageBox({text: msg});
                                     console.trace('[GDBFrontend]', msg);
                                 } else if (result_json.error.not_permitted) {
-                                    showMessageBox({text: 'Access denied.'});
+                                    GDBFrontend.showMessageBox({text: 'Access denied.'});
                                 } else {
-                                    showMessageBox({text: 'An error occured.'});
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
                                 }
 
@@ -217,7 +222,7 @@
 
                                 return;
                             } else if (!result_json.ok) {
-                                showMessageBox({text: 'An error occured.'});
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
 
                                 if (_file_i < parameters.files.length-1) {
@@ -249,7 +254,7 @@
                             }
                         },
                         error: function () {
-                            showMessageBox({text: 'An error occured.'});
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace("An error occured.");
 
                             if (file_i < parameters.files.length-1) {
@@ -302,7 +307,7 @@
                             success: function (result_json) {
                             },
                             error: function () {
-                                showMessageBox({text: 'An error occured.'});
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
                             }
                         });
@@ -316,7 +321,7 @@
                 var address = data.$GDBFrontend_load_connectBtn_openable_addressInput.val();
 
                 if ((address.length < 10) || (address.indexOf(':') < 0)) {
-                    showMessageBox({text: "Provide a gdbserver address like \"127.0.0.1:2345\" (host:port)."});
+                    GDBFrontend.showMessageBox({text: "Provide a gdbserver address like \"127.0.0.1:2345\" (host:port)."});
                     return;
                 }
 
@@ -330,7 +335,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -358,6 +363,10 @@
                 } else {
                     $gdbFrontend_layout_bottom.hide();
                 }
+
+                data.$gdbFrontend_watches.Watches();
+                data.gdbFrontend_watches = data.$gdbFrontend_watches.data('Watches');
+                data.components.watches = data.gdbFrontend_watches;
 
                 data.$gdbFrontend_sourceTree.SourceTree();
                 data.gdbFrontend_sourceTree = data.$gdbFrontend_sourceTree.data('SourceTree');
@@ -448,6 +457,42 @@
                 });
             };
 
+            data.debug.setWatches = function () {
+                data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
+                    if (_watch.is_adder) {
+                        return true;
+                    }
+
+                    $.ajax({
+                        url: '/api/frame/variable',
+                        cache: false,
+                        method: 'get',
+                        data: {
+                            expression: _watch.expression
+                        },
+                        success: function (result_json) {
+                            if (!result_json.ok) {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
+                                return;
+                            }
+
+                            if (!result_json.variable) {
+                                return;
+                            }
+
+                            _watch.setValue({value: result_json.variable.value});
+                        },
+                        error: function () {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+                        }
+                    });
+
+                    return true;
+                });
+            };
+
             $gdbFrontend.on('GDBFrontend_debug_exited.GDBFrontend', function (event, message) {
                 data.debug.setExited(message);
             });
@@ -497,18 +542,18 @@
                     success: function (result_json) {
                         if (result_json.error) {
                             if (result_json.error.not_exists) {
-                                showMessageBox({text: 'Path not found.'});
+                                GDBFrontend.showMessageBox({text: 'Path not found.'});
                                 console.trace("Path not found.");
                             } else if (result_json.error.not_permitted) {
-                                showMessageBox({text: 'Access denied.'});
+                                GDBFrontend.showMessageBox({text: 'Access denied.'});
                             } else {
-                                showMessageBox({text: 'An error occured.'});
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
                             }
 
                             return;
                         } else if (!result_json.ok) {
-                            showMessageBox({text: 'An error occured.'});
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace('An error occured.');
                         }
 
@@ -527,7 +572,7 @@
                         }
                     },
                     error: function () {
-                        showMessageBox({text: 'Path not found.'});
+                        GDBFrontend.showMessageBox({text: 'Path not found.'});
                         console.trace("Path not found.");
                     }
                 });
@@ -552,7 +597,7 @@
                         parameters.return && parameters.return();
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -635,18 +680,18 @@
                                 if (result_json.error) {
                                     if (result_json.error.not_exists) {
                                         var msg = 'Source file not found. ('+parameters.state.current_location.file+')'
-                                        showMessageBox({text: msg});
+                                        GDBFrontend.showMessageBox({text: msg});
                                         console.trace('[GDBFrontend]', msg);
                                     } else if (result_json.error.not_permitted) {
-                                        showMessageBox({text: 'Access denied.'});
+                                        GDBFrontend.showMessageBox({text: 'Access denied.'});
                                     } else {
-                                        showMessageBox({text: 'An error occured.'});
+                                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                                         console.trace('An error occured.');
                                     }
 
                                     return;
                                 } else if (!result_json.ok) {
-                                    showMessageBox({text: 'An error occured.'});
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
                                 }
 
@@ -668,7 +713,7 @@
                                 _continue();
                             },
                             error: function () {
-                                showMessageBox({text: 'Path not found.'});
+                                GDBFrontend.showMessageBox({text: 'Path not found.'});
                                 console.trace("Path not found.");
                             }
                         });
@@ -686,6 +731,10 @@
                         : []
                 });
                 data.components.variablesExplorer.render();
+
+                if (parameters.is_stop && parameters.state.selected_frame) {
+                    data.debug.setWatches();
+                }
             };
 
             data.debug.clearEditorFileBreakpoint = function (parameters) {
@@ -780,7 +829,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -797,7 +846,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -824,18 +873,18 @@
                         success: function (result_json) {
                             if (result_json.error) {
                                 if (result_json.error.not_exists) {
-                                    showMessageBox({text: 'Path not found.'});
+                                    GDBFrontend.showMessageBox({text: 'Path not found.'});
                                     console.trace("Path not found.");
                                 } else if (result_json.error.not_permitted) {
-                                    showMessageBox({text: 'Access denied.'});
+                                    GDBFrontend.showMessageBox({text: 'Access denied.'});
                                 } else {
-                                    showMessageBox({text: 'An error occured.'});
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
                                 }
 
                                 return;
                             } else if (!result_json.ok) {
-                                showMessageBox({text: 'An error occured.'});
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
                             }
 
@@ -857,7 +906,7 @@
                             _continue();
                         },
                         error: function () {
-                            showMessageBox({text: 'An error occured.'});
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace('An error occured.');
                         }
                     });
@@ -879,7 +928,7 @@
                         data.debug.getState();
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -898,8 +947,10 @@
                             var editor_file = data.gdbFrontend_fileTabs.getFileByPath(parameters.frame.file.path);
 
                             var _continue = function () {
-                                editor_file.ace.scrollToLine(parameters.frame.line, true, true, function () {});
-                                editor_file.ace.gotoLine(parameters.frame.line, 0, true);
+                                setTimeout(function () {
+                                    editor_file.ace.scrollToLine(parameters.frame.line, true, true, function () {});
+                                    editor_file.ace.gotoLine(parameters.frame.line, 0, true);
+                                }), 100;
                             };
 
                             if (!editor_file) {
@@ -914,18 +965,18 @@
                                         if (result_json.error) {
                                             if (result_json.error.not_exists) {
                                                 var msg = 'Source file not found. ('+parameters.frame.file.path+')'
-                                                showMessageBox({text: msg});
+                                                GDBFrontend.showMessageBox({text: msg});
                                                 console.trace('[GDBFrontend]', msg);
                                             } else if (result_json.error.not_permitted) {
-                                                showMessageBox({text: 'Access denied.'});
+                                                GDBFrontend.showMessageBox({text: 'Access denied.'});
                                             } else {
-                                                showMessageBox({text: 'An error occured.'});
+                                                GDBFrontend.showMessageBox({text: 'An error occured.'});
                                                 console.trace('An error occured.');
                                             }
 
                                             return;
                                         } else if (!result_json.ok) {
-                                            showMessageBox({text: 'An error occured.'});
+                                            GDBFrontend.showMessageBox({text: 'An error occured.'});
                                             console.trace('An error occured.');
                                         }
 
@@ -947,7 +998,7 @@
                                         _continue();
                                     },
                                     error: function () {
-                                        showMessageBox({text: 'An error occured.'});
+                                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                                         console.trace('An error occured.');
                                     }
                                 });
@@ -958,7 +1009,7 @@
                         }});
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -983,7 +1034,7 @@
                 };
 
                 if (tree.length > 1) {
-                    qs['tree'] = tree.join('.');
+                    qs['expression'] = tree.join('.');
                 }
 
                 $.ajax({
@@ -993,7 +1044,7 @@
                     data: qs,
                     success: function (result_json) {
                         if (!result_json.ok) {
-                            showMessageBox({text: 'An error occured.'});
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace('An error occured.');
 
                             parameters.item.setLoading(false);
@@ -1010,14 +1061,12 @@
                         parameters.item.setLoading(false);
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
 
                         parameters.item.setLoading(false);
                     }
                 });
-
-
             });
 
             data.$GDBFrontend_runtimeControls_btn__run.on('click.GDBFrontend', function (event) {
@@ -1030,7 +1079,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -1046,7 +1095,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -1062,7 +1111,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -1078,7 +1127,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -1094,7 +1143,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -1110,7 +1159,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });
@@ -1126,7 +1175,7 @@
                     success: function (result_json) {
                     },
                     error: function () {
-                        showMessageBox({text: 'An error occured.'});
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
                         console.trace('An error occured.');
                     }
                 });

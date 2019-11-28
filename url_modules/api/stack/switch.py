@@ -11,7 +11,7 @@
 import json
 import urllib
 
-import lib.debug
+import api.debug
 
 def run(request, params):
     if params is None: params = {}
@@ -22,7 +22,7 @@ def run(request, params):
     result_json = {}
     result_json["ok"] = True
 
-    result_json["ok"] = result_json["ok"] and lib.debug.selectFrame(int(qs_params["pc"][0]))
+    result_json["ok"] = result_json["ok"] and api.debug.selectFrame(int(qs_params["pc"][0]))
 
     request.send_response(200)
     request.send_header("Content-Type", "application/json; charset=utf-8")

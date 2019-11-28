@@ -11,7 +11,7 @@
 import json
 import urllib
 
-import lib
+import api.debug
 
 def run(request, params):
     if params is None: params = {}
@@ -22,14 +22,19 @@ def run(request, params):
     result_json = {}
     result_json["ok"] = True
 
-    if qs_params.get("variable") is None:
+    if qs_params.get("variable") is None and qs_params.get("expression") is None:
         result_json["ok"] = False
 
     if result_json["ok"]:
-        if "tree" in qs_params.keys():
-            result_json["variable"] = lib.debug.getVariableByTree(qs_params["tree"][0]).serializable()
+        if "expression" in qs_params.keys():
+            variable = api.debug.getVariableByExpression(qs_params["expression"][0])
         else:
-            result_json["variable"] = lib.debug.getVariable(qs_params["variable"][0]).serializable()
+            variable = api.debug.getVariable(qs_params["variable"][0])
+
+        if variable:
+            result_json["variable"] = variable.serializable()
+        else:
+            result_json["variable"] = False
 
     request.send_response(200)
     request.send_header("Content-Type", "application/json; charset=utf-8")

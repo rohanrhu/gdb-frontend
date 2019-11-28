@@ -38,6 +38,15 @@ def readFile(path):
 
     return content
 
+def versionString(version):
+    release = ""
+
+    if not version[-1].isdigit():
+        release = "-"+version[-1]
+        version = version[:-1]
+
+    return "v"+".".join([str(i) for i in version])+release
+
 class AtomicInteger():
     def __init__(self, num=0):
         self.num = num

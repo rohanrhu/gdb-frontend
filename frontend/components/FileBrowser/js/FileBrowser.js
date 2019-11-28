@@ -66,11 +66,11 @@
                         success: function (result_json) {
                             if (result_json.error) {
                                 if (result_json.error.not_exists) {
-                                    showMessageBox({text: 'Path not found.'});
+                                    GDBFrontend.showMessageBox({text: 'Path not found.'});
                                 } else if (result_json.error.not_permitted) {
-                                    showMessageBox({text: 'Access denied.'});
+                                    GDBFrontend.showMessageBox({text: 'Access denied.'});
                                 } else {
-                                    showMessageBox({text: 'An error occured.'});
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 }
 
                                 data.is_passive = false;
@@ -154,7 +154,7 @@
                             data.is_passive = false;
                         },
                         error: function () {
-                            showMessageBox({text: 'Path not found.'});
+                            GDBFrontend.showMessageBox({text: 'Path not found.'});
                         }
                     });
                 };

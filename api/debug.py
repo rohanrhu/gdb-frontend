@@ -10,7 +10,7 @@
 
 """
 GDBFrontend Debugging API
-All lib.debug functions/methods are thread-safe.
+All api.debug functions/methods are thread-safe.
 They will be executed in GDB's main-thread and block caller thread.
 """
 
@@ -24,8 +24,8 @@ import sys
 import config
 import settings
 import util
-import lib.flags
-import globalvars
+import api.flags
+import api.globalvars
 
 gdb = importlib.import_module("gdb")
 
@@ -37,7 +37,7 @@ def threadSafe(callback):
     and blocks caller thread until callback finish.
     
     Usage:
-    @lib.debug.threadSafe
+    @api.debug.threadSafe
     def threadSafeFunction():
         pass
     """
@@ -158,7 +158,7 @@ def getState():
         state["current_location"]["file"] = current_symbol.symtab.fullname().replace("\\", "/")
         state["current_location"]["line"] = current_symbol.line
     except gdb.error as e:
-        util.verbose("[GDBError]", str(e))
+        pass
 
     inferior = gdb.selected_inferior()
     threads = inferior.threads()
@@ -215,7 +215,7 @@ def getState():
                 _frame_json["function"] = _name
                 _frame_json["file"] = {}
                 if _function is not None:
-                    _frame_json["line"] = _function.line
+                    _frame_json["line"] = _frame.find_sal().line
                     _frame_json["file"]["name"] = _function.symtab.filename
                     _frame_json["file"]["path"] = _function.symtab.fullname()
                 else:
@@ -236,7 +236,7 @@ def getState():
 
         if not th0.is_running():
             stack = backTraceFrame(gdb.newest_frame())
-            selected_frames = globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.SELECTED_FRAMES)
+            selected_frames = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.SELECTED_FRAMES)
 
             selected_frame = False
 
@@ -293,7 +293,7 @@ def getState():
                     _stack_frame_json["function"] = _name
                     _stack_frame_json["file"] = {}
                     if _function is not None:
-                        _stack_frame_json["line"] = _function.line
+                        _stack_frame_json["line"] = _stack_frame.find_sal().line
                         _stack_frame_json["file"]["name"] = _function.symtab.filename
                         _stack_frame_json["file"]["path"] = _function.symtab.fullname()
                     else:
@@ -401,7 +401,7 @@ def addBreakpoint(file, line):
         is_running = False
 
     if is_running:
-        globalvars.debugFlags.set(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, {
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, {
             "file": file,
             "line": line,
         })
@@ -429,10 +429,18 @@ def getBreakpoint(num):
 
 @threadSafe
 def delBreakpoint(bp):
+    """
+    Deletes GDBFrontend.Breakpoint object.
+    """
+
     bp.delete()
 
 @threadSafe
 def getFiles():
+    """
+    Returns GDB.objfile objects in a list.
+    """
+
     objfiles = []
 
     for _file in gdb.objfiles():
@@ -444,12 +452,15 @@ def getFiles():
 
 @threadSafe
 def getSources():
+    """
+    Returns all source files as serializable from GDB.
+    """
+
     try:
         sources = gdb.execute("i sources", to_string=True).split("\n")
         if len(sources) < 3: return []
         return sources[2].replace("\\", "/").split(", ")
     except gdb.error as e:
-        util.verbose("[GDBError]", str(e))
         return []
     except Exception as e:
         util.verbose("[Error] An error occured:", e)
@@ -533,7 +544,7 @@ def selectFrame(pc):
         if _frame.pc() == pc:
             _frame.select()
 
-            frames = globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.SELECTED_FRAMES)
+            frames = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.SELECTED_FRAMES)
             frames[thread.ptid] = _frame.pc()
 
             is_switched = True
@@ -568,11 +579,11 @@ def terminate():
 
     if is_need_interrupt:
         try:
-            globalvars.debugFlags.set(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
             gdb.execute("interrupt")
         except Exception as e:
             print("[Error]", e)
-            globalvars.debugFlags.set(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
 
 @threadSafe
 def resolveTerminalType(ctype):
@@ -664,6 +675,9 @@ def serializableRepresentation(value):
 def getSerializableStructMembers(value, ctype):
     members = []
 
+    if ctype.code not in [gdb.TYPE_CODE_STRUCT, gdb.TYPE_CODE_UNION]:
+        return members
+
     for _field in ctype.fields():
         member = {}
         memberValue = value[_field.name]
@@ -714,9 +728,9 @@ def getVariable(name):
     return False
 
 @threadSafe
-def getVariableByTree(tree):
+def getVariableByExpression(tree):
     """
-    Returns C member (lib.debug.Variable) on current frame
+    Returns C member (api.debug.Variable) on current frame
     by given variable[->member](s) names tree.
     """
 

@@ -10,14 +10,17 @@
 
 import threading
 
-import lib.flags
+import api.flags
 
-def init():    
+lock = False
+debugFlags = False
+
+def init():
     global lock
     lock = threading.Lock()
 
     global debugFlags
-    debugFlags = lib.flags.AtomicDebugFlags()
+    debugFlags = api.flags.AtomicDebugFlags()
 
 def access(function):
     global lock

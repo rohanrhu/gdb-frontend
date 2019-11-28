@@ -41,6 +41,9 @@
     <script type="text/javascript" src="/components/FileBrowser/js/FileBrowser.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/FileBrowser/css/FileBrowser.css" />
 
+    <script type="text/javascript" src="/components/Watches/js/Watches.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/Watches/css/Watches.css" />
+
     <script type="text/javascript" src="/components/SourceTree/js/SourceTree.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/SourceTree/css/SourceTree.css" />
 
@@ -76,11 +79,13 @@
                             <div class="GDBFrontend_mainMenu">
                                 <div class="GDBFrontend_load">
                                     <div class="GDBFrontend_load_loadBtn button1">
-                                        📄 Load File
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/add-file.png" alt="" draggable="false" />
+                                        Load File
                                     </div>
                                     <div class="GDBFrontend_load_connectBtn">
                                         <div class="GDBFrontend_load_connectBtn_box button1">
-                                            ⚡ Connect
+                                            <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/connect.png" alt="" draggable="false" />
+                                            Connect
                                         </div>
                                         <div class="GDBFrontend_load_connectBtn_openable">
                                             <input class="GDBFrontend_load_connectBtn_openable_addressInput input1" placeholder="127.0.0.1:2345" />
@@ -92,25 +97,25 @@
                                 </div>
                                 <div class="GDBFrontend_runtimeControls">
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__run">
-                                        ▶
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/start.png" alt="" draggable="false" />
                                     </div>
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__continue">
-                                        ⏯
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/resume.png" alt="" draggable="false" />
                                     </div>
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__pause">
-                                        ⏸
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/pause.png" alt="" draggable="false" />
                                     </div>
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__n">
-                                        ⮑
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-over.png" alt="" draggable="false" />
                                     </div>
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__s">
-                                        ⮓
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-into.png" alt="" draggable="false" />
                                     </div>
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__si">
-                                        ⯯
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-instruction.png" alt="" draggable="false" />
                                     </div>
                                     <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__t">
-                                        ⏹
+                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/terminate.png" alt="" draggable="false" />
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +135,7 @@
                                 <a class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_menuBtn_openable_items_item__help" target="_blank" href="https://github.com/rohanrhu/gdb-frontend/issues">
                                     Issue Tracker
                                 </a>
-                                <div class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_menuBtn_openable_items_item__about" onclick="showAboutDialog()">
+                                <div class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_menuBtn_openable_items_item__about" onclick="GDBFrontend.showAboutDialog()">
                                     About GDBFrontend
                                 </div>
                             </div>
@@ -157,6 +162,14 @@
                 </div>
                 <div class="GDBFrontend_layout_middle_right">
                     <div class="GDBFrontend_layout_middle_right_content">
+                        <div class="GDBFrontend_watches">
+                            <div class="GDBFrontend_watches_title">
+                                Watches
+                            </div>
+                            <div class="GDBFrontend_watchesComp">
+                                {html_watches}
+                            </div>
+                        </div>
                         <div class="GDBFrontend_breakpoints">
                             <div class="GDBFrontend_breakpoints_title">
                                 Breakpoints
@@ -202,5 +215,7 @@
     {html_fileBrowser}
     {html_messageBox}
     {html_aboutDialog}
+
+    {plugin_htmls}
 </body>
 </html>

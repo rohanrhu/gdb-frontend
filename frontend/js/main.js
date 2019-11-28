@@ -6,12 +6,20 @@
  *
  * Licensed under MIT
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
-*/
+ *
+ */
+
+(function () {
 
 /*
- * GDB-Frontend GUI modes.
+ * GDBFrontend namespace.
+ */
+GDBFrontend;
+
+/*
+ * GDBFrontend GUI modes.
  * 
- * GDB-Frontend can run different GUI modes:
+ * GDBFrontend can run different GUI modes:
  * WEB      : Accessible via http://host:port/ and layout does not contain GDB terminal.
  * WEB_TMUX : Same as WEB but layout contains GDB terminal on bottom.
  * GUI      : It means layout is being opened from native GUI.
@@ -26,21 +34,58 @@ GDBFrontend.gui_mode = 0;
 GDBFrontend.components = {};
 GDBFrontend.is_verbose = true;
 
-GDBFrontend.verbose = function () {
-    if (!GDBFrontend.is_verbose) return;
-    console.log.apply(console, ["[GDBFrontend]"].concat(Array.prototype.slice.call(arguments)));
-};
+/*
+ * Backend loaded plugins.
+ *
+ * These array will be set by evulated code in HTML from backend.
+ */
+GDBFrontend.load_plugins;
 
 /*
- * GDB-Frontend loaded plugins.
+ * GDBFrontend loaded plugins.
  *
  * Loaded plugins are accesable like:
  * GDBFrontend.plugins[plugin_name] = {GDBFrontendPlugin Object}
  */
 GDBFrontend.plugins = {};
 
+GDBFrontend.Plugin = function GDBFrontendPlugin(parameters) {
+    Object.assign(this, parameters.plugin);
+};
+
+GDBFrontend.Plugin.prototype.path = function GDBFrontendPlugin(parameters) {
+    var path = parameters;
+    if (path instanceof Object) {
+        path = parameters.path;
+    }
+
+    return '/plugins/'+this.name+'/'+path;
+};
+
 /*
- * GDB-Frontend GUI channel.
+ * Registers GDBFrontend plugin.
+ * Plugins will be set into GDBFrontend.plugins["PluginName"].
+ */
+GDBFrontend.registerPlugin = function (parameters) {
+    var plugin = parameters;
+    if (parameters instanceof Object) {
+        plugin = parameters.plugin;
+    }
+
+    GDBFrontend.plugins[parameters.plugin.name] = new GDBFrontend.Plugin({plugin: plugin});
+
+    var $link = $('<link rel="stylesheet" type="text/css" />');
+    var $script = $('<script type="text/javascript"></script>');
+
+    $link.attr('href', '/plugins/'+plugin.name+'/css/'+plugin.name+'.css');
+    $script.attr('src', '/plugins/'+plugin.name+'/js/'+plugin.name+'.js');
+
+    $link.appendTo($('body'));
+    $script.appendTo($('body'));
+};
+
+/*
+ * GDBFrontend GUI channel.
  */
 GDBFrontend.gui = {};
 
@@ -50,35 +95,35 @@ GDBFrontend.gui.state.is_loaded = false;
 GDBFrontend.gui.events = {};
 
 GDBFrontend.gui.events.loaded = function () {
-    GDBFrontend.verbose("GDBFrontend is running in GUI mode.")
+    GDBFrontend.verbose("GDBFrontend is running in GUI mode.");
     GDBFrontend.gui.state.is_loaded = true;
 };
 
-GDBFrontend.stdPathSep = function (path) {
-    return path.replace('\\', '/');
-};
-
 var $messageBox;
+var $aboutDialog;
+
 $(document).ready(function () {
     $messageBox = $('.MessageBox');
     $messageBox.MessageBox();
-});
 
-var showMessageBox = function (parameters) {
-    $messageBox.data('MessageBox').open(parameters);
-};
-
-var $aboutDialog;
-$(document).ready(function () {
     $aboutDialog = $('.AboutDialog');
     $aboutDialog.AboutDialog();
 });
 
-var showAboutDialog = function (parameters) {
+GDBFrontend.verbose = function () {
+    if (!GDBFrontend.is_verbose) return;
+    console.log.apply(console, ["[GDBFrontend]"].concat(Array.prototype.slice.call(arguments)));
+};
+
+GDBFrontend.showMessageBox = function (parameters) {
+    $messageBox.data('MessageBox').open(parameters);
+};
+
+GDBFrontend.showAboutDialog = function (parameters) {
     $aboutDialog.data('AboutDialog').open(parameters);
 };
 
-var copyToClipboard = function (text) {
+GDBFrontend.copyToClipboard = function (text) {
     var input = document.createElement('input');
     document.body.append(input);
 
@@ -91,6 +136,10 @@ var copyToClipboard = function (text) {
     input.remove();
 };
 
+GDBFrontend.stdPathSep = function (path) {
+    return path.replace('\\', '/');
+};
+
 $(document).ready(function () {
     var $fileBrowser = $('.FileBrowser');
     $fileBrowser.FileBrowser();
@@ -99,4 +148,10 @@ $(document).ready(function () {
     var $gdbFrontend = $('.GDBFrontend');
     $gdbFrontend.GDBFrontend();
     GDBFrontend.components.gdbFrontend = $gdbFrontend.data().GDBFrontend;
+
+    GDBFrontend.load_plugins.every(function (_plugin, _plugin_i) {
+        GDBFrontend.registerPlugin({plugin: _plugin});
+    });
 });
+
+})();

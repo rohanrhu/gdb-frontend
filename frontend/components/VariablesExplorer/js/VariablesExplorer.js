@@ -299,7 +299,7 @@
                 item.open = function (parameters) {
                     if (item.is_empty) {
                         if (!parameters.is_preload) {
-                            showMessageBox({text: "Structure or union is not initialized yet."});
+                            GDBFrontend.showMessageBox({text: "Structure or union is not initialized yet."});
                         }
                         return false;
                     }

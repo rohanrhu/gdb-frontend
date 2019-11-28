@@ -13,7 +13,7 @@ import time
 import socket
 import importlib
 
-import lib.debug
+import api.debug
 
 gdb = importlib.import_module("gdb")
 
@@ -32,7 +32,7 @@ def run(request, params):
         result_json["event"] = "new_objfile"
         result_json["file"] = {}
         result_json["file"]["name"] = event.new_objfile.filename
-        result_json["state"] = lib.debug.getState()
+        result_json["state"] = api.debug.getState()
 
         handled = True
 
@@ -41,7 +41,7 @@ def run(request, params):
 
         print("EVENT:", event)
         result_json["event"] = "clear_objfiles"
-        result_json["state"] = lib.debug.getState()
+        result_json["state"] = api.debug.getState()
 
         handled = True
 
@@ -50,7 +50,7 @@ def run(request, params):
 
         print("EVENT:", event)
         result_json["event"] = "breakpoint_created"
-        result_json["state"] = lib.debug.getState()
+        result_json["state"] = api.debug.getState()
 
         handled = True
 
@@ -59,7 +59,7 @@ def run(request, params):
 
         print("EVENT:", event)
         result_json["event"] = "breakpoint_modified"
-        result_json["state"] = lib.debug.getState()
+        result_json["state"] = api.debug.getState()
 
         handled = True
 
@@ -68,7 +68,7 @@ def run(request, params):
 
         print("EVENT:", event)
         result_json["event"] = "breakpoint_deleted"
-        result_json["state"] = lib.debug.getState()
+        result_json["state"] = api.debug.getState()
 
         handled = True
 

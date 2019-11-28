@@ -15,7 +15,7 @@ import importlib
 gdb = importlib.import_module("gdb")
 
 import util
-import lib.debug
+import api.debug
 
 
 def run(request, params):
@@ -47,13 +47,10 @@ def run(request, params):
 
     lockCounter = util.AtomicInteger()
 
+    @api.debug.threadSafe
     def _setBreakpoint__mT():
-        nonlocal lockCounter
-        lib.debug.getBreakpoint(qs_params["number"][0]).enabled = (qs_params["is_enabled"][0] == "true")
-        lockCounter.decr()
+        api.debug.getBreakpoint(qs_params["number"][0]).enabled = (qs_params["is_enabled"][0] == "true")
 
-    lockCounter.incr()
-    gdb.post_event(_setBreakpoint__mT)
-    while lockCounter.get() > 0: pass
+    _setBreakpoint__mT()
 
     response()

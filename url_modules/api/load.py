@@ -11,7 +11,7 @@
 import json
 import urllib
 
-import lib.debug
+import api.debug
 
 def run(request, params):
     if params is None: params = {}
@@ -25,7 +25,7 @@ def run(request, params):
     if qs_params.get("file") is None:
         result_json["ok"] = False
 
-    lib.debug.load(qs_params["file"][0])
+    api.debug.load(qs_params["file"][0])
 
     request.send_response(200)
     request.send_header("Content-Type", "application/json; charset=utf-8")

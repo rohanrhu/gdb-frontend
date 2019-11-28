@@ -36,6 +36,7 @@ class AtomicDebugFlags():
     and application will stop immediately when it comes on the breakpoint.
     """
     IS_INTERRUPTED_FOR_BREAKPOINT_ADD = 2
+    IS_INTERRUPTED_FOR_BREAKPOINT_SET = 5
 
     """
     Flag for interrupt for sending posix SIGKILL to process.

@@ -10,6 +10,14 @@
 
 .FileBrowser {
     display: none;
+    font-size: 12px;
+    padding: 10px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.FileBrowser_window {
+    display: flex;
     position: fixed;
     top: 0px;
     left: 0px;
@@ -18,17 +26,10 @@
     background: rgba(0, 0, 0, 0.2);
     text-align: center;
     z-index: 10000;
-    font-size: 12px;
-    padding: 10px;
-    overflow-y: auto;
-    text-align: left;
-}
-
-.FileBrowser_window {
-    text-align: left;
 }
 
 .FileBrowser_window_box {
+    text-align: left;
     position: relative;
     z-index: 200;
     background: black;
@@ -40,7 +41,6 @@
         0px 0px 15px 0px rgba(0,0,0,0.25),
         0px 0px 40px 0px rgba(0,0,0,0.15)
     ;
-    box-shadow: ;
     transition: opacity 500ms;
 }
 
@@ -57,10 +57,12 @@
 .FileBrowser_window_box_header_line {
     background: #3465a4;
     position: relative;
-    padding: 10px 10px;
-    height: 18px;
+    height: 40px;
     color: white;
     line-height: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
 }
 
 /* ---------------------- */
@@ -84,9 +86,11 @@
     width: 40px;
     height: 100%;
     line-height: 20px;
-    text-align: center;
     cursor: pointer;
     transition: color 100ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .FileBrowser_window_box_closeBtn:hover {
@@ -165,6 +169,7 @@
 .FileBrowser_path {
     display: inline-block;
     color: rgba(255,255,255,0.5);
+    padding-left: 10px;
 }
 
 /* ---------------------- */

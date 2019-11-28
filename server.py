@@ -16,9 +16,9 @@ import sys
 
 import config
 import util
-import lib.debug
-import lib.flags
-import globalvars
+import api.debug
+import api.flags
+import api.globalvars
 
 gdb = importlib.import_module("gdb")
 
@@ -65,7 +65,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "new_objfile"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -77,7 +77,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "clear_objfiles"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -86,7 +86,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         gdb.post_event(self.gdb_on_breakpoint_created__mT)
 
     def gdb_on_breakpoint_created__mT(self):
-        interrupted = globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
+        interrupted = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
 
         if interrupted:
             pass
@@ -94,7 +94,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
             response = {}
 
             response["event"] = "breakpoint_created"
-            response["state"] = lib.debug.getState()
+            response["state"] = api.debug.getState()
 
             self.sendMessage(json.dumps(response))
 
@@ -106,7 +106,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "breakpoint_modified"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -118,7 +118,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "breakpoint_deleted"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -127,9 +127,9 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         gdb.post_event(self.gdb_on_stop__mT)
 
     def gdb_on_stop__mT(self):
-        interrupted_for_terminate = globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE)
-        interrupted_for_signal = globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_SIGNAL)
-        interrupted_for_breakpoint_add = globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
+        interrupted_for_terminate = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE)
+        interrupted_for_signal = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_SIGNAL)
+        interrupted_for_breakpoint_add = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
 
         if interrupted_for_terminate:
             try:
@@ -142,19 +142,19 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
             except Exception as e:
                 print("[Error]  (GDBFrontendSocket().gdb_on_stop__mT)", e)
         elif interrupted_for_breakpoint_add:
-            bp = lib.debug.Breakpoint(
+            bp = api.debug.Breakpoint(
                 source = interrupted_for_breakpoint_add["file"],
                 line = interrupted_for_breakpoint_add["line"]
             )
 
-            globalvars.debugFlags.set(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, False)
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, False)
 
             try:
                 gdb.execute("c")
             except Exception as e:
                 print("[Error]  (GDBFrontendSocket().gdb_on_stop__mT)", e)
-        elif globalvars.debugFlags.get(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE):
-            globalvars.debugFlags.set(lib.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
+        elif api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE):
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
             try:
                 gdb.execute("kill")
             except Exception as e:
@@ -163,7 +163,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
             response = {}
 
             response["event"] = "stop"
-            response["state"] = lib.debug.getState()
+            response["state"] = api.debug.getState()
 
             self.sendMessage(json.dumps(response))
 
@@ -175,7 +175,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "new_thread"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -187,7 +187,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "cont"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -199,11 +199,11 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "exited"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
-        globalvars.debugFlags.set(lib.flags.AtomicDebugFlags.SELECTED_FRAMES, {})
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.SELECTED_FRAMES, {})
 
     def gdb_on_new_inferior(self, event):
         util.verbose("gdb_on_new_inferior()")
@@ -213,7 +213,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "new_inferior"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -225,7 +225,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response = {}
 
         response["event"] = "inferior_deleted"
-        response["state"] = lib.debug.getState()
+        response["state"] = api.debug.getState()
 
         self.sendMessage(json.dumps(response))
 
@@ -243,10 +243,10 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
 
         if message["event"] == "get_sources":
             self.emit(message["return_event"], {
-                "sources": lib.debug.getSources()
+                "sources": api.debug.getSources()
             })
         elif message["event"] == "signal":
-            lib.debug.signal(message["signal"])
+            api.debug.signal(message["signal"])
             self.emit(message["return_event"], {})
 
 class GDBFrontendServer(threading.Thread):

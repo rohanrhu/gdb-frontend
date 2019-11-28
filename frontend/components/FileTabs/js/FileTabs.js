@@ -139,7 +139,7 @@
                     file.$tab_pathTooltip.appendTo($('body'));
 
                     file.$tab_pathTooltip.find('.FileTabs_tabs_items_item_pathTooltip_copyBtn').on('click.FileTabs', function (event) {
-                        copyToClipboard(file.path);
+                        GDBFrontend.copyToClipboard(file.path);
                     });
 
                     file.$tab.on('mouseover.FileTabs', function (event) {

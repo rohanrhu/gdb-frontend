@@ -19,25 +19,36 @@ import settings
 import http_server
 import http_handler
 import server
-import globalvars
-import plugins
+import api.globalvars
+import plugin
 import util
+import urls
+import api.url
 
 gdb = importlib.import_module("gdb")
-
-settings.init()
-globalvars.init()
-plugins.init()
 
 gdb.execute("set non-stop off")
 gdb.execute("set pagination off")
 
-httpdbgServer = http_server.GDBFrontendHTTPServer(
+api.globalvars.init()
+settings.init()
+plugin.init()
+plugin.load_all()
+
+all_urls = urls.urls
+
+for _plugin_name, _plugin in plugin.plugins.items():
+    for _url_name, _url in _plugin.urls.items():
+        all_urls[_url_name] = _url
+
+http_handler.url = api.url.URL(all_urls)
+
+httpServer = http_server.GDBFrontendHTTPServer(
     (config.HOST_ADDRESS, config.HTTP_PORT),
     http_handler.RequestHandler
 )
 
-thread = threading.Thread(target=httpdbgServer.serve_forever)
+thread = threading.Thread(target=httpServer.serve_forever)
 thread.setDaemon(True)
 thread.start()
 

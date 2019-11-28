@@ -11,7 +11,7 @@
 import json
 import urllib
 
-import lib.debug
+import api.debug
 
 def run(request, params):
     if params is None: params = {}
@@ -25,7 +25,7 @@ def run(request, params):
     if (qs_params.get("file") is None) or (qs_params.get("line") is None):
         result_json["ok"] = False
 
-    lib.debug.addBreakpoint(
+    api.debug.addBreakpoint(
         file=qs_params["file"][0],
         line=qs_params["line"][0]
     )

@@ -16,6 +16,7 @@
 # GUI      : It means layout is being opened from native GUI.
 #            Also in this mode, layout contains GDB terminal at bottom as natively.
 
+VERSION = [0, 0, 4, "alpha"]
 GUI_MODE_WEB = 1
 GUI_MODE_WEB_TMUX = 2
 GUI_MODE_GUI = 3
