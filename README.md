@@ -1,4 +1,4 @@
-# ![GDBFrontend](media/gdbfrontend.png)
+# [![GDBFrontend Website](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
 GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/releases)
