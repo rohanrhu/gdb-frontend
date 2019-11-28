@@ -2,6 +2,11 @@
 gdb-frontend is a easy, flexible and extensionable gui debugger
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/releases)
+[![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/issues)
+[![GitHub forks](https://img.shields.io/github/forks/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/network)
+[![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
+[![GitHub license](https://img.shields.io/github/license/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/blob/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Foguzhaneroglu.com%2Fprojects%2Fgdb-frontend%2F)](https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fgithub.com%2Frohanrhu%2Fgdb-frontend)
 
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss.png "gdb-frontend")
 
