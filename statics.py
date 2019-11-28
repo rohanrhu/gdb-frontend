@@ -8,15 +8,18 @@
 # Licensed under MIT
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-# GDB-Frontend GUI modes.
-# 
-# GDB-Frontend can run different GUI modes:
-# WEB      : Accessible via http://host:port/ and layout does not contain GDB terminal.
-# WEB_TMUX : Same as WEB but layout contains GDB terminal on bottom.
-# GUI      : It means layout is being opened from native GUI.
-#            Also in this mode, layout contains GDB terminal at bottom as natively.
+VERSION = [0, 0, 4, 1, "git"]
 
-VERSION = [0, 0, 4, "alpha"]
+"""
+GDB-Frontend GUI modes.
+
+GDB-Frontend can run different GUI modes:
+WEB      : Accessible via http://host:port/ and layout does not contain GDB terminal.
+WEB_TMUX : Same as WEB but layout contains GDB terminal on bottom.
+GUI      : It means layout is being opened from native GUI.
+           Also in this mode, layout contains GDB terminal at bottom as natively.
+"""
+
 GUI_MODE_WEB = 1
 GUI_MODE_WEB_TMUX = 2
 GUI_MODE_GUI = 3

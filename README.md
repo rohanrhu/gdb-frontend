@@ -1,5 +1,5 @@
-# gdb-frontend
-gdb-frontend is a easy, flexible and extensionable gui debugger
+# ![GDBFrontend](media/gdbfrontend.png)
+GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/releases)
 [![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/issues)
@@ -69,7 +69,7 @@ In fact, gdb-frontend is able to run on Windows but there are some serious issue
 
 * GDB's main-thread is being blocked during running process. (gdb-frontend has an interrupting mechanism to fixing this but it is not enough yet.)
 * Windows-GDB's prompt is being blocked during running process and there are some issues about interrupting the application.
-* Current release of GDB contain Python2. New GDB have Python3 but it is not released yet.
+* Current release of Windows-GDB contains Python2. New GDB have Python3 but it is not released yet.
 
 ## Documentation
 Documentation is TODO yet.
@@ -77,5 +77,10 @@ Documentation is TODO yet.
 ## API Documentation
 API Documentation is TODO yet.
 
+## Plugin Development
+There is an example plugin `hello` in `plugins/` directory. Plugin development documentation is a TODO yet.
+
 ## License
-GNU GPLv3
+GNU General Public License v3 (GPL-3)
+
+You may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build & install instructions.
