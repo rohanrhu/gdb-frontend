@@ -728,20 +728,25 @@ def getVariable(name):
     return False
 
 @threadSafe
-def getVariableByExpression(tree):
+def getVariableByExpression(tree, no_error=False):
     """
     Returns C member (api.debug.Variable) on current frame
     by given variable[->member](s) names tree.
     """
 
-    value = gdb.parse_and_eval(tree)
-    variable = Variable(
-        frame=gdb.selected_frame(),
-        symbol=False,
-        value=value,
-        tree=tree
-    )
+    try:
+        value = gdb.parse_and_eval(tree)
+        variable = Variable(
+            frame=gdb.selected_frame(),
+            symbol=False,
+            value=value,
+            tree=tree
+        )
+    except gdb.error as e:
+        if not no_error:
+            print(traceback.format_exc())
 
+        return None
     return variable
 
 class Breakpoint(gdb.Breakpoint):

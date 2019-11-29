@@ -522,8 +522,7 @@
             });
 
             $gdbFrontend.on('GDBFrontend_debug_new_objfile.GDBFrontend', function (event, message) {
-                data.gdbFrontend_sourceTree.load({files: message.state.sources});
-                data.gdbFrontend_sourceTree.render();
+                data.debug.setState({state: message.state, reload_files: true});
             });
 
             $gdbFrontend.on('GDBFrontend_debug_get_sources_return.GDBFrontend', function (event, message) {
@@ -604,6 +603,8 @@
             };
 
             data.debug.setState = function (parameters) {
+                var setState_parameters = parameters;
+
                 data.debug.state = parameters.state;
 
                 data.gdbFrontend_sourceTree.load({files: parameters.state.sources});
@@ -655,7 +656,7 @@
 
                 data.gdbFrontend_stackTrace.render();
 
-                if (parameters.is_stop && parameters.state.selected_frame) {
+                if ((parameters.is_stop && parameters.state.selected_frame) || setState_parameters.reload_files) {
                     var editor_file = data.gdbFrontend_fileTabs.getFileByPath(parameters.state.current_location.file);
 
                     var _continue = function () {
@@ -668,7 +669,7 @@
                         }, 0);
                     };
 
-                    if (!editor_file) {
+                    if (!editor_file || setState_parameters.reload_files) {
                         $.ajax({
                             url: '/api/fs/read',
                             cache: false,
@@ -695,22 +696,26 @@
                                     console.trace('An error occured.');
                                 }
 
-                                var file = data.gdbFrontend_fileTabs.openFile({
-                                    file: {
-                                        path: parameters.state.current_location.file,
-                                        content: result_json.file.content
-                                    },
-                                    switch: false
-                                });
+                                if (setState_parameters.reload_files) {
+                                    editor_file.setContent({content: result_json.file.content});
+                                } else {
+                                    var file = data.gdbFrontend_fileTabs.openFile({
+                                        file: {
+                                            path: parameters.state.current_location.file,
+                                            content: result_json.file.content
+                                        },
+                                        switch: false
+                                    });
 
-                                if (file.file) {
-                                    data.debug.placeEditorFileBreakpoints({editor_file: file.file});
-                                    !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
+                                    if (file.file) {
+                                        data.debug.placeEditorFileBreakpoints({editor_file: file.file});
+                                        !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
+                                    }
+
+                                    editor_file = file.file;
+
+                                    _continue();
                                 }
-
-                                editor_file = file.file;
-
-                                _continue();
                             },
                             error: function () {
                                 GDBFrontend.showMessageBox({text: 'Path not found.'});

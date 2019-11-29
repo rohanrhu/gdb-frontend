@@ -27,7 +27,7 @@ def run(request, params):
 
     if result_json["ok"]:
         if "expression" in qs_params.keys():
-            variable = api.debug.getVariableByExpression(qs_params["expression"][0])
+            variable = api.debug.getVariableByExpression(qs_params["expression"][0], no_error=True)
         else:
             variable = api.debug.getVariable(qs_params["variable"][0])
 

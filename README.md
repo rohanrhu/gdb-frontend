@@ -52,8 +52,23 @@ cd gdb-frontend
 Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.
 
 ```bash
-tmux kill-session -t gdb-frontend
+./bin/tmux kill-session -t gdb-frontend
 ```
+
+### `gdbfrontend` Command
+```bash
+$ gdbfrontend --help
+GDBFrontend is a easy, flexible and extensionable gui debugger.
+
+Options:
+  --help, -h:                           Shows this help message.
+  --version, -v:                        Shows version.
+  --gdb-executable=PATH, -g PATH:       Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
+```
+
+#### Options
+##### `--gdb-executable=PATH`, `-g PATH`
+You can specify GDB executable path like `gdbfrontend --gdb-executable=/usr/bin/gdb`.
 
 ### Flatpak
 Flatpak package is a TODO.
@@ -78,7 +93,7 @@ Documentation is TODO yet.
 API Documentation is TODO yet.
 
 ## Plugin Development
-There is an example plugin `hello` in `plugins/` directory. Plugin development documentation is a TODO yet.
+There is an example plugin `hello` in `plugins/` directory.
 
 ## License
 GNU General Public License v3 (GPL-3)
