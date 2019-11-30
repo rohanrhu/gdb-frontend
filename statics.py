@@ -8,7 +8,7 @@
 # Licensed under MIT
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-VERSION = [0, 0, 5, "alpha"]
+VERSION = [0, 0, 6, "alpha"]
 
 """
 GDB-Frontend GUI modes.

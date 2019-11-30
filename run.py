@@ -10,6 +10,7 @@
 
 import os
 import sys
+import shutil
 
 import statics
 import config
@@ -18,6 +19,14 @@ import util
 path = os.path.dirname(os.path.realpath(__file__))
 
 gdb_executable = "gdb"
+tmux_executable = "./bin/tmux"
+
+import subprocess
+
+if shutil.which("tmux"):
+    tmux_executable = "tmux"
+else:
+    print("[Notice] Tmux is not found in PATH. Fallback to built-in tmux.")
 
 def argHandler_gdbExecutable(path):
     global gdb_executable
@@ -106,13 +115,13 @@ if value_expected_arg:
     exit(0)
 
 try:
-    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" ./bin/tmux -f tmux.conf new-session -s gdb-frontend -d '"+gdb_executable+" -ex \"python import sys, os; sys.path.append(\\\""+path+"\\\"); import main\"; read;'")
+    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" "+tmux_executable+" -f tmux.conf new-session -s gdb-frontend -d '"+gdb_executable+" -ex \"python import sys, os; sys.path.append(\\\""+path+"\\\"); import main\"; read;'")
     print("Listening on %s: http://127.0.0.1:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT))
     print("|---------------------------------------------------------------------|")
     print(("| Open this address in web browser: \033[0;32;40mhttp://127.0.0.1:%d/terminal/\033[0m" % config.HTTP_PORT) + "   |")
     print("|---------------------------------------------------------------------|")
-    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" ./bin/gotty --config gotty.conf -a 127.0.0.1 -p "+str(config.GOTTY_PORT)+" -w ./bin/tmux a -t gdb-frontend")
-    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" ./bin/tmux kill-session -t gdb-frontend")
+    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" ./bin/gotty --config gotty.conf -a 127.0.0.1 -p "+str(config.GOTTY_PORT)+" -w "+tmux_executable+" a -t gdb-frontend")
+    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" "+tmux_executable+" kill-session -t gdb-frontend")
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
 
