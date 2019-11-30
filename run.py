@@ -122,7 +122,7 @@ try:
     print("|---------------------------------------------------------------------|")
     print(("| Open this address in web browser: \033[0;32;40mhttp://127.0.0.1:%d/terminal/\033[0m" % config.HTTP_PORT) + "   |")
     print("|---------------------------------------------------------------------|")
-    os.system("LD_LIBRARY_PATH=\"/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$(pwd)/bin/deps\" ./bin/gotty --config gotty.conf -a 127.0.0.1 -p "+str(config.GOTTY_PORT)+" -w "+tmux_executable+" a -t gdb-frontend")
+    os.system(ld_library_path+"./bin/gotty --config gotty.conf -a 127.0.0.1 -p "+str(config.GOTTY_PORT)+" -w "+tmux_executable+" a -t gdb-frontend")
     os.system(ld_library_path+tmux_executable+" kill-session -t gdb-frontend")
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
