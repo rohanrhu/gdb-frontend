@@ -43,7 +43,7 @@ You can open GDB shell with the command:
 
 ```bash
 cd gdb-frontend
-./bin/tmux a -t gdb-frontend
+tmux a -t gdb-frontend
 ```
 
 #### Troubleshooting
@@ -52,7 +52,7 @@ cd gdb-frontend
 Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.
 
 ```bash
-./bin/tmux kill-session -t gdb-frontend
+tmux kill-session -t gdb-frontend
 ```
 
 ### `gdbfrontend` Command
