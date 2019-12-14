@@ -4,7 +4,7 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 */
 
@@ -185,7 +185,7 @@
                     var to_switch = data.gdbFrontend_fileTabs.getFileById(parameters.current.id);
 
                     if (to_switch) {
-                        data.gdbFrontend_fileTabs.switchFile({file: to_switch});
+                        data.gdbFrontend_fileTabs.switchFile({file: to_switch, is_initial: true});
                     }
 
                     data.initSem.leave();
@@ -237,12 +237,13 @@
                                     path: _file.path,
                                     content: result_json.file.content
                                 },
-                                switch: false
+                                switch: false,
+                                is_initial: true
                             });
 
                             if (file.file) {
                                 data.debug.placeEditorFileBreakpoints({editor_file: file.file});
-                                !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
+                                !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file, is_initial: true});
                             }
 
                             editor_file = file.file;
@@ -576,6 +577,53 @@
                     }
                 });
             });
+
+            data.openSource = function (parameters) {
+                $.ajax({
+                    url: '/api/fs/read',
+                    cache: false,
+                    method: 'get',
+                    data: {
+                        path: parameters.file.path
+                    },
+                    success: function (result_json) {
+                        if (result_json.error) {
+                            if (result_json.error.not_exists) {
+                                GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                console.trace("Path not found.");
+                            } else if (result_json.error.not_permitted) {
+                                GDBFrontend.showMessageBox({text: 'Access denied.'});
+                            } else {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
+                            }
+
+                            return;
+                        } else if (!result_json.ok) {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+                        }
+
+                        var file = data.gdbFrontend_fileTabs.openFile({
+                            file: {
+                                name: parameters.file.name,
+                                path: parameters.file.path,
+                                content: result_json.file.content
+                            },
+                            switch: false
+                        });
+
+                        if (file.file) {
+                            data.debug.placeEditorFileBreakpoints({editor_file: file.file});
+                            !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
+                        }
+                    },
+                    error: function () {
+                        GDBFrontend.showMessageBox({text: 'Path not found.'});
+                        console.trace("Path not found.");
+                    }
+                });
+            };
 
             data.debug.getState = function (parameters) {
                 if (parameters === undefined) {

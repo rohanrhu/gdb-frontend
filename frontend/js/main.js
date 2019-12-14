@@ -4,7 +4,7 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
  *
  */
@@ -144,6 +144,32 @@ $(document).ready(function () {
     var $fileBrowser = $('.FileBrowser');
     $fileBrowser.FileBrowser();
     GDBFrontend.components.fileBrowser = $fileBrowser.data().FileBrowser;
+
+    var $fuzzyFinder = $('.FuzzyFinder');
+    $fuzzyFinder.FuzzyFinder();
+    GDBFrontend.components.fuzzyFinder = $fuzzyFinder.data().FuzzyFinder;
+    GDBFrontend.components.fuzzyFinder.sources = function () {
+        return GDBFrontend.components.gdbFrontend.debug.state.sources;
+    };
+
+    $('body').on('keydown.__GDBFrontend__', function (event) {
+        if (event.ctrlKey && event.keyCode == 80) {
+            event.preventDefault();
+
+            GDBFrontend.components.fuzzyFinder.open({
+                onSelected: function (parameters) {
+                    GDBFrontend.components.gdbFrontend.openSource({file: parameters.item.file});
+                }
+            });
+        }
+    });
+
+    GDBFrontend.components.fuzzyFinder.$fuzzyFinder.on('FuzzyFinder_keydown.__GDBFrontend__', function (event, parameters) {
+        if (parameters.event.ctrlKey && parameters.event.keyCode == 80) {
+            parameters.event.preventDefault();
+            GDBFrontend.components.fuzzyFinder.close();
+        }
+    });
     
     var $gdbFrontend = $('.GDBFrontend');
     $gdbFrontend.GDBFrontend();

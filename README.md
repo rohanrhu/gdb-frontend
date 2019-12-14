@@ -6,6 +6,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 [![GitHub forks](https://img.shields.io/github/forks/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/network)
 [![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
 [![GitHub license](https://img.shields.io/github/license/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/blob/master/LICENSE)
+[![Donate](http://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square)](https://liberapay.com/EvrenselKisilik/donate)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Foguzhaneroglu.com%2Fprojects%2Fgdb-frontend%2F)](https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fgithub.com%2Frohanrhu%2Fgdb-frontend)
 
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss.png "gdb-frontend")
@@ -19,6 +20,7 @@ You can download latest source and run it.
 #### Requirements
 * GDB (with python3)
 * python3
+* tmux
 
 You can run gdb-frontend with following commands:
 ```bash
@@ -46,16 +48,10 @@ cd gdb-frontend
 tmux a -t gdb-frontend
 ```
 
-#### Troubleshooting
+### Flatpak
+Flatpak package is a TODO.
 
-##### Zombie Processes
-Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.
-
-```bash
-tmux kill-session -t gdb-frontend
-```
-
-### `gdbfrontend` Command
+## `./gdbfrontend`
 ```bash
 $ gdbfrontend --help
 GDBFrontend is a easy, flexible and extensionable gui debugger.
@@ -64,14 +60,27 @@ Options:
   --help, -h:                           Shows this help message.
   --version, -v:                        Shows version.
   --gdb-executable=PATH, -g PATH:       Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
+  --tmux-executable=PATH, -tmux PATH:   Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
+  --terminal-id=NAME, -t NAME:          Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
 ```
 
-#### Options
-##### `--gdb-executable=PATH`, `-g PATH`
-You can specify GDB executable path like `gdbfrontend --gdb-executable=/usr/bin/gdb`.
+### Options
+#### `--gdb-executable=PATH`, `-g PATH`
+You can specify GDB executable path like `gdbfrontend --gdb-executable=/path/to/gdb`. (Optional)
 
-### Flatpak
-Flatpak package is a TODO.
+#### `--tmux-executable=PATH`, `-tmux PATH`
+You can specify Tmux executable path like `gdbfrontend --tmux-executable=/path/to/tmux`. (Optional)
+
+#### `--terminal-id=PATH`, `-t PATH`
+You can specify Tmux terminal id like `gdbfrontend --terminal-id=terminal-name`. (Default: `gdb-frontend`)
+
+## Troubleshooting
+### Zombie Processes
+Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.
+
+```bash
+tmux kill-session -t gdb-frontend
+```
 
 ## GDB-Related Issues and Tips
 * GDB does not give sources of linked object **until stepping a line once**.
@@ -94,6 +103,11 @@ API Documentation is TODO yet.
 
 ## Plugin Development
 There is an example plugin `hello` in `plugins/` directory.
+
+## Donate
+You can donate to support the project.
+
+<a href="https://liberapay.com/EvrenselKisilik/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 
 ## License
 GNU General Public License v3 (GPL-3)

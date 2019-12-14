@@ -4,7 +4,7 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
  *
  */
@@ -153,16 +153,19 @@
 }
 
 .GDBFrontend_layout_middle_left {
+    font-size: 14px;
+
     width: 210px;
     overflow: hidden;
-    border-right: 1px solid rgba(0,0,0,0.2);
+    border-right: 1px solid rgba(0,0,0,0.1);
     background: rgba(0,0,0,0.1);
 }
 
 .GDBFrontend_layout_middle_right {
+    font-size: 14px;
     width: 250px;
     overflow: hidden;
-    border-left: 1px solid rgba(0,0,0,0.2);
+    border-left: 1px solid rgba(0,0,0,0.1);
     background: rgba(0,0,0,0.1);
     position: relative;
 }
@@ -263,8 +266,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     padding: 0px 10px;
     height: 40px;
     line-height: 40px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
 }
@@ -293,8 +295,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     padding: 0px 10px;
     height: 40px;
     line-height: 40px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
 }
@@ -309,8 +310,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     padding: 0px 10px;
     height: 40px;
     line-height: 40px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
 }
@@ -325,8 +325,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     padding: 0px 10px;
     height: 40px;
     line-height: 40px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
 }
@@ -341,8 +340,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     padding: 0px 10px;
     height: 40px;
     line-height: 40px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
 }
@@ -357,8 +355,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     padding: 0px 10px;
     height: 40px;
     line-height: 40px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
 }

@@ -4,7 +4,7 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 */
 
@@ -35,7 +35,7 @@
     display: flex;
     flex: 0;
     min-height: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.05);
     border-bottom: 0px;
     border-top: 0px;
     cursor: pointer;
@@ -52,7 +52,7 @@
     align-items: center;
     padding-left: 10px;
     padding-right: 5px;
-    font-size: 13px;
+    font-size: 16px;
 }
 
 .FileTabs_tabs_items_item_closeBtn {
@@ -61,7 +61,7 @@
     align-items: center;
     padding-left: 5px;
     padding-right: 10px;
-    font-size: 10px;
+    font-size: 16px;
     color: rgba(255,255,255,0.5);
 }
 
@@ -71,8 +71,6 @@
 
 .FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
     background: rgb(0, 36, 81);
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: bold;
 }
 
 .FileTabs_tabs_items_item.FileTabs_tabs_items_item__current .FileTabs_tabs_items_closeBtn {
@@ -94,7 +92,7 @@
 .FileTabs_tabs_items_item_pathTooltip_box {
     background: #3465a4;
     color: white;
-    font-size: 13px;
+    font-size: 16px;
     display: inline-block;
     border-radius: 1px;
     box-shadow: 0px 0px 20px 0px rgba(0, 25, 0, 0.5);
@@ -122,13 +120,13 @@
 .FileTabs_tabs_items_item_pathTooltip_path {
     display: inline-block;
     vertical-align: middle;
-    padding: 5px;
+    padding: 10px;
 }
 
 .FileTabs_tabs_items_item_pathTooltip_copyBtn {
     display: inline-block;
     vertical-align: middle;
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
     border-left: 1px solid rgba(0,0,0,0.15);
     user-select: none;

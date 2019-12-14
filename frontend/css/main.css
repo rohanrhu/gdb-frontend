@@ -4,9 +4,24 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 */
+
+@font-face {
+  font-family: 'SourceSansPro Regular';
+  src: url('../thirdparty/sourcesanspro/SourceSansPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SourceSansPro Bold';
+  src: url('../thirdparty/sourcesanspro/SourceSansPro-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SourceSansPro SemiBold';
+  src: url('../thirdparty/sourcesanspro/SourceSansPro-SemiBold.ttf') format('truetype');
+}  
 
 * {
     margin: 0px;
@@ -18,7 +33,13 @@ body {
     text-align: left;
     line-height: 100%;
     background: #142648;
-    font-family: 'Consolas';
+    font-family: 'SourceSansPro Regular';
+    font-size: 16px;
+}
+
+b {
+    font-family: 'SourceSansPro Bold';
+    font-weight: normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,7 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 textarea {
-    font-family: 'Consolas';
+    font-family: 'SourceSansPro Regular';
 }
 
 a, a:visited {

@@ -4,13 +4,13 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 */
 
 .Watches {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     overflow-y: auto;
     text-align: left;
     height: 100%;
@@ -58,7 +58,6 @@
 
 .Watches_items_item {
     display: flex;
-    cursor: pointer;
     border-bottom: 1px solid rgba(0,0,0,0.1);
     background: rgba(0,0,0,0.05);
     height: 30px;
@@ -99,6 +98,7 @@
     color: white;
     padding: 0px 5px;
     width: 100%;
+    font-size: 14px;
 }
 
 .Watches_items_item_value {
@@ -130,6 +130,7 @@
     color: white;
     padding: 0px 5px;
     width: 100%;
+    font-size: 14px;
 }
 
 /* ---------------------- */
@@ -152,6 +153,7 @@
     justify-content: center;
     display: flex;
     width: 25px;
+    cursor: pointer;
 }
 
 .Watches_items_item_remove:hover {

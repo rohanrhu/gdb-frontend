@@ -5,10 +5,10 @@
 # https://github.com/rohanrhu/gdb-frontend
 # https://oguzhaneroglu.com/projects/gdb-frontend/
 #
-# Licensed under MIT
+# Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-VERSION = [0, 0, 8, "alpha"]
+VERSION = [0, 0, 9, "alpha"]
 
 """
 GDB-Frontend GUI modes.

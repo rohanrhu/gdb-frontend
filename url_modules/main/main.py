@@ -5,7 +5,7 @@
 # https://github.com/rohanrhu/gdb-frontend
 # https://oguzhaneroglu.com/projects/gdb-frontend/
 #
-# Licensed under MIT
+# Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
 import os
@@ -94,6 +94,7 @@ def run(request, params):
     html_stackTrace = util.readFile(util.webFSPath("/components/StackTrace/html/StackTrace.html")).format(**vars())
     html_variablesExplorer = util.readFile(util.webFSPath("/components/VariablesExplorer/html/VariablesExplorer.html")).format(**vars())
     html_watches = util.readFile(util.webFSPath("/components/Watches/html/Watches.html")).format(**vars())
+    html_fuzzyFinder = util.readFile(util.webFSPath("/components/FuzzyFinder/html/FuzzyFinder.html")).format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

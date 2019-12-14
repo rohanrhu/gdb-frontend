@@ -4,7 +4,7 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 */
 
@@ -188,6 +188,19 @@
                 file.ace.setTheme("ace/theme/tomorrow_night_blue");
                 file.ace.session.setMode(ace.require("ace/ext/modelist").getModeForPath(file.name).mode);
 
+                file.ace.commands.addCommand({
+                    name: 'fuzzySearch',
+                    bindKey: {mac: 'cmd-p', win: 'ctrl-p'},
+                    readOnly: true,
+                    exec: function () {
+                        GDBFrontend.components.fuzzyFinder.open({
+                            onSelected: function (parameters) {
+                                GDBFrontend.components.gdbFrontend.openSource({file: parameters.item.file});
+                            }
+                        });
+                    }
+                });
+
                 file.ace.session.on('changeBreakpoint', function (event) {
                 });
 
@@ -287,11 +300,11 @@
                 var is_switched = false;
 
                 if ((data.files.length == 1) || parameters.switch) {
-                    data.switchFile({file: file});
+                    data.switchFile({file: file, is_initial: parameters.is_initial});
                     is_switched = true;
+                } else if (!parameters.is_initial) {
+                    data.saveState();
                 }
-
-                data.saveState();
 
                 return {
                     file: file,
@@ -342,7 +355,9 @@
 
                 data.current = file;
 
-                data.saveState();
+                if (!parameters.is_initial) {
+                    data.saveState();
+                }
             };
 
             data.getFileById = function (id) {

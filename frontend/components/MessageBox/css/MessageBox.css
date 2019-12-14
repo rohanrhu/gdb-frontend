@@ -4,7 +4,7 @@
  * https://github.com/rohanrhu/gdb-frontend
  * https://oguzhaneroglu.com/projects/gdb-frontend/
  *
- * Licensed under MIT
+ * Licensed under GNU/GPLv3
  * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 */
 
@@ -49,7 +49,6 @@
 
 .css_MessageBox_box_content1 {
     margin-bottom: 10px;
-    font-size: 14px;
     line-height: 20px;
 }
 
@@ -59,9 +58,10 @@
     position: absolute;
     right: 0px;
     top: 0px;
-    padding: 10px 10px;
+    padding: 12px 12px;
     transition: opacity 250ms;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .css_MessageBox_box_closeButton:hover {

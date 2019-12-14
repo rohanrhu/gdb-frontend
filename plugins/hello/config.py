@@ -5,7 +5,7 @@
 # https://github.com/rohanrhu/gdb-frontend
 # https://oguzhaneroglu.com/projects/gdb-frontend/
 #
-# Licensed under MIT
+# Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
 DESCRIPTION = "Example GDBFrontend plugin."
