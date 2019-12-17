@@ -60,7 +60,7 @@ Options:
   --version, -v:                        Shows version.
   --gdb-executable=PATH, -g PATH:       Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
   --tmux-executable=PATH, -tmux PATH:   Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
-  --terminal-id=NAME, -t NAME:          Specifies GDB executable path (Default is "gdb-frontend".)
+  --terminal-id=NAME, -t NAME:          Specifies tmux terminal identifier name (Default is "gdb-frontend".)
 ```
 
 ### Options

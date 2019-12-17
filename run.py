@@ -56,7 +56,7 @@ def argHandler_help():
     print("  --version, -v:\t\t\tShows version.")
     print("  --gdb-executable=PATH, -g PATH:\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
-    print("  --terminal-id=NAME, -t NAME:\t\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
+    print("  --terminal-id=NAME, -t NAME:\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
     print("")
 
     exit(0)
@@ -130,7 +130,7 @@ if value_expected_arg:
 
 if tmux_executable == "tmux" and not shutil.which("tmux"):
     print("\033[0;32;31m[Error] Tmux is not installed. Please install tmux on your system and run GDBFrontend again.\033[0m")
-    exit(1);
+    exit(1)
 
 try:
     os.system(tmux_executable+" -f tmux.conf new-session -s "+terminal_id+" -d '"+gdb_executable+" -ex \"python import sys, os; sys.path.append(\\\""+path+"\\\"); import main\"; read;'")
