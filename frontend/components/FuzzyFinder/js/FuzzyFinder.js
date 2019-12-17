@@ -337,7 +337,6 @@
                     if (sc == pc) {
                         syncs.push([sc, j]);
                         k = j;
-                        m = 0;
                         break;
                     }
                 }

@@ -44,7 +44,6 @@ http://127.0.0.1:5551/
 You can open GDB shell with the command:
 
 ```bash
-cd gdb-frontend
 tmux a -t gdb-frontend
 ```
 
