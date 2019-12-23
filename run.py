@@ -11,9 +11,13 @@
 import os
 import sys
 import shutil
+import json
+import base64
+
+import config
+config.init()
 
 import statics
-import config
 import util
 
 path = os.path.dirname(os.path.realpath(__file__))
@@ -23,6 +27,8 @@ tmux_executable = "tmux"
 terminal_id = "gdb-frontend"
 
 import subprocess
+
+arg_config = {}
 
 def argHandler_gdbExecutable(path):
     global gdb_executable
@@ -47,6 +53,10 @@ def argHandler_terminalId(name):
 
     terminal_id = name
 
+def argHandler_verbose():
+    config.VERBOSE = True
+    arg_config["VERBOSE"] = True
+
 def argHandler_help():
     global gdb_executable
 
@@ -57,6 +67,7 @@ def argHandler_help():
     print("  --gdb-executable=PATH, -g PATH:\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
     print("  --terminal-id=NAME, -t NAME:\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
+    print("  --verbose, -V:\t\t\tEnables verbose output.")
     print("")
 
     exit(0)
@@ -71,11 +82,12 @@ def argHandler_version():
     exit(0)
 
 args = [
-    ["--help", "-h", argHandler_help, False],
-    ["--version", "-v", argHandler_version, False],
+    ["--verbose", "-V", argHandler_verbose, False],
     ["--gdb-executable", "-g", argHandler_gdbExecutable, True],
     ["--tmux-executable", "-tmux", argHandler_tmuxExecutable, True],
-    ["--terminal-id", "-t", argHandler_terminalId, True]
+    ["--terminal-id", "-t", argHandler_terminalId, True],
+    ["--help", "-h", argHandler_help, False],
+    ["--version", "-v", argHandler_version, False]
 ]
 
 value_expected_arg = []
@@ -133,7 +145,7 @@ if tmux_executable == "tmux" and not shutil.which("tmux"):
     exit(1)
 
 try:
-    os.system(tmux_executable+" -f tmux.conf new-session -s "+terminal_id+" -d '"+gdb_executable+" -ex \"python import sys, os; sys.path.append(\\\""+path+"\\\"); import main\"; read;'")
+    os.system(tmux_executable+" -f tmux.conf new-session -s "+terminal_id+" -d '"+gdb_executable+" -ex \"python import sys, os; sys.path.append(\\\""+path+"\\\"); import config, json, base64; config.init(); config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import main\"; read;'")
     print("Listening on %s: http://127.0.0.1:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT))
     print("|---------------------------------------------------------------------|")
     print(("| Open this address in web browser: \033[0;32;40mhttp://127.0.0.1:%d/terminal/\033[0m" % config.HTTP_PORT) + "   |")

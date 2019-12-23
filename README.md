@@ -61,9 +61,16 @@ Options:
   --gdb-executable=PATH, -g PATH:       Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
   --tmux-executable=PATH, -tmux PATH:   Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
   --terminal-id=NAME, -t NAME:          Specifies tmux terminal identifier name (Default is "gdb-frontend".)
+  --verbose, -V:                        Enables verbose output.
 ```
 
 ### Options
+#### `--help`, `-h`
+Shows help text.
+
+#### `--version`, `-v`
+Shows version.
+
 #### `--gdb-executable=PATH`, `-g PATH`
 You can specify GDB executable path like `gdbfrontend --gdb-executable=/path/to/gdb`. (Optional)
 
@@ -72,6 +79,9 @@ You can specify Tmux executable path like `gdbfrontend --tmux-executable=/path/t
 
 #### `--terminal-id=PATH`, `-t PATH`
 You can specify Tmux terminal id like `gdbfrontend --terminal-id=terminal-name`. (Default: `gdb-frontend`)
+
+#### `--verbose`, `-v`
+Enables verbose output.
 
 ## Troubleshooting
 ### Zombie Processes
@@ -82,7 +92,7 @@ tmux kill-session -t gdb-frontend
 ```
 
 ## GDB-Related Issues and Tips
-* GDB does not give sources of linked object **until stepping a line once**.
+* GDB does not give sources of linked object **until stepping a line that calls a function from the linked object once**.
 You can add break point a line and step it once, then you will see sources from linked object hereafter during the session.
 
 ## Windows

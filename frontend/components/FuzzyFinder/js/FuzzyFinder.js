@@ -153,7 +153,6 @@
             };
 
             data.close = function () {
-                // data.clear();
                 data.is_opened = false;
                 data.$fuzzyFinder_box_input_rI.blur();
                 $fuzzyFinder.hide();
@@ -326,7 +325,6 @@
             var sc, pc;
 
             k = 0;
-            l = 0;
 
             for (i=0; i < parameters.query.length; i++) {
                 pc = parameters.query[i];

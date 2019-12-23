@@ -34,7 +34,9 @@
                 var $fileBrowser_window = $fileBrowser.find('.FileBrowser_window');
                 var $fileBrowser_window_closeBtn = $fileBrowser_window.find('.FileBrowser_window_closeBtn');
 
-                var $fileBrowser_path = $fileBrowser.find('.FileBrowser_path');
+                var $fileBrowser_window_box_header_path = $fileBrowser_window.find('.FileBrowser_window_box_header_path');
+                var $fileBrowser_window_box_header_path_input = $fileBrowser_window_box_header_path.find('.FileBrowser_window_box_header_path_input');
+                var $fileBrowser_window_box_header_path_input_rI = $fileBrowser_window_box_header_path_input.find('.FileBrowser_window_box_header_path_input_rI');
 
                 var $fileBrowser_items = $fileBrowser.find('.FileBrowser_items');
                 var $fileBrowser_items_item__proto = $fileBrowser.find('.FileBrowser_items_item.__proto');
@@ -48,6 +50,7 @@
                 data.is_passive = false;
                 data.is_opened = false;
                 data.path = '/';
+                data.onFileSelected = function () {};
 
                 data.refresh = function (parameters) {
                     if (parameters === undefined) {
@@ -79,7 +82,7 @@
                             }
 
                             data.path = parameters.path ? parameters.path: data.path;
-                            $fileBrowser_path.html(data.path);
+                            $fileBrowser_window_box_header_path_input_rI.val(data.path);
 
                             $fileBrowser_total_number.html(result_json.files.length);
 
@@ -89,6 +92,8 @@
                                 $fileBrowser_items_parentBtn.show();
                             }
 
+                            data.onFileSelected = parameters.onFileSelected;
+
                             $fileBrowser_items_parentBtn.off('click.FileBrowser');
                             $fileBrowser_items_parentBtn.on('click.FileBrowser', function (event) {
                                 if (data.is_passive) {
@@ -97,7 +102,7 @@
                                 
                                 data.refresh({
                                     path: '/' + (_ = data.path.split('/')).slice(1, _.length-1).join('/'),
-                                    on_file_selected: parameters.on_file_selected
+                                    onFileSelected: parameters.onFileSelected
                                 });
                             });
 
@@ -117,13 +122,13 @@
                                     if (_file.is_dir) {
                                         data.refresh({
                                             path: [(data.path == '/') ? '': data.path, _file.name].join('/'),
-                                            on_file_selected: parameters.on_file_selected
+                                            onFileSelected: parameters.onFileSelected
                                         });
 
                                         $fileBrowser.trigger('FileBrowser_entered_directory', {directory: _file});
                                     } else {
-                                        if (parameters.on_file_selected) {
-                                            parameters.on_file_selected({file: _file});
+                                        if (parameters.onFileSelected) {
+                                            parameters.onFileSelected({file: _file});
                                         }
 
                                         $fileBrowser.trigger('FileBrowser_file_selected', {file: _file});
@@ -159,6 +164,22 @@
                     });
                 };
 
+                $fileBrowser_window_box_header_path_input_rI.on('keydown.FileBrowser', function (event) {
+                    var path = $fileBrowser_window_box_header_path_input_rI.val();
+
+                    if (!path.length) {
+                        path = '/';
+                    }
+
+                    var keycode = event.keyCode ? event.keyCode: event.which;
+                    if (keycode == 13) {
+                        data.refresh({
+                            path: path,
+                            onFileSelected: data.onFileSelected
+                        });
+                    }
+                });
+
                 $fileBrowser_window_closeBtn.on('click.FileBrowser', function (event) {
                     data.close();
                 });
@@ -174,7 +195,7 @@
 
                     data.refresh({
                         path: parameters.path,
-                        on_file_selected: parameters.on_file_selected
+                        onFileSelected: parameters.onFileSelected
                     });
                 };
 

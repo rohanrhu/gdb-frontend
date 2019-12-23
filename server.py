@@ -132,16 +132,22 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         interrupted_for_breakpoint_add = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
 
         if interrupted_for_terminate:
+            util.verbose("Terminating for interrupt: TERMINATE.")
+
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
             try:
-                gdb.execute("c")
+                gdb.execute("kill")
             except Exception as e:
-                print("[Error]  (GDBFrontendSocket().gdb_on_stop__mT)", e)
+                print("[Error] (GDBFrontendSocket.gdb_on_stop__mT)", e)
         elif interrupted_for_signal:
             try:
+                util.verbose("Continuing for interrupt: SIGNAL.")
                 gdb.execute("c")
             except Exception as e:
-                print("[Error]  (GDBFrontendSocket().gdb_on_stop__mT)", e)
+                print("[Error] (GDBFrontendSocket().gdb_on_stop__mT)", e)
         elif interrupted_for_breakpoint_add:
+            util.verbose("Continuing for interrupt: BREAKPOINT_ADD.")
+
             bp = api.debug.Breakpoint(
                 source = interrupted_for_breakpoint_add["file"],
                 line = interrupted_for_breakpoint_add["line"]
@@ -152,13 +158,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
             try:
                 gdb.execute("c")
             except Exception as e:
-                print("[Error]  (GDBFrontendSocket().gdb_on_stop__mT)", e)
-        elif api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE):
-            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
-            try:
-                gdb.execute("kill")
-            except Exception as e:
-                print("[Error] (GDBFrontendSocket.gdb_on_stop__mT)", e)
+                print("[Error] (GDBFrontendSocket().gdb_on_stop__mT)", e)
         else:
             response = {}
 

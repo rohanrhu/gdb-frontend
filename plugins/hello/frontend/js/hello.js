@@ -13,6 +13,6 @@ $(document).ready(function () {
     console.log("[Hello] Plugin:", GDBFrontend.plugins.hello);
 
     GDBFrontend.components.gdbFrontend.$gdbFrontend.on('GDBFrontend_debug_new_objfile', function (event) {
-        console.log('[HELLO] Event: new_objfile:', event);
+        console.log('[Hello] Event: new_objfile:', event);
     });
 });

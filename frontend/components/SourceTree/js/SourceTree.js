@@ -78,6 +78,10 @@
                 var parent_tree_item = data.files;
 
                 parameters.files.forEach(function (_file, _file_i) {
+                    if (!_file.length) {
+                        return true;
+                    }
+
                     _file = GDBFrontend.stdPathSep(_file);
 
                     var file_tree = $.fn.SourceTree.pathTree(_file);
@@ -133,6 +137,10 @@
 
                 var _put = function (files, $items) {
                     files.forEach(function (_file, _file_i) {
+                        if (_file[$.fn.SourceTree.TREE_ITEM_NAME] == '<built-in>') {
+                            return true;
+                        }
+
                         var $item = $sourceTree_items_item__proto.clone();
                         $item.removeClass('__proto');
                         $item.appendTo($items);

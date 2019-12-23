@@ -297,7 +297,7 @@
             data.$gdbFrontend_load_loadBtn.on('click.GDBFrontend', function (event) {
                 GDBFrontend.components.fileBrowser.open({
                     path: last_fileBrowser_path,
-                    on_file_selected: function (parameters) {
+                    onFileSelected: function (parameters) {
                         $.ajax({
                             url: '/api/load',
                             cache: false,
@@ -442,6 +442,7 @@
             };
 
             data.debug.setExited = function (parameters) {
+                data.debug.emptyWatches();
                 data.debug.clearEditorStops();
                 data.debug.setState({
                     event: parameters.event,
@@ -455,6 +456,18 @@
                     event: parameters.event,
                     state: parameters.state,
                     is_stop: true
+                });
+            };
+
+            data.debug.emptyWatches = function () {
+                data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
+                    if (_watch.is_adder) {
+                        return true;
+                    }
+
+                    _watch.setValue({value: ''});
+
+                    return true;
                 });
             };
 
@@ -478,11 +491,11 @@
                                 return;
                             }
 
-                            if (!result_json.variable) {
-                                return;
+                            if (result_json.variable) {
+                                _watch.setValue({value: result_json.variable.value});
+                            } else {
+                                _watch.setValue({value: ''});
                             }
-
-                            _watch.setValue({value: result_json.variable.value});
                         },
                         error: function () {
                             GDBFrontend.showMessageBox({text: 'An error occured.'});
@@ -569,6 +582,16 @@
                         if (file.file) {
                             data.debug.placeEditorFileBreakpoints({editor_file: file.file});
                             !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
+
+                            if (data.debug.state && data.debug.state.selected_frame && (file.file.path == data.debug.state.selected_frame.file.path)) {
+                                file.file.clearStop();
+                                file.file.setStop({line: data.debug.state.current_location.line});
+
+                                setTimeout(function () {
+                                    file.file.ace.scrollToLine(data.debug.state.current_location.line, true, true, function () {});
+                                    file.file.ace.gotoLine(data.debug.state.current_location.line, 0, true);
+                                }, 0);
+                            }
                         }
                     },
                     error: function () {
@@ -616,6 +639,11 @@
                         if (file.file) {
                             data.debug.placeEditorFileBreakpoints({editor_file: file.file});
                             !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
+
+                            if (data.debug.state && data.debug.state.selected_frame && (file.file.path == data.debug.state.selected_frame.file.path)) {
+                                file.file.clearStop();
+                                file.file.setStop({line: data.debug.state.current_location.line});
+                            }
                         }
                     },
                     error: function () {
@@ -704,7 +732,7 @@
 
                 data.gdbFrontend_stackTrace.render();
 
-                if ((parameters.is_stop && parameters.state.selected_frame) || setState_parameters.reload_files) {
+                if (parameters.is_stop && parameters.state.selected_frame) {
                     var editor_file = data.gdbFrontend_fileTabs.getFileByPath(parameters.state.current_location.file);
 
                     var _continue = function () {
@@ -717,7 +745,7 @@
                         }, 0);
                     };
 
-                    if (!editor_file || setState_parameters.reload_files) {
+                    if (!editor_file) {
                         $.ajax({
                             url: '/api/fs/read',
                             cache: false,
@@ -744,26 +772,22 @@
                                     console.trace('An error occured.');
                                 }
 
-                                if (setState_parameters.reload_files) {
-                                    editor_file.setContent({content: result_json.file.content});
-                                } else {
-                                    var file = data.gdbFrontend_fileTabs.openFile({
-                                        file: {
-                                            path: parameters.state.current_location.file,
-                                            content: result_json.file.content
-                                        },
-                                        switch: false
-                                    });
+                                var file = data.gdbFrontend_fileTabs.openFile({
+                                    file: {
+                                        path: parameters.state.current_location.file,
+                                        content: result_json.file.content
+                                    },
+                                    switch: false
+                                });
 
-                                    if (file.file) {
-                                        data.debug.placeEditorFileBreakpoints({editor_file: file.file});
-                                        !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
-                                    }
-
-                                    editor_file = file.file;
-
-                                    _continue();
+                                if (file.file) {
+                                    data.debug.placeEditorFileBreakpoints({editor_file: file.file});
+                                    !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file});
                                 }
+
+                                editor_file = file.file;
+
+                                _continue();
                             },
                             error: function () {
                                 GDBFrontend.showMessageBox({text: 'Path not found.'});
@@ -777,7 +801,6 @@
                 }
 
                 data.components.variablesExplorer.setLocation(parameters.state.current_location);
-
                 data.components.variablesExplorer.load({
                     variables: parameters.state.selected_frame
                         ? parameters.state.selected_frame.variables
@@ -909,6 +932,11 @@
                 var editor_file = data.gdbFrontend_fileTabs.getFileByPath(parameters.breakpoint.file);
 
                 var _continue = function () {
+                    if (data.debug.state && data.debug.state.selected_frame && (editor_file.path == data.debug.state.selected_frame.file.path)) {
+                        editor_file.clearStop();
+                        editor_file.setStop({line: data.debug.state.current_location.line});
+                    }
+                        
                     setTimeout(function () {
                         editor_file.ace.scrollToLine(parameters.breakpoint.line, true, false, function () {});
                         editor_file.ace.gotoLine(parameters.breakpoint.line, 0, true);
@@ -1000,6 +1028,11 @@
                             var editor_file = data.gdbFrontend_fileTabs.getFileByPath(parameters.frame.file.path);
 
                             var _continue = function () {
+                                if (data.debug.state && data.debug.state.selected_frame && (editor_file.path == data.debug.state.selected_frame.file.path)) {
+                                    editor_file.clearStop();
+                                    editor_file.setStop({line: data.debug.state.current_location.line});
+                                }
+
                                 setTimeout(function () {
                                     editor_file.ace.scrollToLine(parameters.frame.line, true, true, function () {});
                                     editor_file.ace.gotoLine(parameters.frame.line, 0, true);

@@ -120,6 +120,7 @@ img {
     cursor: pointer;
     transition: background 100ms;
     align-items: center;
+    vertical-align: middle;
 }
 
 .button1:hover {
@@ -146,10 +147,11 @@ img {
     cursor: initial;
     color: white;
     box-sizing: border-box;
+    vertical-align: middle;
 }
 
 .input1:focus {
-    box-shadow: 0px 0px 0px 1px rgba(255,255,255,0.25), 0px 0px 20px 0px rgba(255,255,255,0.125);
+    box-shadow: 0px 0px 0px 2px rgba(85, 161, 255, 0.25), 0px 0px 20px 0px rgba(255,255,255,0.125);
 }
 
 /* ------------------------------------------------- */

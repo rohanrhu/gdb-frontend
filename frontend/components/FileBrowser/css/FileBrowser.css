@@ -13,6 +13,7 @@
     padding: 10px;
     overflow-y: auto;
     text-align: left;
+    user-select: none;
 }
 
 .FileBrowser_window {
@@ -46,13 +47,6 @@
 .FileBrowser_window_box_header {
 }
 
-.FileBrowser_window_box_header_title {
-    padding-left: 160px;
-    padding-top: 82px;
-    font-family: 'Verdana';
-    font-size: 18px;
-}
-
 .FileBrowser_window_box_header_line {
     background: #3465a4;
     position: relative;
@@ -61,7 +55,44 @@
     line-height: 18px;
     display: flex;
     align-items: center;
+    flex-direction: row;
+}
+
+/* ---------------------- */
+
+.FileBrowser_window_box_header_line_label {
+    padding-left: 10px;
+}
+
+/* ---------------------- */
+
+.FileBrowser_window_box_header_path {
+    flex-grow: 1;
+    color: rgba(255,255,255,0.5);
+    padding-left: 10px;
+    height: 100%;
+}
+
+.FileBrowser_window_box_header_path_input {
+    height: 100%;
+    width: 100%;
+}
+
+.FileBrowser_window_box_header_path_input_rI {
+    width: 100%;
+    height: 100%;
+    border: 0px;
     padding: 0px 10px;
+    color: white;
+    font-family: 'SourceSansPro Regular';
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.FileBrowser_window_box_header_path_input_rI:focus {
+    background: rgba(0,0,0,0.1);
 }
 
 /* ---------------------- */
@@ -79,12 +110,9 @@
 /* ---------------------- */
 
 .FileBrowser_window_box_closeBtn {
-    position: absolute;
-    right: 0px;
-    top: 0px;
     width: 40px;
     height: 100%;
-    line-height: 20px;
+    align-items: center;
     cursor: pointer;
     transition: color 100ms;
     display: flex;
@@ -161,14 +189,6 @@
 
 .FileBrowser_total_number {
     display: inline;
-}
-
-/* ---------------------- */
-
-.FileBrowser_path {
-    display: inline-block;
-    color: rgba(255,255,255,0.5);
-    padding-left: 10px;
 }
 
 /* ---------------------- */

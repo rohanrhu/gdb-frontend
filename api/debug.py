@@ -319,15 +319,12 @@ def getState():
                                 variable["name"] = symbol.name
                                 variable["is_pointer"] = symbol.type.code == gdb.TYPE_CODE_PTR
 
-                                variable["value"] = {}
+                                variable["value"] = ""
 
                                 try:
-                                    variable["value"] = value.string()
+                                    variable["value"] = value.string(length=1000)
                                     variable["is_nts"] = True
                                 except gdb.error as e:
-                                    variable["is_nts"] = False
-                                    variable["value"] = str(value)
-                                except UnicodeDecodeError as e:
                                     variable["is_nts"] = False
                                     variable["value"] = str(value)
 
@@ -678,6 +675,12 @@ def getSerializableStructMembers(value, ctype):
     if ctype.code not in [gdb.TYPE_CODE_STRUCT, gdb.TYPE_CODE_UNION]:
         return members
 
+    try:
+        if str(value) == "0x0":
+            return None
+    except gdb.error as e:
+        return None
+
     for _field in ctype.fields():
         member = {}
         memberValue = value[_field.name]
@@ -692,11 +695,11 @@ def getSerializableStructMembers(value, ctype):
             member["value"] = memberValue.string()
             member["is_nts"] = True
         except gdb.error as e:
-            member["is_nts"] = False
-            member["value"] = str(memberValue)
-        except UnicodeDecodeError as e:
-            member["is_nts"] = False
-            member["value"] = str(memberValue)
+            try:
+                member["is_nts"] = False
+                member["value"] = str(memberValue)
+            except gdb.MemoryError as e:
+                return None
 
         member["name"] = _field.name
         member["is_pointer"] = _field.type.code == gdb.TYPE_CODE_PTR
@@ -804,11 +807,11 @@ class Variable():
             serializable["value"] = value.string()
             serializable["is_nts"] = True
         except gdb.error as e:
-            serializable["is_nts"] = False
-            serializable["value"] = str(value)
-        except UnicodeDecodeError as e:
-            serializable["is_nts"] = False
-            serializable["value"] = str(value)
+            try:
+                serializable["is_nts"] = False
+                serializable["value"] = str(value)
+            except gdb.MemoryError as e:
+                return None
 
         if value.type:
             terminalType = resolveTerminalType(value.type)
