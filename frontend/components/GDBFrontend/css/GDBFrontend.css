@@ -150,6 +150,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     flex-grow: 1;
+    flex-basis: 0%;
 }
 
 .GDBFrontend_layout_middle_left {

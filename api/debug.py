@@ -327,6 +327,9 @@ def getState():
                                 except gdb.error as e:
                                     variable["is_nts"] = False
                                     variable["value"] = str(value)
+                                except UnicodeDecodeError as e:
+                                    variable["is_nts"] = False
+                                    variable["value"] = str(value)
 
                                 if symbol.type:
                                     terminalType = resolveTerminalType(symbol.type)
@@ -574,7 +577,7 @@ def terminate():
         print("[Error]", e)
         is_need_interrupt = True
 
-    if is_need_interrupt:
+    if is_need_interrupt and (gdb.selected_inferior().threads().__len__() > 0):
         try:
             api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
             gdb.execute("interrupt")
@@ -700,6 +703,9 @@ def getSerializableStructMembers(value, ctype):
                 member["value"] = str(memberValue)
             except gdb.MemoryError as e:
                 return None
+        except UnicodeDecodeError as e:
+            member["is_nts"] = False
+            member["value"] = str(value)
 
         member["name"] = _field.name
         member["is_pointer"] = _field.type.code == gdb.TYPE_CODE_PTR
@@ -812,6 +818,9 @@ class Variable():
                 serializable["value"] = str(value)
             except gdb.MemoryError as e:
                 return None
+        except UnicodeDecodeError as e:
+            serializable["is_nts"] = False
+            serializable["value"] = str(value)
 
         if value.type:
             terminalType = resolveTerminalType(value.type)
