@@ -12,7 +12,29 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss.png "gdb-frontend")
 
 ## Installing 
-Flatpak and linux distribution packages are TODO.
+
+### Deb Package (Debian/Ubuntu/KDE Neon)
+You can install GDBFrnotend via deb package for Debian-based distributions.
+
+You can install it from following commands:
+```bash
+echo "deb [trusted=yes] https://oguzhaneroglu.com/deb/ ./" | sudo tee -a /etc/apt/sources.list > /dev/null
+sudo apt update
+sudo apt install gdbfrontend
+```
+
+After installing with APT, you will get updates for new releases on APT upgrade.
+
+You can get upgrades with following commands:
+```bash
+sudo apt update
+sudo apt upgrade gdbfrontend
+```
+
+and you can run it:
+```bash
+gdbfrontend
+```
 
 ### Running From GIT
 You can download latest source and run it.
