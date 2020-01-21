@@ -14,7 +14,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 ## Installing 
 
 ### Deb Package (Debian / Ubuntu / KDE Neon)
-You can install GDBFrnotend via deb package for Debian-based distributions.
+You can install GDBFrontend via deb package for Debian-based distributions.
 
 You can install it from following commands:
 ```bash
