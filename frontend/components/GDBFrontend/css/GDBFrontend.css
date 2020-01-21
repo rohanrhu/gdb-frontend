@@ -15,10 +15,43 @@
     top: 0px;
     height: 100%;
     width: 100%;
+    background: #00295c;
 }
 
 .GDBFrontend_terminal {
+    position: relative;
+    height: 200px;
+}
+
+.GDBFrontend_terminal_terminal {
+    position: relative;
     height: 100%;
+}
+
+.GDBFrontend_terminalOpenBtn {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    background: white;
+    color: rgba(0,0,0,0.7);
+    text-align: center;
+    padding: 5px 10px;
+    display: none;
+    cursor: pointer;
+    z-index: 2000;
+}
+
+.GDBFrontend_terminalCloseBtn {
+    position: absolute;
+    right: 17px;
+    top: 0px;
+    background: white;
+    color: rgba(0,0,0,0.7);
+    text-align: center;
+    padding: 5px 10px;
+    display: none;
+    cursor: pointer;
+    z-index: 2000;
 }
 
 .GDBFrontend_terminal_iframe {
@@ -104,7 +137,7 @@
     user-select: none;
     flex-shrink: 0;
     height: 50px;
-    background: #3465a4;
+    background: rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 2500;
 }
@@ -155,19 +188,16 @@
 
 .GDBFrontend_layout_middle_left {
     font-size: 14px;
-
     width: 210px;
     overflow: hidden;
-    border-right: 1px solid rgba(0,0,0,0.1);
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.3);
 }
 
 .GDBFrontend_layout_middle_right {
     font-size: 14px;
-    width: 250px;
+    width: 300px;
     overflow: hidden;
-    border-left: 1px solid rgba(0,0,0,0.1);
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.3);
     position: relative;
 }
 
@@ -181,8 +211,8 @@
 }
 
 .GDBFrontend_layout_bottom {
+    position: relative;
     flex-shrink: 0;
-    height: 200px;
     overflow: hidden;
 }
 
@@ -212,7 +242,7 @@
     top: 50px;
     right: 0px;
     width: 200px;
-    background: #3465a4;
+    background: #25324c;
     display: none;
 }
 
@@ -230,7 +260,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     display: block;
     color: white;
     padding: 10px 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     cursor: pointer;
 }
 
@@ -238,8 +268,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     background: rgba(255,255,255,0.2);
 }
 
-.GDBFrontend_layout_top_menuBtn_label:hover {
-    background: rgba(0,0,0,0.1);
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgba(255,255,255,0.1);
 }
 
 .GDBFrontend_layout_top_exitBtn {

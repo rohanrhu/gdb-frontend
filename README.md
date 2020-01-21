@@ -9,7 +9,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 [![Donate](http://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square)](https://liberapay.com/EvrenselKisilik/donate)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Foguzhaneroglu.com%2Fprojects%2Fgdb-frontend%2F)](https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fgithub.com%2Frohanrhu%2Fgdb-frontend)
 
-![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss.png "gdb-frontend")
+![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss2.png "gdb-frontend")
 
 ## Installing 
 
@@ -118,7 +118,10 @@ tmux kill-session -t gdb-frontend
 You can add break point a line and step it once, then you will see sources from linked object hereafter during the session.
 
 ## Windows
-In fact, gdb-frontend is able to run on Windows but there are some serious issues in the GDB's Windows version those avoid using gdb-frontend on Windows.
+In fact, gdb-frontend is able to run on Windows but there are some serious issues in the GDB's Windows version those avoid using gdb-frontend on Windows. Of course you can use gdb-frontend on WSL if you are using Windows 10.
+
+## WSL
+You can use gdb-frontend on WSL (Windows Subsystem for Linux).
 
 ### Issues about Windows-GDB
 
@@ -134,6 +137,9 @@ API Documentation is TODO yet.
 
 ## Plugin Development
 There is an example plugin `hello` in `plugins/` directory.
+
+## Contributing
+You can contribute with commiting to project or developing a plugin. All commits are welcome.
 
 ## Donate
 You can donate to support the project.

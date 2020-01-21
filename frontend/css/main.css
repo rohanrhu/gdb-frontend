@@ -32,7 +32,6 @@ body {
     color: white;
     text-align: left;
     line-height: 100%;
-    background: #142648;
     font-family: 'SourceSansPro Regular';
     font-size: 16px;
 }
@@ -114,7 +113,7 @@ img {
 .button1 {
     height: 34px;
     padding: 0px 10px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.1);
     display: inline-flex;
     border-radius: 2px;
     cursor: pointer;

@@ -63,6 +63,7 @@
                     data.onSelected = parameters.onSelected;
                 }
 
+                data.clear();
                 $fuzzyFinder.show();
                 data.$fuzzyFinder_box_input_rI.focus();
             };

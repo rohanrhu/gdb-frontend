@@ -47,6 +47,9 @@
             data.$GDBFrontend_load_connectBtn_openable_connectBtn = data.$GDBFrontend_load_connectBtn_openable.find('.GDBFrontend_load_connectBtn_openable_connectBtn');
 
             data.$GDBFrontend_terminal = $gdbFrontend.find('.GDBFrontend_terminal');
+            data.$GDBFrontend_terminal_terminal = data.$GDBFrontend_terminal.find('.GDBFrontend_terminal_terminal');
+            data.$GDBFrontend_terminalOpenBtn = $gdbFrontend.find('.GDBFrontend_terminalOpenBtn');
+            data.$GDBFrontend_terminalCloseBtn = $gdbFrontend.find('.GDBFrontend_terminalCloseBtn');
 
             data.$GDBFrontend_runtimeControls = $gdbFrontend.find('.GDBFrontend_runtimeControls');
             data.$GDBFrontend_runtimeControls_btn__run = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__run');
@@ -98,6 +101,8 @@
             data.debug.frames = [];
 
             data.qWebChannel = false;
+
+            data.is_terminal_opened = false;
 
             data.debug.getBreakpoint = function (parameters) {
                 var bp = false;
@@ -358,11 +363,13 @@
                 if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
                     var $iframe = $('<iframe></iframe>');
                     $iframe.addClass('GDBFrontend_terminal_iframe');
-                    $iframe.appendTo(data.$GDBFrontend_terminal);
+                    $iframe.appendTo(data.$GDBFrontend_terminal_terminal);
                     $iframe.attr('src', 'http://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.gotty_port);
                     $gdbFrontend_layout_bottom.show();
+                    data.is_terminal_opened = true;
                 } else {
                     $gdbFrontend_layout_bottom.hide();
+                    data.is_terminal_opened = false;
                 }
 
                 data.$gdbFrontend_watches.Watches();
@@ -1266,6 +1273,42 @@
                     }
                 });
             });
+
+            $gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
+                data.$GDBFrontend_terminalCloseBtn.show();
+            });
+            
+            data.$GDBFrontend_terminal.on('mouseout.GDBFrontend', function (event) {
+                data.$GDBFrontend_terminalCloseBtn.hide();
+            });
+            
+            data.$GDBFrontend_terminalOpenBtn.on('click.GDBFrontend', function (event) {
+                data.openTerminal();
+            });
+            
+            data.$GDBFrontend_terminalCloseBtn.on('click.GDBFrontend', function (event) {
+                data.closeTerminal();
+            });
+
+            data.openTerminal = function (parameters) {
+                data.is_terminal_opened = true;
+                data.$GDBFrontend_terminal.show();
+                data.$GDBFrontend_terminalOpenBtn.hide();
+
+                data.components.fileTabs.files.every(function (_file, _file_i) {
+                    _file.ace.resize();
+                });
+            };
+           
+            data.closeTerminal = function (parameters) {
+                data.is_terminal_opened = false;
+                data.$GDBFrontend_terminal.hide();
+                data.$GDBFrontend_terminalOpenBtn.show();
+
+                data.components.fileTabs.files.every(function (_file, _file_i) {
+                    _file.ace.resize();
+                });
+            };
 
             data.comply = function (parameters) {
                 if (parameters === undefined) {

@@ -1,4 +1,6 @@
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
+.vscode
 __pycache__
 *.pyc

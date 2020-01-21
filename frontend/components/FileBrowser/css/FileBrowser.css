@@ -48,7 +48,7 @@
 }
 
 .FileBrowser_window_box_header_line {
-    background: #3465a4;
+    background: rgb(0, 27, 61);
     position: relative;
     height: 40px;
     color: white;

@@ -82,7 +82,7 @@
 }
 
 .StackTrace_items_item.StackTrace__current {
-    background: rgba(58, 195, 48, 0.5);
+    background: rgba(0, 45, 170, 0.5);
 }
 
 .StackTrace_items_item_num_val {

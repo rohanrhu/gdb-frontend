@@ -36,9 +36,9 @@ def threadSafe(callback):
     otherwise it appends callback to gdb's event-loop
     and blocks caller thread until callback finish.
     
-    Usage:
-    @api.debug.threadSafe
-    def threadSafeFunction():
+    Usage:\n
+    @api.debug.threadSafe\n
+    def threadSafeFunction():\n
         pass
     """
 
