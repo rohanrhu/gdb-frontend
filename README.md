@@ -136,7 +136,7 @@ Documentation is TODO yet.
 API Documentation is TODO yet.
 
 ## Plugin Development
-There is an example plugin `hello` in `plugins/` directory.
+You can read the [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
 
 ## Contributing
 You can contribute with commiting to project or developing a plugin. All commits are welcome.
