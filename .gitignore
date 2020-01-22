@@ -4,3 +4,5 @@
 .vscode
 __pycache__
 *.pyc
+.swo
+.swp
