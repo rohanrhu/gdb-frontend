@@ -31,6 +31,12 @@
                 $fileBrowser.data('FileBrowser', data);
                 data.$fileBrowser = $fileBrowser;
 
+                if (!window.hasOwnProperty('FileBrowser_component_id')) {
+                    FileBrowser_component_id = 0;
+                }
+
+                data.id = ++FileBrowser_component_id;
+
                 var $fileBrowser_window = $fileBrowser.find('.FileBrowser_window');
                 var $fileBrowser_window_closeBtn = $fileBrowser_window.find('.FileBrowser_window_closeBtn');
 
@@ -51,13 +57,37 @@
                 data.is_opened = false;
                 data.path = '/';
                 data.onFileSelected = function () {};
+                data.items = [];
+                data.current = -1;
+                data.pathUpdateRefreshTimout = 0;
+
+                var is_first_refresh = true;
+                var dont_auto_refresh = false;
 
                 data.refresh = function (parameters) {
                     if (parameters === undefined) {
                         parameters = {};
                     }
 
+                    var refresh_parameters = parameters;
+                    
+                    clearTimeout(data.pathUpdateRefreshTimout);
+
+                    if (!parameters.path.length) {
+                        parameters.path = '/';
+                    }
+                    
+                    if (!parameters.ignoreSamePath && !is_first_refresh && (data.path == parameters.path)) {
+                        is_first_refresh = false;
+                        return;
+                    }
+
+                    is_first_refresh = false;
+
                     data.is_passive = true;
+                    data.current = -1;
+
+                    $fileBrowser_items_parentBtn.removeClass('FileBrowser_items_item__current');
 
                     $.ajax({
                         url: '/api/fs/list',
@@ -69,9 +99,13 @@
                         success: function (result_json) {
                             if (result_json.error) {
                                 if (result_json.error.not_exists) {
-                                    GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                    if (!parameters.ignoreNotFound) {
+                                        GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                    }
                                 } else if (result_json.error.not_permitted) {
-                                    GDBFrontend.showMessageBox({text: 'Access denied.'});
+                                    if (!parameters.ignoreNotFound) {
+                                        GDBFrontend.showMessageBox({text: 'Access denied.'});
+                                    }
                                 } else {
                                     GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 }
@@ -82,7 +116,12 @@
                             }
 
                             data.path = parameters.path ? parameters.path: data.path;
-                            $fileBrowser_window_box_header_path_input_rI.val(data.path);
+
+                            $fileBrowser.trigger('FileBrowser_entered_directory', {path: data.path});
+
+                            if (!parameters.dontUpdatePathInput) {
+                                $fileBrowser_window_box_header_path_input_rI.val(data.path);
+                            }
 
                             $fileBrowser_total_number.html(result_json.files.length);
 
@@ -92,10 +131,12 @@
                                 $fileBrowser_items_parentBtn.show();
                             }
 
-                            data.onFileSelected = parameters.onFileSelected;
+                            if (parameters.onFileSelected) {
+                                data.onFileSelected = parameters.onFileSelected;
+                            }
 
                             $fileBrowser_items_parentBtn.off('click.FileBrowser');
-                            $fileBrowser_items_parentBtn.on('click.FileBrowser', function (event) {
+                            $fileBrowser_items_parentBtn.on('click.FileBrowser-' + data.id, function (event) {
                                 if (data.is_passive) {
                                     return;
                                 }
@@ -107,34 +148,52 @@
                             });
 
                             var _append = function (_file, _file_i) {
-                                var $item = $fileBrowser_items_item__proto.clone();
-                                $item.removeClass('__proto');
-                                $item.appendTo($fileBrowser_items);
+                                var item = {};
+                                data.items.push(item);
+                                
+                                item.is_selected = false;
+                                item.file = _file;
+                                
+                                item.$item = $fileBrowser_items_item__proto.clone();
+                                item.$item.removeClass('__proto');
+                                item.$item.appendTo($fileBrowser_items);
 
-                                $item.find('.FileBrowser_items_item_icon').html(_file.is_dir ? '📁': '📄');
-                                $item.find('.FileBrowser_items_item_name').html(_file.name);
+                                item.$item.find('.FileBrowser_items_item_icon').html(_file.is_dir ? '📁': '📄');
+                                item.$item.find('.FileBrowser_items_item_name').html(_file.name);
 
-                                $item.on('click.FileBrowser', function (event) {
+                                item.$item.on('click.FileBrowser-' + data.id, function (event) {
                                     if (data.is_passive) {
                                         return;
                                     }
 
+                                    item.open();
+                                });
+                                
+                                item.open = function (parameters) {
                                     if (_file.is_dir) {
                                         data.refresh({
                                             path: [(data.path == '/') ? '': data.path, _file.name].join('/'),
-                                            onFileSelected: parameters.onFileSelected
+                                            onFileSelected: data.onFileSelected
                                         });
-
-                                        $fileBrowser.trigger('FileBrowser_entered_directory', {directory: _file});
                                     } else {
-                                        if (parameters.onFileSelected) {
-                                            parameters.onFileSelected({file: _file});
-                                        }
-
-                                        $fileBrowser.trigger('FileBrowser_file_selected', {file: _file});
+                                        data.onFileSelected({file: _file});
+                                        $fileBrowser.trigger('FileBrowser_file_selected', {file: _file, item: item});
                                     }
-                                });
+                                };
                             };
+
+                            data.items = [];
+                            
+                            if (data.path != '/') {
+                                data.items.push({
+                                    is_parent_button: true,
+                                    file: {
+                                        path: '..',
+                                        name: '..'
+                                    },
+                                    $item: $fileBrowser_items_parentBtn
+                                });
+                            }
 
                             $fileBrowser.find('.FileBrowser_items_item:not(.__proto)').remove();
 
@@ -164,23 +223,134 @@
                     });
                 };
 
-                $fileBrowser_window_box_header_path_input_rI.on('keydown.FileBrowser', function (event) {
+                $fileBrowser_window_box_header_path_input_rI.on('keydown.FileBrowser-' + data.id, function (event) {
+                    if (!data.is_opened) {
+                        return;
+                    }
+                    
                     var path = $fileBrowser_window_box_header_path_input_rI.val();
 
                     if (!path.length) {
                         path = '/';
                     }
 
-                    var keycode = event.keyCode ? event.keyCode: event.which;
-                    if (keycode == 13) {
-                        data.refresh({
-                            path: path,
-                            onFileSelected: data.onFileSelected
-                        });
+                    clearTimeout(data.pathUpdateRefreshTimout);
+                    
+                    var keycode = event.keyCode ? event.keyCode : event.which;
+                    if (keycode == 27) {
+                        event.stopPropagation();
+                        data.close();
+                    } else if (keycode == 38) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        data.up();
+                    } else if (keycode == 40) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        data.down();
+                    } else if (keycode == 13) {
+                        event.stopPropagation();
+                        
+                        dont_auto_refresh = true;
+                        
+                        if (data.current == -1) {
+                            data.refresh({
+                                path: path,
+                                onFileSelected: parameters.onFileSelected
+                            });
+                        } else {
+                            var item = data.items[data.current];
+                            
+                            if (item.is_parent_button) {
+                                data.refresh({
+                                    path: '/' + (_ = data.path.split('/')).slice(1, _.length-1).join('/'),
+                                    onFileSelected: parameters.onFileSelected
+                                });
+                            } else {
+                                item.open();
+                            }
+                        }
+                    } else if (keycode == 8) {
+                        event.stopPropagation();
                     }
                 });
 
-                $fileBrowser_window_closeBtn.on('click.FileBrowser', function (event) {
+                $('body').on('keydown.FileBrowser-'+data.id, function (event) {
+                    if (!data.is_opened) {
+                        return;
+                    }
+
+                    var path = $fileBrowser_window_box_header_path_input_rI.val();
+
+                    if (!path.length) {
+                        path = '/';
+                    }
+
+                    clearTimeout(data.pathUpdateRefreshTimout);
+                    
+                    var keycode = event.keyCode ? event.keyCode : event.which;
+                    if (keycode == 27) {
+                        data.close();
+                    } else if (keycode == 38) {
+                        event.preventDefault();
+                        data.up();
+                    } else if (keycode == 40) {
+                        event.preventDefault();
+                        data.down();
+                    } else if (keycode == 13) {
+                        dont_auto_refresh = true;
+                        
+                        if (data.current != -1) {
+                            var item = data.items[data.current];
+                            
+                            if (item.is_parent_button) {
+                                data.refresh({
+                                    path: '/' + (_ = data.path.split('/')).slice(1, _.length-1).join('/'),
+                                    onFileSelected: parameters.onFileSelected
+                                });
+                            } else {
+                                item.open();
+                            }
+                        }
+                    } else if (keycode == 8) {
+                        data.refresh({
+                            path: '/' + (_ = data.path.split('/')).slice(1, _.length-1).join('/'),
+                            onFileSelected: parameters.onFileSelected
+                        });
+                    }
+                });
+                
+                $fileBrowser_window_box_header_path_input_rI.on('keyup.FileBrowser-' + data.id, function (event) {
+                    var path = $fileBrowser_window_box_header_path_input_rI.val();
+
+                    if (!path.length) {
+                        return;
+                    }
+
+                    if (path != data.path) {
+                        data.current = -1;
+                        $fileBrowser_items_parentBtn.removeClass('FileBrowser_items_item__current');
+                        $fileBrowser_items.find('.FileBrowser_items_item__current').removeClass('FileBrowser_items_item__current');
+                    }
+                    
+                    if (dont_auto_refresh) {
+                        dont_auto_refresh = false;
+                        return;
+                    }
+
+                    dont_auto_refresh = false;
+
+                    clearTimeout(data.pathUpdateRefreshTimout);
+                    data.pathUpdateRefreshTimout = setTimeout(function () {
+                        data.refresh({
+                            path: path,
+                            ignoreNotFound: true,
+                            dontUpdatePathInput: true
+                        });
+                    }, 500);
+                });
+
+                $fileBrowser_window_closeBtn.on('click.FileBrowser-' + data.id, function (event) {
                     data.close();
                 });
 
@@ -192,6 +362,7 @@
                     data.is_opened = true;
 
                     $fileBrowser.fadeIn(data.animation_duration);
+                    $fileBrowser_window_box_header_path_input_rI.focus();
 
                     data.refresh({
                         path: parameters.path,
@@ -205,15 +376,62 @@
                     $fileBrowser.fadeOut(data.animation_duration);
                 };
 
+                data.up = function () {
+                    if (data.current <= 0) {
+                        return;
+                    }
+    
+                    data.select({index: data.current-1});
+                };
+    
+                data.down = function () {
+                    if (data.current >= data.items.length-1) {
+                        return;
+                    }
+    
+                    data.select({index: data.current+1});
+                };
+    
+                data.select = function (parameters) {
+                    var item = data.items[parameters.index];
+                    var prev = data.items[data.current];
+    
+                    if (prev) {
+                        prev.is_selected = false;
+                        prev.$item.removeClass('FileBrowser_items_item__current');
+                    }
+    
+                    if (!item) {
+                        return;
+                    }
+    
+                    data.current = parameters.index;
+    
+                    item.is_selected = true;
+                    item.$item.addClass('FileBrowser_items_item__current');
+    
+                    var scroll_y = $fileBrowser_items.scrollTop();
+                    var height = $fileBrowser_items.innerHeight();
+                    var item_y = scroll_y + item.$item.position().top;
+                    var item_h = item.$item.outerHeight();
+                    var limit = scroll_y+height-item_h;
+    
+                    if (item_y > limit) {
+                        $fileBrowser_items.scrollTop(item_y - (height - item_h));
+                    } else if (item_y < scroll_y) {
+                        $fileBrowser_items.scrollTop(item_y);
+                    }
+                };
+
                 data.toggle = function (parameters) {
                     data[data.is_opened ? 'close': 'open']();
                 };
 
-                $fileBrowser.on('FileBrowser_initialize.FileBrowser', function (event) {
+                $fileBrowser.on('FileBrowser_initialize.FileBrowser-' + data.id, function (event) {
                     data.init();
                 });
 
-                $fileBrowser.on('FileBrowser_comply.FileBrowser', function (event) {
+                $fileBrowser.on('FileBrowser_comply.FileBrowser-' + data.id, function (event) {
                     data.comply();
                 });
 

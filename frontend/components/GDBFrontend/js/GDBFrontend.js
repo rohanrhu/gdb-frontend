@@ -296,7 +296,7 @@
             var last_fileBrowser_path = '/';
 
             GDBFrontend.components.fileBrowser.$fileBrowser.on('FileBrowser_entered_directory.GDBFrontend', function (event, parameters) {
-                last_fileBrowser_path = parameters.directory.path;
+                last_fileBrowser_path = parameters.path;
             });
 
             data.$gdbFrontend_load_loadBtn.on('click.GDBFrontend', function (event) {

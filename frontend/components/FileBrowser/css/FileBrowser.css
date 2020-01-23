@@ -127,6 +127,7 @@
 /* ---------------------- */
 
 .FileBrowser_items {
+    position: relative;
     height: 500px;
     overflow-y: auto;
 }
@@ -165,6 +166,10 @@
     background: rgba(255,255,255,0.1);
 }
 
+.FileBrowser_items_item.FileBrowser_items_item__current {
+    background: rgba(255,255,255,0.2);
+}
+
 .FileBrowser_items_item_location {
     margin-top: 5px;
     color: #8c8c8c;
@@ -178,6 +183,10 @@
 
 .FileBrowser_items_parentBtn:hover {
     background: rgba(255,255,255,0.1);
+}
+
+.FileBrowser_items_parentBtn.FileBrowser_items_item__current {
+    background: rgba(255,255,255,0.2);
 }
 
 /* ---------------------- */
