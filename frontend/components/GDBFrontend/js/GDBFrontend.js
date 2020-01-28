@@ -66,6 +66,10 @@
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
 
+            data.$gdbFrontend_disassemblyComp = $gdbFrontend.find('.GDBFrontend_disassemblyComp');
+            data.$gdbFrontend_disassembly = data.$gdbFrontend_disassemblyComp.find('> .Disassembly');
+            data.gdbFrontend_disassembly = null;
+            
             data.$gdbFrontend_watchesComp = $gdbFrontend.find('.GDBFrontend_watchesComp');
             data.$gdbFrontend_watches = data.$gdbFrontend_watchesComp.find('> .Watches');
             data.gdbFrontend_watches = null;
@@ -372,6 +376,10 @@
                     data.is_terminal_opened = false;
                 }
 
+                data.$gdbFrontend_disassembly.Disassembly();
+                data.gdbFrontend_disassembly = data.$gdbFrontend_disassembly.data('Disassembly');
+                data.components.disassembly = data.gdbFrontend_disassembly;
+                
                 data.$gdbFrontend_watches.Watches();
                 data.gdbFrontend_watches = data.$gdbFrontend_watches.data('Watches');
                 data.components.watches = data.gdbFrontend_watches;
@@ -690,6 +698,17 @@
 
                 data.debug.state = parameters.state;
 
+                if (parameters.state.selected_frame) {
+                    data.gdbFrontend_disassembly.load({
+                        pc: parameters.state.selected_frame.pc,
+                        instructions: parameters.state.selected_frame.disassembly
+                    });
+                } else {
+                    data.gdbFrontend_disassembly.clear();
+                }
+
+                data.gdbFrontend_disassembly.render();
+                
                 data.gdbFrontend_sourceTree.load({files: parameters.state.sources});
                 data.gdbFrontend_sourceTree.render();
 
@@ -879,7 +898,10 @@
 
                 data.debug.breakpoints.forEach(function (_bp, _bp_i) {
                     if (!_bp.file || (_bp.file != editor_file.path)) return true;
-                    data.debug.placeEditorFileBreakpoint({editor_file: editor_file, line: _bp.line});
+
+                    if (_bp.gdb_breakpoint.enabled) {
+                        data.debug.placeEditorFileBreakpoint({editor_file: editor_file, line: _bp.line});
+                    }
                 });
             };
 
@@ -888,7 +910,10 @@
 
                 data.debug.breakpoints.forEach(function (_bp, _bp_i) {
                     if (!_bp.file) return true;
-                    data.debug.placeEditorFileBreakpoint({file: _bp.file, line: _bp.line});
+
+                    if (_bp.gdb_breakpoint.enabled) {
+                        data.debug.placeEditorFileBreakpoint({file: _bp.file, line: _bp.line});
+                    }
                 });
             };
 

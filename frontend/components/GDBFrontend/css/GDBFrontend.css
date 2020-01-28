@@ -318,6 +318,21 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 
 /* ---------------------- */
 
+.GDBFrontend_disassembly {
+
+}
+
+.GDBFrontend_disassembly_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------- */
+
 .GDBFrontend_watches {
 
 }

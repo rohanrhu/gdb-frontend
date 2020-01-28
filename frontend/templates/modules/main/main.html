@@ -43,6 +43,9 @@
     <script type="text/javascript" src="/components/FileBrowser/js/FileBrowser.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/FileBrowser/css/FileBrowser.css" />
 
+    <script type="text/javascript" src="/components/Disassembly/js/Disassembly.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/Disassembly/css/Disassembly.css" />
+    
     <script type="text/javascript" src="/components/Watches/js/Watches.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/Watches/css/Watches.css" />
 
@@ -167,6 +170,14 @@
                 </div>
                 <div class="GDBFrontend_layout_middle_right">
                     <div class="GDBFrontend_layout_middle_right_content">
+                        <div class="GDBFrontend_disassembly">
+                            <div class="GDBFrontend_disassembly_title">
+                                Disassembly
+                            </div>
+                            <div class="GDBFrontend_disassemblyComp">
+                                {html_disassembly}
+                            </div>
+                        </div>
                         <div class="GDBFrontend_watches">
                             <div class="GDBFrontend_watches_title">
                                 Watches

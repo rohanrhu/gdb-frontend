@@ -95,6 +95,7 @@ def run(request, params):
     html_variablesExplorer = util.readFile(util.webFSPath("/components/VariablesExplorer/html/VariablesExplorer.html")).format(**vars())
     html_watches = util.readFile(util.webFSPath("/components/Watches/html/Watches.html")).format(**vars())
     html_fuzzyFinder = util.readFile(util.webFSPath("/components/FuzzyFinder/html/FuzzyFinder.html")).format(**vars())
+    html_disassembly = util.readFile(util.webFSPath("/components/Disassembly/html/Disassembly.html")).format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

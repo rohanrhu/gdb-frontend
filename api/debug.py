@@ -360,6 +360,7 @@ def getState():
                 state["selected_frame"]["function"] = function_name
                 state["selected_frame"]["backtrace"] = backtrace_json
                 state["selected_frame"]["variables"] = variables
+                state["selected_frame"]["disassembly"] = disassembleFrame()
             else:
                 state["selected_frame"] = False
         else:
@@ -757,6 +758,25 @@ def getVariableByExpression(tree, no_error=False):
 
         return None
     return variable
+
+@threadSafe
+def disassemble(start, end):
+    """
+    Returns serializable instructions from start adress to end address.
+    """
+
+    return gdb.selected_frame().architecture().disassemble(start, end)
+
+@threadSafe
+def disassembleFrame():
+    """
+    Returns serializable instructions in selected frame.
+    """
+
+    frame = gdb.selected_frame()
+    block = frame.block()
+
+    return disassemble(block.start, block.end-1)
 
 class Breakpoint(gdb.Breakpoint):
     @threadSafe

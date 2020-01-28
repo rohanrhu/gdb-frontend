@@ -106,22 +106,22 @@ urls = {
     },
     "api-thread-switch": {
         "url": "/api/thread/switch",
-        "match": "^/api/thread/switch",
+        "match": "^/api/thread/switch$",
         "module": "url_modules.api.thread.switch"
     },
     "api-stack-trace": {
         "url": "/api/stack/trace",
-        "match": "^/api/stack/trace",
+        "match": "^/api/stack/trace$",
         "module": "url_modules.api.stack.trace"
     },
     "api-stack-switch": {
         "url": "/api/stack/switch",
-        "match": "^/api/stack/switch",
+        "match": "^/api/stack/switch$",
         "module": "url_modules.api.stack.switch"
     },
     "api-frame-variable": {
         "url": "/api/frame/variable",
-        "match": "^/api/frame/variable",
+        "match": "^/api/frame/variable$",
         "module": "url_modules.api.frame.variable"
     },
     "api-load": {
@@ -131,7 +131,17 @@ urls = {
     },
     "api-connect": {
         "url": "/api/connect",
-        "match": "^/api/connect",
+        "match": "^/api/connect$",
         "module": "url_modules.api.connect"
     },
+    "api-disassemble": {
+        "url": "/api/disassemble",
+        "match": "^/api/disassemble$",
+        "module": "url_modules.api.disassemble"
+    },
+    "api-disassemble-frame": {
+        "url": "/api/disassemble-frame",
+        "match": "^/api/disassemble-frame$",
+        "module": "url_modules.api.disassemble_frame"
+    }
 }
