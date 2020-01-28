@@ -180,7 +180,23 @@
     height: 100%;
 }
 
+.FileTabs_editors_items_item_ace .ace_gutter-cell {
+    cursor: pointer;
+}
+
 .FileTabs_editors_items_item_ace .ace_gutter-cell.ace_breakpoint {
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell:hover::after {
+    content: ' ';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 4px;
+    top: 2px;
+    background: #ff4c4c;
+    border-radius: 100%;
+    opacity: 0.5;
 }
 
 .FileTabs_editors_items_item_ace .ace_gutter-cell.ace_breakpoint::after {
@@ -192,6 +208,7 @@
     top: 2px;
     background: #ff4c4c;
     border-radius: 100%;
+    opacity: 1;
 }
 
 .FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__stopped {

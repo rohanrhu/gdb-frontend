@@ -21,6 +21,7 @@ def verbose(*text):
         return
         
     print("[GDBFrontend]", *text)
+    sys.stdout.flush()
 
 def gdbPath(path):
     return os.path.realpath(os.path.join(config.gdb_path, path.replace("..", "").lstrip("/")))

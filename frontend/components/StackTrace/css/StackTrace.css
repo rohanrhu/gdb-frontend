@@ -82,11 +82,10 @@
 }
 
 .StackTrace_items_item.StackTrace__current {
-    background: rgba(0, 45, 170, 0.5);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .StackTrace_items_item_num_val {
-    font-weight: bold;
 }
 
 .StackTrace_items_item_name {

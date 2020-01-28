@@ -1,13 +1,12 @@
 # [![GDBFrontend Website](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
 GDBFrontend is an easy, flexible and extensionable gui debugger.
 
-[![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/releases)
-[![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/issues)
+[![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&color=informational)](https://github.com/rohanrhu/gdb-frontend/releases)
+[![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
 [![GitHub forks](https://img.shields.io/github/forks/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/network)
 [![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
-[![GitHub license](https://img.shields.io/github/license/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/blob/master/LICENSE)
-[![Donate](http://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square)](https://liberapay.com/EvrenselKisilik/donate)
-[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Foguzhaneroglu.com%2Fprojects%2Fgdb-frontend%2F)](https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fgithub.com%2Frohanrhu%2Fgdb-frontend)
+[![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg?style=flat-square&logo=gitter)](https://gitter.im/gdb-frontend/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Donate](https://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square&color=green)](https://liberapay.com/EvrenselKisilik/donate)
 
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss2.png "gdb-frontend")
 
@@ -120,14 +119,14 @@ You can add break point a line and step it once, then you will see sources from 
 ## Windows
 In fact, gdb-frontend is able to run on Windows but there are some serious issues in the GDB's Windows version those avoid using gdb-frontend on Windows. Of course you can use gdb-frontend on WSL if you are using Windows 10.
 
-## WSL
-You can use gdb-frontend on WSL (Windows Subsystem for Linux).
-
 ### Issues about Windows-GDB
 
 * GDB's main-thread is being blocked during running process. (gdb-frontend has an interrupting mechanism to fixing this but it is not enough yet.)
 * Windows-GDB's prompt is being blocked during running process and there are some issues about interrupting the application.
 * Current release of Windows-GDB contains Python2. New GDB have Python3 but it is not released yet.
+
+## WSL
+You can use gdb-frontend on WSL (Windows Subsystem for Linux).
 
 ## Documentation
 Documentation is TODO yet.

@@ -91,7 +91,7 @@
                     }
                 }
                 
-                members.forEach(function (variable, variable_i) {
+                members.every(function (variable, variable_i) {
                     var item = {};
                     item.parent = parameters.parent ? parameters.parent: false;
                     item.variable = variable;
@@ -128,6 +128,8 @@
                     } else {
                         parameters.parent.items.push(item);
                     }
+
+                    return true;
                 });
             };
 
@@ -138,15 +140,17 @@
 
                 (parameters.item ? parameters.item.$item_openable_items: data.$variablesExplorer_items)
                 .find('.VariablesExplorer_items_item:not(.__proto)').remove();
-
+                
                 var is_there_ptr = false;
 
                 (parameters.item ? parameters.item.items: data.items)
-                .forEach(function (item, item_i) {
+                .every(function (item, item_i) {
                     (parameters.item ? parameters.item: data)
                     .add({
                         item: item
                     });
+
+                    return true;
                 });
 
                 if (!is_there_ptr) {
@@ -346,8 +350,9 @@
                 item.kvKey = function (key) {
                     var tree = [];
 
-                    item.tree.forEach(function (_item, _item_i) {
+                    item.tree.every(function (_item, _item_i) {
                         tree.push(_item.variable.name);
+                        return true;
                     });
 
                     tree = tree.join(":");

@@ -135,7 +135,7 @@
 
                 $sourceTree_items.find('.SourceTree_items_item:not(.__proto)').remove();
 
-                var _put = function (files, $items) {
+                var _put = function (files, $items, level) {
                     files.forEach(function (_file, _file_i) {
                         if (_file[$.fn.SourceTree.TREE_ITEM_NAME] == '<built-in>') {
                             return true;
@@ -145,13 +145,20 @@
                         $item.removeClass('__proto');
                         $item.appendTo($items);
 
+                        var $item_button = $item.find('.SourceTree_items_item_button');
+                        var $item_button_indent = $item.find('.SourceTree_items_item_button_indent');
                         var $item_items = $item.find('.SourceTree_items_item_items');
+                        var $item_line = $item.find('.SourceTree_items_item_line');
 
                         var item = {};
                         _file[$.fn.SourceTree.TREE_ITEM_ITEM] = item;
                         item.file = _file;
                         item.$item = $item;
+                        item.$item_button_indent = $item_button_indent;
+                        item.$item_button = $item_button;
+                        item.$item_button_indent = $item_button_indent;
                         item.$item_items = $item_items;
+                        item.$item_line = $item_line;
                         item.$item_name = $item.find('.SourceTree_items_item_name');
                         item.is_opened = false;
 
@@ -161,6 +168,9 @@
                             item.$item.addClass('SourceTree__opened');
                             item.$item.trigger('SourceTree_opened');
 
+                            item.$item_line.css('left', item.$item_button_indent.width());
+                            // item.$item_line.height();
+                            
                             $.fn.SourceTree.saveItemState({
                                 path: item.file[$.fn.SourceTree.TREE_ITEM_PATH],
                                 state: {
@@ -187,6 +197,8 @@
                             item[item.is_opened ? 'close': 'open']();
                         };
 
+                        item.$item_button_indent.width(level*10);
+                        
                         $item_items.hide();
 
                         item.$item_name.html(_file[$.fn.SourceTree.TREE_ITEM_NAME]);
@@ -215,11 +227,11 @@
                             }
                         });
 
-                        _put(_file[$.fn.SourceTree.TREE_ITEM_ITEMS], $item_items);
+                        _put(_file[$.fn.SourceTree.TREE_ITEM_ITEMS], $item_items, level+1);
                     });
                 };
 
-                _put(data.files, $sourceTree_items);
+                _put(data.files, $sourceTree_items, 0);
 
                 $sourceTree.trigger('SourceTree_rendered');
             };

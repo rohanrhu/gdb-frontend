@@ -63,7 +63,14 @@
 
                 var is_first_refresh = true;
                 var dont_auto_refresh = false;
+                var prev_path = false;
 
+                data.clearSelected = function () {
+                    data.current = -1;
+                    $fileBrowser_items_parentBtn.removeClass('FileBrowser_items_item__current');
+                    $fileBrowser_items.find('.FileBrowser_items_item__current').removeClass('FileBrowser_items_item__current');
+                };
+                
                 data.refresh = function (parameters) {
                     if (parameters === undefined) {
                         parameters = {};
@@ -83,11 +90,7 @@
                     }
 
                     is_first_refresh = false;
-
                     data.is_passive = true;
-                    data.current = -1;
-
-                    $fileBrowser_items_parentBtn.removeClass('FileBrowser_items_item__current');
 
                     $.ajax({
                         url: '/api/fs/list',
@@ -195,6 +198,8 @@
                                 });
                             }
 
+                            data.clearSelected();
+                            
                             $fileBrowser.find('.FileBrowser_items_item:not(.__proto)').remove();
 
                             result_json.files.forEach(function (_file, _file_i) {
@@ -239,7 +244,12 @@
                     var keycode = event.keyCode ? event.keyCode : event.which;
                     if (keycode == 27) {
                         event.stopPropagation();
-                        data.close();
+
+                        if (data.current > -1) {
+                            data.clearSelected();
+                        } else {
+                            data.close();
+                        }
                     } else if (keycode == 38) {
                         event.stopPropagation();
                         event.preventDefault();
@@ -290,7 +300,11 @@
                     
                     var keycode = event.keyCode ? event.keyCode : event.which;
                     if (keycode == 27) {
-                        data.close();
+                        if (data.current > -1) {
+                            data.clearSelected();
+                        } else {
+                            data.close();
+                        }
                     } else if (keycode == 38) {
                         event.preventDefault();
                         data.up();
@@ -323,23 +337,25 @@
                 $fileBrowser_window_box_header_path_input_rI.on('keyup.FileBrowser-' + data.id, function (event) {
                     var path = $fileBrowser_window_box_header_path_input_rI.val();
 
+                    if (path == prev_path) {
+                        return;
+                    }
+
+                    prev_path = path;
+
                     if (!path.length) {
                         return;
                     }
 
-                    if (path != data.path) {
-                        data.current = -1;
-                        $fileBrowser_items_parentBtn.removeClass('FileBrowser_items_item__current');
-                        $fileBrowser_items.find('.FileBrowser_items_item__current').removeClass('FileBrowser_items_item__current');
+                    if (path == data.path) {
+                        return;
                     }
-                    
+
                     if (dont_auto_refresh) {
                         dont_auto_refresh = false;
                         return;
                     }
-
-                    dont_auto_refresh = false;
-
+                    
                     clearTimeout(data.pathUpdateRefreshTimout);
                     data.pathUpdateRefreshTimout = setTimeout(function () {
                         data.refresh({

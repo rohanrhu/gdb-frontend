@@ -32,7 +32,7 @@ GDBFrontend.GUI_MODE_GUI = 3;
 GDBFrontend.gui_mode = 0;
 
 GDBFrontend.components = {};
-GDBFrontend.is_verbose = true;
+GDBFrontend.is_verbose = false;
 
 /*
  * Backend loaded plugins.
