@@ -172,8 +172,27 @@
 }
 
 .FileTabs_editors_items_item {
+    position: relative;
     display: none;
     height: 100%;
+}
+
+.FileTabs_editors_items_item_variablePopup {
+    position: absolute;
+    z-index: 2000;
+    min-width: 300px;
+    max-width: 400px;
+    max-height: 250px;
+    overflow-y: auto;
+    line-height: 20px;
+    padding: 5px;
+    background: rgb(0, 20, 46);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+.FileTabs_editors_items_item_variablePopup:focus {
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .FileTabs_editors_items_item_ace {

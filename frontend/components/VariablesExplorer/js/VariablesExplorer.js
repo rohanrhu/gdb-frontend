@@ -45,6 +45,8 @@
             $variablesExplorer.data('VariablesExplorer', data);
             data.$variablesExplorer = $variablesExplorer;
 
+            data.id = ++$.fn.VariablesExplorer.id_i;
+
             data.$variablesExplorer_content = $variablesExplorer.find('.VariablesExplorer_content');
             data.$variablesExplorer_items = $variablesExplorer.find('.VariablesExplorer_items');
             data.$VariablesExplorer_items_item__proto = data.$variablesExplorer_items.find('.VariablesExplorer_items_item.__proto');
@@ -57,6 +59,7 @@
             data.currents = {};
             data.modifieds = {};
             data.scroll = {x: 0, y: 0};
+            data.mark_changes = true;
 
             data.setLocation = function (location) {
                 data.location = location;
@@ -234,7 +237,9 @@
                 item.$item_button_name.html(item.variable.name);
                 item.$item_button_value.html(item.variable.value);
 
-                if (item.variable.type.terminal.code == $.fn.VariablesExplorer.TYPE_CODE_STRUCT) {
+                if (item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_FUNC) {
+                    item.$item_button_preType.html('function');
+                } else if (item.variable.type.terminal.code == $.fn.VariablesExplorer.TYPE_CODE_STRUCT) {
                     item.$item_button_preType.html('struct');
                     item.$item_button_isNotPointer.hide();
                 } else if (item.variable.type.terminal.code == $.fn.VariablesExplorer.TYPE_CODE_UNION) {
@@ -267,6 +272,7 @@
                         (data.modifieds[item.expression].line == data.location.line)
                     )
                 ) {
+                    data.mark_changes &&
                     item.$item.addClass('VariablesExplorer__changed');
                     data.modifieds[item.expression] = {file: data.location.file, line: data.location.line};
                 }
@@ -357,7 +363,10 @@
 
                     tree = tree.join(":");
 
-                    return $.fn.VariablesExplorer.kvKey('item:'+tree+':'+key);
+                    return $.fn.VariablesExplorer.kvKey({
+                        data: data,
+                        key: 'item:'+tree+':'+key
+                    });
                 };
 
                 item.saveState = function (parameters) {
@@ -407,7 +416,7 @@
                     });
                 };
 
-                item.$item_button.on('click.VariablesExplorer', function (event) {
+                item.$item_button.on('click.VariablesExplorer.'+data.id, function (event) {
                     item.expand();
                 });
 
@@ -426,7 +435,7 @@
                 }
             };
 
-            data.$variablesExplorer_content.on('mousewheel.VariablesExplorer', function (event) {
+            data.$variablesExplorer_content.on('mousewheel.VariablesExplorer.'+data.id, function (event) {
                 setTimeout(function () {
                     var scroll_x = data.$variablesExplorer_content.scrollLeft();
                     var scroll_y = data.$variablesExplorer_content.scrollTop();
@@ -436,11 +445,11 @@
                 }, 500);
             });
 
-            $variablesExplorer.on('VariablesExplorer_initialize.VariablesExplorer', function (event) {
+            $variablesExplorer.on('VariablesExplorer_initialize.VariablesExplorer.'+data.id, function (event) {
                 data.init();
             });
 
-            $variablesExplorer.on('VariablesExplorer_comply.VariablesExplorer', function (event) {
+            $variablesExplorer.on('VariablesExplorer_comply.VariablesExplorer.'+data.id, function (event) {
                 data.comply();
             });
 
@@ -465,10 +474,12 @@
         }
     };
 
-    $.fn.VariablesExplorer.kvKey = function (key) {
-        return 'VariablesExplorer:'+key;
+    $.fn.VariablesExplorer.kvKey = function (parameters) {
+        return 'VariablesExplorer-'+parameters.data.id+':'+parameters.key;
     };
 
+    $.fn.VariablesExplorer.id_i = 0;
+    
     $.fn.VariablesExplorer.TYPE_CODE_STRUCT = 3;
     $.fn.VariablesExplorer.TYPE_CODE_UNION = 4;
     $.fn.VariablesExplorer.TYPE_CODE_FUNC = 7;

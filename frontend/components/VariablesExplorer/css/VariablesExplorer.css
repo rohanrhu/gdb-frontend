@@ -165,6 +165,7 @@
 
 .VariablesExplorer_items_item_button_value {
     flex: 0 0;
+    flex-grow: 1;
     display: flex;
     align-items: center;
     padding: 0px 5px;

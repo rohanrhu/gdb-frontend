@@ -104,6 +104,9 @@
                 file.path = parameters.file.path;
                 file.breakpoints = [];
                 file.stopped_line = 0;
+                file.tokenMouseoverTimeout = 0;
+                file.tokenMouseoutTimeout = 0;
+                file.currentHoveredToken = null;
 
                 if (parameters.file.name === undefined) {
                     file.name = pathFileName(parameters.file.path);
@@ -121,11 +124,11 @@
 
                 file.$tab_fileName.html(file.name);
 
-                file.$tab_closeBtn.on('click.FileTabs', function (event) {
+                file.$tab_closeBtn.on('click.FileTabs'+data.id, function (event) {
                     data.closeFile({file: file});
                 });
 
-                file.$tab_fileName.on('click.FileTabs', function (event) {
+                file.$tab_fileName.on('click.FileTabs'+data.id, function (event) {
                     data.switchFile({file: file});
                 });
 
@@ -138,11 +141,11 @@
                     file.$tab_pathTooltip.find('.FileTabs_tabs_items_item_pathTooltip_path').html(file.path);
                     file.$tab_pathTooltip.appendTo($('body'));
 
-                    file.$tab_pathTooltip.find('.FileTabs_tabs_items_item_pathTooltip_copyBtn').on('click.FileTabs', function (event) {
+                    file.$tab_pathTooltip.find('.FileTabs_tabs_items_item_pathTooltip_copyBtn').on('click.FileTabs'+data.id, function (event) {
                         GDBFrontend.copyToClipboard(file.path);
                     });
 
-                    file.$tab.on('mouseover.FileTabs', function (event) {
+                    file.$tab.on('mouseover.FileTabs'+data.id, function (event) {
                         clearTimeout(file.tab_pathTooltip_hover_timeout);
                         file.tab_pathTooltip_hover_timeout = setTimeout(function () {
                             file.$tab_pathTooltip.show();
@@ -158,18 +161,18 @@
                         }, file.tab_pathTooltip_hover_delay);
                     });
 
-                    file.$tab.on('mouseout.FileTabs', function (event) {
+                    file.$tab.on('mouseout.FileTabs'+data.id, function (event) {
                         clearTimeout(file.tab_pathTooltip_hover_timeout);
                         file.tab_pathTooltip_hover_timeout = setTimeout(function () {
                             file.$tab_pathTooltip.hide();
                         }, file.tab_pathTooltip_hover_delay/2);
                     });
 
-                    file.$tab_pathTooltip.on('mouseover.FileTabs', function (event) {
+                    file.$tab_pathTooltip.on('mouseover.FileTabs'+data.id, function (event) {
                         clearTimeout(file.tab_pathTooltip_hover_timeout);
                     });
 
-                    file.$tab_pathTooltip.on('mouseout.FileTabs', function (event) {
+                    file.$tab_pathTooltip.on('mouseout.FileTabs'+data.id, function (event) {
                         clearTimeout(file.tab_pathTooltip_hover_timeout);
                         file.tab_pathTooltip_hover_timeout = setTimeout(function () {
                             file.$tab_pathTooltip.hide();
@@ -180,6 +183,73 @@
                 file.$editor = $fileTabs_editors_items_item__proto.clone();
                 file.$editor.removeClass('__proto');
                 file.$editor.appendTo($fileTabs_editors_items);
+
+                file.$variablePopup = file.$editor.find('.FileTabs_editors_items_item_variablePopup');
+                file.$variablePopup_variablesExplorerComp = file.$variablePopup.find('.FileTabs_editors_items_item_variablePopup_variablesExplorerComp');
+                file.$variablePopup_variablesExplorer = file.$variablePopup_variablesExplorerComp.find('> .VariablesExplorer');
+                file.$variablePopup_variablesExplorer.VariablesExplorer();
+                file.$variablePopup_variablesExplorer.data().VariablesExplorer.mark_changes = false;
+
+                file.$variablePopup_variablesExplorer.on('VariablesExplorer_item_toggle.GDBFrontend', function (event, parameters) {
+                    if (parameters.item.is_opened) {
+                        parameters.item.close();
+                        return;
+                    }
+    
+                    parameters.item.setLoading(true);
+    
+                    var tree = [];
+    
+                    parameters.item.tree.forEach(function (_member, _member_i) {
+                        tree.push(_member.variable.name);
+                    });
+    
+                    var qs = {
+                        variable: parameters.item.variable.name
+                    };
+    
+                    if (tree.length > 1) {
+                        qs['expression'] = tree.join('.');
+                    }
+    
+                    $.ajax({
+                        url: '/api/frame/variable',
+                        cache: false,
+                        method: 'get',
+                        data: qs,
+                        success: function (result_json) {
+                            if (!result_json.ok) {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
+    
+                                parameters.item.setLoading(false);
+    
+                                return;
+                            }
+    
+                            parameters.item.load({
+                                members: result_json.variable.members
+                            });
+    
+                            parameters.item.render();
+                            parameters.item.open({is_preload: parameters.is_preload});
+                            parameters.item.setLoading(false);
+
+                            var bottom_y = file.$variablePopup.offset().top + file.$variablePopup.outerHeight();
+                            var editor_bottom_y = file.$editor.offset().top + file.$editor.outerHeight();
+                            
+                            if (bottom_y > editor_bottom_y) {
+                                file.$variablePopup.css('top', file.$variablePopup.position().top - file.$variablePopup.outerHeight() - 24);
+                            }
+                        },
+                        error: function () {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+    
+                            parameters.item.setLoading(false);
+                        }
+                    });
+                });
 
                 file.$editor_ace = file.$editor.find('.FileTabs_editors_items_item_ace');
 
@@ -218,6 +288,117 @@
                         line: event.getDocumentPosition().row+1
                     });
                 });
+                
+                $('body').on('click.'+data.id, function (event) {
+                    clearTimeout(file.tokenMouseoverTimeout);
+                    clearTimeout(file.tokenMouseoutTimeout);
+                    file.closeVariablePopup();
+                });
+                
+                file.$variablePopup.on('click.'+data.id, function (event) {
+                    event.stopImmediatePropagation();
+                });
+
+                $('body').on('keydown.FileTabs-'+data.id, function (event) {
+                    clearTimeout(file.tokenMouseoverTimeout);
+                    clearTimeout(file.tokenMouseoutTimeout);
+                    
+                    var keycode = event.keyCode ? event.keyCode : event.which;
+                    if (keycode == 27) {
+                        file.closeVariablePopup();
+                    }
+                });
+                
+                file.$variablePopup.on('mouseover.'+data.id, function (event) {
+                    event.stopImmediatePropagation();
+                    clearTimeout(file.tokenMouseoverTimeout);
+                    clearTimeout(file.tokenMouseoutTimeout);
+                });
+
+                file.$variablePopup.on('mouseout.'+data.id, function (event) {
+                    event.stopImmediatePropagation();
+                    file.tokenMouseoutTimeout = setTimeout(function () {
+                        file.closeVariablePopup();
+                    }, 500);
+                });
+                
+                file.ace.on('mousemove', function (event) {
+                    clearTimeout(file.tokenMouseoverTimeout);
+                    clearTimeout(file.tokenMouseoutTimeout);
+
+                    var position = event.getDocumentPosition();
+                    var token = file.ace.session.getTokenAt(position.row, position.column);
+                    var pixel_position = file.ace.renderer.$cursorLayer.getPixelPosition(position, true);
+                    
+                    file.tokenMouseoutTimeout = setTimeout(function () {
+                        file.closeVariablePopup();
+                    }, 500);
+                    
+                    if (!token || (token.type != 'identifier')) {
+                        return;
+                    }
+                    
+                    file.currentHoveredToken = token;
+                    
+                    file.tokenMouseoverTimeout = setTimeout(function () {
+                        $.ajax({
+                            url: '/api/frame/variable',
+                            cache: false,
+                            method: 'get',
+                            data: {
+                                expression: token.value
+                            },
+                            success: function (result_json) {
+                                if (!result_json.ok) {
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                    console.trace('An error occured.');
+                                    file.closeVariablePopup();
+                                    return;
+                                }
+    
+                                if (!result_json.variable) {
+                                    file.closeVariablePopup();
+                                    return;
+                                }
+    
+                                file.openVariablePopup({
+                                    variable: result_json.variable,
+                                    position: pixel_position
+                                });
+                            },
+                            error: function () {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
+                            }
+                        });
+                    }, 500);
+                });
+
+                file.openVariablePopup = function (parameters) {
+                    var x = parameters.position.left-10;
+                    var y = parameters.position.top+12;
+                    
+                    file.$variablePopup.css({
+                        left: x,
+                        top: y
+                    });
+
+                    file.$variablePopup.show();
+                    
+                    file.$variablePopup_variablesExplorer.data().VariablesExplorer.load({variables: [parameters.variable]});
+                    file.$variablePopup_variablesExplorer.data().VariablesExplorer.render();
+
+                    var bottom_y = file.$variablePopup.offset().top + file.$variablePopup.outerHeight();
+                    var editor_bottom_y = file.$editor.offset().top + file.$editor.outerHeight();
+                    
+                    if (bottom_y > editor_bottom_y) {
+                    }
+                };
+
+                file.closeVariablePopup = function () {
+                    file.currentHoveredToken = null;
+                    file.$variablePopup.hide();
+                };
 
                 file.getBreakpoint = function (parameters) {
                     var bp = false;
@@ -460,11 +641,11 @@
                 };
             };
 
-            $fileTabs.on('FileTabs_initialize.FileTabs', function (event) {
+            $fileTabs.on('FileTabs_initialize.FileTabs'+data.id, function (event) {
                 data.init();
             });
 
-            $fileTabs.on('FileTabs_comply.FileTabs', function (event) {
+            $fileTabs.on('FileTabs_comply.FileTabs'+data.id, function (event) {
                 data.comply();
             });
 
