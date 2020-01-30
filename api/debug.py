@@ -152,13 +152,15 @@ def getState():
     state["sources"] = getSources()
 
     try:
-        current_loc = gdb.decode_line()
-        current_symbol = current_loc[1][0]
+        current_frame = gdb.selected_frame()
+        sal = current_frame.find_sal()
+        symtab = sal.symtab
+        
         state["current_location"] = {}
-        state["current_location"]["file"] = current_symbol.symtab.fullname().replace("\\", "/")
-        state["current_location"]["line"] = current_symbol.line
-    except gdb.error as e:
-        pass
+        state["current_location"]["file"] = symtab.fullname().replace("\\", "/")
+        state["current_location"]["line"] = sal.line
+    except Exception as e:
+        state["current_location"] = False
 
     inferior = gdb.selected_inferior()
     threads = inferior.threads()

@@ -554,6 +554,10 @@
                 data.debug.setState({state: message.state, reload_files: true});
             });
 
+            $gdbFrontend.on('GDBFrontend_debug_clear_objfiles.GDBFrontend', function (event, message) {
+                data.debug.setState({state: message.state, reload_files: true});
+            });
+
             $gdbFrontend.on('GDBFrontend_debug_get_sources_return.GDBFrontend', function (event, message) {
                 data.gdbFrontend_sourceTree.load({files: message.state.sources});
                 data.gdbFrontend_sourceTree.render();
@@ -583,6 +587,7 @@
                         } else if (!result_json.ok) {
                             GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace('An error occured.');
+                            return;
                         }
 
                         var file = data.gdbFrontend_fileTabs.openFile({
@@ -640,6 +645,7 @@
                         } else if (!result_json.ok) {
                             GDBFrontend.showMessageBox({text: 'An error occured.'});
                             console.trace('An error occured.');
+                            return;
                         }
 
                         var file = data.gdbFrontend_fileTabs.openFile({
@@ -694,6 +700,10 @@
             };
 
             data.debug.setState = function (parameters) {
+                if (!parameters.state) {
+                    return;
+                }
+                
                 var setState_parameters = parameters;
 
                 data.debug.state = parameters.state;
@@ -772,6 +782,7 @@
                     };
 
                     if (!editor_file) {
+                        parameters.state.current_location &&
                         $.ajax({
                             url: '/api/fs/read',
                             cache: false,
@@ -796,6 +807,7 @@
                                 } else if (!result_json.ok) {
                                     GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
+                                    return;
                                 }
 
                                 var file = data.gdbFrontend_fileTabs.openFile({
@@ -999,6 +1011,7 @@
                             } else if (!result_json.ok) {
                                 GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
+                                return;
                             }
 
                             var file = data.gdbFrontend_fileTabs.openFile({
@@ -1096,6 +1109,7 @@
                                         } else if (!result_json.ok) {
                                             GDBFrontend.showMessageBox({text: 'An error occured.'});
                                             console.trace('An error occured.');
+                                            return;
                                         }
 
                                         var file = data.gdbFrontend_fileTabs.openFile({

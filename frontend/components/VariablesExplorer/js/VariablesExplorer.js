@@ -416,6 +416,10 @@
                     });
                 };
 
+                item.$item_button_value.on('click.VariablesExplorer-'+data.id, function (event) {
+                    event.stopPropagation();
+                });
+                
                 item.$item_button.on('click.VariablesExplorer.'+data.id, function (event) {
                     item.expand();
                 });
@@ -434,7 +438,7 @@
                     }
                 }
             };
-
+            
             data.$variablesExplorer_content.on('mousewheel.VariablesExplorer.'+data.id, function (event) {
                 setTimeout(function () {
                     var scroll_x = data.$variablesExplorer_content.scrollLeft();

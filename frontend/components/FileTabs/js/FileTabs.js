@@ -289,13 +289,13 @@
                     });
                 });
                 
-                $('body').on('click.'+data.id, function (event) {
+                $('body').on('click.FileTabs-'+data.id, function (event) {
                     clearTimeout(file.tokenMouseoverTimeout);
                     clearTimeout(file.tokenMouseoutTimeout);
                     file.closeVariablePopup();
                 });
                 
-                file.$variablePopup.on('click.'+data.id, function (event) {
+                file.$variablePopup.on('click.FileTabs-'+data.id, function (event) {
                     event.stopImmediatePropagation();
                 });
 
@@ -309,13 +309,13 @@
                     }
                 });
                 
-                file.$variablePopup.on('mouseover.'+data.id, function (event) {
+                file.$variablePopup.on('mouseover.FileTabs-'+data.id, function (event) {
                     event.stopImmediatePropagation();
                     clearTimeout(file.tokenMouseoverTimeout);
                     clearTimeout(file.tokenMouseoutTimeout);
                 });
 
-                file.$variablePopup.on('mouseout.'+data.id, function (event) {
+                file.$variablePopup.on('mouseout.FileTabs-'+data.id, function (event) {
                     event.stopImmediatePropagation();
                     file.tokenMouseoutTimeout = setTimeout(function () {
                         file.closeVariablePopup();
@@ -323,6 +323,10 @@
                 });
                 
                 file.ace.on('mousemove', function (event) {
+                    if (!GDBFrontend.components.gdbFrontend.debug.state.selected_frame) {
+                        return;
+                    }
+                    
                     clearTimeout(file.tokenMouseoverTimeout);
                     clearTimeout(file.tokenMouseoutTimeout);
 

@@ -95,6 +95,7 @@
     width: 1px;
     height: 100%;
     background: rgba(255,255,255, 0.1);
+    margin-left: 10px;
 }
 
 .SourceTree_items_item_sub:hover .SourceTree_items_item_line {
@@ -106,6 +107,7 @@
     flex-direction: row;
     min-height: 28px;
     align-items: center;
+    padding: 0px 10px;
 }
 
 .SourceTree_items_item_button_indent {
