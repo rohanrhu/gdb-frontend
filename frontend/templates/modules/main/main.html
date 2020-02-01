@@ -72,6 +72,9 @@
 
     <script type="text/javascript" src="/components/FuzzyFinder/js/FuzzyFinder.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/FuzzyFinder/css/FuzzyFinder.css" />
+    
+    <script type="text/javascript" src="/components/Resizable/js/Resizable.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/Resizable/css/Resizable.css" />
 
     <link rel="stylesheet" type="text/css" href="/css/override.css" />
 
@@ -79,53 +82,49 @@
         <div class="GDBFrontend_layout">
             <div class="GDBFrontend_layout_top">
                 <div class="GDBFrontend_layout_top_left">
-                    <div class="table">
-                        <div class="table_td">
-                            <div class="GDBFrontend_layout_top_logo">
-                                <img class="GDBFrontend_layout_top_logo_img" src="/images/bug.png" alt="GDBFrontend" draggable="false" />
+                    <div class="GDBFrontend_layout_top_logo">
+                        <img class="GDBFrontend_layout_top_logo_img" src="/images/bug.png" alt="GDBFrontend" draggable="false" />
+                    </div>
+                    <div class="GDBFrontend_mainMenu">
+                        <div class="GDBFrontend_load">
+                            <div class="GDBFrontend_load_loadBtn button1">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/add-file.png" alt="" draggable="false" />
+                                Load File
                             </div>
-                            <div class="GDBFrontend_mainMenu">
-                                <div class="GDBFrontend_load">
-                                    <div class="GDBFrontend_load_loadBtn button1">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/add-file.png" alt="" draggable="false" />
-                                        Load File
-                                    </div>
-                                    <div class="GDBFrontend_load_connectBtn">
-                                        <div class="GDBFrontend_load_connectBtn_box button1">
-                                            <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/connect.png" alt="" draggable="false" />
-                                            Connect
-                                        </div>
-                                        <div class="GDBFrontend_load_connectBtn_openable">
-                                            <input class="GDBFrontend_load_connectBtn_openable_addressInput input1" placeholder="127.0.0.1:2345" />
-                                            <div class="GDBFrontend_load_connectBtn_openable_connectBtn button1">
-                                                Connect
-                                            </div>
-                                        </div>
+                            <div class="GDBFrontend_load_connectBtn">
+                                <div class="GDBFrontend_load_connectBtn_box button1">
+                                    <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/connect.png" alt="" draggable="false" />
+                                    Connect
+                                </div>
+                                <div class="GDBFrontend_load_connectBtn_openable">
+                                    <input class="GDBFrontend_load_connectBtn_openable_addressInput input1" placeholder="127.0.0.1:2345" />
+                                    <div class="GDBFrontend_load_connectBtn_openable_connectBtn button1">
+                                        Connect
                                     </div>
                                 </div>
-                                <div class="GDBFrontend_runtimeControls">
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__run">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/start.png" alt="" draggable="false" />
-                                    </div>
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__continue">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/resume.png" alt="" draggable="false" />
-                                    </div>
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__pause">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/pause.png" alt="" draggable="false" />
-                                    </div>
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__n">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-over.png" alt="" draggable="false" />
-                                    </div>
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__s">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-into.png" alt="" draggable="false" />
-                                    </div>
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__si">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-instruction.png" alt="" draggable="false" />
-                                    </div>
-                                    <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__t">
-                                        <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/terminate.png" alt="" draggable="false" />
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="GDBFrontend_runtimeControls">
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__run">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/start.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__continue">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/resume.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__pause">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/pause.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__n">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-over.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__s">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-into.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__si">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/step-instruction.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__t">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/terminate.png" alt="" draggable="false" />
                             </div>
                         </div>
                     </div>
@@ -153,7 +152,7 @@
                 <div class="clear"></div>
             </div>
             <div class="GDBFrontend_layout_middle">
-                <div class="GDBFrontend_layout_middle_left">
+                <div class="Resizable Resizable__left GDBFrontend_layout_middle_left">
                     <div class="GDBFrontend_sources">
                         <div class="GDBFrontend_sources_title">
                             Sources
@@ -162,13 +161,16 @@
                             {html_sourceTree}
                         </div>
                     </div>
+                    <div class="Resizable_resizer">
+                        <div draggable="false" class="Resizable_resizer_draggable"></div>
+                    </div>
                 </div>
                 <div class="GDBFrontend_layout_middle_center">
                     <div class="GDBFrontend_fileTabsComp">
                         {html_fileTabs}
                     </div>
                 </div>
-                <div class="GDBFrontend_layout_middle_right">
+                <div class="Resizable Resizable__right GDBFrontend_layout_middle_right">
                     <div class="GDBFrontend_layout_middle_right_content">
                         <div class="GDBFrontend_disassembly">
                             <div class="GDBFrontend_disassembly_title">
@@ -219,9 +221,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="Resizable_resizer">
+                        <div draggable="false" class="Resizable_resizer_draggable"></div>
+                    </div>
                 </div>
             </div>
-            <div class="GDBFrontend_layout_bottom">
+            <div class="Resizable Resizable__top GDBFrontend_layout_bottom">
                 <div class="GDBFrontend_terminal">
                     <div class="GDBFrontend_terminal_terminal">
                     </div>
@@ -229,6 +234,9 @@
                 <div class="GDBFrontend_terminalCloseBtn">
                     <i class="icofont-simple-down"></i>
                     Hide Terminal
+                </div>
+                <div class="Resizable_resizer">
+                    <div draggable="false" class="Resizable_resizer_draggable"></div>
                 </div>
             </div>
             <div class="GDBFrontend_terminalOpenBtn">

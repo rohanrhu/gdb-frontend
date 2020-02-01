@@ -20,7 +20,7 @@
 
 .GDBFrontend_terminal {
     position: relative;
-    height: 200px;
+    height: 100%;
 }
 
 .GDBFrontend_terminal_terminal {
@@ -32,8 +32,8 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background: white;
-    color: rgba(0,0,0,0.7);
+    background: #003f91;
+    color: white;
     text-align: center;
     padding: 5px 10px;
     display: none;
@@ -45,8 +45,8 @@
     position: absolute;
     right: 17px;
     top: 0px;
-    background: white;
-    color: rgba(0,0,0,0.7);
+    background: #003f91;
+    color: white;
     text-align: center;
     padding: 5px 10px;
     display: none;
@@ -158,6 +158,8 @@
 .GDBFrontend_layout_top_left {
     height: 100%;
     float: left;
+    display: flex;
+    align-items: center;
 }
 
 .GDBFrontend_layout_top_right {
@@ -189,14 +191,12 @@
 .GDBFrontend_layout_middle_left {
     font-size: 14px;
     width: 210px;
-    overflow: hidden;
     background: rgba(0,0,0,0.3);
 }
 
 .GDBFrontend_layout_middle_right {
     font-size: 14px;
     width: 300px;
-    overflow: hidden;
     background: rgba(0,0,0,0.3);
     position: relative;
 }
@@ -213,7 +213,7 @@
 .GDBFrontend_layout_bottom {
     position: relative;
     flex-shrink: 0;
-    overflow: hidden;
+    height: 200px;
 }
 
 .GDBFrontend_layout_top_menuBtn {

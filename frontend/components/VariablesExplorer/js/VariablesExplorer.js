@@ -165,6 +165,10 @@
                 data.$variablesExplorer_content.scrollTop(data.scroll.y);
             };
 
+            data.setMaxHeight = function (parameters) {
+                data.$variablesExplorer_content.css('max-height', parameters.max_height);
+            };
+
             data.add = function (parameters) {
                 var item = parameters.item;
 

@@ -31,12 +31,17 @@
             $gdbFrontend.data('GDBFrontend', data);
             data.$gdbFrontend = $gdbFrontend;
 
-            var $gdbFrontend_layout = $gdbFrontend.find('.GDBFrontend_layout');
-            var $gdbFrontend_layout_top = $gdbFrontend.find('.GDBFrontend_layout_top');
-            var $gdbFrontend_layout_left = $gdbFrontend.find('.GDBFrontend_layout_left');
-            var $gdbFrontend_layout_right = $gdbFrontend.find('.GDBFrontend_layout_right');
-            var $gdbFrontend_layout_middle = $gdbFrontend.find('.GDBFrontend_layout_middle');
-            var $gdbFrontend_layout_bottom = $gdbFrontend.find('.GDBFrontend_layout_bottom');
+            data.$gdbFrontend_layout = $gdbFrontend.find('.GDBFrontend_layout');
+
+            data.$gdbFrontend_layout_top = $gdbFrontend.find('.GDBFrontend_layout_top');
+            
+            data.$gdbFrontend_layout_middle = $gdbFrontend.find('.GDBFrontend_layout_middle');
+            data.$gdbFrontend_layout_middle_center = data.$gdbFrontend_layout_middle.find('.GDBFrontend_layout_middle_center');
+            data.$gdbFrontend_layout_middle_left = data.$gdbFrontend_layout_middle.find('.GDBFrontend_layout_middle_left');
+            data.$gdbFrontend_layout_middle_right = data.$gdbFrontend_layout_middle.find('.GDBFrontend_layout_middle_right');
+            data.$gdbFrontend_layout_middle_right_content = data.$gdbFrontend_layout_middle.find('.GDBFrontend_layout_middle_right_content');
+
+            data.$gdbFrontend_layout_bottom = $gdbFrontend.find('.GDBFrontend_layout_bottom');
 
             data.$gdbFrontend_load = $gdbFrontend.find('.GDBFrontend_load');
             data.$gdbFrontend_load_loadBtn = data.$gdbFrontend_load.find('.GDBFrontend_load_loadBtn');
@@ -107,6 +112,7 @@
             data.qWebChannel = false;
 
             data.is_terminal_opened = false;
+            data.layout_middle_right_scroll_top = 0;
 
             data.debug.getBreakpoint = function (parameters) {
                 var bp = false;
@@ -369,12 +375,51 @@
                     $iframe.addClass('GDBFrontend_terminal_iframe');
                     $iframe.appendTo(data.$GDBFrontend_terminal_terminal);
                     $iframe.attr('src', 'http://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.gotty_port);
-                    $gdbFrontend_layout_bottom.show();
+                    data.$gdbFrontend_layout_bottom.show();
                     data.is_terminal_opened = true;
                 } else {
-                    $gdbFrontend_layout_bottom.hide();
+                    data.$gdbFrontend_layout_bottom.hide();
                     data.is_terminal_opened = false;
                 }
+
+                data.$gdbFrontend_layout_middle_left.Resizable();
+                data.$gdbFrontend_layout_middle_right.Resizable();
+                data.$gdbFrontend_layout_bottom.Resizable();
+
+                data.$gdbFrontend_layout_middle_left.on('Resizable_end.GDBFrontend', function (event) {
+                    localStorage.setItem($.fn.GDBFrontend.kvKey('layout_middle_left:width'), data.$gdbFrontend_layout_middle_left.innerWidth());
+                    
+                    data.components.fileTabs.files.every(function (_file, _file_i) {
+                        _file.ace.resize();
+                        return true;
+                    });
+                });
+                
+                data.$gdbFrontend_layout_middle_right.on('Resizable_end.GDBFrontend', function (event) {
+                    localStorage.setItem($.fn.GDBFrontend.kvKey('layout_middle_right:width'), data.$gdbFrontend_layout_middle_right.innerWidth());
+                    
+                    data.components.fileTabs.files.every(function (_file, _file_i) {
+                        _file.ace.resize();
+                        return true;
+                    });
+                });
+
+                data.$gdbFrontend_layout_bottom.on('Resizable_end.GDBFrontend', function (event) {
+                    localStorage.setItem($.fn.GDBFrontend.kvKey('layout_middle_bottom:height'), data.$gdbFrontend_layout_bottom.innerHeight());
+                    
+                    data.components.fileTabs.files.every(function (_file, _file_i) {
+                        _file.ace.resize();
+                        return true;
+                    });
+                });
+
+                var left_width = localStorage.getItem($.fn.GDBFrontend.kvKey('layout_middle_left:width'));
+                var right_width = localStorage.getItem($.fn.GDBFrontend.kvKey('layout_middle_right:width'));
+                var bottom_height = localStorage.getItem($.fn.GDBFrontend.kvKey('layout_middle_bottom:height'));
+
+                data.$gdbFrontend_layout_middle_left.width(left_width);
+                data.$gdbFrontend_layout_middle_right.width(right_width);
+                data.$gdbFrontend_layout_bottom.height(bottom_height);
 
                 data.$gdbFrontend_disassembly.Disassembly();
                 data.gdbFrontend_disassembly = data.$gdbFrontend_disassembly.data('Disassembly');
@@ -487,38 +532,44 @@
             };
 
             data.debug.setWatches = function () {
-                data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
-                    if (_watch.is_adder) {
-                        return true;
-                    }
+                new Promise(function (resolve) {
+                    data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
+                        if (_watch.is_adder) {
+                            return true;
+                        }
 
-                    $.ajax({
-                        url: '/api/frame/variable',
-                        cache: false,
-                        method: 'get',
-                        data: {
-                            expression: _watch.expression
-                        },
-                        success: function (result_json) {
-                            if (!result_json.ok) {
+                        $.ajax({
+                            url: '/api/frame/variable',
+                            cache: false,
+                            method: 'get',
+                            data: {
+                                expression: _watch.expression
+                            },
+                            success: function (result_json) {
+                                if (!result_json.ok) {
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                    console.trace('An error occured.');
+                                    resolve();
+                                    return;
+                                }
+
+                                if (result_json.variable) {
+                                    _watch.setValue({value: result_json.variable.value});
+                                } else {
+                                    _watch.setValue({value: ''});
+                                }
+
+                                resolve();
+                            },
+                            error: function () {
                                 GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
-                                return;
+                                resolve();
                             }
+                        });
 
-                            if (result_json.variable) {
-                                _watch.setValue({value: result_json.variable.value});
-                            } else {
-                                _watch.setValue({value: ''});
-                            }
-                        },
-                        error: function () {
-                            GDBFrontend.showMessageBox({text: 'An error occured.'});
-                            console.trace('An error occured.');
-                        }
+                        return true;
                     });
-
-                    return true;
                 });
             };
 
@@ -699,7 +750,7 @@
                 });
             };
 
-            data.debug.setState = function (parameters) {
+            data.debug.setState = async function (parameters) {
                 if (!parameters.state) {
                     return;
                 }
@@ -847,8 +898,10 @@
                 data.components.variablesExplorer.render();
 
                 if (parameters.is_stop && parameters.state.selected_frame) {
-                    data.debug.setWatches();
+                    await data.debug.setWatches();
                 }
+                
+                data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
             };
 
             data.debug.clearEditorFileBreakpoint = function (parameters) {
@@ -936,6 +989,13 @@
                     _file.clearStop();
                 });
             };
+            
+            data.$gdbFrontend_layout_middle_right_content.on('mousewheel.GDBFrontend', function (event) {
+                data.layout_middle_right_scroll_top = data.$gdbFrontend_layout_middle_right_content.scrollTop();
+                setTimeout(function () {
+                    data.layout_middle_right_scroll_top = data.$gdbFrontend_layout_middle_right_content.scrollTop();
+                }, 250);
+            });
 
             data.$gdbFrontend_breakpointsEditor.on('BreakpointsEditor_breakpoint_enabled_changed.GDBFrontend', function (event, parameters) {
                 $.ajax({
@@ -1191,6 +1251,8 @@
                         parameters.item.render();
                         parameters.item.open({is_preload: parameters.is_preload});
                         parameters.item.setLoading(false);
+
+                        data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
                     },
                     error: function () {
                         GDBFrontend.showMessageBox({text: 'An error occured.'});
@@ -1313,7 +1375,7 @@
                 });
             });
 
-            $gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
+            data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
                 data.$GDBFrontend_terminalCloseBtn.show();
             });
             
@@ -1331,21 +1393,23 @@
 
             data.openTerminal = function (parameters) {
                 data.is_terminal_opened = true;
-                data.$GDBFrontend_terminal.show();
+                data.$gdbFrontend_layout_bottom.show();
                 data.$GDBFrontend_terminalOpenBtn.hide();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace.resize();
+                    return true;
                 });
             };
            
             data.closeTerminal = function (parameters) {
                 data.is_terminal_opened = false;
-                data.$GDBFrontend_terminal.hide();
+                data.$gdbFrontend_layout_bottom.hide();
                 data.$GDBFrontend_terminalOpenBtn.show();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace.resize();
+                    return true;
                 });
             };
 
@@ -1371,6 +1435,10 @@
         } else {
             $.error('Method '+method+' does not exist on jQuery.GDBFrontend');
         }
+    };
+
+    $.fn.GDBFrontend.kvKey = function (key) {
+        return 'GDBFrontend:'+key;
     };
 
     $.fn.GDBFrontend.event = function (event) {

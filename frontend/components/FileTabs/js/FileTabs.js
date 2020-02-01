@@ -188,7 +188,10 @@
                 file.$variablePopup_variablesExplorerComp = file.$variablePopup.find('.FileTabs_editors_items_item_variablePopup_variablesExplorerComp');
                 file.$variablePopup_variablesExplorer = file.$variablePopup_variablesExplorerComp.find('> .VariablesExplorer');
                 file.$variablePopup_variablesExplorer.VariablesExplorer();
-                file.$variablePopup_variablesExplorer.data().VariablesExplorer.mark_changes = false;
+                file.variablePopup_variablesExplorer = file.$variablePopup_variablesExplorer.data().VariablesExplorer;
+
+                file.variablePopup_variablesExplorer.mark_changes = false;
+                file.variablePopup_variablesExplorer.setMaxHeight({max_height: file.$variablePopup.css('max-height')});
 
                 file.$variablePopup_variablesExplorer.on('VariablesExplorer_item_toggle.GDBFrontend', function (event, parameters) {
                     if (parameters.item.is_opened) {
@@ -255,8 +258,8 @@
 
                 file.ace = ace.edit(file.$editor_ace.get(0));
                 file.ace.setReadOnly(true);
-                file.ace.setTheme("ace/theme/tomorrow_night_blue");
-                file.ace.session.setMode(ace.require("ace/ext/modelist").getModeForPath(file.name).mode);
+                file.ace.setTheme('ace/theme/tomorrow_night_blue');
+                file.ace.session.setMode(ace.require('ace/ext/modelist').getModeForPath(file.name).mode);
 
                 file.ace.commands.addCommand({
                     name: 'fuzzySearch',
@@ -274,10 +277,10 @@
                 file.ace.session.on('changeBreakpoint', function (event) {
                 });
 
-                file.ace.on("guttermousedown", function(event) {
+                file.ace.on('guttermousedown', function (event) {
                     var target = event.domEvent.target;
 
-                    if (target.className.indexOf("ace_gutter-cell") == -1) {
+                    if (target.className.indexOf('ace_gutter-cell') == -1) {
                         return;
                     }
 
@@ -396,6 +399,7 @@
                     var editor_bottom_y = file.$editor.offset().top + file.$editor.outerHeight();
                     
                     if (bottom_y > editor_bottom_y) {
+                        file.$variablePopup.css('top', file.$variablePopup.position().top - file.$variablePopup.outerHeight() - 24);
                     }
                 };
 
@@ -537,6 +541,7 @@
 
                 file.$tab.addClass('FileTabs_tabs_items_item__current');
                 file.$editor.show();
+                file.ace.resize();
 
                 data.current = file;
 

@@ -75,7 +75,9 @@
                     len = data.instructions.length;
                 }
                 
-                data.$Disassembly_content.height(item_height * len + 10);
+                var height = item_height * len;
+                
+                data.$Disassembly_content.height((height > 0 ) ? height + 10: 0);
                 
                 data.$Disassembly_items.find('.Disassembly_items_item:not(.__proto)').remove();
 

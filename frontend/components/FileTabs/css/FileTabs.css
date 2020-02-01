@@ -66,7 +66,7 @@
 }
 
 .FileTabs_tabs_items_item_closeBtn:hover {
-    color: #3465a4;
+    color: #003f91;
 }
 
 .FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
@@ -78,7 +78,7 @@
 }
 
 .FileTabs_tabs_items_item.FileTabs_tabs_items_item__current .FileTabs_tabs_items_closeBtn:hover {
-    color: #3465a4;
+    color: #003f91;
 }
 
 .FileTabs_tabs_items_item_pathTooltip {
@@ -90,11 +90,10 @@
 }
 
 .FileTabs_tabs_items_item_pathTooltip_box {
-    background: #3465a4;
+    background: #003f91;
     color: white;
     font-size: 16px;
     display: inline-block;
-    border-radius: 1px;
     box-shadow: 0px 0px 20px 0px rgba(0, 25, 0, 0.5);
 }
 
@@ -112,7 +111,7 @@
     margin-left: -5px;
     content: ' ';
     border: 10px solid transparent;
-    border-bottom: 10px solid #3465a4;
+    border-bottom: 10px solid #003f91;
     width: 0px;
     height: 0px;
 }
