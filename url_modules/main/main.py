@@ -96,7 +96,7 @@ def run(request, params):
     html_watches = util.readFile(util.webFSPath("/components/Watches/html/Watches.html"))
     html_fuzzyFinder = util.readFile(util.webFSPath("/components/FuzzyFinder/html/FuzzyFinder.html"))
     html_disassembly = util.readFile(util.webFSPath("/components/Disassembly/html/Disassembly.html"))
-    html_evaulateExpression = util.readFile(util.webFSPath("/components/EvaulateExpression/html/EvaulateExpression.html"))
+    html_evaluateExpression = util.readFile(util.webFSPath("/components/EvaluateExpression/html/EvaluateExpression.html"))
 
     html_messageBox = html_messageBox.format(**vars())
     html_aboutDialog = html_aboutDialog.format(**vars())
@@ -111,7 +111,7 @@ def run(request, params):
     html_watches = html_watches.format(**vars())
     html_fuzzyFinder = html_fuzzyFinder.format(**vars())
     html_disassembly = html_disassembly.format(**vars())
-    html_evaulateExpression = html_evaulateExpression.format(**vars())
+    html_evaluateExpression = html_evaluateExpression.format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

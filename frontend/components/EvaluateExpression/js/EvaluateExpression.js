@@ -22,50 +22,50 @@
             t_init.parameters = parameters;
 
             $elements.each(function () {
-                var $evaulateExpression = $(this);
+                var $evaluateExpression = $(this);
 
-                $(window).off('EvaulateExpression');
-                $(document).off('EvaulateExpression');
-                $('body').off('EvaulateExpression')
+                $(window).off('EvaluateExpression');
+                $(document).off('EvaluateExpression');
+                $('body').off('EvaluateExpression')
                 
-                $evaulateExpression.off('.EvaulateExpression');
-                $evaulateExpression.find('*').off('.EvaulateExpression');
+                $evaluateExpression.off('.EvaluateExpression');
+                $evaluateExpression.find('*').off('.EvaluateExpression');
 
                 var data = {};
-                $evaulateExpression.data('EvaulateExpression', data);
-                data.$evaulateExpression = $evaulateExpression;
+                $evaluateExpression.data('EvaluateExpression', data);
+                data.$evaluateExpression = $evaluateExpression;
 
-                if (!window.hasOwnProperty('EvaulateExpression_component_id')) {
-                    EvaulateExpression_component_id = 0;
+                if (!window.hasOwnProperty('EvaluateExpression_component_id')) {
+                    EvaluateExpression_component_id = 0;
                 }
 
-                data.id = ++EvaulateExpression_component_id;
+                data.id = ++EvaluateExpression_component_id;
 
                 data.components = {};
 
-                data.$evaulateExpression_window = $evaulateExpression.find('.EvaulateExpression_window');
-                data.$evaulateExpression_window_closeBtn = data.$evaulateExpression_window.find('.EvaulateExpression_window_closeBtn');
+                data.$evaluateExpression_window = $evaluateExpression.find('.EvaluateExpression_window');
+                data.$evaluateExpression_window_closeBtn = data.$evaluateExpression_window.find('.EvaluateExpression_window_closeBtn');
 
-                data.$evaulateExpression_window_box_header_expression = data.$evaulateExpression_window.find('.EvaulateExpression_window_box_header_expression');
-                data.$evaulateExpression_window_box_header_expression_input = data.$evaulateExpression_window_box_header_expression.find('.EvaulateExpression_window_box_header_expression_input');
-                data.$evaulateExpression_window_box_header_expression_input_rI = data.$evaulateExpression_window_box_header_expression_input.find('.EvaulateExpression_window_box_header_expression_input_rI');
+                data.$evaluateExpression_window_box_header_expression = data.$evaluateExpression_window.find('.EvaluateExpression_window_box_header_expression');
+                data.$evaluateExpression_window_box_header_expression_input = data.$evaluateExpression_window_box_header_expression.find('.EvaluateExpression_window_box_header_expression_input');
+                data.$evaluateExpression_window_box_header_expression_input_rI = data.$evaluateExpression_window_box_header_expression_input.find('.EvaluateExpression_window_box_header_expression_input_rI');
 
-                data.$evaulateExpression_window_mover = data.$evaulateExpression_window.find('.EvaulateExpression_window_mover');
+                data.$evaluateExpression_window_mover = data.$evaluateExpression_window.find('.EvaluateExpression_window_mover');
 
-                data.$evaulateExpression_items = $evaulateExpression.find('.EvaulateExpression_items');
-                data.$evaulateExpression_items_item__proto = $evaulateExpression.find('.EvaulateExpression_items_item.__proto');
-                data.$evaulateExpression_items_parentBtn = $evaulateExpression.find('.EvaulateExpression_items_parentBtn');
+                data.$evaluateExpression_items = $evaluateExpression.find('.EvaluateExpression_items');
+                data.$evaluateExpression_items_item__proto = $evaluateExpression.find('.EvaluateExpression_items_item.__proto');
+                data.$evaluateExpression_items_parentBtn = $evaluateExpression.find('.EvaluateExpression_items_parentBtn');
                 
-                data.$evaulateExpression_window_box_content = $evaulateExpression.find('.EvaulateExpression_window_box_content');
+                data.$evaluateExpression_window_box_content = $evaluateExpression.find('.EvaluateExpression_window_box_content');
 
-                data.$evaulateExpression_value = $evaulateExpression.find('.EvaulateExpression_value');
-                data.$evaulateExpression_noValue = $evaulateExpression.find('.EvaulateExpression_noValue');
+                data.$evaluateExpression_value = $evaluateExpression.find('.EvaluateExpression_value');
+                data.$evaluateExpression_noValue = $evaluateExpression.find('.EvaluateExpression_noValue');
 
-                data.$evaulateExpression_variablesExplorerComp = data.$evaulateExpression.find('.EvaulateExpression_variablesExplorerComp');
-                data.$evaulateExpression_variablesExplorer = data.$evaulateExpression_variablesExplorerComp.find('> .VariablesExplorer');
-                data.$evaulateExpression_variablesExplorer.VariablesExplorer();
-                data.evaulateExpression_variablesExplorer = data.$evaulateExpression_variablesExplorer.data().VariablesExplorer;
-                data.components.variablesExplorer = data.evaulateExpression_variablesExplorer;
+                data.$evaluateExpression_variablesExplorerComp = data.$evaluateExpression.find('.EvaluateExpression_variablesExplorerComp');
+                data.$evaluateExpression_variablesExplorer = data.$evaluateExpression_variablesExplorerComp.find('> .VariablesExplorer');
+                data.$evaluateExpression_variablesExplorer.VariablesExplorer();
+                data.evaluateExpression_variablesExplorer = data.$evaluateExpression_variablesExplorer.data().VariablesExplorer;
+                data.components.variablesExplorer = data.evaluateExpression_variablesExplorer;
 
                 data.components.variablesExplorer.mark_changes = false;
                 data.components.variablesExplorer.setFluent(true);
@@ -75,12 +75,12 @@
                 data.is_passive = false;
                 data.is_opened = false;
 
-                data.$evaulateExpression_window_box_header_expression_input_rI.on('keydown.EvaulateExpression-'+data.id, function (event) {
+                data.$evaluateExpression_window_box_header_expression_input_rI.on('keydown.EvaluateExpression-'+data.id, function (event) {
                     if (!data.is_opened) {
                         return;
                     }
                     
-                    var expression = data.$evaulateExpression_window_box_header_expression_input_rI.val();
+                    var expression = data.$evaluateExpression_window_box_header_expression_input_rI.val();
                     
                     var keycode = event.keyCode ? event.keyCode : event.which;
                     if (keycode == 27) {
@@ -90,27 +90,27 @@
                     }
                 });
                 
-                $evaulateExpression.on('mousedown.EvaulateExpression-' + data.id, function (event) {
+                $evaluateExpression.on('mousedown.EvaluateExpression-' + data.id, function (event) {
                     data.focus();
                 });
                 
-                data.$evaulateExpression_window_closeBtn.on('mousedown.EvaulateExpression-' + data.id, function (event) {
+                data.$evaluateExpression_window_closeBtn.on('mousedown.EvaluateExpression-' + data.id, function (event) {
                     data.close();
                 });
 
-                $(document).on('mousedown.EvaulateExpression-'+data.id, function (event) {
-                    if ($evaulateExpression.is(event.target) || $evaulateExpression.has(event.target).length) {
+                $(document).on('mousedown.EvaluateExpression-'+data.id, function (event) {
+                    if ($evaluateExpression.is(event.target) || $evaluateExpression.has(event.target).length) {
                         return;
                     }
                     
                     data.blur();
                 });
                 
-                data.$evaulateExpression_window_box_content.on('resize.EvaulateExpression-' + data.id, function (event) {
+                data.$evaluateExpression_window_box_content.on('resize.EvaluateExpression-' + data.id, function (event) {
                     data.variablePopup_variablesExplorer.setMaxHeight({max_height: file.$variablePopup.height()});
                 });
 
-                data.$evaulateExpression_variablesExplorer.on('VariablesExplorer_item_toggle.EvaulateExpression', function (event, parameters) {
+                data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_toggle.EvaluateExpression', function (event, parameters) {
                     if (parameters.item.is_opened) {
                         parameters.item.close();
                         return;
@@ -166,8 +166,8 @@
 
                 data.refresh = function (parameters) {
                     if (!parameters.expression) {
-                        data.$evaulateExpression_noValue.show();
-                        data.$evaulateExpression_value.hide();
+                        data.$evaluateExpression_noValue.show();
+                        data.$evaluateExpression_value.hide();
                         return;
                     }
                     
@@ -186,14 +186,14 @@
                             }
 
                             if (result_json.variable) {
-                                data.$evaulateExpression_variablesExplorer.data().VariablesExplorer.load({variables: [result_json.variable]});
-                                data.$evaulateExpression_variablesExplorer.data().VariablesExplorer.render();
+                                data.$evaluateExpression_variablesExplorer.data().VariablesExplorer.load({variables: [result_json.variable]});
+                                data.$evaluateExpression_variablesExplorer.data().VariablesExplorer.render();
 
-                                data.$evaulateExpression_noValue.hide();
-                                data.$evaulateExpression_value.show();
+                                data.$evaluateExpression_noValue.hide();
+                                data.$evaluateExpression_value.show();
                             } else {
-                                data.$evaulateExpression_noValue.show();
-                                data.$evaulateExpression_value.hide();
+                                data.$evaluateExpression_noValue.show();
+                                data.$evaluateExpression_value.hide();
                             }
                         },
                         error: function () {
@@ -211,18 +211,18 @@
                     data.is_opened = true;
 
                     data.focus();
-                    $evaulateExpression.data().Movable.focus();
+                    $evaluateExpression.data().Movable.focus();
                     
-                    var x = (window.innerWidth / 2) - ($evaulateExpression.outerWidth()/2);
-                    var y = (window.innerHeight / 2) - ($evaulateExpression.outerHeight()/2);
+                    var x = (window.innerWidth / 2) - ($evaluateExpression.outerWidth()/2);
+                    var y = (window.innerHeight / 2) - ($evaluateExpression.outerHeight()/2);
 
                     x = x + (5 + parseInt(Math.random()*20)) * (Math.random() >= 0.5 ? 1: -1);
                     y = y + (5 + parseInt(Math.random()*20)) * (Math.random() >= 0.5 ? 1: -1);
                     
-                    $evaulateExpression.css('transform', 'translate('+x+'px, '+y+'px)');
+                    $evaluateExpression.css('transform', 'translate('+x+'px, '+y+'px)');
                     
-                    $evaulateExpression.fadeIn(data.animation_duration, function (event) {
-                        data.$evaulateExpression_window_box_header_expression_input_rI.focus();
+                    $evaluateExpression.fadeIn(data.animation_duration, function (event) {
+                        data.$evaluateExpression_window_box_header_expression_input_rI.focus();
                         
                         if (parameters.onOpened) {
                             parameters.onOpened();
@@ -238,43 +238,43 @@
                     data.is_opened = false;
 
                     data.blur();
-                    $evaulateExpression.data().Movable.blur();
+                    $evaluateExpression.data().Movable.blur();
                     
-                    $evaulateExpression.fadeOut(data.animation_duration, function (event) {
+                    $evaluateExpression.fadeOut(data.animation_duration, function (event) {
                         if (parameters.onClosed) {
                             parameters.onClosed();
                         }
-                        $evaulateExpression.trigger('EvaulateExpression_closed');
+                        $evaluateExpression.trigger('EvaluateExpression_closed');
                     });
                 };
 
                 data.focus = function (parameters) {
-                    $evaulateExpression.addClass('EvaulateExpression__focused');
+                    $evaluateExpression.addClass('EvaluateExpression__focused');
                 };
                 
                 data.blur = function (parameters) {
-                    $evaulateExpression.removeClass('EvaulateExpression__focused');
+                    $evaluateExpression.removeClass('EvaluateExpression__focused');
                 };
                 
                 data.setSize = function (parameters) {
-                    data.$evaulateExpression_window_box_content.width(parameters.width);
-                    data.$evaulateExpression_window_box_content.height(parameters.height);
+                    data.$evaluateExpression_window_box_content.width(parameters.width);
+                    data.$evaluateExpression_window_box_content.height(parameters.height);
                 };
 
                 data.toggle = function (parameters) {
                     data[data.is_opened ? 'close': 'open']();
                 };
 
-                $evaulateExpression.on('EvaulateExpression_initialize.EvaulateExpression-' + data.id, function (event) {
+                $evaluateExpression.on('EvaluateExpression_initialize.EvaluateExpression-' + data.id, function (event) {
                     data.init();
                 });
 
-                $evaulateExpression.on('EvaulateExpression_comply.EvaulateExpression-' + data.id, function (event) {
+                $evaluateExpression.on('EvaluateExpression_comply.EvaluateExpression-' + data.id, function (event) {
                     data.comply();
                 });
 
                 data.init = function () {
-                    $evaulateExpression.Movable();
+                    $evaluateExpression.Movable();
                 };
 
                 data.comply = function () {
@@ -285,13 +285,13 @@
         }
     };
 
-    $.fn.EvaulateExpression = function(method) {
+    $.fn.EvaluateExpression = function(method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error('Method '+method+' does not exist on jQuery.EvaulateExpression');
+            $.error('Method '+method+' does not exist on jQuery.EvaluateExpression');
         }
     };
 })(jQuery);

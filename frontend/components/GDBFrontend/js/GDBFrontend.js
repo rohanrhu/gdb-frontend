@@ -68,9 +68,9 @@
             data.$GDBFrontend_runtimeControls_btn__n = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__n');
             data.$GDBFrontend_runtimeControls_btn__si = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__si');
             data.$GDBFrontend_runtimeControls_btn__t = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__t');
-            data.$GDBFrontend_runtimeControls_btn__evaulate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaulate');
+            data.$GDBFrontend_runtimeControls_btn__evaluate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
 
-            data.$gdbFrontend_evaulaters = $gdbFrontend.find('.GDBFrontend_evaulaters');
+            data.$gdbFrontend_evaluaters = $gdbFrontend.find('.GDBFrontend_evaluaters');
 
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
@@ -106,9 +106,9 @@
             data.$gdbFrontend_variablesExplorer = data.$gdbFrontend_variablesExplorerComp.find('> .VariablesExplorer');
             data.gdbFrontend_variablesExplorer = null;
             
-            data.$gdbFrontend_evaulateExpressionComp = $gdbFrontend.find('.GDBFrontend_evaulateExpressionComp');
-            data.$gdbFrontend_evaulateExpression = data.$gdbFrontend_evaulateExpressionComp.find('> .EvaulateExpression');
-            data.gdbFrontend_evaulateExpression = null;
+            data.$gdbFrontend_evaluateExpressionComp = $gdbFrontend.find('.GDBFrontend_evaluateExpressionComp');
+            data.$gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpressionComp.find('> .EvaluateExpression');
+            data.gdbFrontend_evaluateExpression = null;
 
             data.components = {};
 
@@ -125,26 +125,26 @@
             data.is_terminal_opened = false;
             data.layout_middle_right_scroll_top = 0;
 
-            data.evaulaters = [];
+            data.evaluaters = [];
 
-            data.createEvaulater = function (parameters) {
-                var evaulater = {};
+            data.createEvaluater = function (parameters) {
+                var evaluater = {};
 
-                evaulater.$evaulateExpression = data.$gdbFrontend_evaulateExpression.clone();
-                evaulater.$evaulateExpression.appendTo(data.$gdbFrontend_evaulaters);
-                evaulater.$evaulateExpression.EvaulateExpression();
-                evaulater.evaulateExpression = evaulater.$evaulateExpression.data().EvaulateExpression;
+                evaluater.$evaluateExpression = data.$gdbFrontend_evaluateExpression.clone();
+                evaluater.$evaluateExpression.appendTo(data.$gdbFrontend_evaluaters);
+                evaluater.$evaluateExpression.EvaluateExpression();
+                evaluater.evaluateExpression = evaluater.$evaluateExpression.data().EvaluateExpression;
                 
-                evaulater.evaulateExpression.open();
+                evaluater.evaluateExpression.open();
                 
-                data.evaulaters.push(evaulater);
+                data.evaluaters.push(evaluater);
 
-                evaulater.$evaulateExpression.on('EvaulateExpression_closed.GDBFrontend', function (parameters) {
-                    evaulater.$evaulateExpression.remove();
+                evaluater.$evaluateExpression.on('EvaluateExpression_closed.GDBFrontend', function (parameters) {
+                    evaluater.$evaluateExpression.remove();
                     
-                    data.evaulaters.every(function (_evaulater, _evaulater_i) {
-                        if (_evaulater.$evaulateExpression.is(evaulater.$evaulateExpression)) {
-                            data.evaulaters.splice(_evaulater_i, 1);
+                    data.evaluaters.every(function (_evaluater, _evaluater_i) {
+                        if (_evaluater.$evaluateExpression.is(evaluater.$evaluateExpression)) {
+                            data.evaluaters.splice(_evaluater_i, 1);
                             
                             return false;
                         }
@@ -493,9 +493,9 @@
                 data.gdbFrontend_variablesExplorer = data.$gdbFrontend_variablesExplorer.data('VariablesExplorer');
                 data.components.variablesExplorer = data.gdbFrontend_variablesExplorer;
                 
-                data.$gdbFrontend_evaulateExpression.EvaulateExpression();
-                data.gdbFrontend_evaulateExpression = data.$gdbFrontend_evaulateExpression.data('EvaulateExpression');
-                data.components.evaulateExpression = data.gdbFrontend_evaulateExpression;
+                data.$gdbFrontend_evaluateExpression.EvaluateExpression();
+                data.gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpression.data('EvaluateExpression');
+                data.components.evaluateExpression = data.gdbFrontend_evaluateExpression;
 
                 data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.server_port);
 
@@ -1419,8 +1419,8 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__evaulate.on('click.GDBFrontend', function (event) {
-                data.createEvaulater();
+            data.$GDBFrontend_runtimeControls_btn__evaluate.on('click.GDBFrontend', function (event) {
+                data.createEvaluater();
             });
 
             data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
