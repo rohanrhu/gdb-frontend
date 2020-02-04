@@ -11,7 +11,6 @@
 .VariablesExplorer {
     text-align: center;
     font-size: 12px;
-    overflow-y: auto;
     text-align: left;
     height: 100%;
 }
@@ -33,6 +32,11 @@
     flex-wrap: nowrap;
     overflow-y: auto;
     overflow-x: auto;
+}
+
+.VariablesExplorer.VariablesExplorer__fluent .VariablesExplorer_content {
+    overflow: visible;
+    max-height: none;
 }
 
 /* ---------------------- */
@@ -72,7 +76,7 @@
     flex-direction: row;
     line-height: 15px;
     cursor: pointer;
-    height: 25px;
+    height: 28px;
     white-space: nowrap;
 }
 

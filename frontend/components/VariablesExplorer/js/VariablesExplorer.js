@@ -60,7 +60,18 @@
             data.modifieds = {};
             data.scroll = {x: 0, y: 0};
             data.mark_changes = true;
+            data.is_fluent = false;
 
+            data.setFluent = function (is_fluent) {
+                data.is_fluent = is_fluent;
+
+                if (data.is_fluent) {
+                    $variablesExplorer.addClass('VariablesExplorer__fluent');
+                } else {
+                    $variablesExplorer.removeClass('VariablesExplorer__fluent');
+                }
+            };
+            
             data.setLocation = function (location) {
                 data.location = location;
             };

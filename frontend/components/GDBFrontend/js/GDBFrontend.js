@@ -24,6 +24,10 @@
         $elements.each(function () {
             var $gdbFrontend = $(this);
 
+            $(window).off('GDBFrontend');
+            $(document).off('GDBFrontend');
+            $('body').off('GDBFrontend')
+            
             $gdbFrontend.off('.GDBFrontend');
             $gdbFrontend.find('*').off('.GDBFrontend');
 
@@ -64,6 +68,9 @@
             data.$GDBFrontend_runtimeControls_btn__n = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__n');
             data.$GDBFrontend_runtimeControls_btn__si = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__si');
             data.$GDBFrontend_runtimeControls_btn__t = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__t');
+            data.$GDBFrontend_runtimeControls_btn__evaulate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaulate');
+
+            data.$gdbFrontend_evaulaters = $gdbFrontend.find('.GDBFrontend_evaulaters');
 
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
@@ -98,6 +105,10 @@
             data.$gdbFrontend_variablesExplorerComp = $gdbFrontend.find('.GDBFrontend_variablesExplorerComp');
             data.$gdbFrontend_variablesExplorer = data.$gdbFrontend_variablesExplorerComp.find('> .VariablesExplorer');
             data.gdbFrontend_variablesExplorer = null;
+            
+            data.$gdbFrontend_evaulateExpressionComp = $gdbFrontend.find('.GDBFrontend_evaulateExpressionComp');
+            data.$gdbFrontend_evaulateExpression = data.$gdbFrontend_evaulateExpressionComp.find('> .EvaulateExpression');
+            data.gdbFrontend_evaulateExpression = null;
 
             data.components = {};
 
@@ -114,6 +125,35 @@
             data.is_terminal_opened = false;
             data.layout_middle_right_scroll_top = 0;
 
+            data.evaulaters = [];
+
+            data.createEvaulater = function (parameters) {
+                var evaulater = {};
+
+                evaulater.$evaulateExpression = data.$gdbFrontend_evaulateExpression.clone();
+                evaulater.$evaulateExpression.appendTo(data.$gdbFrontend_evaulaters);
+                evaulater.$evaulateExpression.EvaulateExpression();
+                evaulater.evaulateExpression = evaulater.$evaulateExpression.data().EvaulateExpression;
+                
+                evaulater.evaulateExpression.open();
+                
+                data.evaulaters.push(evaulater);
+
+                evaulater.$evaulateExpression.on('EvaulateExpression_closed.GDBFrontend', function (parameters) {
+                    evaulater.$evaulateExpression.remove();
+                    
+                    data.evaulaters.every(function (_evaulater, _evaulater_i) {
+                        if (_evaulater.$evaulateExpression.is(evaulater.$evaulateExpression)) {
+                            data.evaulaters.splice(_evaulater_i, 1);
+                            
+                            return false;
+                        }
+                        
+                        return true;
+                    });
+                });
+            };
+            
             data.debug.getBreakpoint = function (parameters) {
                 var bp = false;
                 var bp_i = false;
@@ -452,6 +492,10 @@
                 data.$gdbFrontend_variablesExplorer.VariablesExplorer();
                 data.gdbFrontend_variablesExplorer = data.$gdbFrontend_variablesExplorer.data('VariablesExplorer');
                 data.components.variablesExplorer = data.gdbFrontend_variablesExplorer;
+                
+                data.$gdbFrontend_evaulateExpression.EvaulateExpression();
+                data.gdbFrontend_evaulateExpression = data.$gdbFrontend_evaulateExpression.data('EvaulateExpression');
+                data.components.evaulateExpression = data.gdbFrontend_evaulateExpression;
 
                 data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.server_port);
 
@@ -1373,6 +1417,10 @@
                         console.trace('An error occured.');
                     }
                 });
+            });
+
+            data.$GDBFrontend_runtimeControls_btn__evaulate.on('click.GDBFrontend', function (event) {
+                data.createEvaulater();
             });
 
             data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {

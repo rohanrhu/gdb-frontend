@@ -8,7 +8,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg?style=flat-square&logo=gitter)](https://gitter.im/gdb-frontend/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Donate](https://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square&color=green)](https://liberapay.com/EvrenselKisilik/donate)
 
-![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss4.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
+![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss5.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
 ## Installing 
 
@@ -39,7 +39,7 @@ gdbfrontend
 You can download latest source and run it.
 
 #### Requirements
-* GDB (with python3)
+* GDB => 8.2 (with python3)
 * python3
 * tmux
 
@@ -123,7 +123,7 @@ In fact, gdb-frontend is able to run on Windows but there are some serious issue
 
 * GDB's main-thread is being blocked during running process. (gdb-frontend has an interrupting mechanism to fixing this but it is not enough yet.)
 * Windows-GDB's prompt is being blocked during running process and there are some issues about interrupting the application.
-* Current release of Windows-GDB contains Python2. New GDB have Python3 but it is not released yet.
+* Current release of Windows-GDB contains Python2. New GDB 9 have Python3 but it is not released yet.
 
 ## WSL
 You can use gdb-frontend on WSL (Windows Subsystem for Linux).

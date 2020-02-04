@@ -190,10 +190,12 @@
                 file.$variablePopup_variablesExplorer.VariablesExplorer();
                 file.variablePopup_variablesExplorer = file.$variablePopup_variablesExplorer.data().VariablesExplorer;
 
+                file.$variablePopup.appendTo($('body'));
+
                 file.variablePopup_variablesExplorer.mark_changes = false;
                 file.variablePopup_variablesExplorer.setMaxHeight({max_height: file.$variablePopup.css('max-height')});
 
-                file.$variablePopup_variablesExplorer.on('VariablesExplorer_item_toggle.GDBFrontend', function (event, parameters) {
+                file.$variablePopup_variablesExplorer.on('VariablesExplorer_item_toggle.FileTabs', function (event, parameters) {
                     if (parameters.item.is_opened) {
                         parameters.item.close();
                         return;
@@ -336,6 +338,9 @@
                     var position = event.getDocumentPosition();
                     var token = file.ace.session.getTokenAt(position.row, position.column);
                     var pixel_position = file.ace.renderer.$cursorLayer.getPixelPosition(position, true);
+
+                    var x = pixel_position.left + file.$editor.offset().left;
+                    var y = pixel_position.top + file.$editor.offset().top;
                     
                     file.tokenMouseoutTimeout = setTimeout(function () {
                         file.closeVariablePopup();
@@ -370,7 +375,7 @@
     
                                 file.openVariablePopup({
                                     variable: result_json.variable,
-                                    position: pixel_position
+                                    position: {x, y}
                                 });
                             },
                             error: function () {
@@ -382,8 +387,8 @@
                 });
 
                 file.openVariablePopup = function (parameters) {
-                    var x = parameters.position.left-10;
-                    var y = parameters.position.top+12;
+                    var x = parameters.position.x-10;
+                    var y = parameters.position.y+12;
                     
                     file.$variablePopup.css({
                         left: x,

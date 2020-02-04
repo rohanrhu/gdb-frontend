@@ -16,6 +16,7 @@
     height: 100%;
     width: 100%;
     background: #00295c;
+    overflow: hidden;
 }
 
 .GDBFrontend_terminal {
@@ -394,7 +395,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 /* ---------------------- */
 
 .GDBFrontend_variables {
-
+    
 }
 
 .GDBFrontend_variables_title {
@@ -404,4 +405,15 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------- */
+
+.GDBFrontend_evaulaters {
+    position: absolute;
+    top: 0px;;
+    left: 0px;
+    width: 0px;
+    height: 0px;
+    z-index: 5000;
 }

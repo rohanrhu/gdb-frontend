@@ -1,0 +1,231 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.EvaulateExpression {
+    display: none;
+    user-select: none;
+}
+
+.EvaulateExpression_window {
+}
+
+.EvaulateExpression_window_box {
+    text-align: left;
+    background: #003f91;
+    transition: opacity 500ms;
+    border: 1px solid rgba(0,0,0,0.25);
+}
+
+.EvaulateExpression_window_box_header {
+}
+
+.EvaulateExpression_window_box_header_line {
+    background: rgb(0,0,0,0.25);
+    position: relative;
+    height: 28px;
+    color: white;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression.EvaulateExpression__focused .EvaulateExpression_window_box {
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.25), 0px 0px 40px 0px rgba(0,0,0,0.15);
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_window_box_header_line_label {
+    padding-left: 10px;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_window_box_header_expression {
+    flex-grow: 1;
+    color: rgba(255,255,255,0.5);
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    min-width: 210px;
+}
+
+.EvaulateExpression_window_box_header_expression_input {
+    height: 100%;
+    width: 100%;
+}
+
+.EvaulateExpression_window_box_header_expression_input_rI {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    color: white;
+    font-family: 'SourceSansPro Regular';
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 0px 10px;
+}
+
+.EvaulateExpression_window_box_header_expression_input_rI:focus {
+    background: rgba(0,0,0,0.1);
+}
+
+/* ---------------------- */
+
+.EvaulateExpression.EvaulateExpression__passive .EvaulateExpression_window_box {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_window_box_closeBtn {
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    transition: color 100ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.EvaulateExpression_window_box_closeBtn:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_items {
+    position: relative;
+    height: 500px;
+    overflow-y: auto;
+}
+
+.EvaulateExpression_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.EvaulateExpression_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.EvaulateExpression_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.EvaulateExpression_items_item {
+    line-height: 15px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.EvaulateExpression_items_item_icon {
+    display: inline-block;
+}
+
+.EvaulateExpression_items_item_name {
+    display: inline-block;
+}
+
+.EvaulateExpression_items_item_name.EvaulateExpression__dir {
+    font-weight: bold;
+}
+
+.EvaulateExpression_items_item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.EvaulateExpression_items_item.EvaulateExpression_items_item__current {
+    background: rgba(255,255,255,0.2);
+}
+
+.EvaulateExpression_items_item_location {
+    margin-top: 5px;
+    color: #8c8c8c;
+}
+
+.EvaulateExpression_items_parentBtn {
+    line-height: 15px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.EvaulateExpression_items_parentBtn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.EvaulateExpression_items_parentBtn.EvaulateExpression_items_item__current {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_total {
+    padding: 10px;
+    background: rgba(0,0,0,0.1);
+}
+
+.EvaulateExpression_total_number {
+    display: inline;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_window_box_content {
+    min-width: 250px;
+    min-height: 28px;
+    width: 400px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    resize: both;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_noValue {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+}
+
+.EvaulateExpression_noValue_label {
+    display: inline-block;
+    color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 3px 5px;
+    margin: auto;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_value {
+    display: none;
+    min-height: 28px;
+}
+
+/* ---------------------- */
+
+.EvaulateExpression_window_mover {
+    height: 10px;
+    background-color: #002f6d;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIUlEQVQYV2NkQAL///83ZoTxwRxGxrNgARgHxGZE5oAEAOz3DzUR5jnxAAAAAElFTkSuQmCC');
+    cursor: move;
+}
+
+/* ---------------------- */

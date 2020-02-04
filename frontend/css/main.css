@@ -162,8 +162,21 @@ img {
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0,0,0,0.7);
 }
-
+  
 ::-webkit-scrollbar-track {
+}
+  
+::-webkit-scrollbar-corner {
+    background: transparent;
+    border: 0px;
+}
+
+::-webkit-resizer {
+    background-color: transparent;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAOUlEQVQoU4XN0QoAIAhD0fz/j14sSNKm7nUHrq1hAGCdOYCr0AX8JXqBzH0g5xQIuQp4rgXMTYC5DUwhR/4WCsiMAAAAAElFTkSuQmCC');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    border: 0px;
 }
 
 /* ------------------------------------------------- */

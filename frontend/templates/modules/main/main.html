@@ -75,6 +75,12 @@
     
     <script type="text/javascript" src="/components/Resizable/js/Resizable.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/Resizable/css/Resizable.css" />
+    
+    <script type="text/javascript" src="/components/Movable/js/Movable.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/Movable/css/Movable.css" />
+    
+    <script type="text/javascript" src="/components/EvaulateExpression/js/EvaulateExpression.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/EvaulateExpression/css/EvaulateExpression.css" />
 
     <link rel="stylesheet" type="text/css" href="/css/override.css" />
 
@@ -125,6 +131,9 @@
                             </div>
                             <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__t">
                                 <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/terminate.png" alt="" draggable="false" />
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__evaulate">
+                                <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/fx.png" alt="" draggable="false" />
                             </div>
                         </div>
                     </div>
@@ -243,6 +252,11 @@
                 <i class="icofont-simple-up"></i>
                 Show Terminal
             </div>
+        </div>
+        <div class="GDBFrontend_evaulateExpressionComp">
+            {html_evaulateExpression}
+        </div>
+        <div class="GDBFrontend_evaulaters">
         </div>
     </div>
     
