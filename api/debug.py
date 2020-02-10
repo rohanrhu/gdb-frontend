@@ -708,10 +708,10 @@ def getSerializableStructMembers(value, ctype):
                 member["is_nts"] = False
                 member["value"] = str(memberValue)
             except gdb.MemoryError as e:
-                return None
+                continue
         except UnicodeDecodeError as e:
             member["is_nts"] = False
-            member["value"] = str(value)
+            member["value"] = str(memberValue)
 
         member["name"] = _field.name
         member["is_pointer"] = _field.type.code == gdb.TYPE_CODE_PTR
