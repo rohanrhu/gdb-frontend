@@ -57,7 +57,6 @@
     height: 100%;
     display: flex;
     flex-direction: row;
-    min-width: 210px;
 }
 
 .EvaluateExpression_window_box_header_expression_input {
@@ -103,6 +102,27 @@
 
 .EvaluateExpression_window_box_closeBtn:hover {
     background: rgba(0,0,0,0.2);
+}
+
+/* ---------------------- */
+
+.EvaluateExpression_window_box_header_btn {
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    transition: color 100ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.EvaluateExpression_window_box_header_btn:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: #38bfff;
 }
 
 /* ---------------------- */

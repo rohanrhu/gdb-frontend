@@ -71,6 +71,7 @@
             data.$GDBFrontend_runtimeControls_btn__evaluate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
 
             data.$gdbFrontend_evaluaters = $gdbFrontend.find('.GDBFrontend_evaluaters');
+            data.$gdbFrontend_pointings = $gdbFrontend.find('.GDBFrontend_pointings');
 
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
@@ -135,6 +136,7 @@
                 evaluater.$evaluateExpression.EvaluateExpression();
                 evaluater.evaluateExpression = evaluater.$evaluateExpression.data().EvaluateExpression;
                 
+                evaluater.evaluateExpression.setPointingPlaceholder(data.$gdbFrontend_pointings);
                 evaluater.evaluateExpression.open();
                 
                 data.evaluaters.push(evaluater);
@@ -492,6 +494,9 @@
                 data.$gdbFrontend_variablesExplorer.VariablesExplorer();
                 data.gdbFrontend_variablesExplorer = data.$gdbFrontend_variablesExplorer.data('VariablesExplorer');
                 data.components.variablesExplorer = data.gdbFrontend_variablesExplorer;
+
+                data.components.variablesExplorer.is_signal_pointings = false;
+                data.components.variablesExplorer.is_slot_pointings = false;
                 
                 data.$gdbFrontend_evaluateExpression.EvaluateExpression();
                 data.gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpression.data('EvaluateExpression');
@@ -1292,9 +1297,9 @@
                             members: result_json.variable.members
                         });
 
+                        parameters.item.setLoading(false);
                         parameters.item.render();
                         parameters.item.open({is_preload: parameters.is_preload});
-                        parameters.item.setLoading(false);
 
                         data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
                     },

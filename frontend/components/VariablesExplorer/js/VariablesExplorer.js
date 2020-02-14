@@ -45,7 +45,7 @@
             $variablesExplorer.data('VariablesExplorer', data);
             data.$variablesExplorer = $variablesExplorer;
 
-            data.id = ++$.fn.VariablesExplorer.id_i;
+            data.id = t_init.parameters.id ? t_init.parameters.id: ++$.fn.VariablesExplorer.id_i;
 
             data.$variablesExplorer_content = $variablesExplorer.find('.VariablesExplorer_content');
             data.$variablesExplorer_items = $variablesExplorer.find('.VariablesExplorer_items');
@@ -53,15 +53,38 @@
 
             data.animation_duration = 100;
 
+            data.is_loading = false;
             data.is_passive = false;
             data.items = [];
             data.location = false;
             data.currents = {};
             data.modifieds = {};
             data.scroll = {x: 0, y: 0};
-            data.mark_changes = true;
+            data.is_mark_changes = true;
             data.is_fluent = false;
+            data.is_signal_pointings = false;
+            data.is_slot_pointings = false;
 
+            data.$pointingPlaceholder = t_init.parameters.$pointingPlaceholder ? t_init.parameters.$pointingPlaceholder: false;
+
+            data.signal_bounds = {};
+            data.signal_bounds.top = false;
+            data.signal_bounds.right = false;
+            data.signal_bounds.bottom = false;
+            data.signal_bounds.left = false;
+
+            data.setSignalBounds = function (parameters) {
+                Object.assign(data.signal_bounds, parameters.bounds);
+            };
+            
+            data.setLoading = function (is_loading) {
+                data.is_loading = is_loading;
+            };
+            
+            data.setPointingPlaceholder = function ($ph) {
+                data.$pointingPlaceholder = $ph;
+            };
+            
             data.setFluent = function (is_fluent) {
                 data.is_fluent = is_fluent;
 
@@ -77,6 +100,14 @@
             };
 
             data.clear = function () {
+                data.iterateItems({iterate: function (iteration) {
+                    iteration.item.$item_pointingsSVG.remove();
+                    iteration.item.clearPointingSignals();
+                    iteration.item.clearPointingSlots();
+                }});
+                
+                data.$variablesExplorer_items.find('.VariablesExplorer_items_item:not(.__proto)').remove();
+                
                 data.items = [];
                 data.location = false;
                 data.currents = {};
@@ -107,9 +138,19 @@
                 
                 members.every(function (variable, variable_i) {
                     var item = {};
+                    
+                    if (!window.VariablesExplorer_items_item_i) {
+                        VariablesExplorer_items_item_i = 1;
+                    }
+
+                    item.id = VariablesExplorer_items_item_i++;
+                    
                     item.parent = parameters.parent ? parameters.parent: false;
                     item.variable = variable;
                     item.items = [];
+                    
+                    item.pointing_signals = [];
+                    item.pointing_slots = [];
 
                     item.expression = [];
 
@@ -146,7 +187,7 @@
                     return true;
                 });
             };
-
+            
             data.render = function (parameters) {
                 if (parameters === undefined) {
                     parameters = {};
@@ -171,6 +212,18 @@
                     (parameters.item ? parameters.item.$item_openable_items: data.$variablesExplorer_items)
                     .find('.VariablesExplorer_items_item_button:not(.__proto)  .VariablesExplorer_items_item_button_isNotPointer').hide();
                 }
+
+                data.$variablesExplorer_content.scrollLeft(data.scroll.x);
+                data.$variablesExplorer_content.scrollTop(data.scroll.y);
+
+                if (!parameters.item) {
+                    data.signalPointings();
+                    data.signalOthers();
+                }
+
+                $variablesExplorer.trigger('VariablesExplorer_rendered', {
+                    item: parameters.item
+                });
 
                 data.$variablesExplorer_content.scrollLeft(data.scroll.x);
                 data.$variablesExplorer_content.scrollTop(data.scroll.y);
@@ -239,6 +292,22 @@
                 item.$item_button_type = $item.find('.VariablesExplorer_items_item_button_type');
                 item.$item_button_name = $item.find('.VariablesExplorer_items_item_button_name');
                 item.$item_button_value = $item.find('.VariablesExplorer_items_item_button_value');
+                item.$item_pointingsSVG = $item.find('.VariablesExplorer_items_item_pointingsSVG');
+                item.$item_pointingsSVG_path__proto = item.$item_pointingsSVG.find('.VariablesExplorer_items_item_pointingsSVG_path.__proto');
+
+                var color = [
+                    50 + (Math.floor(Math.random()*255) - 50),
+                    50 + (Math.floor(Math.random()*255) - 50),
+                    50 + (Math.floor(Math.random()*255) - 50)
+                ];
+
+                var i = Math.floor(Math.random()*3);
+                
+                if ((color[i] += 120) > 255) {
+                    color[i] = 255;
+                }
+                
+                item.path_css_stroke = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
 
                 if (item.variable.is_pointer) {
                     item.$item_button_isPointer.show();
@@ -287,7 +356,7 @@
                         (data.modifieds[item.expression].line == data.location.line)
                     )
                 ) {
-                    data.mark_changes &&
+                    data.is_mark_changes &&
                     item.$item.addClass('VariablesExplorer__changed');
                     data.modifieds[item.expression] = {file: data.location.file, line: data.location.line};
                 }
@@ -308,6 +377,21 @@
 
                 data.currents[item.expression] = item.variable.value;
 
+                item.iterateItems = function (parameters) {
+                    if (parameters === undefined) {
+                        parameters = {};
+                    }
+    
+                    var _iter = function (items) {
+                        items.forEach(function (_item, _item_i) {
+                            parameters.iterate({item: _item});
+                            _iter(_item.items);
+                        });
+                    };
+    
+                    _iter(item.items);
+                };
+                
                 item.setLoading = function (is_loading) {
                     item.is_loading = is_loading;
 
@@ -335,11 +419,27 @@
                     item.saveState({
                         is_opened: true
                     });
+
+                    data.$variablesExplorer_content.scrollLeft(data.scroll.x);
+                    data.$variablesExplorer_content.scrollTop(data.scroll.y);
+
+                    item.signalPointings();
+                    data.signalOthers();
+
+                    $variablesExplorer.trigger('VariablesExplorer_item_opened', {item});
                 };
 
                 item.close = function (parameters) {
                     item.is_opened = false;
                     item.$item_openable.hide();
+
+                    item.iterateItems({iterate: function (iteration) {
+                        iteration.item.clearPointingSignals();
+                        iteration.item.clearPointingSlots();
+                    }});
+                    
+                    item.$item_openable_items.find('.VariablesExplorer_items_item:not(.__proto)').remove();
+                    item.items = [];
 
                     item.saveState();
                 };
@@ -431,6 +531,262 @@
                     });
                 };
 
+                item.signalPointings = function (parameters) {
+                    if (parameters === undefined) {
+                        parameters = {};
+                    }
+
+                    if (parameters.is_recursive === undefined) {
+                        parameters.is_recursive = true;
+                    }
+                    
+                    if (!data.is_signal_pointings) {
+                        return true;
+                    }
+                    
+                    item.pointing_signals = [];
+                    
+                    item.$item_pointingsSVG.find('.VariablesExplorer_items_item_pointingsSVG_path:not(.__proto)').remove();
+
+                    (
+                        parameters.$to 
+                        ? parameters.$to
+                        : $('.VariablesExplorer:not(.__proto)').not($variablesExplorer)
+                    ).each(function () {
+                        var $target = $(this);
+                        var target = $target.data().VariablesExplorer;
+
+                        if (!target) {
+                            return true;
+                        }
+
+                        if (!target.is_slot_pointings) {
+                            return true;
+                        }
+
+                        var _draw = function (items) {
+                            items.forEach(function (_item, _item_i) {
+                                if (
+                                    (!item.variable.is_pointer)
+                                    ||
+                                    (item.variable.value != _item.variable.address)
+                                    ||
+                                    !parseInt(_item.variable.address)
+                                ) {
+                                    _draw(_item.items);
+                                    return true;
+                                }
+                                
+                                var c = 100;
+                            
+                                var ix, iy;
+                                var icx, icy;
+        
+                                var tx, ty;
+                                var tcx, tcy;
+                                var tl1x, tl1y, tl2x, tl2y;
+        
+                                ix = item.$item_button.offset().left;
+                                iy = item.$item_button.offset().top+(item.$item_button.outerHeight()/2);
+        
+                                if (data.signal_bounds.left && (ix < data.signal_bounds.left)) {
+                                    ix = data.signal_bounds.left;
+                                } else if (data.signal_bounds.right && (ix > data.signal_bounds.right)) {
+                                    ix = data.signal_bounds.right;
+                                }
+                                
+                                if (data.signal_bounds.top && (iy < data.signal_bounds.top)) {
+                                    iy = data.signal_bounds.top;
+                                } else if (data.signal_bounds.bottom && (iy > data.signal_bounds.bottom)) {
+                                    iy = data.signal_bounds.bottom;
+                                }
+                                
+                                icx = ix - c;
+                                icy = iy - c;
+        
+                                tx = _item.$item.offset().left;
+                                ty = _item.$item.offset().top+(item.$item_button.outerHeight()/2);
+                                
+                                if (target.signal_bounds.left && (tx < target.signal_bounds.left)) {
+                                    tx = target.signal_bounds.left;
+                                } else if (target.signal_bounds.right && (tx > target.signal_bounds.right)) {
+                                    tx = target.signal_bounds.right;
+                                }
+                                
+                                if (target.signal_bounds.top && (ty < target.signal_bounds.top)) {
+                                    ty = target.signal_bounds.top;
+                                } else if (target.signal_bounds.bottom && (ty > target.signal_bounds.bottom)) {
+                                    ty = target.signal_bounds.bottom;
+                                }
+
+                                tcx = tx - c;
+                                tcy = ty - c;
+                                
+                                tl1x = tx - 2;
+                                tl1y = ty - 11;
+                                
+                                tl2x = tx - 11;
+                                tl2y = ty - 3;
+                                
+                                var svg = `
+                                    M ${ix}, ${iy}
+                                    C ${icx}, ${icy}
+                                    ${tcx}, ${tcy}
+                                    ${tx}, ${ty}
+                                    L ${tl1x}, ${tl1y}
+                                    M ${tx}, ${ty}
+                                    L ${tl2x}, ${tl2y}
+                                `;
+                                
+                                var $path = item.$item_pointingsSVG_path__proto.clone();
+                                $path.removeClass('__proto');
+                                $path.appendTo(item.$item_pointingsSVG);
+                                
+                                $path.attr('d', svg);
+                                $path.css('stroke', item.path_css_stroke);
+
+                                item.pointing_signals.push({
+                                    item: _item,
+                                    $path: $path
+                                });
+
+                                var is_exists = false;
+                                
+                                _item.pointing_slots.every(function (_slot, _slot_i) {
+                                    if (item.id == _slot.item.id) {
+                                        _slot.$path = $path;
+                                        
+                                        is_exists = true;
+                                        return false;
+                                    }
+                                    return true;
+                                });
+
+                                if (!is_exists) {
+                                    _item.pointing_slots.push({
+                                        item: item,
+                                        $path: $path
+                                    });
+                                }
+                                
+                                _draw(_item.items);
+                            }); 
+                        };
+
+                        _draw(target.items);
+                    });
+                    
+                    data.$pointingPlaceholder && item.$item_pointingsSVG.appendTo(data.$pointingPlaceholder);
+                    item.$item_pointingsSVG.show();
+
+                    parameters.is_recursive &&
+                    item.iterateItems({iterate: function (iteration) {
+                        iteration.item.signalPointings();
+                    }});
+                };
+
+                item.slotPointings = function (parameters) {
+                    if (parameters === undefined) {
+                        parameters = {};
+                    }
+
+                    if (parameters.is_recursive === undefined) {
+                        parameters.is_recursive = true;
+                    }
+                    
+                    if (!data.is_slot_pointings) {
+                        return true;
+                    }
+                    
+                    item.pointing_slots.every(function (_slot, _slot_i) {
+                        _slot.item.signalPointings({is_recursive: parameters.is_recursive});
+                        return true;
+                    });
+                    
+                    parameters.is_recursive &&
+                    item.iterateItems({iterate: function (iteration) {
+                        iteration.item.pointing_slots.every(function (_slot, _slot_i) {
+                            _slot.item.signalPointings({is_recursive: parameters.is_recursive});
+                            return true;
+                        });
+                    }});
+                };
+                
+                item.clearPointingSignals = function (parameters) {
+                    if (parameters === undefined) {
+                        parameters = {};
+                    }  
+
+                    if (parameters.is_recursive === undefined) {
+                        parameters.is_recursive = true;
+                    }
+                    
+                    item.pointing_signals.every(function (_signal, _signal_i) {
+                        var slots = [];
+                        
+                        _signal.item.pointing_slots.every(function (_slot, _slot_i) {
+                            if (_slot.item.id == item.id) {
+                                return true;
+                            }
+
+                            slots.push(_slot);
+                            
+                            return true;
+                        });
+
+                        _signal.item.pointing_slots = slots;
+
+                        return true;
+                    });
+                    
+                    item.pointing_signals = [];
+                    
+                    item.$item_pointingsSVG.find('.VariablesExplorer_items_item_pointingsSVG_path').remove();
+                    item.$item_pointingsSVG.hide();
+
+                    parameters.is_recursive &&
+                    item.iterateItems({iterate: function (iteration) {
+                        iteration.item.clearPointingSignals();
+                    }});
+                };
+                
+                item.clearPointingSlots = function (parameters) {
+                    if (parameters === undefined) {
+                        parameters = {};
+                    }  
+
+                    if (parameters.is_recursive === undefined) {
+                        parameters.is_recursive = true;
+                    }
+                    
+                    item.pointing_slots.every(function (_slot, _slot_i) {
+                        _slot.$path.remove();
+
+                        var signals = [];
+    
+                        _slot.item.pointing_signals.every(function (_signal, _signal_i) {
+                            if (_signal.item.id == item.id) {
+                                return true;
+                            }
+    
+                            signals.push(_signal);
+                            
+                            return true;
+                        });
+    
+                        _slot.item.pointing_signals = signals;
+                        
+                        return true;
+                    });
+                    
+                    item.pointing_slots = [];
+
+                    parameters.is_recursive &&
+                    item.iterateItems({iterate: function (iteration) {
+                        iteration.item.clearPointingSlots();
+                    }});
+                };
+                
                 item.$item_button_value.on('click.VariablesExplorer-'+data.id, function (event) {
                     event.stopPropagation();
                 });
@@ -452,6 +808,82 @@
                         });
                     }
                 }
+            };
+
+            data.signalOthers = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                $('.VariablesExplorer:not(.__proto)').not($variablesExplorer).each(function () {
+                    var $source = $(this);
+                    var source = $source.data().VariablesExplorer;
+
+                    if (!source) {
+                        return true;
+                    }
+
+                    if (!source.is_signal_pointings) {
+                        return true;
+                    }
+
+                    source.signalPointings({$to: $variablesExplorer});
+                });
+            };
+            
+            data.iterateItems = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                var _iter = function (items) {
+                    items.forEach(function (_item, _item_i) {
+                        parameters.iterate({item: _item});
+                        _iter(_item.items);
+                    });
+                };
+
+                _iter(data.items);
+            };
+            
+            data.signalPointings = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                data.items.forEach(function (_item, _item_i) {
+                    _item.signalPointings({is_recursive: parameters.is_recursive});
+                });
+            };
+            
+            data.slotPointings = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                data.items.forEach(function (_item, _item_i) {
+                    _item.slotPointings({is_recursive: parameters.is_recursive});
+                });
+            };
+            
+            data.clearPointingSignals = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                data.items.forEach(function (_item, _item_i) {
+                    _item.clearPointingSignals({is_recursive: parameters.is_recursive});
+                });
+            };
+            
+            data.clearPointingSlots = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                data.items.forEach(function (_item, _item_i) {
+                    _item.clearPointingSlots({is_recursive: parameters.is_recursive});
+                });
             };
             
             data.$variablesExplorer_content.on('mousewheel.VariablesExplorer.'+data.id, function (event) {

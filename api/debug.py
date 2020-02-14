@@ -715,6 +715,7 @@ def getSerializableStructMembers(value, ctype):
 
         member["name"] = _field.name
         member["is_pointer"] = _field.type.code == gdb.TYPE_CODE_PTR
+        member["address"] = str(memberValue.address) if memberValue.address else "0x0"
         member["is_base_class"] = _field.is_base_class
         member["artificial"] = _field.artificial
         member["bitsize"] = _field.bitsize
@@ -833,6 +834,7 @@ class Variable():
         serializable["is_global"] = block.is_global
         serializable["name"] = self.name
         serializable["is_pointer"] = value.type.code == gdb.TYPE_CODE_PTR
+        serializable["address"] = str(value.address) if value.address else "0x0"
 
         try:
             serializable["value"] = value.string()

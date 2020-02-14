@@ -192,7 +192,7 @@
 
                 file.$variablePopup.appendTo($('body'));
 
-                file.variablePopup_variablesExplorer.mark_changes = false;
+                file.variablePopup_variablesExplorer.is_mark_changes = false;
                 file.variablePopup_variablesExplorer.setMaxHeight({max_height: file.$variablePopup.css('max-height')});
 
                 file.$variablePopup_variablesExplorer.on('VariablesExplorer_item_toggle.FileTabs', function (event, parameters) {

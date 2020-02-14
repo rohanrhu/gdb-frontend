@@ -177,6 +177,7 @@
 }
 
 .FileTabs_editors_items_item_variablePopup {
+    display: none;
     position: absolute;
     z-index: 2000;
     min-width: 300px;

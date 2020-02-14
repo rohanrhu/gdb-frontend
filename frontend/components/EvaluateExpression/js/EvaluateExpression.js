@@ -10,279 +10,455 @@
  */
 
 (function($){
-    var methods = {
-        init: function (parameters) {
-            var t_init = this;
-            var $elements = $(this);
+    var methods = {};
 
-            if (typeof parameters == 'undefined') {
-                parameters = {};
+    methods.init = function (parameters) {
+        var t_init = this;
+        var $elements = $(this);
+
+        if (typeof parameters == 'undefined') {
+            parameters = {};
+        }
+
+        t_init.parameters = parameters;
+
+        $elements.each(function () {
+            var $evaluateExpression = $(this);
+
+            $(window).off('EvaluateExpression');
+            $(document).off('EvaluateExpression');
+            $('body').off('EvaluateExpression')
+            
+            $evaluateExpression.off('.EvaluateExpression');
+            $evaluateExpression.find('*').off('.EvaluateExpression');
+
+            var data = {};
+            $evaluateExpression.data('EvaluateExpression', data);
+            data.$evaluateExpression = $evaluateExpression;
+
+            if (!window.hasOwnProperty('EvaluateExpression_component_id')) {
+                EvaluateExpression_component_id = 0;
             }
 
-            t_init.parameters = parameters;
+            data.id = ++EvaluateExpression_component_id;
 
-            $elements.each(function () {
-                var $evaluateExpression = $(this);
+            data.components = {};
 
-                $(window).off('EvaluateExpression');
-                $(document).off('EvaluateExpression');
-                $('body').off('EvaluateExpression')
+            data.$evaluateExpression_window = $evaluateExpression.find('.EvaluateExpression_window');
+            data.$evaluateExpression_window_closeBtn = data.$evaluateExpression_window.find('.EvaluateExpression_window_closeBtn');
+            
+            data.$evaluateExpression_window_box_header_expression = data.$evaluateExpression_window.find('.EvaluateExpression_window_box_header_expression');
+            data.$evaluateExpression_window_box_header_expression_input = data.$evaluateExpression_window_box_header_expression.find('.EvaluateExpression_window_box_header_expression_input');
+            data.$evaluateExpression_window_box_header_expression_input_rI = data.$evaluateExpression_window_box_header_expression_input.find('.EvaluateExpression_window_box_header_expression_input_rI');
+            
+            data.$evaluateExpression_window_box_header_btn__signalEnabled = data.$evaluateExpression_window.find('.EvaluateExpression_window_box_header_btn__signalEnabled');
+            data.$evaluateExpression_window_box_header_btn__slotEnabled = data.$evaluateExpression_window.find('.EvaluateExpression_window_box_header_btn__slotEnabled');
+
+            data.$evaluateExpression_window_mover = data.$evaluateExpression_window.find('.EvaluateExpression_window_mover');
+
+            data.$evaluateExpression_items = $evaluateExpression.find('.EvaluateExpression_items');
+            data.$evaluateExpression_items_item__proto = $evaluateExpression.find('.EvaluateExpression_items_item.__proto');
+            data.$evaluateExpression_items_parentBtn = $evaluateExpression.find('.EvaluateExpression_items_parentBtn');
+            
+            data.$evaluateExpression_window_box_content = $evaluateExpression.find('.EvaluateExpression_window_box_content');
+
+            data.$evaluateExpression_value = $evaluateExpression.find('.EvaluateExpression_value');
+            data.$evaluateExpression_noValue = $evaluateExpression.find('.EvaluateExpression_noValue');
+
+            data.$evaluateExpression_variablesExplorerComp = data.$evaluateExpression.find('.EvaluateExpression_variablesExplorerComp');
+            data.$evaluateExpression_variablesExplorer = data.$evaluateExpression_variablesExplorerComp.find('> .VariablesExplorer');
+            data.$evaluateExpression_variablesExplorer.VariablesExplorer({id: 'evaluateExpression_variablesExplorer'});
+            data.evaluateExpression_variablesExplorer = data.$evaluateExpression_variablesExplorer.data().VariablesExplorer;
+            data.components.variablesExplorer = data.evaluateExpression_variablesExplorer;
+            
+            data.components.variablesExplorer.is_signal_pointings = false;
+            data.components.variablesExplorer.is_slot_pointings = false;
+            data.components.variablesExplorer.is_mark_changes = false;
+            data.components.variablesExplorer.is_mark_changes = false;
+            data.components.variablesExplorer.setFluent(true);
+
+            data.animation_duration = 100;
+
+            data.is_passive = false;
+            data.is_opened = false;
+
+            data.$pointingPlaceholder = t_init.parameters.$pointingPlaceholder ? t_init.parameters.$pointingPlaceholder: false;
+
+            var resize_timeout = 0;
+            
+            data.resizeObserver = new ResizeObserver(function (entries) {
+                var entry = entries[0];
+                var content = entry.target;
+
+                data.complyBounds();
+
+                clearTimeout(resize_timeout);
+
+                resize_timeout = setTimeout(function () {
+                    data.components.variablesExplorer.signalPointings();
+                    data.components.variablesExplorer.slotPointings();
+                    data.components.variablesExplorer.signalOthers();
+                }, 250);
+            });
+
+            data.resizeObserver.observe(data.$evaluateExpression_window_box_content[0]);
+        
+            data.setPointingPlaceholder = function ($ph) {
+                data.$pointingPlaceholder = $ph;
+                data.components.variablesExplorer.setPointingPlaceholder(data.$pointingPlaceholder);
+            };
+            
+            data.complyBounds = function () {
+                var bounds = {};
                 
-                $evaluateExpression.off('.EvaluateExpression');
-                $evaluateExpression.find('*').off('.EvaluateExpression');
+                var x = data.$evaluateExpression_window_box_content.offset().left;
+                var y = data.$evaluateExpression_window_box_content.offset().top;
+                var w = data.$evaluateExpression_window_box_content.innerWidth();
+                var h = data.$evaluateExpression_window_box_content.innerHeight();
+                
+                bounds.left = x;
+                bounds.top = y;
+                bounds.right = x + w;
+                bounds.bottom = y + h;
+                
+                data.components.variablesExplorer.setSignalBounds({bounds});
+            };
 
-                var data = {};
-                $evaluateExpression.data('EvaluateExpression', data);
-                data.$evaluateExpression = $evaluateExpression;
+            data.$evaluateExpression_window_box_header_expression_input_rI.on('keydown.EvaluateExpression-'+data.id, function (event) {
+                if (!data.is_opened) {
+                    return;
+                }
+                
+                var expression = data.$evaluateExpression_window_box_header_expression_input_rI.val();
+                
+                var keycode = event.keyCode ? event.keyCode : event.which;
+                if (keycode == 27) {
+                    data.close();
+                } else if (keycode == 13) {
+                    data.refresh({expression});
+                }
+            });
+            
+            $evaluateExpression.on('mousedown.EvaluateExpression-' + data.id, function (event) {
+                data.focus();
+            });
+            
+            data.$evaluateExpression_window_closeBtn.on('mousedown.EvaluateExpression-' + data.id, function (event) {
+                data.close();
+            });
 
-                if (!window.hasOwnProperty('EvaluateExpression_component_id')) {
-                    EvaluateExpression_component_id = 0;
+            $(document).on('mousedown.EvaluateExpression-'+data.id, function (event) {
+                if ($evaluateExpression.is(event.target) || $evaluateExpression.has(event.target).length) {
+                    return;
+                }
+                
+                data.blur();
+            });
+
+            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_toggle.EvaluateExpression', function (event, parameters) {
+                if (parameters.item.is_loading) {
+                    return;
+                }
+                
+                if (parameters.item.is_opened) {
+                    parameters.item.close();
+                    return;
                 }
 
-                data.id = ++EvaluateExpression_component_id;
+                parameters.item.setLoading(true);
 
-                data.components = {};
+                var tree = [];
 
-                data.$evaluateExpression_window = $evaluateExpression.find('.EvaluateExpression_window');
-                data.$evaluateExpression_window_closeBtn = data.$evaluateExpression_window.find('.EvaluateExpression_window_closeBtn');
+                parameters.item.tree.forEach(function (_member, _member_i) {
+                    tree.push(_member.variable.name);
+                });
 
-                data.$evaluateExpression_window_box_header_expression = data.$evaluateExpression_window.find('.EvaluateExpression_window_box_header_expression');
-                data.$evaluateExpression_window_box_header_expression_input = data.$evaluateExpression_window_box_header_expression.find('.EvaluateExpression_window_box_header_expression_input');
-                data.$evaluateExpression_window_box_header_expression_input_rI = data.$evaluateExpression_window_box_header_expression_input.find('.EvaluateExpression_window_box_header_expression_input_rI');
+                var qs = {
+                    variable: parameters.item.variable.name
+                };
 
-                data.$evaluateExpression_window_mover = data.$evaluateExpression_window.find('.EvaluateExpression_window_mover');
+                if (tree.length > 1) {
+                    qs['expression'] = tree.join('.');
+                }
 
-                data.$evaluateExpression_items = $evaluateExpression.find('.EvaluateExpression_items');
-                data.$evaluateExpression_items_item__proto = $evaluateExpression.find('.EvaluateExpression_items_item.__proto');
-                data.$evaluateExpression_items_parentBtn = $evaluateExpression.find('.EvaluateExpression_items_parentBtn');
+                $.ajax({
+                    url: '/api/frame/variable',
+                    cache: false,
+                    method: 'get',
+                    data: qs,
+                    success: function (result_json) {
+                        if (!result_json.ok) {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+
+                            parameters.item.setLoading(false);
+
+                            return;
+                        }
+
+                        parameters.item.load({
+                            members: result_json.variable.members
+                        });
+
+                        parameters.item.setLoading(false);
+                        parameters.item.render();
+                        parameters.item.open({is_preload: parameters.is_preload});
+                    },
+                    error: function () {
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                        console.trace('An error occured.');
+
+                        parameters.item.setLoading(false);
+                    }
+                });
+            });
+
+            data.refresh = function (parameters) {
+                if (data.components.variablesExplorer.is_loading) {
+                    return;
+                }
+
+                data.components.variablesExplorer.setLoading(true);
+                data.components.variablesExplorer.clear();
+
+                if (!parameters.expression) {
+                    data.$evaluateExpression_noValue.show();
+                    data.$evaluateExpression_value.hide();
+                    return;
+                }
                 
-                data.$evaluateExpression_window_box_content = $evaluateExpression.find('.EvaluateExpression_window_box_content');
+                $.ajax({
+                    url: '/api/frame/variable',
+                    cache: false,
+                    method: 'get',
+                    data: {
+                        expression: parameters.expression
+                    },
+                    success: function (result_json) {
+                        data.components.variablesExplorer.setLoading(false);
+                        
+                        if (!result_json.ok) {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+                            return;
+                        }
 
-                data.$evaluateExpression_value = $evaluateExpression.find('.EvaluateExpression_value');
-                data.$evaluateExpression_noValue = $evaluateExpression.find('.EvaluateExpression_noValue');
+                        if (result_json.variable) {
+                            data.$evaluateExpression_noValue.hide();
+                            data.$evaluateExpression_value.show();
 
-                data.$evaluateExpression_variablesExplorerComp = data.$evaluateExpression.find('.EvaluateExpression_variablesExplorerComp');
-                data.$evaluateExpression_variablesExplorer = data.$evaluateExpression_variablesExplorerComp.find('> .VariablesExplorer');
-                data.$evaluateExpression_variablesExplorer.VariablesExplorer();
-                data.evaluateExpression_variablesExplorer = data.$evaluateExpression_variablesExplorer.data().VariablesExplorer;
-                data.components.variablesExplorer = data.evaluateExpression_variablesExplorer;
+                            data.$evaluateExpression_variablesExplorer.data().VariablesExplorer.load({variables: [result_json.variable]});
+                            data.$evaluateExpression_variablesExplorer.data().VariablesExplorer.render();
+                        } else {
+                            data.$evaluateExpression_noValue.show();
+                            data.$evaluateExpression_value.hide();
+                        }
+                    },
+                    error: function () {
+                        data.components.variablesExplorer.setLoading(false);
+                        
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                        console.trace('An error occured.');
+                    }
+                });
+            };
 
-                data.components.variablesExplorer.mark_changes = false;
-                data.components.variablesExplorer.setFluent(true);
+            data.open = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
 
-                data.animation_duration = 100;
+                data.is_opened = true;
 
-                data.is_passive = false;
+                data.focus();
+                $evaluateExpression.data().Movable.focus();
+                
+                var x = (window.innerWidth / 2) - ($evaluateExpression.outerWidth()/2);
+                var y = (window.innerHeight / 2) - ($evaluateExpression.outerHeight()/2);
+
+                x = x + (5 + parseInt(Math.random()*20)) * (Math.random() >= 0.5 ? 1: -1);
+                y = y + (5 + parseInt(Math.random()*20)) * (Math.random() >= 0.5 ? 1: -1);
+                
+                $evaluateExpression.css('transform', 'translate('+x+'px, '+y+'px)');
+                
+                $evaluateExpression.fadeIn(data.animation_duration, function (event) {
+                    data.components.variablesExplorer.is_signal_pointings = true;
+                    data.components.variablesExplorer.is_slot_pointings = true;
+                    
+                    data.complyBounds();
+                    
+                    data.components.variablesExplorer.signalPointings();
+                    data.components.variablesExplorer.slotPointings();
+                    
+                    data.$evaluateExpression_window_box_header_expression_input_rI.focus();
+                    
+                    if (parameters.onOpened) {
+                        parameters.onOpened();
+                    }
+                });
+            };
+
+            data.close = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+                
                 data.is_opened = false;
 
-                data.$evaluateExpression_window_box_header_expression_input_rI.on('keydown.EvaluateExpression-'+data.id, function (event) {
-                    if (!data.is_opened) {
-                        return;
-                    }
-                    
-                    var expression = data.$evaluateExpression_window_box_header_expression_input_rI.val();
-                    
-                    var keycode = event.keyCode ? event.keyCode : event.which;
-                    if (keycode == 27) {
-                        data.close();
-                    } else if (keycode == 13) {
-                        data.refresh({expression});
-                    }
-                });
+                data.blur();
+                $evaluateExpression.data().Movable.blur();
                 
-                $evaluateExpression.on('mousedown.EvaluateExpression-' + data.id, function (event) {
-                    data.focus();
+                $evaluateExpression.fadeOut(data.animation_duration, function (event) {
+                    if (parameters.onClosed) {
+                        parameters.onClosed();
+                    }
+                    $evaluateExpression.trigger('EvaluateExpression_closed');
                 });
+
+                data.components.variablesExplorer.is_signal_pointings = false;
+                data.components.variablesExplorer.is_slot_pointings = false;
+
+                data.components.variablesExplorer.clear();
+            };
+
+            data.focus = function (parameters) {
+                $evaluateExpression.addClass('EvaluateExpression__focused');
+            };
+            
+            data.blur = function (parameters) {
+                $evaluateExpression.removeClass('EvaluateExpression__focused');
+            };
+            
+            data.setSize = function (parameters) {
+                data.$evaluateExpression_window_box_content.width(parameters.width);
+                data.$evaluateExpression_window_box_content.height(parameters.height);
+            };
+
+            data.toggle = function (parameters) {
+                data[data.is_opened ? 'close': 'open']();
+            };
+
+            var move_timeout = 0;
+            
+            $evaluateExpression.on('Movable_move.EvaluateExpression-' + data.id, function (event) {
+                clearTimeout(move_timeout);
+
+                data.complyBounds();
                 
-                data.$evaluateExpression_window_closeBtn.on('mousedown.EvaluateExpression-' + data.id, function (event) {
-                    data.close();
-                });
+                move_timeout = setTimeout(function () {
+                    data.components.variablesExplorer.signalPointings();
+                    data.components.variablesExplorer.slotPointings();
+                }, 16);
+            });
 
-                $(document).on('mousedown.EvaluateExpression-'+data.id, function (event) {
-                    if ($evaluateExpression.is(event.target) || $evaluateExpression.has(event.target).length) {
-                        return;
-                    }
-                    
-                    data.blur();
-                });
-                
-                data.$evaluateExpression_window_box_content.on('resize.EvaluateExpression-' + data.id, function (event) {
-                    data.variablePopup_variablesExplorer.setMaxHeight({max_height: file.$variablePopup.height()});
-                });
-
-                data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_toggle.EvaluateExpression', function (event, parameters) {
-                    if (parameters.item.is_opened) {
-                        parameters.item.close();
-                        return;
-                    }
-    
-                    parameters.item.setLoading(true);
-    
-                    var tree = [];
-    
-                    parameters.item.tree.forEach(function (_member, _member_i) {
-                        tree.push(_member.variable.name);
+            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_rendered.EvaluateExpression', function (event, parameters) {
+                data.components.variablesExplorer.iterateItems({iterate: function (iteration) {
+                    iteration.item.$item_pointingsSVG.css('z-index', parseInt($evaluateExpression.css('z-index'))+1);
+                    iteration.item.pointing_slots.forEach(function (_slot, _slot_i) {
+                        _slot.item.$item_pointingsSVG.css('z-index', parseInt($evaluateExpression.css('z-index'))+1);
                     });
-    
-                    var qs = {
-                        variable: parameters.item.variable.name
-                    };
-    
-                    if (tree.length > 1) {
-                        qs['expression'] = tree.join('.');
-                    }
-    
-                    $.ajax({
-                        url: '/api/frame/variable',
-                        cache: false,
-                        method: 'get',
-                        data: qs,
-                        success: function (result_json) {
-                            if (!result_json.ok) {
-                                GDBFrontend.showMessageBox({text: 'An error occured.'});
-                                console.trace('An error occured.');
-    
-                                parameters.item.setLoading(false);
-    
-                                return;
-                            }
-    
-                            parameters.item.load({
-                                members: result_json.variable.members
-                            });
-    
-                            parameters.item.render();
-                            parameters.item.open({is_preload: parameters.is_preload});
-                            parameters.item.setLoading(false);
-                        },
-                        error: function () {
-                            GDBFrontend.showMessageBox({text: 'An error occured.'});
-                            console.trace('An error occured.');
-    
-                            parameters.item.setLoading(false);
-                        }
+                }});
+            });
+            
+            $evaluateExpression.on('Movable_focused.EvaluateExpression-' + data.id, function (event, parameters) {
+                data.components.variablesExplorer.iterateItems({iterate: function (iteration) {
+                    iteration.item.$item_pointingsSVG.css('z-index', parameters.zIndex+1);
+                    iteration.item.pointing_slots.forEach(function (_slot, _slot_i) {
+                        _slot.item.$item_pointingsSVG.css('z-index', parameters.zIndex+1);
                     });
-                });
-
-                data.refresh = function (parameters) {
-                    if (!parameters.expression) {
-                        data.$evaluateExpression_noValue.show();
-                        data.$evaluateExpression_value.hide();
-                        return;
-                    }
-                    
-                    $.ajax({
-                        url: '/api/frame/variable',
-                        cache: false,
-                        method: 'get',
-                        data: {
-                            expression: parameters.expression
-                        },
-                        success: function (result_json) {
-                            if (!result_json.ok) {
-                                GDBFrontend.showMessageBox({text: 'An error occured.'});
-                                console.trace('An error occured.');
-                                return;
-                            }
-
-                            if (result_json.variable) {
-                                data.$evaluateExpression_variablesExplorer.data().VariablesExplorer.load({variables: [result_json.variable]});
-                                data.$evaluateExpression_variablesExplorer.data().VariablesExplorer.render();
-
-                                data.$evaluateExpression_noValue.hide();
-                                data.$evaluateExpression_value.show();
-                            } else {
-                                data.$evaluateExpression_noValue.show();
-                                data.$evaluateExpression_value.hide();
-                            }
-                        },
-                        error: function () {
-                            GDBFrontend.showMessageBox({text: 'An error occured.'});
-                            console.trace('An error occured.');
-                        }
+                }});
+            });
+            
+            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_opened.EvaluateExpression', function (event, parameters) {
+                data.components.variablesExplorer.iterateItems({iterate: function (iteration) {
+                    iteration.item.$item_pointingsSVG.css('z-index', parseInt($evaluateExpression.css('z-index'))+1);
+                    iteration.item.pointing_slots.forEach(function (_slot, _slot_i) {
+                        _slot.item.$item_pointingsSVG.css('z-index', parseInt($evaluateExpression.css('z-index'))+1);
                     });
-                };
+                }});
+            });
+            
+            var scroll_timeout = 0;
+            
+            data.$evaluateExpression_window_box_content.on('scroll.EvaluateExpression-' + data.id, function (event) {
+                clearTimeout(scroll_timeout);
 
-                data.open = function (parameters) {
-                    if (parameters === undefined) {
-                        parameters = {};
-                    }
+                scroll_timeout = setTimeout(function () {
+                    data.components.variablesExplorer.signalPointings();
+                    data.components.variablesExplorer.slotPointings();
+                    data.components.variablesExplorer.signalOthers();
+                }, 250);
+            });
 
-                    data.is_opened = true;
+            data.$evaluateExpression_window_box_header_btn__signalEnabled.on('click.EvaluateExpression', function (event) {
+                data.$evaluateExpression_window_box_header_btn__signalEnabled[
+                    (
+                        data.components.variablesExplorer.is_signal_pointings
+                        = !data.components.variablesExplorer.is_signal_pointings
+                    )
+                    ? 'addClass'
+                    : 'removeClass'
+                ]('EvaluateExpression__checked');
 
-                    data.focus();
-                    $evaluateExpression.data().Movable.focus();
-                    
-                    var x = (window.innerWidth / 2) - ($evaluateExpression.outerWidth()/2);
-                    var y = (window.innerHeight / 2) - ($evaluateExpression.outerHeight()/2);
+                data.components.variablesExplorer.clearPointingSignals();
+                data.components.variablesExplorer.clearPointingSlots();
+                data.components.variablesExplorer.signalPointings();
+                data.components.variablesExplorer.slotPointings();
+                data.components.variablesExplorer.signalOthers();
+            });
+            
+            data.$evaluateExpression_window_box_header_btn__slotEnabled.on('click.EvaluateExpression', function (event) {
+                data.$evaluateExpression_window_box_header_btn__slotEnabled[
+                    (
+                        data.components.variablesExplorer.is_slot_pointings
+                        = !data.components.variablesExplorer.is_slot_pointings
+                    )
+                    ? 'addClass'
+                    : 'removeClass'
+                ]('EvaluateExpression__checked');
 
-                    x = x + (5 + parseInt(Math.random()*20)) * (Math.random() >= 0.5 ? 1: -1);
-                    y = y + (5 + parseInt(Math.random()*20)) * (Math.random() >= 0.5 ? 1: -1);
-                    
-                    $evaluateExpression.css('transform', 'translate('+x+'px, '+y+'px)');
-                    
-                    $evaluateExpression.fadeIn(data.animation_duration, function (event) {
-                        data.$evaluateExpression_window_box_header_expression_input_rI.focus();
-                        
-                        if (parameters.onOpened) {
-                            parameters.onOpened();
-                        }
-                    });
-                };
-
-                data.close = function (parameters) {
-                    if (parameters === undefined) {
-                        parameters = {};
-                    }
-                    
-                    data.is_opened = false;
-
-                    data.blur();
-                    $evaluateExpression.data().Movable.blur();
-                    
-                    $evaluateExpression.fadeOut(data.animation_duration, function (event) {
-                        if (parameters.onClosed) {
-                            parameters.onClosed();
-                        }
-                        $evaluateExpression.trigger('EvaluateExpression_closed');
-                    });
-                };
-
-                data.focus = function (parameters) {
-                    $evaluateExpression.addClass('EvaluateExpression__focused');
-                };
-                
-                data.blur = function (parameters) {
-                    $evaluateExpression.removeClass('EvaluateExpression__focused');
-                };
-                
-                data.setSize = function (parameters) {
-                    data.$evaluateExpression_window_box_content.width(parameters.width);
-                    data.$evaluateExpression_window_box_content.height(parameters.height);
-                };
-
-                data.toggle = function (parameters) {
-                    data[data.is_opened ? 'close': 'open']();
-                };
-
-                $evaluateExpression.on('EvaluateExpression_initialize.EvaluateExpression-' + data.id, function (event) {
-                    data.init();
-                });
-
-                $evaluateExpression.on('EvaluateExpression_comply.EvaluateExpression-' + data.id, function (event) {
-                    data.comply();
-                });
-
-                data.init = function () {
-                    $evaluateExpression.Movable();
-                };
-
-                data.comply = function () {
-                };
-
+                data.components.variablesExplorer.clearPointingSignals();
+                data.components.variablesExplorer.clearPointingSlots();
+                data.components.variablesExplorer.signalPointings();
+                data.components.variablesExplorer.slotPointings();
+                data.components.variablesExplorer.signalOthers();
+            });
+            
+            $evaluateExpression.on('EvaluateExpression_initialize.EvaluateExpression-' + data.id, function (event) {
                 data.init();
             });
-        }
+
+            $evaluateExpression.on('EvaluateExpression_comply.EvaluateExpression-' + data.id, function (event) {
+                data.comply();
+            });
+
+            data.init = function () {
+                $evaluateExpression.Movable();
+
+                data.$evaluateExpression_window_box_header_btn__signalEnabled[
+                    (
+                        data.components.variablesExplorer.is_signal_pointings
+                        = !data.components.variablesExplorer.is_signal_pointings
+                    )
+                    ? 'addClass'
+                    : 'removeClass'
+                ]('EvaluateExpression__checked');
+                
+                data.$evaluateExpression_window_box_header_btn__slotEnabled[
+                    (
+                        data.components.variablesExplorer.is_slot_pointings
+                        = !data.components.variablesExplorer.is_slot_pointings
+                    )
+                    ? 'addClass'
+                    : 'removeClass'
+                ]('EvaluateExpression__checked');
+            };
+
+            data.comply = function () {
+            };
+
+            data.init();
+        });
     };
 
     $.fn.EvaluateExpression = function(method) {

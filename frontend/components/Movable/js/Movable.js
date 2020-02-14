@@ -146,6 +146,8 @@ if (!window.Movable_zIndex_i) {
                     }
                     
                     $movable.css('transform', 'translate('+x+'px, '+y+'px)');
+
+                    $movable.trigger('Movable_move');
                 };
                 
                 $(document).on('mousemove.Movable-'+data.id, function (event) {
@@ -174,11 +176,13 @@ if (!window.Movable_zIndex_i) {
                 };
 
                 data.focus = function (parameters) {
-                    $movable.addClass('Movable__focused');
                     $movable.css('z-index', Movable_zIndex_i++);
+                    $movable.addClass('Movable__focused');
+                    $movable.trigger('Movable_focused', {zIndex: Movable_zIndex_i});
                 };
                 
                 data.blur = function (parameters) {
+                    $movable.trigger('Movable_blured');
                     $movable.removeClass('Movable__focused');
                 };
 
@@ -215,6 +219,8 @@ if (!window.Movable_zIndex_i) {
                     }
                     
                     $movable.css('transform', 'translate('+x+'px, '+y+'px)');
+
+                    $movable.trigger('Movable_move');
                 };
 
                 data.init();
