@@ -376,10 +376,14 @@
             });
 
             data.$GDBFrontend_load_connectBtn_openable_connectBtn.on('click.GDBFrontend', function (event) {
-                var address = data.$GDBFrontend_load_connectBtn_openable_addressInput.val();
+                var address = data.$GDBFrontend_load_connectBtn_openable_addressInput.val().trim();
 
-                if ((address.length < 10) || (address.indexOf(':') < 0)) {
-                    GDBFrontend.showMessageBox({text: "Provide a gdbserver address like \"127.0.0.1:2345\" (host:port)."});
+                if (
+                    ((address[0] == '/') && (address.length < 2))
+                    ||
+                    ((address[0] != '/') && ((address.length < 10) || (address.indexOf(':') < 0)))
+                ) {
+                    GDBFrontend.showMessageBox({text: "Provide a gdbserver address like \"127.0.0.1:2345\" (host:port) or a serial path like /dev/tty5."});
                     return;
                 }
 
