@@ -163,7 +163,11 @@ def getState():
         state["current_location"] = False
 
     inferior = gdb.selected_inferior()
-    threads = inferior.threads()
+    
+    try:
+        threads = inferior.threads()
+    except:
+        threads = []
 
     state["inferior"] = {}
     state["inferior"]["num"] = inferior.num
@@ -367,7 +371,6 @@ def getState():
                 state["selected_frame"] = False
         else:
             state["selected_frame"] = False
-
 
     state["inferior"]["threads"].reverse()
 
