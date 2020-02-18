@@ -145,6 +145,7 @@ if tmux_executable == "tmux" and not shutil.which("tmux"):
     exit(1)
 
 try:
+    os.system(tmux_executable+" kill-session -t "+terminal_id)
     os.system(tmux_executable+" -f tmux.conf new-session -s "+terminal_id+" -d '"+gdb_executable+" -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import main\"; read;'")
     print("Listening on %s: http://127.0.0.1:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT))
     print("|---------------------------------------------------------------------|")
