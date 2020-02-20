@@ -310,7 +310,10 @@ def getState():
                 variables = []
 
                 try:
-                    block = selected_frame.block()
+                    try:
+                        block = selected_frame.block()
+                    except RuntimeError:
+                        block = False
 
                     while block:
                         for symbol in block:
@@ -740,7 +743,12 @@ def getVariable(name):
 
     frame = gdb.selected_frame()
 
-    for symbol in frame.block():
+    try:
+        block = frame.block()
+    except RuntimeError:
+        return False
+
+    for symbol in block:
         if symbol.name == name:
             return Variable(frame, symbol)
 
@@ -783,7 +791,11 @@ def disassembleFrame():
     """
 
     frame = gdb.selected_frame()
-    block = frame.block()
+    
+    try:
+        block = frame.block()
+    except RuntimeError:
+        return []
 
     return disassemble(block.start, block.end-1)
 
@@ -831,6 +843,7 @@ class Variable():
             value = symbol.value(frame)
         else:
             value = self.value
+        
         block = frame.block()
 
         serializable = {}
