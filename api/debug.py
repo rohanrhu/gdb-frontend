@@ -331,7 +331,7 @@ def getState():
                                 variable["value"] = ""
 
                                 try:
-                                    variable["value"] = value.string(length=1000)
+                                    variable["value"] = value.string()[:1000]
                                     variable["is_nts"] = True
                                 except gdb.error as e:
                                     variable["is_nts"] = False
