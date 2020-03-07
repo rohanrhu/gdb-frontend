@@ -94,7 +94,7 @@
                     instruction.$item_location = $item.find('.Disassembly_items_item_location');
 
                     instruction.$item_addr_val.html('0x'+instruction.addr.toString(16));
-                    instruction.$item_asm.html(instruction.asm);
+                    instruction.$item_asm.html(instruction.asm.replace('<', '&lt').replace('>', '&gt'));
 
                     if (instruction.addr == data.pc) {
                         instruction.$item.addClass('Disassembly__current');
