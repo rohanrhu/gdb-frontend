@@ -585,7 +585,7 @@
             };
 
             data.debug.setWatches = function () {
-                new Promise(function (resolve) {
+                new Promise(function (resolve, reject) {
                     data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
                         if (_watch.is_adder) {
                             return true;
@@ -602,7 +602,7 @@
                                 if (!result_json.ok) {
                                     GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
-                                    resolve();
+                                    reject();
                                     return;
                                 }
 
@@ -617,10 +617,69 @@
                             error: function () {
                                 GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
-                                resolve();
+                                reject();
                             }
                         });
 
+                        return true;
+                    });
+                });
+            };
+            
+            data.debug.reloadFileTabs = function () {
+                new Promise(function (resolve, reject) {
+                    data.components.fileTabs.files.every(function (_file, _file_i) {
+                        $.ajax({
+                            url: '/api/fs/read',
+                            cache: false,
+                            method: 'get',
+                            data: {
+                                path: _file.path
+                            },
+                            success: function (result_json) {
+                                if (result_json.error) {
+                                    if (result_json.error.not_exists) {
+                                        GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                        console.trace("Path not found.");
+                                    } else if (result_json.error.not_permitted) {
+                                        GDBFrontend.showMessageBox({text: 'Access denied.'});
+                                    } else {
+                                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                        console.trace('An error occured.');
+                                    }
+        
+                                    reject();
+                                    return;
+                                } else if (!result_json.ok) {
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                    console.trace('An error occured.');
+                                    reject();
+                                    return;
+                                }
+                                
+                                _file.setContent({content: result_json.file.content});
+        
+                                data.debug.placeEditorFileBreakpoints({editor_file: _file});
+    
+                                if (data.debug.state && data.debug.state.selected_frame && (_file.path == data.debug.state.selected_frame.file.path)) {
+                                    _file.clearStop();
+                                    _file.setStop({line: data.debug.state.current_location.line});
+    
+                                    setTimeout(function () {
+                                        _file.ace.scrollToLine(data.debug.state.current_location.line, true, true, function () {});
+                                        _file.ace.gotoLine(data.debug.state.current_location.line, 0, true);
+                                    }, 0);
+                                }
+
+                                resolve();
+                            },
+                            error: function () {
+                                GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                console.trace("Path not found.");
+                                reject();
+                            }
+                        });
+                        
                         return true;
                     });
                 });
@@ -654,7 +713,8 @@
                 data.debug.getState();
             });
 
-            $gdbFrontend.on('GDBFrontend_debug_new_objfile.GDBFrontend', function (event, message) {
+            $gdbFrontend.on('GDBFrontend_debug_new_objfile.GDBFrontend', async function (event, message) {
+                await data.debug.reloadFileTabs();
                 data.debug.setState({state: message.state, reload_files: true});
             });
 

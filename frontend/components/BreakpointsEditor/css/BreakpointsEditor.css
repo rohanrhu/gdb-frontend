@@ -17,14 +17,6 @@
 
 /* ---------------------- */
 
-.BreakpointsEditor_cr {
-    height: 100%;
-}
-
-.BreakpointsEditor_cr_c {
-    height: 100%;
-}
-
 .BreakpointsEditor_content {
     height: 100%;
     position: relative;
@@ -32,7 +24,7 @@
     flex-wrap: nowrap;
     overflow-y: auto;
     overflow-x: auto;
-    max-height: 134px;
+    max-height: 150px;
 }
 
 /* ---------------------- */
