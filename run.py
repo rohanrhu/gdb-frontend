@@ -100,11 +100,11 @@ def argHandler_help():
     print("  --gdb-executable=PATH, -g PATH:\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
     print("  --terminal-id=NAME, -t NAME:\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
-    print("  --listen=IP, -l IP:\t\tSpecifies listen address for HTTP and WS servers.)")
-    print("  --port=PORT, -p PORT:\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2).)")
-    print("  --http-port=PORT:\t\tSpecifies HTTP server port.)")
-    print("  --server-port=PORT:\t\tSpecifies WS server port.)")
-    print("  --gotty-port=PORT:\t\tSpecifies Gotty server port.)")
+    print("  --listen=IP, -l IP:\t\t\tSpecifies listen address for HTTP and WS servers.)")
+    print("  --port=PORT, -p PORT:\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2).)")
+    print("  --http-port=PORT:\t\t\tSpecifies HTTP server port.)")
+    print("  --server-port=PORT:\t\t\tSpecifies WS server port.)")
+    print("  --gotty-port=PORT:\t\t\tSpecifies Gotty server port.)")
     print("  --verbose, -V:\t\t\tEnables verbose output.")
     print("")
 
@@ -203,7 +203,7 @@ try:
     print(("| Open this address in web browser: \033[0;32;40mhttp://127.0.0.1:%d/terminal/\033[0m" % config.HTTP_PORT) + "   |")
     print("|---------------------------------------------------------------------|")
 
-    os.system("./bin/gotty --config gotty.conf -a 127.0.0.1 -p "+str(config.GOTTY_PORT)+" -w "+tmux_executable+" a -t "+terminal_id)
+    os.system("./bin/gotty --config gotty.conf -a "+config.HOST_ADDRESS+" -p "+str(config.GOTTY_PORT)+" -w "+tmux_executable+" a -t "+terminal_id)
     os.system(tmux_executable+" kill-session -t "+terminal_id)
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")

@@ -82,6 +82,11 @@ Options:
   --gdb-executable=PATH, -g PATH:       Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
   --tmux-executable=PATH, -tmux PATH:   Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
   --terminal-id=NAME, -t NAME:          Specifies tmux terminal identifier name (Default is "gdb-frontend".)
+  --listen=IP, -l IP:                   Specifies listen address for HTTP and WS servers.)
+  --port=PORT, -p PORT:                 Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2).)
+  --http-port=PORT:                     Specifies HTTP server port.)
+  --server-port=PORT:                   Specifies WS server port.)
+  --gotty-port=PORT:                    Specifies Gotty server port.)
   --verbose, -V:                        Enables verbose output.
 ```
 
@@ -100,6 +105,21 @@ You can specify Tmux executable path like `gdbfrontend --tmux-executable=/path/t
 
 #### `--terminal-id=PATH`, `-t PATH`
 You can specify Tmux terminal id like `gdbfrontend --terminal-id=terminal-name`. (Default: `gdb-frontend`)
+
+#### `--listen=IP`, `-l IP`
+Specifies listen address for HTTP and WS servers.)
+
+#### `--port=PORT`, `-l PORT`
+Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2).)
+
+#### `--http-port=PORT`
+Specifies HTTP server port.)
+
+#### `--server-port=PORT`
+Specifies WS server port.)
+
+#### `--gotty-port=PORT`
+Specifies Gotty server port.)
 
 #### `--verbose`, `-v`
 Enables verbose output.
