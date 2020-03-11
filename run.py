@@ -127,8 +127,8 @@ args = [
     ["--listen", "-l", argHandler_listen, True],
     ["--port", "-p", argHandler_port, True],
     ["--http-port", False, argHandler_httpPort, True],
-    ["--server-port", "-p", argHandler_serverPort, True],
-    ["--gotty-port", "-p", argHandler_gottyPort, True],
+    ["--server-port", False, argHandler_serverPort, True],
+    ["--gotty-port", False, argHandler_gottyPort, True],
     ["--help", "-h", argHandler_help, False],
     ["--version", "-v", argHandler_version, False]
 ]

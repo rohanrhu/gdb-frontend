@@ -109,7 +109,7 @@ You can specify Tmux terminal id like `gdbfrontend --terminal-id=terminal-name`.
 #### `--listen=IP`, `-l IP`
 Specifies listen address for HTTP and WS servers.
 
-#### `--port=PORT`, `-l PORT`
+#### `--port=PORT`, `-p PORT`
 Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2).
 
 #### `--http-port=PORT`
