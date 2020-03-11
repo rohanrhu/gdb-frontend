@@ -735,10 +735,10 @@ def getSerializableStructMembers(value, ctype):
     return members
 
 @threadSafe
-def getVariable(name):
+def getVariableInBlock(name):
     """
     Returns C structure/union variable with members
-    or pointers with what they point to.
+    or pointers with what they point to inside current block.
     """
 
     frame = gdb.selected_frame()
@@ -755,19 +755,19 @@ def getVariable(name):
     return False
 
 @threadSafe
-def getVariableByExpression(tree, no_error=False):
+def getVariableByExpression(expression, no_error=False):
     """
     Returns C member (api.debug.Variable) on current frame
-    by given variable[->member](s) names tree.
+    by given variable[->member](s) names expression or any expression.
     """
 
     try:
-        value = gdb.parse_and_eval(tree)
+        value = gdb.parse_and_eval(expression)
         variable = Variable(
             frame=gdb.selected_frame(),
             symbol=False,
             value=value,
-            tree=tree
+            expression=expression
         )
     except gdb.error as e:
         if not no_error:
@@ -775,6 +775,10 @@ def getVariableByExpression(tree, no_error=False):
 
         return None
     return variable
+
+@threadSafe
+def getVariable(name, no_error=False):
+    return getVariableByExpression(name, no_error=no_error)
 
 @threadSafe
 def disassemble(start, end):
@@ -820,14 +824,14 @@ class Variable():
     GDBFrontend's serializable variable/member class.
     """
     
-    def __init__(self, frame, symbol=False, value=False, tree=False):
+    def __init__(self, frame, symbol=False, value=False, expression=False):
         self.frame = frame
         self.symbol = symbol
         self.value = value
-        self.tree = tree
+        self.expression = expression
 
-        if self.tree:
-            self.name = self.tree.split(".")[-1]
+        if self.expression:
+            self.name = self.expression.split(".")[-1].split("->")[-1]
         else:
             self.name = self.symbol.name
 

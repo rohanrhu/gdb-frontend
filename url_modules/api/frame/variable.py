@@ -29,7 +29,7 @@ def run(request, params):
         if "expression" in qs_params.keys():
             variable = api.debug.getVariableByExpression(qs_params["expression"][0], no_error=True)
         else:
-            variable = api.debug.getVariable(qs_params["variable"][0])
+            variable = api.debug.getVariableByExpression(qs_params["variable"][0], no_error=True)
 
         if variable:
             result_json["variable"] = variable.serializable()
