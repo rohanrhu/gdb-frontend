@@ -77,6 +77,10 @@
                     }
 
                     var refresh_parameters = parameters;
+
+                    if (parameters.onFileSelected) {
+                        data.onFileSelected = parameters.onFileSelected;
+                    }
                     
                     clearTimeout(data.pathUpdateRefreshTimout);
 
@@ -132,10 +136,6 @@
                                 $fileBrowser_items_parentBtn.hide();
                             } else {
                                 $fileBrowser_items_parentBtn.show();
-                            }
-
-                            if (parameters.onFileSelected) {
-                                data.onFileSelected = parameters.onFileSelected;
                             }
 
                             $fileBrowser_items_parentBtn.off('click.FileBrowser');
@@ -375,6 +375,10 @@
                         parameters = {};
                     }
 
+                    if (parameters.onFileSelected) {
+                        data.onFileSelected = parameters.onFileSelected;
+                    }
+                    
                     data.is_opened = true;
 
                     $fileBrowser.fadeIn(data.animation_duration);
