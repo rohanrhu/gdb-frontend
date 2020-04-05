@@ -295,12 +295,40 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 }
 
 .GDBFrontend_sources_title {
-    padding: 0px 10px;
     height: 40px;
     line-height: 40px;
     font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
+    display: flex;
+}
+
+.GDBFrontend_sources_title_label {
+    flex-grow: 1;
+    padding: 0px 10px;
+    height: 100%;
+}
+
+.GDBFrontend_sources_title_buttons {
+    height: 100%;
+    display: flex;
+}
+
+.GDBFrontend_sources_title_buttons_button {
+    height: 100%;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.GDBFrontend_sources_title_buttons_button:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.GDBFrontend_sources_title_buttons_button_iconImg {
+    height: 20px;
+    display: block;
 }
 
 .GDBFrontend_sourceTreeComp {

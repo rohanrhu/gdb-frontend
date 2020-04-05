@@ -75,9 +75,45 @@
 
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
+            data.$GDBFrontend_sources_title_buttons_button__openSource = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button');
             data.$gdbFrontend_sourceTreeComp = data.$gdbFrontend_sources.find('.GDBFrontend_sourceTreeComp');
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
+
+            data.sourceOpener_current_dir = '/';
+
+            data.openSourceOpener = function () {
+                GDBFrontend.components.fileBrowser.open({
+                    path: data.sourceOpener_current_dir,
+                    onFileSelected: function (parameters) {
+                        data.sourceOpener_current_dir = GDBFrontend.components.fileBrowser.path;
+                        
+                        GDBFrontend.components.gdbFrontend.openSource({
+                            file: {path: parameters.file.path}
+                        });
+                        GDBFrontend.components.fileBrowser.close();
+                    }
+                });
+            };
+
+            data.$GDBFrontend_sources_title_buttons_button__openSource.on('click.GDBFrontend', function (event) {
+                data.openSourceOpener();
+            });
+
+            $('body').on('keydown.GDBFrontend', function (event) {
+                if (GDBFrontend.components.fileBrowser.is_opened) {
+                    return;
+                }
+
+                var keycode = event.keyCode ? event.keyCode: event.which;
+
+                if (event.ctrlKey && keycode == 79) {
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    
+                    data.openSourceOpener();
+                }
+            });
 
             data.$gdbFrontend_disassemblyComp = $gdbFrontend.find('.GDBFrontend_disassemblyComp');
             data.$gdbFrontend_disassembly = data.$gdbFrontend_disassemblyComp.find('> .Disassembly');
