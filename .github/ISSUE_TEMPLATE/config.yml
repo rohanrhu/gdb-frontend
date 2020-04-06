@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Github
+    url: https://github.com/rohanrhu/gdb-frontend
+    about: Github repository.
+  - name: Gitter Chat
+    url: https://gitter.im/gdb-frontend/community
+    about: Conversating about GDBFrontend.
