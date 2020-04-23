@@ -80,6 +80,8 @@
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
 
+            data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
+            
             data.sourceOpener_current_dir = '/';
 
             data.openSourceOpener = function () {

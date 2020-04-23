@@ -121,6 +121,9 @@ Specifies WS server port.
 #### `--gotty-port=PORT`
 Specifies Gotty server port.
 
+#### `--readonly, -r`
+Makes code editor readonly. (Notice: This option is not related to security.)
+
 #### `--verbose`, `-v`
 Enables verbose output.
 

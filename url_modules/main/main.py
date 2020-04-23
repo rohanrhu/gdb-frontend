@@ -51,7 +51,7 @@ def run(request, params):
     GDBFrontend.config.app_path = '"""+str(config.app_path)+"""';
     GDBFrontend.config.plugins_dir = '"""+str(config.PLUGINS_DIR)+"""';
     GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
-    GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
+    GDBFrontend.config.is_readonly = """+json.dumps(config.IS_READONLY)+""";
     GDBFrontend.load_plugins = JSON.parse('"""+json.dumps(load_plugins)+"""');
     """
 

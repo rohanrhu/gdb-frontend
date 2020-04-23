@@ -107,6 +107,10 @@
                 file.tokenMouseoverTimeout = 0;
                 file.tokenMouseoutTimeout = 0;
                 file.currentHoveredToken = null;
+                file.is_changed = false;
+
+                file.flags = {};
+                file.flags.set = false;
 
                 if (parameters.file.name === undefined) {
                     file.name = pathFileName(parameters.file.path);
@@ -119,6 +123,7 @@
                 file.$tab.appendTo($fileTabs_tabs_items);
 
                 file.$tab_pathTooltip = file.$tab.find('.FileTabs_tabs_items_item_pathTooltip');
+                file.$tab_isChanged = file.$tab.find('.FileTabs_tabs_items_item_isChanged');
                 file.$tab_fileName = file.$tab.find('.FileTabs_tabs_items_item_fileName');
                 file.$tab_closeBtn = file.$tab.find('.FileTabs_tabs_items_item_closeBtn');
 
@@ -259,7 +264,7 @@
                 file.$editor_ace = file.$editor.find('.FileTabs_editors_items_item_ace');
 
                 file.ace = ace.edit(file.$editor_ace.get(0));
-                file.ace.setReadOnly(true);
+                file.ace.setReadOnly(GDBFrontend.components.gdbFrontend.is_readonly);
                 file.ace.setTheme('ace/theme/tomorrow_night_blue');
                 file.ace.session.setMode(ace.require('ace/ext/modelist').getModeForPath(file.name).mode);
 
@@ -271,6 +276,40 @@
                         GDBFrontend.components.fuzzyFinder.open({
                             onSelected: function (parameters) {
                                 GDBFrontend.components.gdbFrontend.openSource({file: parameters.item.file});
+                            }
+                        });
+                    }
+                });
+
+                file.ace.commands.addCommand({
+                    name: 'save',
+                    bindKey: {mac: 'cmd-s', win: 'ctrl-s'},
+                    readOnly: true,
+                    exec: function () {
+                        if (GDBFrontend.config.is_readonly) {
+                            return;
+                        }
+                        
+                        data.current.setChanged(false);
+                        
+                        $.ajax({
+                            url: '/api/fs/write',
+                            cache: false,
+                            method: 'post',
+                            data: {
+                                path: data.current.path,
+                                content: data.current.ace.getValue()
+                            },
+                            success: function (result_json) {
+                                if (!result_json.ok) {
+                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                    console.trace('An error occured.');
+                                    return;
+                                }
+                            },
+                            error: function () {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
                             }
                         });
                     }
@@ -292,6 +331,18 @@
                         file: file,
                         line: event.getDocumentPosition().row+1
                     });
+                });
+
+                file.ace.on('change', function (event) {
+                    if (file.flags.set) {
+                        return;
+                    }
+                    
+                    if (!data.current) {
+                        return;
+                    }
+                    
+                    data.current.setChanged(true);
                 });
                 
                 $('body').on('click.FileTabs-'+data.id, function (event) {
@@ -386,6 +437,10 @@
                     }, 500);
                 });
 
+                file.setChanged = function (is_changed) {
+                    file.$tab_isChanged.css('display', (file.is_changed = is_changed) ? 'flex': 'none');
+                };
+                
                 file.openVariablePopup = function (parameters) {
                     var x = parameters.position.x-10;
                     var y = parameters.position.y+12;
@@ -481,7 +536,9 @@
                 data.files.push(file);
 
                 file.setContent = function (parameters) {
+                    file.flags.set = true;
                     file.ace.setValue(parameters.content, -1);
+                    file.flags.set = false;
                 };
 
                 if (parameters.file.content !== undefined) {

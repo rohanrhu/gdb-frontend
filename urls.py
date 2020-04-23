@@ -44,6 +44,11 @@ urls = {
         "match": "^/api/fs/read$",
         "module": "url_modules.api.fs.read"
     },
+    "api-fs-write": {
+        "url": "/api/fs/write",
+        "match": "^/api/fs/write$",
+        "module": "url_modules.api.fs.write"
+    },
     "api-sources": {
         "url": "/api/sources$",
         "match": "^/api/sources$",

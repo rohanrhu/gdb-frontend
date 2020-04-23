@@ -86,6 +86,10 @@ def argHandler_gottyPort(port):
     arg_config["GOTTY_PORT"] = port
     config.GOTTY_PORT = port
 
+def argHandler_readonly():
+    arg_config["IS_READONLY"] = True
+    config.IS_READONLY = True
+
 def argHandler_verbose():
     config.VERBOSE = True
     arg_config["VERBOSE"] = True
@@ -105,6 +109,7 @@ def argHandler_help():
     print("  --http-port=PORT:\t\t\tSpecifies HTTP server port.")
     print("  --server-port=PORT:\t\t\tSpecifies WS server port.")
     print("  --gotty-port=PORT:\t\t\tSpecifies Gotty server port.")
+    print("  --readonly, -r:\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
     print("  --verbose, -V:\t\t\tEnables verbose output.")
     print("")
 
@@ -129,6 +134,7 @@ args = [
     ["--http-port", False, argHandler_httpPort, True],
     ["--server-port", False, argHandler_serverPort, True],
     ["--gotty-port", False, argHandler_gottyPort, True],
+    ["--readonly", "-r", argHandler_readonly, False],
     ["--help", "-h", argHandler_help, False],
     ["--version", "-v", argHandler_version, False]
 ]

@@ -34,6 +34,8 @@ def init():
     SERVER_PORT = 5552
     global PLUGINS_DIR
     PLUGINS_DIR = os.path.join(app_path, "plugins")
+    global IS_READONLY
+    IS_READONLY = False
 
 def setJSON(config_json):
     new_config = json.loads(config_json)

@@ -46,6 +46,15 @@
     background: rgba(255,255,255,0.05);
 }
 
+.FileTabs_tabs_items_item_isChanged {
+    display: flex;
+    flex: 0;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 16px;
+    display: none;
+}
+
 .FileTabs_tabs_items_item_fileName {
     display: flex;
     flex: 0;

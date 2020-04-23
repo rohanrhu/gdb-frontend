@@ -25,6 +25,8 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     def __init__(self, request, client_address, server):
         http.server.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
 
+        self.method = 'GET'
+
     def send_response(self, code, message=None):
         self.send_response_only(code, message)
         self.send_header("Server", "GDB-Frontend Server")
@@ -101,5 +103,13 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(html)
 
     def do_GET(self):
+        self.method = 'GET'
+        
+        try: self.handleRequest()
+        except BrokenPipeError: pass
+
+    def do_POST(self):
+        self.method = 'POST'
+
         try: self.handleRequest()
         except BrokenPipeError: pass
