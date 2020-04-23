@@ -87,6 +87,7 @@ Options:
   --http-port=PORT:                     Specifies HTTP server port.
   --server-port=PORT:                   Specifies WS server port.
   --gotty-port=PORT:                    Specifies Gotty server port.
+  --readonly, -r:                        Makes code editor readonly. (Notice: This option is not related to security.)
   --verbose, -V:                        Enables verbose output.
 ```
 
