@@ -194,8 +194,8 @@ if tmux_executable == "tmux" and not shutil.which("tmux"):
     exit(1)
 
 try:
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     os.system(tmux_executable+" kill-session -t "+terminal_id)
-
     os.system(
         tmux_executable +
         " -f tmux.conf new-session -s " + terminal_id +
