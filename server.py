@@ -252,7 +252,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
 class GDBFrontendServer(threading.Thread):
     server = False
 
-    def __init__(self, host=config.HOST_ADDRESS, port=config.SERVER_PORT, socket=GDBFrontendSocket):
+    def __init__(self, host=config.BIND_ADDRESS, port=config.SERVER_PORT, socket=GDBFrontendSocket):
         threading.Thread.__init__(self)
         self.server = SimpleWebSocketServer.SimpleWebSocketServer(host, port, socket)
 

@@ -45,6 +45,7 @@ def run(request, params):
     GDBFrontend.version = '"""+util.versionString(statics.VERSION)+"""';
     GDBFrontend.config = {};
     GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
+    GDBFrontend.config.bind_address = '"""+str(config.BIND_ADDRESS)+"""';
     GDBFrontend.config.http_port = """+str(config.HTTP_PORT)+""";
     GDBFrontend.config.gotty_port = """+str(config.GOTTY_PORT)+""";
     GDBFrontend.config.server_port = """+str(config.SERVER_PORT)+""";

@@ -11,6 +11,7 @@
 import threading
 import importlib
 import sys
+import os
 
 sys.path.insert(0, "python-libs")
 
@@ -44,7 +45,7 @@ for _plugin_name, _plugin in plugin.plugins.items():
 http_handler.url = api.url.URL(all_urls)
 
 httpServer = http_server.GDBFrontendHTTPServer(
-    (config.HOST_ADDRESS, config.HTTP_PORT),
+    (config.BIND_ADDRESS, config.HTTP_PORT),
     http_handler.RequestHandler
 )
 
@@ -55,3 +56,19 @@ thread.start()
 dbgServer = server.GDBFrontendServer()
 dbgServer.setDaemon(True)
 dbgServer.start()
+
+config.HTTP_PORT = httpServer.server_port
+config.SERVER_PORT = dbgServer.server.serversocket.getsockname()[1]
+
+if config.MMAP_PATH:
+    import mmap
+    import ctypes
+    
+    fd = os.open(config.MMAP_PATH, os.O_RDWR)
+    mmapBuff = mmap.mmap(fd, mmap.PAGESIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
+
+    http_port = ctypes.c_uint16.from_buffer(mmapBuff, 0)
+    server_port = ctypes.c_uint16.from_buffer(mmapBuff, 2)
+    
+    http_port.value = httpServer.server_port
+    server_port.value = dbgServer.server.serversocket.getsockname()[1]

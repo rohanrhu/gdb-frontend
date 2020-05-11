@@ -13,6 +13,7 @@ import sys
 import shutil
 import json
 import base64
+import subprocess
 
 import config
 config.init()
@@ -25,8 +26,7 @@ path = os.path.dirname(os.path.realpath(__file__))
 gdb_executable = "gdb"
 tmux_executable = "tmux"
 terminal_id = "gdb-frontend"
-
-import subprocess
+is_random_port = False
 
 arg_config = {}
 
@@ -53,20 +53,37 @@ def argHandler_terminalId(name):
 
     terminal_id = name
 
-def argHandler_listen(address):
+def argHandler_host(address):
     arg_config["HOST_ADDRESS"] = address
     config.HOST_ADDRESS = address
 
+def argHandler_listen(address):
+    arg_config["BIND_ADDRESS"] = address
+    config.BIND_ADDRESS = address
+
 def argHandler_port(port):
+    global is_random_port
+    
     port = int(port)
 
-    arg_config["GOTTY_PORT"] = port
-    arg_config["HTTP_PORT"] = port+1
-    arg_config["SERVER_PORT"] = port+2
+    if port == 0:
+        is_random_port = True
+        
+        arg_config["GOTTY_PORT"] = 0
+        arg_config["HTTP_PORT"] = 0
+        arg_config["SERVER_PORT"] = 0
 
-    config.GOTTY_PORT = port
-    config.HTTP_PORT = port+1
-    config.SERVER_PORT = port+2
+        config.GOTTY_PORT = 0
+        config.HTTP_PORT = 0
+        config.SERVER_PORT = 0
+    else:
+        arg_config["GOTTY_PORT"] = port
+        arg_config["HTTP_PORT"] = port+1
+        arg_config["SERVER_PORT"] = port+2
+
+        config.GOTTY_PORT = port
+        config.HTTP_PORT = port+1
+        config.SERVER_PORT = port+2
 
 def argHandler_httpPort(port):
     port = int(port)
@@ -104,8 +121,9 @@ def argHandler_help():
     print("  --gdb-executable=PATH, -g PATH:\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
     print("  --terminal-id=NAME, -t NAME:\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
+    print("  --host=IP, -H IP:\t\t\tSpecifies current host address that you can access via for HTTP and WS servers.")
     print("  --listen=IP, -l IP:\t\t\tSpecifies listen address for HTTP and WS servers.")
-    print("  --port=PORT, -p PORT:\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2).")
+    print("  --port=PORT, -p PORT:\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).")
     print("  --http-port=PORT:\t\t\tSpecifies HTTP server port.")
     print("  --server-port=PORT:\t\t\tSpecifies WS server port.")
     print("  --gotty-port=PORT:\t\t\tSpecifies Gotty server port.")
@@ -129,6 +147,7 @@ args = [
     ["--gdb-executable", "-g", argHandler_gdbExecutable, True],
     ["--tmux-executable", "-tmux", argHandler_tmuxExecutable, True],
     ["--terminal-id", "-t", argHandler_terminalId, True],
+    ["--host", "-H", argHandler_host, True],
     ["--listen", "-l", argHandler_listen, True],
     ["--port", "-p", argHandler_port, True],
     ["--http-port", False, argHandler_httpPort, True],
@@ -193,25 +212,105 @@ if tmux_executable == "tmux" and not shutil.which("tmux"):
     print("\033[0;32;31m[Error] Tmux is not installed. Please install tmux on your system and run GDBFrontend again.\033[0m")
     exit(1)
 
+print("GDBFrontend "+statics.VERSION_STRING)
+
+try:
+    if 0 in (config.HTTP_PORT, config.GOTTY_PORT, config.SERVER_PORT):
+        import psutil
+except ImportError:
+    print("\033[0;32;31m[Error] The \"psutil\" module is not found. It is necessary for random ports (--port 0).\033[0m")
+    print("You can install \"psutil\" module with the command: \033[0;32;40mpython3 -m pip install psutil\033[0m")
+
+if is_random_port:
+    import mmap
+    import uuid
+    import ctypes
+    
+    mmap_path = '/tmp/gdbfrontend-'+uuid.uuid4().__str__()
+    arg_config["MMAP_PATH"] = mmap_path
+    
+    fd = os.open(mmap_path, os.O_CREAT | os.O_TRUNC | os.O_RDWR)
+    os.write(fd, b"\0" * mmap.PAGESIZE)
+    mmapBuff = mmap.mmap(fd, mmap.PAGESIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
+
 try:
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
-    os.system(tmux_executable+" kill-session -t "+terminal_id)
-    os.system(
-        tmux_executable +
-        " -f tmux.conf new-session -s " + terminal_id +
-        " -d '" + gdb_executable +
-        " -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); " +
-        "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import main\"; read;'"
+    subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+    
+    if not is_random_port:
+        os.system(
+            tmux_executable +
+            " -f tmux.conf new-session -s " + terminal_id +
+            " -d '" + gdb_executable +
+            " -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); " +
+            "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import main\"; read;'"
+        )
+    else:
+        os.system(
+            tmux_executable +
+            " -f tmux.conf new-session -d -s " + terminal_id
+        )
+
+    gotty = subprocess.Popen(
+        ["./bin/gotty", "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        stdin=subprocess.PIPE
     )
 
-    print("Listening on %s: http://127.0.0.1:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT))
-    print("|---------------------------------------------------------------------|")
-    print(("| Open this address in web browser: \033[0;32;40mhttp://127.0.0.1:%d/terminal/\033[0m" % config.HTTP_PORT) + "   |")
-    print("|---------------------------------------------------------------------|")
+    if not is_random_port:
+        print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
+        print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
+        
+        gotty.wait()
+        subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+    else:
+        gottyProc = psutil.Process(gotty.pid)
 
-    os.system("./bin/gotty --config gotty.conf -a "+config.HOST_ADDRESS+" -p "+str(config.GOTTY_PORT)+" -w "+tmux_executable+" a -t "+terminal_id)
-    os.system(tmux_executable+" kill-session -t "+terminal_id)
+        while gottyProc.connections().__len__() == 0: pass
+
+        config.GOTTY_PORT = gottyProc.connections()[0].laddr.port
+        arg_config["GOTTY_PORT"] = config.GOTTY_PORT
+
+        os.system(
+            tmux_executable +
+            " -f tmux.conf send-keys -t " + terminal_id +
+            " \"" +
+            gdb_executable +
+            " -ex \\\"python import sys, os; sys.path.insert(0, '"+path+"'); import config, json, base64; config.init(); " +
+            "config.setJSON(base64.b64decode('"+base64.b64encode(json.dumps(arg_config).encode()).decode()+"').decode()); import main\\\"; read;"
+            "\" "
+        )
+        os.system(
+            tmux_executable +
+            " -f tmux.conf send-keys -t " + terminal_id +
+            " ENTER"
+        )
+
+        http_port = ctypes.c_uint16.from_buffer(mmapBuff, 0)
+        server_port = ctypes.c_uint16.from_buffer(mmapBuff, 2)
+        
+        while not http_port.value or not server_port.value: pass
+
+        config.HTTP_PORT = http_port.value
+        config.SERVER_PORT = server_port.value
+
+        print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
+        print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
+        
+        gotty.wait()
+        gotty.kill()
+        subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+
+        if is_random_port:
+            os.remove(mmap_path)
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
+    
+    subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+    gotty.kill()
+
+    if is_random_port:
+        os.remove(mmap_path)
 
 print("Stoped GDBFrontend.")

@@ -26,6 +26,8 @@ def init():
     VERBOSE = False
     global HOST_ADDRESS
     HOST_ADDRESS = "127.0.0.1"
+    global BIND_ADDRESS
+    BIND_ADDRESS = "127.0.0.1"
     global GOTTY_PORT
     GOTTY_PORT = 5550
     global HTTP_PORT
@@ -36,6 +38,8 @@ def init():
     PLUGINS_DIR = os.path.join(app_path, "plugins")
     global IS_READONLY
     IS_READONLY = False
+    global MMAP_PATH
+    MMAP_PATH = False
 
 def setJSON(config_json):
     new_config = json.loads(config_json)
