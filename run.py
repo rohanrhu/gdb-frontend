@@ -223,14 +223,18 @@ except ImportError:
 
 if is_random_port:
     import mmap
-    import uuid
     import ctypes
     
-    mmap_path = '/tmp/gdbfrontend-'+uuid.uuid4().__str__()
+    mmap_path = '/tmp/gdbfrontend-mmap-'+terminal_id
     arg_config["MMAP_PATH"] = mmap_path
     
-    fd = os.open(mmap_path, os.O_CREAT | os.O_TRUNC | os.O_RDWR)
-    os.write(fd, b"\0" * mmap.PAGESIZE)
+    if os.path.exists(mmap_path):
+        fd = os.open(mmap_path, os.O_RDWR)
+        os.write(fd, b"\0" * mmap.PAGESIZE)
+    else:
+        fd = os.open(mmap_path, os.O_CREAT | os.O_TRUNC | os.O_RDWR)
+        os.write(fd, b"\0" * mmap.PAGESIZE)
+
     mmapBuff = mmap.mmap(fd, mmap.PAGESIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
 
 try:
@@ -301,16 +305,13 @@ try:
         gotty.wait()
         gotty.kill()
         subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
-
-        if is_random_port:
-            os.remove(mmap_path)
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
     
-    subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
     gotty.kill()
+    subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
 
-    if is_random_port:
-        os.remove(mmap_path)
+if is_random_port:
+    os.remove(mmap_path)
 
-print("Stoped GDBFrontend.")
+print("Stopped GDBFrontend.")
