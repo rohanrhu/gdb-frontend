@@ -82,7 +82,7 @@
 
             data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
             
-            data.sourceOpener_current_dir = '/';
+            data.sourceOpener_current_dir = GDBFrontend.config.workdir ? GDBFrontend.config.workdir: '/';
 
             data.openSourceOpener = function () {
                 GDBFrontend.components.fileBrowser.open({
@@ -383,7 +383,7 @@
                 preloadFiles(parameters);
             });
 
-            var last_fileBrowser_path = '/';
+            var last_fileBrowser_path = GDBFrontend.config.workdir ? GDBFrontend.config.workdir: '/';
 
             GDBFrontend.components.fileBrowser.$fileBrowser.on('FileBrowser_entered_directory.GDBFrontend', function (event, parameters) {
                 last_fileBrowser_path = parameters.path;

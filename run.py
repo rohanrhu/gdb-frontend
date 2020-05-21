@@ -27,6 +27,7 @@ gdb_executable = "gdb"
 tmux_executable = "tmux"
 terminal_id = "gdb-frontend"
 is_random_port = False
+workdir = False
 
 arg_config = {}
 
@@ -107,6 +108,10 @@ def argHandler_readonly():
     arg_config["IS_READONLY"] = True
     config.IS_READONLY = True
 
+def argHandler_workdir(path):
+    arg_config["WORKDIR"] = path
+    config.WORKDIR = path
+
 def argHandler_verbose():
     config.VERBOSE = True
     arg_config["VERBOSE"] = True
@@ -128,6 +133,7 @@ def argHandler_help():
     print("  --server-port=PORT:\t\t\tSpecifies WS server port.")
     print("  --gotty-port=PORT:\t\t\tSpecifies Gotty server port.")
     print("  --readonly, -r:\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
+    print("  --workdir, -w:\t\t\tSpecifies working directory.")
     print("  --verbose, -V:\t\t\tEnables verbose output.")
     print("")
 
@@ -154,6 +160,7 @@ args = [
     ["--server-port", False, argHandler_serverPort, True],
     ["--gotty-port", False, argHandler_gottyPort, True],
     ["--readonly", "-r", argHandler_readonly, False],
+    ["--workdir", "-w", argHandler_workdir, True],
     ["--help", "-h", argHandler_help, False],
     ["--version", "-v", argHandler_version, False]
 ]
@@ -253,6 +260,14 @@ try:
         os.system(
             tmux_executable +
             " -f tmux.conf new-session -d -s " + terminal_id
+        )
+
+    if config.WORKDIR:
+        os.system(
+            tmux_executable +
+            " -f tmux.conf send-keys -t " + terminal_id +
+            " \"cd " + config.WORKDIR + "\"" +
+            " ENTER"
         )
 
     gotty = subprocess.Popen(

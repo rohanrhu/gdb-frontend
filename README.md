@@ -89,6 +89,7 @@ Options:
   --server-port=PORT:                   Specifies WS server port.
   --gotty-port=PORT:                    Specifies Gotty server port.
   --readonly, -r:                       Makes code editor readonly. (Notice: This option is not related to security.)
+  --workdir, -w:                        Specifies working directory.
   --verbose, -V:                        Enables verbose output.
 ```
 
@@ -129,7 +130,10 @@ Specifies Gotty server port.
 #### `--readonly, -r`
 Makes code editor readonly. (Notice: This option is not related to security.)
 
-#### `--verbose`, `-v`
+#### `--workdir, -w`
+Specifies working directory.
+
+#### `--verbose`, `-V`
 Enables verbose output.
 
 ## Troubleshooting

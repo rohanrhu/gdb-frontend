@@ -13,7 +13,7 @@ import importlib
 import sys
 import os
 
-sys.path.insert(0, "python-libs")
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "python-libs"))
 
 import config
 import settings

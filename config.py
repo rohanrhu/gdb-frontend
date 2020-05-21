@@ -40,6 +40,8 @@ def init():
     IS_READONLY = False
     global MMAP_PATH
     MMAP_PATH = False
+    global WORKDIR
+    WORKDIR = False
 
 def setJSON(config_json):
     new_config = json.loads(config_json)
