@@ -30,7 +30,7 @@ plugins/
 Plugins those are inside plugins directory will be loaded automatically.
 
 Plugin Name Format:
-On File System: hello_plugin
+On File System: hello
 Plugin Backend Class: HelloPlugin
 """
 
@@ -39,8 +39,6 @@ import importlib
 
 import config
 import util
-
-plugins = False
 
 def webFSPath(plugin_name, path):
     return util.appPath(os.path.join("plugins", plugin_name, "frontend", path))
