@@ -80,7 +80,6 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
 
             return False
 
-
         if not check_path(self, fs_path) and file_path[:9] == "/plugins/":
             for _plugin_name, _plugin in plugin.plugins.items():
                 if check_path(self, plugin.webFSPath(_plugin_name, file_path[10+len(_plugin_name):])):

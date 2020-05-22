@@ -90,6 +90,7 @@ Options:
   --gotty-port=PORT:                    Specifies Gotty server port.
   --readonly, -r:                       Makes code editor readonly. (Notice: This option is not related to security.)
   --workdir, -w:                        Specifies working directory.
+  --plugin-dir, -P:                     Specifies plugins directory.
   --verbose, -V:                        Enables verbose output.
 ```
 
@@ -132,6 +133,9 @@ Makes code editor readonly. (Notice: This option is not related to security.)
 
 #### `--workdir, -w`
 Specifies working directory.
+
+#### `--plugin-dir, -P`
+Specifies plugins directory.
 
 #### `--verbose`, `-V`
 Enables verbose output.

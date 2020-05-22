@@ -26,6 +26,8 @@ import util
 import urls
 import api.url
 
+sys.path.insert(0, config.PLUGINS_DIR)
+
 gdb = importlib.import_module("gdb")
 
 gdb.execute("set non-stop off")

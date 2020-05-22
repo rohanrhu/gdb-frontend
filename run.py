@@ -112,6 +112,10 @@ def argHandler_workdir(path):
     arg_config["WORKDIR"] = path
     config.WORKDIR = path
 
+def argHandler_pluginsDir(path):
+    arg_config["PLUGINS_DIR"] = path
+    config.PLUGINS_DIR = path
+
 def argHandler_verbose():
     config.VERBOSE = True
     arg_config["VERBOSE"] = True
@@ -134,6 +138,7 @@ def argHandler_help():
     print("  --gotty-port=PORT:\t\t\tSpecifies Gotty server port.")
     print("  --readonly, -r:\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
     print("  --workdir, -w:\t\t\tSpecifies working directory.")
+    print("  --plugin-dir, -P:\t\t\tSpecifies plugins directory.")
     print("  --verbose, -V:\t\t\tEnables verbose output.")
     print("")
 
@@ -161,6 +166,7 @@ args = [
     ["--gotty-port", False, argHandler_gottyPort, True],
     ["--readonly", "-r", argHandler_readonly, False],
     ["--workdir", "-w", argHandler_workdir, True],
+    ["--plugins-dir", "-P", argHandler_pluginsDir, True],
     ["--help", "-h", argHandler_help, False],
     ["--version", "-v", argHandler_version, False]
 ]

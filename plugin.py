@@ -41,7 +41,7 @@ import config
 import util
 
 def webFSPath(plugin_name, path):
-    return util.appPath(os.path.join("plugins", plugin_name, "frontend", path))
+    return os.path.join(config.PLUGINS_DIR, plugin_name, "frontend", path)
 
 def init():
     global plugins
