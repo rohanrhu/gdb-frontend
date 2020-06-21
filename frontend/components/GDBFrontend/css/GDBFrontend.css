@@ -352,12 +352,40 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 }
 
 .GDBFrontend_disassembly_title {
-    padding: 0px 10px;
     height: 40px;
     line-height: 40px;
     font-size: 16px;
     color: white;
     background: rgba(0, 0, 0, 0.2);
+    display: flex;
+}
+
+.GDBFrontend_disassembly_title_label {
+    padding: 0px 10px;
+    height: 100%;
+    flex-grow: 1;
+}
+
+.GDBFrontend_disassembly_title_buttons {
+    height: 100%;
+    display: flex;
+}
+
+.GDBFrontend_disassembly_title_buttons_button {
+    height: 100%;
+    display: flex;
+    padding: 0px 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.GDBFrontend_disassembly_title_buttons_button:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {
+    height: 20px;
+    display: block;
 }
 
 /* ---------------------- */

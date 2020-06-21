@@ -68,7 +68,7 @@
     cursor: text;
     white-space: nowrap;
     line-height: 16px;
-    min-height: 28px;
+    height: 28px;
     align-items: center;
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -79,6 +79,38 @@
 
 .Disassembly_items_item.Disassembly__current {
     background: rgba(255, 255, 255, 0.2);
+}
+
+.Disassembly_items_item_bp {
+    height: 100%;
+    width: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.Disassembly_items_item_bp_icon {
+    display: none;
+    width: 10px;
+    height: 10px;
+    background: #ff4c4c;
+    border-radius: 100%;
+}
+
+.Disassembly_items_item:hover .Disassembly_items_item_bp_icon {
+    display: block;
+    opacity: 0.5;
+}
+
+.Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
+    background: linear-gradient(90deg, rgba(136, 173, 255, 0.5), rgba(255, 255, 255, 0));
+}
+
+.Disassembly_items_item.Disassembly__bp .Disassembly_items_item_bp_icon {
+    display: block;
+    opacity: 1;
 }
 
 .Disassembly_items_item_addr_val {
@@ -95,8 +127,11 @@
     flex: 0 0;
     display: flex;
     align-items: center;
-    padding: 0px 5px;
-    color: #cacaca;
+    color: #8db1d0;
+    height: 100%;
+    justify-content: center;
+    flex-basis: 110px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .Disassembly_items_item_name {
@@ -119,6 +154,18 @@
     display: flex;
     align-items: center;
     padding: 0px 5px;
+}
+
+.Disassembly_items_item_asm {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.Disassembly_items_item_asm_mnemonic {
+    color: #78ff7c;
+    margin-right: 10px;
 }
 
 /* ---------------------- */

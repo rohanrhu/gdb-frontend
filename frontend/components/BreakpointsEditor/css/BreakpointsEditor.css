@@ -74,6 +74,7 @@
     padding: 5px 5px;
     flex-grow: 1;
     align-items: center;
+    width: min-content;
 }
 
 .BreakpointsEditor_items_item:hover {

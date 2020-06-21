@@ -72,13 +72,15 @@
 
             data.$gdbFrontend_evaluaters = $gdbFrontend.find('.GDBFrontend_evaluaters');
             data.$gdbFrontend_pointings = $gdbFrontend.find('.GDBFrontend_pointings');
-
+            
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
             data.$GDBFrontend_sources_title_buttons_button__openSource = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button');
             data.$gdbFrontend_sourceTreeComp = data.$gdbFrontend_sources.find('.GDBFrontend_sourceTreeComp');
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
+            
+            data.$gdbFrontend_disassembly_title_buttons_button__openTab = $gdbFrontend.find('.GDBFrontend_disassembly_title_buttons_button__openTab');
 
             data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
             
@@ -100,6 +102,25 @@
 
             data.$GDBFrontend_sources_title_buttons_button__openSource.on('click.GDBFrontend', function (event) {
                 data.openSourceOpener();
+            });
+            
+            data.$gdbFrontend_disassembly_title_buttons_button__openTab.on('click.GDBFrontend', function (event) {
+                var disasTab = data.components.fileTabs.openDisassembly({switch: true});
+                if (disasTab.exists) {
+                    data.components.fileTabs.switchFile({file: disasTab.file});
+                }
+
+                if (!data.debug.state) return;
+                if (!data.debug.state.selected_frame) return;
+
+                disasTab.file.disassembly.load({
+                    pc: data.debug.state.selected_frame.pc,
+                    instructions: data.debug.state.selected_frame.disassembly
+                });
+                disasTab.file.disassembly.render();
+
+                data.debug.clearDisassemblyBreakpoints();
+                data.debug.placeDisassemblyBreakpoints();
             });
 
             $('body').on('keydown.GDBFrontend', function (event) {
@@ -164,6 +185,8 @@
             data.is_terminal_opened = false;
             data.layout_middle_right_scroll_top = 0;
 
+            data.last_not_found_source = false;
+            
             data.evaluaters = [];
 
             data.createEvaluater = function (parameters) {
@@ -198,13 +221,29 @@
                 var bp = false;
                 var bp_i = false;
 
-                data.debug.breakpoints.forEach(function (_bp, _bp_i) {
-                    if (_bp.file && (parameters.file.path == _bp.file) && (parameters.line == _bp.line)) {
-                        bp = _bp;
-                        bp_i = _bp_i;
-                        return false;
-                    }
-                });
+                if (!parameters.instruction) {
+                    data.debug.breakpoints.every(function (_bp, _bp_i) {
+                        if (_bp.file && (parameters.file.path == _bp.file) && (parameters.line == _bp.line)) {
+                            bp = _bp;
+                            bp_i = _bp_i;
+                            
+                            return false;
+                        }
+
+                        return true;
+                    });
+                } else {
+                    data.debug.breakpoints.every(function (_bp, _bp_i) {
+                        if ((_bp.gdb_breakpoint.location[0] == '*') && (_bp.gdb_breakpoint.location.substr(1) == parameters.instruction.addr)) {
+                            bp = _bp;
+                            bp_i = _bp_i;
+
+                            return false;
+                        }
+
+                        return true;
+                    });
+                }
 
                 return bp ? {
                     breakpoint: bp,
@@ -213,17 +252,23 @@
             };
 
             data.debug.addBreakpoint = function (parameters) {
-                var bp = data.debug.getBreakpoint({file: parameters.file, line: parameters.line});
+                var bp = data.debug.getBreakpoint({file: parameters.file, line: parameters.line, instruction: parameters.instruction});
 
                 if (!bp) {
+                    var api_params = {};
+
+                    if (!parameters.instruction) {
+                        api_params.file = parameters.file.path;
+                        api_params.line = parameters.line;
+                    } else {
+                        api_params.address = parameters.instruction.addr;
+                    }
+                    
                     $.ajax({
                         url: '/api/breakpoint/add',
                         cache: false,
                         method: 'get',
-                        data: {
-                            file: parameters.file.path,
-                            line: parameters.line
-                        },
+                        data: api_params,
                         success: function (result_json) {
                         },
                         error: function () {
@@ -256,14 +301,15 @@
             };
 
             data.debug.toggleBreakpoint = function (parameters) {
-                var bp = data.debug.getBreakpoint({file: parameters.file, line: parameters.line});
+                var bp = data.debug.getBreakpoint({file: parameters.file, line: parameters.line, instruction: parameters.instruction});
 
                 if (bp) {
                     data.debug.delBreakpoint({number: bp.breakpoint.gdb_breakpoint.number});
                 } else {
                     data.debug.addBreakpoint({
                         file: parameters.file,
-                        line: parameters.line
+                        line: parameters.line,
+                        instruction: parameters.instruction
                     });
                 }
             };
@@ -271,7 +317,14 @@
             data.$gdbFrontend_fileTabs.on('FileTabs_breakpoints_toggle.GDBFrontend', function (event, parameters) {
                 data.debug.toggleBreakpoint({
                     file: parameters.file,
-                    line: parameters.line
+                    line: parameters.line,
+                    instruction: parameters.instruction
+                });
+            });
+            
+            data.$gdbFrontend_disassembly.on('Disassembly_breakpoints_toggle.GDBFrontend', function (event, parameters) {
+                data.debug.toggleBreakpoint({
+                    instruction: parameters.instruction
                 });
             });
 
@@ -288,6 +341,15 @@
 
                 var getFile = function (_file_i) {
                     var _file = parameters.files[_file_i];
+
+                    if (_file === undefined) {
+                        return;
+                    }
+                    
+                    if (_file.path === undefined) {
+                        getFile(_file_i+1);
+                        return;
+                    }
 
                     $.ajax({
                         url: '/api/fs/read',
@@ -340,8 +402,6 @@
                                 data.debug.placeEditorFileBreakpoints({editor_file: file.file});
                                 !file.is_switched && data.gdbFrontend_fileTabs.switchFile({file: file.file, is_initial: true});
                             }
-
-                            editor_file = file.file;
 
                             if (_file_i < parameters.files.length-1) {
                                 getFile(_file_i+1);
@@ -474,7 +534,7 @@
                     localStorage.setItem($.fn.GDBFrontend.kvKey('layout_middle_left:width'), data.$gdbFrontend_layout_middle_left.innerWidth());
                     
                     data.components.fileTabs.files.every(function (_file, _file_i) {
-                        _file.ace.resize();
+                        _file.ace && _file.ace.resize();
                         return true;
                     });
                 });
@@ -483,7 +543,7 @@
                     localStorage.setItem($.fn.GDBFrontend.kvKey('layout_middle_right:width'), data.$gdbFrontend_layout_middle_right.innerWidth());
                     
                     data.components.fileTabs.files.every(function (_file, _file_i) {
-                        _file.ace.resize();
+                        _file.ace && _file.ace.resize();
                         return true;
                     });
                 });
@@ -492,7 +552,7 @@
                     localStorage.setItem($.fn.GDBFrontend.kvKey('layout_middle_bottom:height'), data.$gdbFrontend_layout_bottom.innerHeight());
                     
                     data.components.fileTabs.files.every(function (_file, _file_i) {
-                        _file.ace.resize();
+                        _file.ace && _file.ace.resize();
                         return true;
                     });
                 });
@@ -640,7 +700,7 @@
                                 if (!result_json.ok) {
                                     GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
-                                    reject();
+                                    resolve();
                                     return;
                                 }
 
@@ -655,7 +715,7 @@
                             error: function () {
                                 GDBFrontend.showMessageBox({text: 'An error occured.'});
                                 console.trace('An error occured.');
-                                reject();
+                                resolve();
                             }
                         });
 
@@ -667,6 +727,11 @@
             data.debug.reloadFileTabs = function () {
                 new Promise(function (resolve, reject) {
                     data.components.fileTabs.files.every(function (_file, _file_i) {
+                        if (!_file.path) {
+                            resolve();
+                            return false;
+                        }
+                        
                         $.ajax({
                             url: '/api/fs/read',
                             cache: false,
@@ -686,12 +751,12 @@
                                         console.trace('An error occured.');
                                     }
         
-                                    reject();
+                                    resolve();
                                     return;
                                 } else if (!result_json.ok) {
                                     GDBFrontend.showMessageBox({text: 'An error occured.'});
                                     console.trace('An error occured.');
-                                    reject();
+                                    resolve();
                                     return;
                                 }
                                 
@@ -714,7 +779,7 @@
                             error: function () {
                                 GDBFrontend.showMessageBox({text: 'Path not found.'});
                                 console.trace("Path not found.");
-                                reject();
+                                resolve();
                             }
                         });
                         
@@ -915,6 +980,11 @@
                         pc: parameters.state.selected_frame.pc,
                         instructions: parameters.state.selected_frame.disassembly
                     });
+                    
+                    data.gdbFrontend_fileTabs.loadInstructions({
+                        pc: parameters.state.selected_frame.pc,
+                        instructions: parameters.state.selected_frame.disassembly
+                    });
                 } else {
                     data.gdbFrontend_disassembly.clear();
                 }
@@ -925,24 +995,28 @@
                 data.gdbFrontend_sourceTree.render();
 
                 data.debug.clearEditorBreakpoints();
+                data.debug.clearDisassemblyBreakpoints();
 
                 data.debug.breakpoints = [];
                 parameters.state.breakpoints.forEach(function (_gdb_bp, _gdb_bp_i) {
                     var loc = _gdb_bp.location.match(/-source (.+?) -line (\d+)/i);
 
-                    if (loc) {
-                        var bp = {
-                            gdb_breakpoint: _gdb_bp
-                        };
+                    var bp = {
+                        gdb_breakpoint: _gdb_bp
+                    };
 
+                    if (loc) {
                         bp.file = loc[1];
                         bp.line = loc[2];
-
-                        data.debug.breakpoints.push(bp);
+                    } else if (bp.gdb_breakpoint.location[0] == '*') {
+                        bp.address = bp.gdb_breakpoint.location.substr(1);
                     }
+
+                    data.debug.breakpoints.push(bp);
                 });
 
                 data.debug.placeEditorBreakpoints();
+                data.debug.placeDisassemblyBreakpoints();
 
                 data.gdbFrontend_breakpointsEditor.load({breakpoints: data.debug.breakpoints});
                 data.gdbFrontend_breakpointsEditor.render();
@@ -982,9 +1056,22 @@
                             editor_file.ace.gotoLine(parameters.state.current_location.line, 0, true);
                         }, 0);
                     };
+                    
+                    if (!parameters.state.current_location) {
+                        var disasTab = data.components.fileTabs.openDisassembly({switch: true});
+                        if (disasTab.exists) {
+                            data.components.fileTabs.switchFile({file: disasTab.file});
+                        }
 
-                    if (!editor_file) {
-                        parameters.state.current_location &&
+                        disasTab.file.disassembly.load({
+                            pc: parameters.state.selected_frame.pc,
+                            instructions: parameters.state.selected_frame.disassembly
+                        });
+                        disasTab.file.disassembly.render();
+
+                        data.debug.clearDisassemblyBreakpoints();
+                        data.debug.placeDisassemblyBreakpoints();
+                    } else if (!editor_file) {
                         $.ajax({
                             url: '/api/fs/read',
                             cache: false,
@@ -995,9 +1082,27 @@
                             success: function (result_json) {
                                 if (result_json.error) {
                                     if (result_json.error.not_exists) {
-                                        var msg = 'Source file not found. ('+parameters.state.current_location.file+')'
-                                        GDBFrontend.showMessageBox({text: msg});
-                                        console.trace('[GDBFrontend]', msg);
+                                        if (!data.last_not_found_source || (data.last_not_found_source != parameters.state.current_location.file)) {
+                                            var msg = 'Source file not found. ('+parameters.state.current_location.file+')'
+                                            GDBFrontend.showMessageBox({text: msg});
+                                            console.trace('[GDBFrontend]', msg);
+
+                                            data.last_not_found_source = parameters.state.current_location.file;
+                                        }
+
+                                        var disasTab = data.components.fileTabs.openDisassembly({switch: true});
+                                        if (disasTab.exists) {
+                                            data.components.fileTabs.switchFile({file: disasTab.file});
+                                        }
+
+                                        disasTab.file.disassembly.load({
+                                            pc: parameters.state.selected_frame.pc,
+                                            instructions: parameters.state.selected_frame.disassembly
+                                        });
+                                        disasTab.file.disassembly.render();
+
+                                        data.debug.clearDisassemblyBreakpoints();
+                                        data.debug.placeDisassemblyBreakpoints();
                                     } else if (result_json.error.not_permitted) {
                                         GDBFrontend.showMessageBox({text: 'Access denied.'});
                                     } else {
@@ -1053,6 +1158,94 @@
                 }
                 
                 data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
+            };
+
+            data.debug.clearDisassemblyBreakpoint = function (parameters) {
+                if ((parameters.editor_file == undefined) && (parameters.id === undefined)) {
+                    data.components.disassembly.instructions.every(function (_instruction, _instruction_i) {
+                        if (_instruction.addr == parameters.address) {
+                            _instruction.Disassembly[data.components.disassembly.id].delBreakpoint();
+                            return false;
+                        }
+                        return true;
+                    });
+
+                    return;
+                }
+                
+                var editor_file = parameters.editor_file ?
+                                  parameters.editor_file:
+                                  data.gdbFrontend_fileTabs.getFileById(parameters.id);
+
+                if (!editor_file) return false;
+
+                return editor_file.delBreakpoint({
+                    address: parameters.address
+                });
+            };
+
+            data.debug.clearDisassemblyBreakpoints = function (parameters) {
+                data.debug.breakpoints.forEach(function (_bp, _bp_i) {
+                    if (!_bp.address) return true;
+
+                    data.debug.clearDisassemblyBreakpoint({address: _bp.address});
+                    
+                    data.components.fileTabs.files.every(function (_tab, _tab_i) {
+                        if (!_tab.disassembly) {
+                            return true;
+                        }
+
+                        data.debug.clearDisassemblyBreakpoint({editor_file: _tab, address: _bp.address});
+                        
+                        return true;
+                    });
+                });
+            };
+
+            data.debug.placeDisassemblyBreakpoint = function (parameters) {
+                if ((parameters.editor_file == undefined) && (parameters.id === undefined)) {
+                    data.components.disassembly.instructions.every(function (_instruction, _instruction_i) {
+                        if (_instruction.addr == parameters.address) {
+                            _instruction.Disassembly[data.components.disassembly.id].addBreakpoint();
+                            return false;
+                        }
+                        return true;
+                    });
+
+                    return;
+                }
+                
+                var editor_file = parameters.editor_file ?
+                                  parameters.editor_file:
+                                  data.gdbFrontend_fileTabs.getFileByPath(parameters.id);
+
+                if (!editor_file) return false;
+
+                return editor_file.addBreakpoint({
+                    address: parameters.address
+                });
+            };
+
+            data.debug.placeDisassemblyBreakpoints = function (parameters) {
+                data.debug.breakpoints.every(function (_bp, _bp_i) {
+                    if (_bp.file) return true;
+
+                    data.debug.placeDisassemblyBreakpoint({address: _bp.address});
+
+                    data.components.fileTabs.files.every(function (_tab, _tab_i) {
+                        if (!_tab.disassembly) {
+                            return true;
+                        }
+
+                        if (_bp.gdb_breakpoint.enabled) {
+                            data.debug.placeDisassemblyBreakpoint({editor_file: _tab, address: _bp.address});
+                        }
+                        
+                        return true;
+                    });
+
+                    return true;
+                });
             };
 
             data.debug.clearEditorFileBreakpoint = function (parameters) {
@@ -1281,6 +1474,10 @@
                     },
                     success: function (result_json) {
                         data.debug.getState({return: function () {
+                            if (!parameters.frame.file) {
+                                return;
+                            }
+                            
                             var editor_file = data.gdbFrontend_fileTabs.getFileByPath(parameters.frame.file.path);
 
                             var _continue = function () {
@@ -1295,7 +1492,7 @@
                                 }), 100;
                             };
 
-                            if (!editor_file) {
+                            if (!editor_file && parameters.frame.file) {
                                 $.ajax({
                                     url: '/api/fs/read',
                                     cache: false,
@@ -1306,9 +1503,13 @@
                                     success: function (result_json) {
                                         if (result_json.error) {
                                             if (result_json.error.not_exists) {
-                                                var msg = 'Source file not found. ('+parameters.frame.file.path+')'
+                                                if (!data.last_not_found_source || (data.last_not_found_source != parameters.frame.file.path)) {
+                                                    var msg = 'Source file not found. ('+parameters.frame.file.path+')'
                                                 GDBFrontend.showMessageBox({text: msg});
                                                 console.trace('[GDBFrontend]', msg);
+        
+                                                    data.last_not_found_source = parameters.frame.file.path;
+                                                }
                                             } else if (result_json.error.not_permitted) {
                                                 GDBFrontend.showMessageBox({text: 'Access denied.'});
                                             } else {
@@ -1552,7 +1753,7 @@
                 data.$GDBFrontend_terminalOpenBtn.hide();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
-                    _file.ace.resize();
+                    _file.ace && _file.ace.resize();
                     return true;
                 });
             };
@@ -1563,7 +1764,7 @@
                 data.$GDBFrontend_terminalOpenBtn.show();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
-                    _file.ace.resize();
+                    _file.ace && _file.ace.resize();
                     return true;
                 });
             };

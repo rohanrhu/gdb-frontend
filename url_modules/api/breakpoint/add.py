@@ -22,13 +22,15 @@ def run(request, params):
     result_json = {}
     result_json["ok"] = True
 
-    if (qs_params.get("file") is None) or (qs_params.get("line") is None):
-        result_json["ok"] = False
-
-    api.debug.addBreakpoint(
-        file=qs_params["file"][0],
-        line=qs_params["line"][0]
-    )
+    if (qs_params.get("file") is not None) and (qs_params.get("line") is not None):
+        api.debug.addBreakpoint(
+            file=qs_params["file"][0],
+            line=qs_params["line"][0]
+        )
+    elif qs_params.get("address") is not None:
+        api.debug.addBreakpoint(
+            address=qs_params["address"][0]
+        )
 
     request.send_response(200)
     request.send_header("Content-Type", "application/json; charset=utf-8")

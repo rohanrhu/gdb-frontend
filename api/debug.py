@@ -20,6 +20,7 @@ import threading
 import traceback
 import time
 import sys
+import re
 
 import config
 import settings
@@ -396,12 +397,16 @@ def getBreakpoints():
         _breakpoint_json["condition"] = _breakpoint.condition
         _breakpoint_json["thread"] = _breakpoint.thread
 
+        if isinstance(_breakpoint.location, str) and (_breakpoint.location.__len__() > 1) and (_breakpoint.location[0] == "*"):
+            try: _breakpoint_json["assembly"] = gdb.execute("x/i "+str(_breakpoint.location[1:]), to_string=True)
+            except: pass
+
         breakpoints.append(_breakpoint_json)
 
     return breakpoints
 
 @threadSafe
-def addBreakpoint(file, line):
+def addBreakpoint(file=None, line=None, address=None):
     thread = gdb.selected_thread()
 
     if thread:
@@ -409,17 +414,31 @@ def addBreakpoint(file, line):
     else:
         is_running = False
 
+    if (file is not None) and (line is not None):
+        if is_running:
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, {
+                "file": file,
+                "line": line,
+            })
+
+            gdb.execute("interrupt")
+        else:
+            bp = Breakpoint(
+                source = file,
+                line = line
+            )
+        
+        return
+    
     if is_running:
         api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, {
-            "file": file,
-            "line": line,
+            "address": address
         })
 
         gdb.execute("interrupt")
     else:
         bp = Breakpoint(
-            source = file,
-            line = line
+            address = address
         )
 
 @threadSafe
@@ -477,27 +496,33 @@ def getSources():
 
 @threadSafe
 def run():
-    gdb.execute("r")
+    try: gdb.execute("r")
+    except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe
 def pause():
-    gdb.execute("interrupt")
+    try: gdb.execute("interrupt")
+    except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe
 def cont():
-    gdb.execute("c")
+    try: gdb.execute("c")
+    except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe
 def stepOver():
-    gdb.execute("n")
+    try: gdb.execute("n")
+    except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe
 def step():
-    gdb.execute("s")
+    try: gdb.execute("s")
+    except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe
 def stepInstruction():
-    gdb.execute("si")
+    try: gdb.execute("si")
+    except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe
 def switchThread(global_num):
@@ -789,6 +814,38 @@ def disassemble(start, end):
     return gdb.selected_frame().architecture().disassemble(start, end)
 
 @threadSafe
+def iterateAsmToRet():
+    """
+    Returns instructions to return or max limit.
+    """
+
+    frame = gdb.selected_frame()
+    arch = frame.architecture()
+
+    instructions = []
+    length = 0
+
+    def _iterate(addr):
+        nonlocal instructions
+        nonlocal length
+
+        instruction = arch.disassemble(addr)[0]
+
+        instructions.append(instruction)
+        length += 1
+
+        if length == 1000: return
+        if instruction['asm'][:3] == 'ret': return
+        
+        _iterate(addr + int(instruction['length']))
+
+
+    try: _iterate(int(re.findall("(0x.+) <", gdb.parse_and_eval(frame.name()).__str__())[0], 16))
+    except: return instructions
+
+    return instructions
+
+@threadSafe
 def disassembleFrame():
     """
     Returns serializable instructions in selected frame.
@@ -799,7 +856,13 @@ def disassembleFrame():
     try:
         block = frame.block()
     except RuntimeError:
-        return []
+        try:
+            instructions = iterateAsmToRet()
+        except:
+            print("[Error] Can not disassemble frame.")
+            instructions = []
+
+        return instructions
 
     return disassemble(block.start, block.end-1)
 
@@ -808,12 +871,21 @@ class Breakpoint(gdb.Breakpoint):
     def __init__(
         self,
         source = None,
-        line = None
+        line = None,
+        address = None
     ):
+        if (source is not None) and (line is not None):
+            gdb.Breakpoint.__init__(
+                self,
+                source = source,
+                line = line
+            )
+
+            return
+        
         gdb.Breakpoint.__init__(
             self,
-            source = source,
-            line = line
+            "*" + str(address)
         )
 
     def stop(self):
@@ -848,7 +920,11 @@ class Variable():
         else:
             value = self.value
         
-        block = frame.block()
+        try:
+            block = frame.block()
+        except RuntimeError as e:
+            print("[Error]", str(e))
+            return False
 
         serializable = {}
         serializable["is_global"] = block.is_global

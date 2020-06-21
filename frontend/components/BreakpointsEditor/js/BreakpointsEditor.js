@@ -67,6 +67,8 @@
             var data = {};
             $breakpointsEditor.data('BreakpointsEditor', data);
             data.$breakpointsEditor = $breakpointsEditor;
+            
+            data.id = ++$.fn.BreakpointsEditor.id_i;
 
             data.$breakpointsEditor_noItems = $breakpointsEditor.find('.BreakpointsEditor_noItems');
             data.$breakpointsEditor_items = $breakpointsEditor.find('.BreakpointsEditor_items');
@@ -84,6 +86,7 @@
                     var breakpoint = {};
                     breakpoint.file = _bp.file;
                     breakpoint.line = _bp.line;
+                    breakpoint.address = _bp.address;
                     breakpoint.gdb_breakpoint = _bp.gdb_breakpoint;
 
                     data.breakpoints.push(breakpoint);
@@ -126,11 +129,23 @@
                         });
                     });
 
-                    var loc = pathFileName(breakpoint.file) + ':' + breakpoint.line;
+                    var loc;
+                    
+                    if (breakpoint.file && breakpoint.line) {
+                        loc = pathFileName(breakpoint.file) + ':' + breakpoint.line;
+                    } else if (breakpoint.gdb_breakpoint.assembly) {
+                        loc = breakpoint.gdb_breakpoint.assembly;
+                    } else {
+                        loc = breakpoint.gdb_breakpoint.location;
+                    }
 
                     breakpoint.$item_loc_val.html(loc);
 
                     breakpoint.$item_loc.on('click.BreakpointsEditor', function (event) {
+                        if (!breakpoint.file || !breakpoint.line) {
+                            return;
+                        }
+                        
                         $breakpointsEditor.trigger('BreakpointsEditor_breakpoint_selected', {
                             breakpoint: breakpoint
                         });
@@ -172,4 +187,6 @@
             $.error('Method '+method+' does not exist on jQuery.BreakpointsEditor');
         }
     };
+    
+    $.fn.BreakpointsEditor.id_i = 0;
 })(jQuery);
