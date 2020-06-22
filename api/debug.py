@@ -346,7 +346,8 @@ def getState():
                                     type_tree = serializableTypeTree(resolveTypeTree(symbol.type))
 
                                     variable["type"] = serializableType(symbol.type)
-                                    variable["type"]["terminal"] = serializableType(terminalType)
+                                    if variable["type"]:
+                                        variable["type"]["terminal"] = serializableType(terminalType)
                                     variable["type_tree"] = type_tree
                                 else:
                                     variable["type"] = False
@@ -676,7 +677,8 @@ def serializableType(ctype):
     """
 
     serializable = {}
-    serializable["alignof"] = ctype.alignof
+    if "alignof" in dir(ctype):
+        serializable["alignof"] = ctype.alignof
     serializable["code"] = ctype.code
     serializable["name"] = ctype.name
     serializable["sizeof"] = ctype.sizeof
