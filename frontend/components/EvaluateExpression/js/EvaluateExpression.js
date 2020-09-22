@@ -224,6 +224,9 @@
                 if (!parameters.expression) {
                     data.$evaluateExpression_noValue.show();
                     data.$evaluateExpression_value.hide();
+
+                    data.components.variablesExplorer.setLoading(false);
+                    
                     return;
                 }
                 
