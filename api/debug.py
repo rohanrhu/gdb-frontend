@@ -723,9 +723,13 @@ def getSerializableStructMembers(value, ctype):
     for _field in ctype.fields():
         member = {}
         try:
-            memberValue = value[_field.name]
+            memberValue = value[_field]
         except gdb.error:
             continue
+
+        if _field.is_base_class:
+            base_members = getSerializableStructMembers(memberValue, _field.type)
+            members.extend(base_members)
 
         if hasattr(_field, "bitpos"):
             member["bitpos"] = _field.bitpos

@@ -178,6 +178,8 @@
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    position: relative;
+    z-index: 2000;
 }
 
 .GDBFrontend_layout_middle_center {

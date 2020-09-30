@@ -1581,6 +1581,10 @@
                     qs['expression'] = tree.join('.');
                 }
 
+                if (parameters.item.parent && (parameters.item.variable.type.code == 3 /* struct */)) {
+                    qs.expression = '('+parameters.item.variable.type.name+')'+qs.expression;
+                }
+
                 $.ajax({
                     url: '/api/frame/variable',
                     cache: false,
