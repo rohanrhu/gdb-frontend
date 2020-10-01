@@ -60,7 +60,6 @@
 .SourceTree_title {
     padding: 10px;
     font-weight: bold;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -124,7 +123,6 @@
 }
 
 .SourceTree_items_item__file .SourceTree_items_item_icon {
-    color: white;
 }
 
 .SourceTree_items_item__dir .SourceTree_items_item_icon__closedDir {

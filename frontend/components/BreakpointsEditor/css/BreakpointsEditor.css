@@ -97,7 +97,6 @@
 
 .BreakpointsEditor_items_item_remove {
     background: rgb(14, 27, 52);
-    color: white;
     transition: opacity 250ms;
     align-items: center;
     justify-content: center;

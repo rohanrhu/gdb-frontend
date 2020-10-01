@@ -147,7 +147,6 @@
 
 .Watches_items_item_remove {
     background: rgba(0,0,0,0.2);
-    color: white;
     transition: opacity 250ms;
     align-items: center;
     justify-content: center;

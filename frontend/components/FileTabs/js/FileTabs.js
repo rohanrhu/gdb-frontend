@@ -72,6 +72,8 @@
             var $fileTabs_editors_items = $fileTabs.find('.FileTabs_editors_items');
             var $fileTabs_editors_items_item__proto = $fileTabs.find('.FileTabs_editors_items_item.__proto');
 
+            data.ace_theme = 'ace/theme/tomorrow_night_blue';
+            
             data.animation_duration = 100;
 
             data.is_passive = false;
@@ -80,6 +82,13 @@
 
             data.current = false;
 
+            data.setAceTheme = function (theme) {
+                data.ace_theme = theme;
+                data.files.every(function (_file) {
+                    _file.ace.setTheme(data.ace_theme);
+                });
+            };
+            
             data.loadInstructions = function (parameters) {
                 data.files.every(function (_file, _file_i) {
                     if (_file.disassembly === undefined) {
@@ -437,7 +446,7 @@
 
                 file.ace = ace.edit(file.$editor_ace.get(0));
                 file.ace.setReadOnly(GDBFrontend.components.gdbFrontend.is_readonly);
-                file.ace.setTheme('ace/theme/tomorrow_night_blue');
+                file.ace.setTheme(data.ace_theme);
                 file.ace.session.setMode(ace.require('ace/ext/modelist').getModeForPath(file.name).mode);
 
                 file.ace.commands.addCommand({

@@ -34,7 +34,6 @@
     right: 0px;
     bottom: 0px;
     background: #003f91;
-    color: white;
     text-align: center;
     padding: 5px 10px;
     display: none;
@@ -47,7 +46,6 @@
     right: 17px;
     top: 0px;
     background: #003f91;
-    color: white;
     text-align: center;
     padding: 5px 10px;
     display: none;
@@ -300,7 +298,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
     display: flex;
 }
@@ -357,7 +354,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
     display: flex;
 }
@@ -401,7 +397,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -416,7 +411,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -431,7 +425,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -446,7 +439,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -461,7 +453,6 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    color: white;
     background: rgba(0, 0, 0, 0.2);
 }
 

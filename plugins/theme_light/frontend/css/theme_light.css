@@ -1,0 +1,180 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+ *
+ */
+
+ .GDBFrontend {
+     background: white;
+     color: black;
+ }
+
+ .Checkbox_icon_img {
+    filter: hue-rotate(320deg) contrast(5);
+ }
+ 
+.button1:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.GDBFrontend_layout_top {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgba(0,0,0,0.2);
+ }
+ 
+ .GDBFrontend_runtimeControls_btn_img {
+     filter: invert(1);
+ }
+
+ .GDBFrontend_load_connectBtn_openable {
+    background: #999999;
+ }
+ 
+ .GDBFrontend_layout_middle_left {
+     background: rgba(0, 0, 0, 0.25);
+ }
+
+ .GDBFrontend_sources_title {
+    background: rgba(0, 0, 0, 0.1);
+ }
+
+ .GDBFrontend_sources_title_buttons_button_iconImg {
+    filter: invert(1);
+}
+
+.GDBFrontend_disassembly_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {
+    filter: invert(1);
+}
+
+.GDBFrontend_watches_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_breakpoints_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.BreakpointsEditor_items_item_remove {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_threads_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ThreadsEditor_items_item_num {
+    color: black;
+}
+
+.GDBFrontend_stack_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.StackTrace_items_item_num {
+    color: black;
+}
+
+.GDBFrontend_variables_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.FileTabs_editors_content {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.FileTabs_editors_noItem {
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+.FileTabs_tabs_items_item_closeBtn {
+    color: black;
+}
+
+.GDBFrontend_terminalCloseBtn,
+.GDBFrontend_terminalOpenBtn {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon {
+    color: #fff35f;
+}
+
+.Resizable_resizer_draggable {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.Watches_items_item_expression_input_rI {
+    color: black;
+}
+
+.Watches_items_item_value_input_rI {
+    color: black;
+}
+
+.Disassembly_items_item_addr {
+    color: #d9edff;
+}
+
+.VariablesExplorer_items_item_button_type {
+    color: white;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0,0,0,0.075);
+}
+
+.FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box {
+    color: black;
+    background: #a0a0a0;
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
+    border-bottom: 10px solid #a0a0a0;
+}
+
+.FileBrowser_window_box {
+    background: #656565;
+}
+
+.EvaluateExpression_window_box {
+    background: #656565;
+    color: white;
+}
+
+.EvaluateExpression_window_mover {
+    background: #656565;
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    background: #999999;
+    color: black;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    color: black;
+}
+
+.css_AboutDialog_box {
+    background: #656565;
+}

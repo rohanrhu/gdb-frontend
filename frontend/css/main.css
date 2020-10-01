@@ -29,11 +29,11 @@
 }
 
 body {
-    color: white;
     text-align: left;
     line-height: 100%;
     font-family: 'SourceSansPro Regular';
     font-size: 16px;
+    color: white;
 }
 
 b {

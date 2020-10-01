@@ -18,7 +18,8 @@ plugin_order = [
 ]
 
 disabled_plugins = [
-    "hello"
+    "hello",
+    "theme_light"
 ]
 
 def init():
