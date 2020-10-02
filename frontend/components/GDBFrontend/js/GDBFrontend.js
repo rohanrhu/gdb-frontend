@@ -788,6 +788,18 @@
                 });
             };
 
+            $gdbFrontend.on('GDBFrontend_debug_refresh.GDBFrontend', function (event, message) {
+                window.location.reload();
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_plugin_loaded.GDBFrontend', function (event, message) {
+                GDBFrontend.verbose('Plugin loaded: ', message.plugin.name);
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_plugin_unloaded.GDBFrontend', function (event, message) {
+                GDBFrontend.verbose('Plugin unloaded: ', message.plugin.name);
+            });
+
             $gdbFrontend.on('GDBFrontend_debug_exited.GDBFrontend', function (event, message) {
                 data.debug.setExited(message);
             });

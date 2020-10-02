@@ -14,6 +14,7 @@ import api.flags
 
 lock = False
 debugFlags = False
+dbgServer = False
 
 def init():
     global lock
@@ -22,9 +23,12 @@ def init():
     global debugFlags
     debugFlags = api.flags.AtomicDebugFlags()
 
+    global dbgServer
+
 def access(function):
     global lock
     global debugFlags
+    global dbgServer
 
     lock.acquire()
     function()

@@ -16,6 +16,9 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "python-libs"))
 
 import config
+
+sys.path.insert(0, config.PLUGINS_DIR)
+
 import settings
 import http_server
 import http_handler
@@ -25,8 +28,7 @@ import plugin
 import util
 import urls
 import api.url
-
-sys.path.insert(0, config.PLUGINS_DIR)
+import commands
 
 gdb = importlib.import_module("gdb")
 
@@ -36,7 +38,7 @@ gdb.execute("set pagination off")
 api.globalvars.init()
 settings.init()
 plugin.init()
-plugin.load_all()
+plugin.loadAll()
 
 all_urls = urls.urls
 
@@ -55,12 +57,12 @@ thread = threading.Thread(target=httpServer.serve_forever)
 thread.setDaemon(True)
 thread.start()
 
-dbgServer = server.GDBFrontendServer()
-dbgServer.setDaemon(True)
-dbgServer.start()
+api.globalvars.dbgServer = server.GDBFrontendServer()
+api.globalvars.dbgServer.setDaemon(True)
+api.globalvars.dbgServer.start()
 
 config.HTTP_PORT = httpServer.server_port
-config.SERVER_PORT = dbgServer.server.serversocket.getsockname()[1]
+config.SERVER_PORT = api.globalvars.dbgServer.server.serversocket.getsockname()[1]
 
 if config.MMAP_PATH:
     import mmap
@@ -73,4 +75,4 @@ if config.MMAP_PATH:
     server_port = ctypes.c_uint16.from_buffer(mmapBuff, 2)
     
     http_port.value = httpServer.server_port
-    server_port.value = dbgServer.server.serversocket.getsockname()[1]
+    server_port.value = api.globalvars.dbgServer.server.serversocket.getsockname()[1]

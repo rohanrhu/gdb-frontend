@@ -140,6 +140,46 @@ Specifies plugins directory.
 #### `--verbose`, `-V`
 Enables verbose output.
 
+### GDB Commands
+GDBFrontend's GDB commands starts with `gf-`.
+
+#### `gf-refresh`
+Refreshes all browser clients.
+
+#### `gf-theme [theme-name]`
+Switch to desired theme. For example: `gf-theme light` or `gf-theme default` for default theme.
+
+#### `gf-list-plugins`
+Lists all GDBFrontend plugins in the plugin directory.
+
+#### `gf-load-plugin [plugin-name]`
+Loads GDBFrontend plugin.
+
+#### `gf-unload-plugin [plugin-name]`
+Unloads GDBFrontend plugin.
+
+### GDBFrontend Python API
+You can access GDBFrontend's Python API via `gdbfrontend` module.
+
+```
+(gdb) python-interactive
+```
+```python
+>>> dir(gdbfrontend)
+```
+
+For example, you can get all client sockets like this:
+```python
+>>> gdbfrontend.api.globalvars.dbgServer.server.connections
+{1: <server.GDBFrontendSocket object at 0x...>}
+```
+
+or you can get all plugins:
+```python
+>>> gdbfrontend.plugin.getAll()
+['hello', 'theme_light']
+```
+
 ## Troubleshooting
 ### Zombie Processes
 Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.

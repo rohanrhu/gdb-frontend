@@ -260,7 +260,7 @@ try:
             " -f tmux.conf new-session -s " + terminal_id +
             " -d '" + gdb_executable +
             " -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); " +
-            "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import main\"; read;'"
+            "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import gdbfrontend\"; read;'"
         )
     else:
         os.system(
@@ -303,7 +303,7 @@ try:
             " \"" +
             gdb_executable +
             " -ex \\\"python import sys, os; sys.path.insert(0, '"+path+"'); import config, json, base64; config.init(); " +
-            "config.setJSON(base64.b64decode('"+base64.b64encode(json.dumps(arg_config).encode()).decode()+"').decode()); import main\\\"; read;"
+            "config.setJSON(base64.b64decode('"+base64.b64encode(json.dumps(arg_config).encode()).decode()+"').decode()); import gdbfrontend\\\"; read;"
             "\" "
         )
         os.system(
