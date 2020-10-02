@@ -119,6 +119,10 @@
     color: black;
 }
 
+.FileTabs_editors_items_item_variablePopup {
+    color: #656565;
+}
+
 .GDBFrontend_terminalCloseBtn,
 .GDBFrontend_terminalOpenBtn {
     background: rgba(255, 255, 255, 0.5);
