@@ -423,7 +423,7 @@
                     data.$variablesExplorer_content.scrollLeft(data.scroll.x);
                     data.$variablesExplorer_content.scrollTop(data.scroll.y);
 
-                    item.signalPointings();
+                    data.signalPointings();
                     data.signalOthers();
 
                     $variablesExplorer.trigger('VariablesExplorer_item_opened', {item});
@@ -440,6 +440,9 @@
                     
                     item.$item_openable_items.find('.VariablesExplorer_items_item:not(.__proto)').remove();
                     item.items = [];
+
+                    data.signalPointings();
+                    data.signalOthers();
 
                     item.saveState();
                 };
