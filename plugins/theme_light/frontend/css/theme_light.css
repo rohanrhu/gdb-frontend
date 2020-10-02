@@ -78,12 +78,28 @@
     color: black;
 }
 
+.ThreadsEditor_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.ThreadsEditor_items_item.ThreadsEditor__current {
+    background: rgb(255, 243, 95, 0.2);
+}
+
 .GDBFrontend_stack_title {
     background: rgba(0, 0, 0, 0.1);
 }
 
 .StackTrace_items_item_num {
     color: black;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgb(255, 243, 95, 0.2);
 }
 
 .GDBFrontend_variables_title {
@@ -159,7 +175,11 @@
 }
 
 .EvaluateExpression_window_mover {
-    background: #656565;
+    background-color: #656565;
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: #fff35f;
 }
 
 .GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
@@ -176,5 +196,13 @@
 }
 
 .css_AboutDialog_box {
+    background: #656565;
+}
+
+.FuzzyFinder_box {
+    background: #656565;
+}
+
+.css_MessageBox_box {
     background: #656565;
 }
