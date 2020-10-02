@@ -730,6 +730,7 @@ def getSerializableStructMembers(value, ctype):
         if _field.is_base_class:
             base_members = getSerializableStructMembers(memberValue, _field.type)
             members.extend(base_members)
+            continue
 
         if hasattr(_field, "bitpos"):
             member["bitpos"] = _field.bitpos
