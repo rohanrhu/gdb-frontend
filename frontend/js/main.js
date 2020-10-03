@@ -177,6 +177,7 @@ $(document).ready(function () {
 
     GDBFrontend.load_plugins.every(function (_plugin, _plugin_i) {
         GDBFrontend.registerPlugin({plugin: _plugin});
+        return true;
     });
 });
 

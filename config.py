@@ -17,9 +17,12 @@ app_path = os.path.dirname(os.path.realpath(__file__))
 plugin_order = [
 ]
 
+"""
+Theme plugins (like "theme_light") dont get loaded automatically.
+So you can switch between themes with commands in GDB shell: "gf-theme light", "gf-theme default".
+"""
 disabled_plugins = [
-    "hello",
-    "theme_light"
+    "hello"
 ]
 
 def init():

@@ -103,13 +103,14 @@ def load(plugin_name):
 
     plugins[plugin_name] = plugin
 
-    for client_id, client in api.globalvars.dbgServer.server.connections.items():
-        client.sendMessage(json.dumps({
-            "event": "plugin_loaded",
-            "plugin": {
-                "name": plugin_name
-            }
-        }))
+    if api.globalvars.dbgServer:
+        for client_id, client in api.globalvars.dbgServer.server.connections.items():
+            client.sendMessage(json.dumps({
+                "event": "plugin_loaded",
+                "plugin": {
+                    "name": plugin_name
+                }
+            }))
 
     plugin.loaded()
 
@@ -127,13 +128,14 @@ def unload(plugin_name):
     
     del plugins[plugin_name]
 
-    for client_id, client in api.globalvars.dbgServer.server.connections.items():
-        client.sendMessage(json.dumps({
-            "event": "plugin_unloaded",
-            "plugin": {
-                "name": plugin_name
-            }
-        }))
+    if api.globalvars.dbgServer:
+        for client_id, client in api.globalvars.dbgServer.server.connections.items():
+            client.sendMessage(json.dumps({
+                "event": "plugin_unloaded",
+                "plugin": {
+                    "name": plugin_name
+                }
+            }))
 
     plugin.unloaded()
 
@@ -147,6 +149,9 @@ def loadAll():
     plugin_dirs = config.plugin_order
 
     for plugin_dir in os.listdir(config.PLUGINS_DIR):
+        if plugin_dir.startswith("theme_"):
+            continue
+        
         if plugin_dir not in plugin_dirs:
             plugin_dirs.append(plugin_dir)
 

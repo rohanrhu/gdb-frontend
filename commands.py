@@ -91,10 +91,11 @@ class GDBFrontendRefreshPrefixCommand(gdb.Command):
         )
     
     def invoke(self, arg, from_tty):
-        for client_id, client in api.globalvars.dbgServer.server.connections.items():
-            client.sendMessage(json.dumps({
-                "event": "refresh"
-            }))
+        if api.globalvars.dbgServer:
+            for client_id, client in api.globalvars.dbgServer.server.connections.items():
+                client.sendMessage(json.dumps({
+                    "event": "refresh"
+                }))
 
 GDBFrontendRefreshPrefixCommand()
 
@@ -117,15 +118,17 @@ class GDBFrontendThemePrefixCommand(gdb.Command):
             theme_name = "theme_" + theme_name
         
         for _plugin_name in list(plugin.plugins.keys()).copy():
-            plugin.unload(_plugin_name)
+            if _plugin_name.startswith("theme_"):
+                plugin.unload(_plugin_name)
         
         if theme_name and theme_name != "theme_default":
             if not plugin.load(theme_name):
                 print("Plugin not found:", theme_name)
         
-        for client_id, client in api.globalvars.dbgServer.server.connections.items():
-            client.sendMessage(json.dumps({
-                "event": "refresh"
-            }))
+        if api.globalvars.dbgServer:
+            for client_id, client in api.globalvars.dbgServer.server.connections.items():
+                client.sendMessage(json.dumps({
+                    "event": "refresh"
+                }))
 
 GDBFrontendThemePrefixCommand()
