@@ -67,7 +67,17 @@ def threadSafe(callback):
         if not is_mt:
             lockCounter.incr()
             gdb.post_event(_exec__mT)
-            while lockCounter.get() > 0: pass
+
+            is_warned = False
+            start_time = time.time()
+            
+            while lockCounter.get() > 0:
+                if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
+                    is_warned = True
+                    print("")
+                    print("[GDBFrontend]", "GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)")
+                
+                time.sleep(0.1)
         else:
             _exec__mT()
 
@@ -102,7 +112,17 @@ def execCommand(command, buff_output=False):
     if not is_mt:
         lockCounter.incr()
         gdb.post_event(_execCommand__mT)
-        while lockCounter.get() > 0: pass
+
+        is_warned = False
+        start_time = time.time()
+        
+        while lockCounter.get() > 0:
+            if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
+                is_warned = True
+                print("")
+                print("[GDBFrontend]", "GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)")
+            
+            time.sleep(0.1)
     else:
         _execCommand__mT()
 

@@ -181,6 +181,18 @@ or you can get all plugins:
 ```
 
 ## Troubleshooting
+### Blocking GDB shell/main-thread
+Most of GDBFrontend functions are thread-safe and work on GDB's main-thread. So, if you run something that is blocking on the GDB shell, GDBFrontend functions have to wait it until finish.
+
+You will get this warning when a thread-safe GDBFrontend function needs to work and you are blocking GDB's main thread.
+```bash
+(gdb) shell
+$ ...
+[GDBFrontend] GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)
+```
+
+When you exit shell, blocking GDBFrontend functions will continue working.
+
 ### Zombie Processes
 Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.
 
