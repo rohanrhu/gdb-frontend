@@ -130,6 +130,8 @@
                                 $fileBrowser_window_box_header_path_input_rI.val(data.path);
                             }
 
+                            result_json.files.sort();
+                            
                             $fileBrowser_total_number.html(result_json.files.length);
 
                             if (data.path == '/') {
