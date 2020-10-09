@@ -46,6 +46,8 @@ def init():
     MMAP_PATH = False
     global WORKDIR
     WORKDIR = False
+    global CREDENTIALS
+    CREDENTIALS = None
 
 def setJSON(config_json):
     new_config = json.loads(config_json)

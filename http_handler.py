@@ -14,6 +14,7 @@ import re
 import http
 import http.server
 import mimetypes
+import base64
 
 import config
 import util
@@ -101,14 +102,39 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(html)
 
+    def checkAuth(self):
+        if not config.CREDENTIALS:
+            return True
+        
+        if self.headers.get("Authorization") is None:
+            self.do_AUTH()
+            return False
+        
+        if self.headers.get("Authorization") == "Basic " + base64.b64encode(config.CREDENTIALS.encode("utf-8")).decode("utf-8"):
+            return True
+        
+        self.do_AUTH()
+        return False
+
+    def do_AUTH(self):
+        self.send_response(401)
+        self.send_header("WWW-Authenticate", "Basic realm=\"Login to GDBFrontend session\"")
+        self.end_headers()
+
     def do_GET(self):
         self.method = 'GET'
+
+        if not self.checkAuth():
+            return
         
         try: self.handleRequest()
         except BrokenPipeError: pass
 
     def do_POST(self):
         self.method = 'POST'
+
+        if not self.checkAuth():
+            return
 
         try: self.handleRequest()
         except BrokenPipeError: pass

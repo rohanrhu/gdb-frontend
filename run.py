@@ -26,6 +26,7 @@ path = os.path.dirname(os.path.realpath(__file__))
 gdb_executable = "gdb"
 tmux_executable = "tmux"
 terminal_id = "gdb-frontend"
+credentials = False
 is_random_port = False
 workdir = False
 
@@ -53,6 +54,14 @@ def argHandler_terminalId(name):
     global terminal_id
 
     terminal_id = name
+
+def argHandler_credentials(_credentials):
+    global credentials
+
+    credentials = _credentials
+
+    arg_config["CREDENTIALS"] = credentials
+    config.CREDENTIALS = credentials
 
 def argHandler_host(address):
     arg_config["HOST_ADDRESS"] = address
@@ -130,6 +139,7 @@ def argHandler_help():
     print("  --gdb-executable=PATH, -g PATH:\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
     print("  --terminal-id=NAME, -t NAME:\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
+    print("  --credentials=USER:PASS, -c USER:PASS:\t\tSpecifies username and password for accessing to debugger (Browser asks it for two times).)")
     print("  --host=IP, -H IP:\t\t\tSpecifies current host address that you can access via for HTTP and WS servers.")
     print("  --listen=IP, -l IP:\t\t\tSpecifies listen address for HTTP and WS servers.")
     print("  --port=PORT, -p PORT:\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).")
@@ -158,6 +168,7 @@ args = [
     ["--gdb-executable", "-g", argHandler_gdbExecutable, True],
     ["--tmux-executable", "-tmux", argHandler_tmuxExecutable, True],
     ["--terminal-id", "-t", argHandler_terminalId, True],
+    ["--credentials", "-c", argHandler_credentials, True],
     ["--host", "-H", argHandler_host, True],
     ["--listen", "-l", argHandler_listen, True],
     ["--port", "-p", argHandler_port, True],
@@ -276,8 +287,13 @@ try:
             " ENTER"
         )
 
+    if credentials:
+        gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-c", "user:pass", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
+    else:
+        gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
+
     gotty = subprocess.Popen(
-        ["./bin/gotty", "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id],
+        gotty_args,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         stdin=subprocess.PIPE
