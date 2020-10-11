@@ -67,6 +67,5 @@ if config.MMAP_PATH:
     mmapBuff = mmap.mmap(fd, mmap.PAGESIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
 
     http_port = ctypes.c_uint16.from_buffer(mmapBuff, 0)
-    server_port = ctypes.c_uint16.from_buffer(mmapBuff, 2)
     
     http_port.value = api.globalvars.httpServer.server_port

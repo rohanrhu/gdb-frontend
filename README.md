@@ -85,7 +85,7 @@ Options:
   --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger (Browser asks it for two times).)
   --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
   --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
-  --port=PORT, -p PORT:                         Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).
+  --port=PORT, -p PORT:                         Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).
   --http-port=PORT:                             Specifies HTTP server port.
   --gotty-port=PORT:                            Specifies Gotty server port.
   --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
@@ -222,6 +222,16 @@ You can use gdb-frontend on WSL (Windows Subsystem for Linux).
 
 ### Issues about WSL
 * Random port option is not usable on WSL becasue `/proc/net/tcp` interface is not working on WSL.
+
+## Versioning
+Since v0.2.0-beta, GDBFrontend switched to a new versioning strategy.
+
+### Reading Versions
+In `vX.Y.Z-STABILITY`:
+* `X` is **major** versions, changes long term with major features and enhancements.
+* `Y` is **main** versions that include new features and enhancements.
+* `Z` is **bugfix** releases of main versions.
+* `STABILITY` is stability level of the release. (`alpha`, `beta`, `rcN`, `stable`)
 
 ## Documentation
 Documentation is TODO yet.

@@ -14,6 +14,7 @@ import shutil
 import json
 import base64
 import subprocess
+import time
 
 import config
 config.init()
@@ -132,7 +133,7 @@ def argHandler_help():
     print("  --credentials=USER:PASS, -c USER:PASS:\tSpecifies username and password for accessing to debugger (Browser asks it for two times).)")
     print("  --host=IP, -H IP:\t\t\t\tSpecifies current host address that you can access via for HTTP and WS servers.")
     print("  --listen=IP, -l IP:\t\t\t\tSpecifies listen address for HTTP and WS servers.")
-    print("  --port=PORT, -p PORT:\t\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).")
+    print("  --port=PORT, -p PORT:\t\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).")
     print("  --http-port=PORT:\t\t\t\tSpecifies HTTP server port.")
     print("  --gotty-port=PORT:\t\t\t\tSpecifies Gotty server port.")
     print("  --readonly, -r:\t\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
@@ -157,11 +158,18 @@ def quit_tmux_gdb():
     global tmux_executable
     global terminal_id
     
-    os.system(
-        tmux_executable +
-        " -f tmux.conf send-keys -t " + terminal_id +
-        " C-c C-c C-d C-d ENTER "
-    )
+    for i in range(5):
+        subprocess.Popen([
+            tmux_executable,
+            "-f",
+            "tmux.conf",
+            "send-keys", 
+            "-t",
+            terminal_id,
+            "C-c", "C-c", "C-d", "C-d", "ENTER"
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+        
+        time.sleep(0.1)
 
 args = [
     ["--verbose", "-V", argHandler_verbose, False],
@@ -305,7 +313,6 @@ try:
         gotty.wait()
 
         quit_tmux_gdb()
-        quit_tmux_gdb()
         
         subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
     else:
@@ -344,7 +351,6 @@ try:
         gotty.kill()
 
         quit_tmux_gdb()
-        quit_tmux_gdb()
         
         subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
 except KeyboardInterrupt as e:
@@ -352,7 +358,6 @@ except KeyboardInterrupt as e:
     
     gotty.kill()
 
-    quit_tmux_gdb()
     quit_tmux_gdb()
 
     subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
