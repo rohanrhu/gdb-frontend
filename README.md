@@ -77,21 +77,21 @@ $ gdbfrontend --help
 GDBFrontend is a easy, flexible and extensionable gui debugger.
 
 Options:
-  --help, -h:                           Shows this help message.
-  --version, -v:                        Shows version.
-  --gdb-executable=PATH, -g PATH:       Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
-  --tmux-executable=PATH, -tmux PATH:   Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
-  --terminal-id=NAME, -t NAME:          Specifies tmux terminal identifier name (Default is "gdb-frontend".)
-  --host=IP, -H IP:                     Specifies current host address that you can access via for HTTP and WS servers.
-  --listen=IP, -l IP:                   Specifies listen address for HTTP and WS servers.
-  --port=PORT, -p PORT:                 Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).
-  --http-port=PORT:                     Specifies HTTP server port.
-  --server-port=PORT:                   Specifies WS server port.
-  --gotty-port=PORT:                    Specifies Gotty server port.
-  --readonly, -r:                       Makes code editor readonly. (Notice: This option is not related to security.)
-  --workdir, -w:                        Specifies working directory.
-  --plugin-dir, -P:                     Specifies plugins directory.
-  --verbose, -V:                        Enables verbose output.
+  --help, -h:                                   Shows this help message.
+  --version, -v:                                Shows version.
+  --gdb-executable=PATH, -g PATH:               Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
+  --tmux-executable=PATH, -tmux PATH:           Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
+  --terminal-id=NAME, -t NAME:                  Specifies tmux terminal identifier name (Default is "gdb-frontend".)
+  --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger (Browser asks it for two times).)
+  --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
+  --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
+  --port=PORT, -p PORT:                         Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).
+  --http-port=PORT:                             Specifies HTTP server port.
+  --gotty-port=PORT:                            Specifies Gotty server port.
+  --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
+  --workdir, -w:                                Specifies working directory.
+  --plugin-dir, -P:                             Specifies plugins directory.
+  --verbose, -V:                                Enables verbose output.
 ```
 
 ### Options
@@ -110,6 +110,9 @@ You can specify Tmux executable path like `gdbfrontend --tmux-executable=/path/t
 #### `--terminal-id=PATH`, `-t PATH`
 You can specify Tmux terminal id like `gdbfrontend --terminal-id=terminal-name`. (Default: `gdb-frontend`)
 
+#### `--credentials=USER:PASS`, `-c USER:PASS`
+Specifies username and password for accessing to debugger (Browser asks it for two times).)
+
 #### `--host=IP`, `-H IP`
 Specifies current host address that you can access via for HTTP and WS servers.
 
@@ -117,13 +120,10 @@ Specifies current host address that you can access via for HTTP and WS servers.
 Specifies listen address for HTTP and WS servers.
 
 #### `--port=PORT`, `-p PORT`
-Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1, WS: PORT+2 or 0 for random ports).
+Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).
 
 #### `--http-port=PORT`
 Specifies HTTP server port.
-
-#### `--server-port=PORT`
-Specifies WS server port.
 
 #### `--gotty-port=PORT`
 Specifies Gotty server port.
@@ -170,7 +170,7 @@ You can access GDBFrontend's Python API via `gdbfrontend` module.
 
 For example, you can get all client sockets like this:
 ```python
->>> gdbfrontend.api.globalvars.dbgServer.server.connections
+>>> gdbfrontend.api.globalvars.httpServer.ws_clients
 {1: <server.GDBFrontendSocket object at 0x...>}
 ```
 
@@ -179,6 +179,10 @@ or you can get all plugins:
 >>> gdbfrontend.plugin.getAll()
 ['hello', 'theme_light']
 ```
+
+## Security with Sharing Sessions
+You can use `--credentials=USER:PASS` option for adding HTTP authentication to your debugger session.
+**Note:** Your browser will ask same credentials for two times.
 
 ## Troubleshooting
 ### Blocking GDB shell/main-thread

@@ -9,7 +9,6 @@
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
 import threading
-import SimpleWebSocketServer
 import importlib
 import json
 import sys
@@ -19,16 +18,18 @@ import util
 import api.debug
 import api.flags
 import api.globalvars
+import websocket
 
 gdb = importlib.import_module("gdb")
 
-clients = []
+class GDBFrontendSocket(websocket.WebSocketHandler):
+    def __init__(self, request, client_address, server):
+        websocket.WebSocketHandler.__init__(self, request, client_address, server)
+    
+    def handleConnection(self):
+        util.verbose(self.client_address[0], "is connected.")
 
-class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
-    def handleConnected(self):
-        util.verbose(self.address, "is connected.")
-
-        clients.append(self)
+        self.server.ws_clients.append(self)
         self.connectGDBEvents()
 
     def connectGDBEvents(self):
@@ -61,13 +62,13 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         util.verbose("gdb_on_new_objfile()")
         gdb.post_event(self.gdb_on_new_objfile__mT)
 
-    def gdb_on_new_objfile__mT(self,):
+    def gdb_on_new_objfile__mT(self):
         response = {}
 
         response["event"] = "new_objfile"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_clear_objfiles(self, event):
         util.verbose("gdb_on_clear_objfiles()")
@@ -79,7 +80,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "clear_objfiles"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_breakpoint_created(self, event):
         util.verbose("gdb_on_breakpoint_created()")
@@ -96,7 +97,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
             response["event"] = "breakpoint_created"
             response["state"] = api.debug.getState()
 
-            self.sendMessage(json.dumps(response))
+            self.wsSend(json.dumps(response))
 
     def gdb_on_breakpoint_modified(self, event):
         util.verbose("gdb_on_breakpoint_modified()")
@@ -108,7 +109,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "breakpoint_modified"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_breakpoint_deleted(self, event):
         util.verbose("gdb_on_breakpoint_deleted()")
@@ -120,7 +121,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "breakpoint_deleted"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_stop(self, event):
         util.verbose("gdb_on_stop()")
@@ -165,7 +166,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
             response["event"] = "stop"
             response["state"] = api.debug.getState()
 
-            self.sendMessage(json.dumps(response))
+            self.wsSend(json.dumps(response))
 
     def gdb_on_new_thread(self, event):
         util.verbose("gdb_on_new_thread()")
@@ -177,7 +178,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "new_thread"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_cont(self, event):
         util.verbose("gdb_on_cont()")
@@ -189,7 +190,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "cont"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_exited(self, event):
         util.verbose("gdb_on_exited()")
@@ -201,7 +202,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "exited"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
         api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.SELECTED_FRAMES, {})
 
@@ -215,7 +216,7 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "new_inferior"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def gdb_on_inferior_deleted(self, event):
         util.verbose("gdb_on_inferior_deleted()")
@@ -227,34 +228,29 @@ class GDBFrontendSocket(SimpleWebSocketServer.WebSocket):
         response["event"] = "inferior_deleted"
         response["state"] = api.debug.getState()
 
-        self.sendMessage(json.dumps(response))
+        self.wsSend(json.dumps(response))
 
     def handleClose(self):
-        util.verbose(self.address, "is disconnected.")
-        clients.remove(self)
+        util.verbose(self.client_address[0], "is disconnected.")
+
+        if self in self.server.ws_clients:
+            self.server.ws_clients.remove(self)
+
         self.disconnectGDBEvents()
 
     def emit(self, event, message={}):
         message["event"] = event
-        self.sendMessage(json.dumps(message))
+        self.wsSend(json.dumps(message))
 
     def handleMessage(self):
-        message = json.loads(self.data)
+        message = json.loads(self.message)
 
         if message["event"] == "get_sources":
             self.emit(message["return_event"], {
-                "sources": api.debug.getSources()
+                "state": {
+                    "sources": api.debug.getSources()
+                }
             })
         elif message["event"] == "signal":
             api.debug.signal(message["signal"])
             self.emit(message["return_event"], {})
-
-class GDBFrontendServer(threading.Thread):
-    server = False
-
-    def __init__(self, host=config.BIND_ADDRESS, port=config.SERVER_PORT, socket=GDBFrontendSocket):
-        threading.Thread.__init__(self)
-        self.server = SimpleWebSocketServer.SimpleWebSocketServer(host, port, socket)
-
-    def run(self):
-        self.server.serveforever()

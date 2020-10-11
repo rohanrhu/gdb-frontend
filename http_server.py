@@ -8,9 +8,7 @@
 # Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-import socketserver
-import http
-import http.server
+import websocket
 
-class GDBFrontendHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+class GDBFrontendHTTPServer(websocket.HTTPServer):
     pass

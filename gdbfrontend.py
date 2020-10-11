@@ -22,7 +22,7 @@ sys.path.insert(0, config.PLUGINS_DIR)
 import settings
 import http_server
 import http_handler
-import server
+import websocket
 import api.globalvars
 import plugin
 import util
@@ -48,21 +48,16 @@ for _plugin_name, _plugin in plugin.plugins.items():
 
 http_handler.url = api.url.URL(all_urls)
 
-httpServer = http_server.GDBFrontendHTTPServer(
+api.globalvars.httpServer = http_server.GDBFrontendHTTPServer(
     (config.BIND_ADDRESS, config.HTTP_PORT),
     http_handler.RequestHandler
 )
 
-thread = threading.Thread(target=httpServer.serve_forever)
+thread = threading.Thread(target=api.globalvars.httpServer.serve_forever)
 thread.setDaemon(True)
 thread.start()
 
-api.globalvars.dbgServer = server.GDBFrontendServer()
-api.globalvars.dbgServer.setDaemon(True)
-api.globalvars.dbgServer.start()
-
-config.HTTP_PORT = httpServer.server_port
-config.SERVER_PORT = api.globalvars.dbgServer.server.serversocket.getsockname()[1]
+config.HTTP_PORT = api.globalvars.httpServer.server_port
 
 if config.MMAP_PATH:
     import mmap
@@ -74,5 +69,4 @@ if config.MMAP_PATH:
     http_port = ctypes.c_uint16.from_buffer(mmapBuff, 0)
     server_port = ctypes.c_uint16.from_buffer(mmapBuff, 2)
     
-    http_port.value = httpServer.server_port
-    server_port.value = api.globalvars.dbgServer.server.serversocket.getsockname()[1]
+    http_port.value = api.globalvars.httpServer.server_port

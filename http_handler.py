@@ -19,13 +19,15 @@ import base64
 import config
 import util
 import plugin
+import debug_server
 
 url = None
 
-class RequestHandler(http.server.BaseHTTPRequestHandler):
+class RequestHandler(debug_server.GDBFrontendSocket):
     def __init__(self, request, client_address, server):
-        http.server.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
-
+        debug_server.GDBFrontendSocket.__init__(self, request, client_address, server)
+        
+        self.protocol_version = "HTTP/1.1"
         self.method = 'GET'
 
     def send_response(self, code, message=None):
@@ -125,6 +127,9 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
         self.method = 'GET'
 
         if not self.checkAuth():
+            return
+
+        if self.wsHandle():
             return
         
         try: self.handleRequest()

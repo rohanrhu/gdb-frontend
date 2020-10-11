@@ -36,8 +36,6 @@ def init():
     GOTTY_PORT = 5550
     global HTTP_PORT
     HTTP_PORT = 5551
-    global SERVER_PORT
-    SERVER_PORT = 5552
     global PLUGINS_DIR
     PLUGINS_DIR = os.path.join(app_path, "plugins")
     global IS_READONLY

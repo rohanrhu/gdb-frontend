@@ -744,7 +744,8 @@ def getSerializableStructMembers(value, ctype):
         member = {}
         try:
             memberValue = value[_field]
-        except gdb.error:
+        except Exception as e:
+            util.verbose("Member value error:", e)
             continue
 
         if _field.is_base_class:

@@ -103,9 +103,9 @@ def load(plugin_name):
 
     plugins[plugin_name] = plugin
 
-    if api.globalvars.dbgServer:
-        for client_id, client in api.globalvars.dbgServer.server.connections.items():
-            client.sendMessage(json.dumps({
+    if api.globalvars.httpServer:
+        for client in api.globalvars.httpServer.ws_clients:
+            client.wsSend(json.dumps({
                 "event": "plugin_loaded",
                 "plugin": {
                     "name": plugin_name
@@ -128,10 +128,10 @@ def unload(plugin_name):
     
     del plugins[plugin_name]
 
-    if api.globalvars.dbgServer:
-        for client_id, client in api.globalvars.dbgServer.server.connections.items():
-            client.sendMessage(json.dumps({
-                "event": "plugin_unloaded",
+    if api.globalvars.httpServer:
+        for client in api.globalvars.httpServer.ws_clients:
+            client.wsSend(json.dumps({
+                "event": "plugin_loaded",
                 "plugin": {
                     "name": plugin_name
                 }

@@ -604,7 +604,7 @@
                 data.gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpression.data('EvaluateExpression');
                 data.components.evaluateExpression = data.gdbFrontend_evaluateExpression;
 
-                data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.server_port);
+                data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.http_port+"/debug-server");
 
                 data.debug.socket.onopen = function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');

@@ -13,8 +13,9 @@ import threading
 import api.flags
 
 lock = False
-debugFlags = False
-dbgServer = False
+debugFlags = None
+httpServer = None
+wsServer = None
 
 def init():
     global lock
@@ -23,12 +24,15 @@ def init():
     global debugFlags
     debugFlags = api.flags.AtomicDebugFlags()
 
-    global dbgServer
+    global httpServer
+    global httpServer
+    global wsServer
 
 def access(function):
     global lock
     global debugFlags
-    global dbgServer
+    global httpServer
+    global wsServer
 
     lock.acquire()
     function()
