@@ -35,9 +35,7 @@
     display: flex;
     flex: 0;
     min-height: 20px;
-    border: 1px solid rgba(163, 163, 163, 0.05);
-    border-bottom: 0px;
-    border-top: 0px;
+    border-right: 1px solid rgba(163, 163, 163, 0.1);
     cursor: pointer;
     position: relative;
 }

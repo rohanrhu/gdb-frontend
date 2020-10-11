@@ -147,7 +147,7 @@ GDBFrontend's GDB commands starts with `gf-`.
 Refreshes all browser clients.
 
 #### `gf-theme [theme-name]`
-Switch to desired theme. For example: `gf-theme light` or `gf-theme default` for default theme.
+Switch to desired theme. For example: `gf-theme light`, `gf-theme red` or `gf-theme default` for default theme.
 
 #### `gf-list-plugins`
 Lists all GDBFrontend plugins in the plugin directory.
@@ -177,7 +177,7 @@ For example, you can get all client sockets like this:
 or you can get all plugins:
 ```python
 >>> gdbfrontend.plugin.getAll()
-['hello', 'theme_light']
+['hello', 'theme_light', 'theme_red']
 ```
 
 ## Security with Sharing Sessions
@@ -231,6 +231,9 @@ API Documentation is TODO yet.
 
 ## Plugin Development
 You can read the [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
+
+## Theme Development
+Themes are developed as plugins.
 
 ## Contributing
 You can contribute with commiting to project or developing a plugin. All commits are welcome.
