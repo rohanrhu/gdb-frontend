@@ -22,7 +22,12 @@ def run(request, params):
     result_json = {}
     result_json["ok"] = True
 
-    api.debug.run()
+    if "args" in qs_params.keys():
+        args = qs_params["args"][0]
+    else:
+        args = ""
+
+    api.debug.run(args=args)
 
     request.send_response(200)
     request.send_header("Content-Type", "application/json; charset=utf-8")

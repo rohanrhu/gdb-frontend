@@ -9,17 +9,21 @@
  *
  */
 
- .GDBFrontend {
-     background: white;
-     color: black;
- }
+.GDBFrontend {
+    background: white;
+    color: black;
+}
 
- .Checkbox_icon_img {
+.input1:focus {
+    border-color: rgba(255, 255, 255, 0.75);
+}
+
+.Checkbox_icon_img {
     filter: hue-rotate(320deg) contrast(5);
- }
- 
+}
+
 .button1:hover {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .GDBFrontend_layout_top {
@@ -27,26 +31,30 @@
 }
 
 .GDBFrontend_runtimeControls_btn:hover {
-    background: rgba(0,0,0,0.2);
- }
- 
- .GDBFrontend_runtimeControls_btn_img {
-     filter: invert(1);
- }
+    background: rgba(0, 0, 0, 0.2);
+}
 
- .GDBFrontend_load_connectBtn_openable {
+.GDBFrontend_runtimeControls_btn_img {
+    filter: invert(1);
+}
+
+.GDBFrontend_runtimeControls_btn_openable {
     background: #999999;
- }
- 
- .GDBFrontend_layout_middle_left {
-     background: rgba(0, 0, 0, 0.25);
- }
+}
 
- .GDBFrontend_sources_title {
+.GDBFrontend_load_connectBtn_openable {
+    background: #999999;
+}
+
+.GDBFrontend_layout_middle_left {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.GDBFrontend_sources_title {
     background: rgba(0, 0, 0, 0.1);
- }
+}
 
- .GDBFrontend_sources_title_buttons_button_iconImg {
+.GDBFrontend_sources_title_buttons_button_iconImg {
     filter: invert(1);
 }
 
@@ -79,7 +87,7 @@
 }
 
 .ThreadsEditor_items_item:nth-child(odd) {
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .ThreadsEditor_items_item.ThreadsEditor__current {
@@ -95,7 +103,7 @@
 }
 
 .StackTrace_items_item:nth-child(odd) {
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .StackTrace_items_item.StackTrace__current {
@@ -153,7 +161,7 @@
 }
 
 .VariablesExplorer_items_item_button:nth-child(odd) {
-    background: rgba(0,0,0,0.075);
+    background: rgba(0, 0, 0, 0.075);
 }
 
 .FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
@@ -195,7 +203,9 @@
     color: black;
 }
 
-.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+.GDBFrontend_layout_top_menuBtn_openable_items_item,
+a.GDBFrontend_layout_top_menuBtn_openable_items_item,
+a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     color: black;
 }
 

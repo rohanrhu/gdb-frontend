@@ -516,9 +516,16 @@ def getSources():
         return []
 
 @threadSafe
-def run():
-    try: gdb.execute("r")
-    except gdb.error as e: print("[Error] " + str(e))
+def run(args=""):
+    try:
+        if args == "":
+            gdb.execute("set args")
+        else:
+            gdb.execute("set args " + args)
+        
+        gdb.execute("r")
+    except gdb.error as e:
+        print("[Error] " + str(e))
 
 @threadSafe
 def pause():

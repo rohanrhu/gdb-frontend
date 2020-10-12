@@ -62,13 +62,22 @@
 
             data.$GDBFrontend_runtimeControls = $gdbFrontend.find('.GDBFrontend_runtimeControls');
             data.$GDBFrontend_runtimeControls_btn__run = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__run');
+            data.$GDBFrontend_runtimeControls_btn__run_btn = data.$GDBFrontend_runtimeControls_btn__run.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$GDBFrontend_runtimeControls_btn__run_argsInput = data.$GDBFrontend_runtimeControls_btn__run.find('.GDBFrontend_runtimeControls_btn__run_argsInput');
             data.$GDBFrontend_runtimeControls_btn__pause = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__pause');
+            data.$GDBFrontend_runtimeControls_btn__pause_btn = data.$GDBFrontend_runtimeControls_btn__pause.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$GDBFrontend_runtimeControls_btn__continue = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__continue');
+            data.$GDBFrontend_runtimeControls_btn__continue_btn = data.$GDBFrontend_runtimeControls_btn__continue.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$GDBFrontend_runtimeControls_btn__s = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__s');
+            data.$GDBFrontend_runtimeControls_btn__s_btn = data.$GDBFrontend_runtimeControls_btn__s.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$GDBFrontend_runtimeControls_btn__n = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__n');
+            data.$GDBFrontend_runtimeControls_btn__n_btn = data.$GDBFrontend_runtimeControls_btn__n.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$GDBFrontend_runtimeControls_btn__si = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__si');
+            data.$GDBFrontend_runtimeControls_btn__si_btn = data.$GDBFrontend_runtimeControls_btn__si.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$GDBFrontend_runtimeControls_btn__t = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__t');
+            data.$GDBFrontend_runtimeControls_btn__t_btn = data.$GDBFrontend_runtimeControls_btn__t.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$GDBFrontend_runtimeControls_btn__evaluate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
+            data.$GDBFrontend_runtimeControls_btn__evaluate_btn = data.$GDBFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
 
             data.$gdbFrontend_evaluaters = $gdbFrontend.find('.GDBFrontend_evaluaters');
             data.$gdbFrontend_pointings = $gdbFrontend.find('.GDBFrontend_pointings');
@@ -1631,12 +1640,13 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__run.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__run_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/run',
                     cache: false,
                     method: 'get',
                     data: {
+                        args: data.$GDBFrontend_runtimeControls_btn__run_argsInput.val()
                     },
                     success: function (result_json) {
                     },
@@ -1647,7 +1657,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__pause.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__pause_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/pause',
                     cache: false,
@@ -1663,7 +1673,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__continue.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__continue_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/continue',
                     cache: false,
@@ -1679,7 +1689,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__n.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__n_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/next',
                     cache: false,
@@ -1695,7 +1705,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__s.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__s_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/step',
                     cache: false,
@@ -1711,7 +1721,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__si.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__si_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/stepi',
                     cache: false,
@@ -1727,7 +1737,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__t.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__t_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/terminate',
                     cache: false,
@@ -1743,7 +1753,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__evaluate.on('click.GDBFrontend', function (event) {
+            data.$GDBFrontend_runtimeControls_btn__evaluate_btn.on('click.GDBFrontend', function (event) {
                 data.createEvaluater();
             });
 

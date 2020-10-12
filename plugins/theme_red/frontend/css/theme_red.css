@@ -34,6 +34,10 @@
     background: #501b1b;
 }
  
+.GDBFrontend_runtimeControls_btn_openable {
+    background: #501b1b;
+}
+
 .Checkbox.Checkbox__checked .Checkbox_icon_img {
     filter: hue-rotate(320deg) contrast(5);
 }

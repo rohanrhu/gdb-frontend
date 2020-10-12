@@ -86,7 +86,7 @@
     position: absolute;
     left: 0px;
     top: 34px;
-    background: #1a2c43;
+    background: #00050c;
     padding: 10px;
     white-space: nowrap;
     display: none;
@@ -107,12 +107,32 @@
 .GDBFrontend_runtimeControls_btn {
     display: inline-flex;
     vertical-align: middle;
-    height: 34px;
     font-size: 20px;
-    padding: 0px 10px;
     border-radius: 2px;
     cursor: pointer;
     align-items: center;
+    position: relative;
+}
+
+.GDBFrontend_runtimeControls_btn_btn {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    padding: 0px 10px;
+}
+
+.GDBFrontend_runtimeControls_btn_openable {
+    position: absolute;
+    left: 0px;
+    top: 34px;
+    background: #00050c;
+    padding: 10px;
+    white-space: nowrap;
+    display: none;
+}
+
+.GDBFrontend_runtimeControls_btn:hover .GDBFrontend_runtimeControls_btn_openable {
+    display: block;
 }
 
 .GDBFrontend_runtimeControls_btn:hover {
