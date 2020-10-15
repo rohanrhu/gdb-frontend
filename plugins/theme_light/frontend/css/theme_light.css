@@ -251,3 +251,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 .LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
     background: rgb(35, 35, 35);
 }
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(62, 62, 62);
+}

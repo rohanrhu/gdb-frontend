@@ -305,3 +305,8 @@
 .LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
     background: #5a1515;
 }
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(93 29 29);
+}
