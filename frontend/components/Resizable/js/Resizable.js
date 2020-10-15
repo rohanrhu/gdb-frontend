@@ -24,14 +24,22 @@
         t_init.parameters = parameters;
 
         $elements.each(function () {
-            var $Resizable = $(this);
+            var $resizable = $(this);
 
-            $Resizable.off('.Resizable');
-            $Resizable.find('*').off('.Resizable');
+            $resizable.off('.Resizable');
+            $resizable.find('*').off('.Resizable');
+
+            var current_data = $resizable.data('Resizable');
+            
+            if (current_data) {
+                $(window).off('Resizable-' + current_data.id);
+                $(document).off('Resizable-' + current_data.id);
+                $('html, body').off('Resizable-' + current_data.id)
+            }
 
             var data = {};
-            $Resizable.data('Resizable', data);
-            data.$Resizable = $Resizable;
+            $resizable.data('Resizable', data);
+            data.$resizable = $resizable;
 
             if (!window.hasOwnProperty('Resizable_component_id')) {
                 Resizable_component_id = 0;
@@ -39,8 +47,8 @@
 
             data.id = ++Resizable_component_id;
 
-            data.$Resizable_resizer = $Resizable.find('.Resizable_resizer');
-            data.$Resizable_resizer_draggable = data.$Resizable_resizer.find('.Resizable_resizer_draggable');
+            data.$resizable_resizer = $resizable.find('.Resizable_resizer');
+            data.$resizable_resizer_draggable = data.$resizable_resizer.find('.Resizable_resizer_draggable');
 
             data.is_passive = false;
             data.is_resizing = false;
@@ -54,16 +62,16 @@
                 zIndex: 500000
             });
 
-            data.$Resizable_resizer_draggable.on('mousedown.Resizable-'+data.id, function (event) {
+            data.$resizable_resizer_draggable.on('mousedown.Resizable-'+data.id, function (event) {
                 data.is_resizing = true;
-                data.$Resizable.trigger('Resizable_start');
+                data.$resizable.trigger('Resizable_start');
 
-                data.$overlay.appendTo(data.$Resizable);
+                data.$overlay.appendTo(data.$resizable);
             });
             
             $(document).on('mouseup.Resizable-'+data.id, function (event) {
                 data.is_resizing = false;
-                data.$Resizable.trigger('Resizable_end');
+                data.$resizable.trigger('Resizable_end');
 
                 data.$overlay.remove();
             });
@@ -77,24 +85,24 @@
                 var px, py;
                 var width, height;
 
-                if (data.$Resizable.hasClass('Resizable__top')) {
-                    ry = data.$Resizable.offset().top;
+                if (data.$resizable.hasClass('Resizable__top')) {
+                    ry = data.$resizable.offset().top;
                     py = event.originalEvent.clientY;
 
-                    rl = ry + data.$Resizable.outerHeight();
+                    rl = ry + data.$resizable.outerHeight();
                     height = rl - py;
 
                     if (height < 5) {
                         height = 5;
                     }
 
-                    data.$Resizable.height(height);
+                    data.$resizable.height(height);
                 } else {
-                    rx = data.$Resizable.offset().left;
+                    rx = data.$resizable.offset().left;
                     px = event.originalEvent.clientX;
 
-                    if (data.$Resizable.hasClass('Resizable__right')) {
-                        rl = rx + data.$Resizable.outerWidth();
+                    if (data.$resizable.hasClass('Resizable__right')) {
+                        rl = rx + data.$resizable.outerWidth();
                         width = rl - px;
                     } else {
                         width = px - rx;
@@ -104,15 +112,15 @@
                         width = 5;
                     }
                     
-                    data.$Resizable.width(width);
+                    data.$resizable.width(width);
                 }
             });
 
-            $Resizable.on('Resizable_initialize.Resizable-' + data.id, function (event) {
+            $resizable.on('Resizable_initialize.Resizable-' + data.id, function (event) {
                 data.init();
             });
 
-            $Resizable.on('Resizable_comply.Resizable-' + data.id, function (event) {
+            $resizable.on('Resizable_comply.Resizable-' + data.id, function (event) {
                 data.comply();
             });
 

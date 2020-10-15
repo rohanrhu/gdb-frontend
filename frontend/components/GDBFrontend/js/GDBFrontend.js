@@ -79,6 +79,8 @@
             data.$GDBFrontend_runtimeControls_btn__evaluate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
             data.$GDBFrontend_runtimeControls_btn__evaluate_btn = data.$GDBFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
 
+            data.$gdbFrontend_variablesExplorer__proto = $gdbFrontend.find('.GDBFrontend_variablesExplorerProto > .VariablesExplorer');
+
             data.$gdbFrontend_evaluaters = $gdbFrontend.find('.GDBFrontend_evaluaters');
             data.$gdbFrontend_pointings = $gdbFrontend.find('.GDBFrontend_pointings');
             
@@ -199,6 +201,10 @@
             data.evaluaters = [];
 
             data.createEvaluater = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
                 var evaluater = {};
 
                 evaluater.$evaluateExpression = data.$gdbFrontend_evaluateExpression.clone();
@@ -224,6 +230,10 @@
                         return true;
                     });
                 });
+
+                if (parameters.expression) {
+                    evaluater.evaluateExpression.evaluate({expression: parameters.expression});
+                }
             };
             
             data.debug.getBreakpoint = function (parameters) {
@@ -1591,18 +1601,25 @@
                 var tree = [];
 
                 parameters.item.tree.forEach(function (_member, _member_i) {
-                    tree.push(_member.variable.name);
+                    tree.push(_member.variable.expression ? _member.variable.expression: _member.variable.name);
                 });
 
                 var qs = {
-                    variable: parameters.item.variable.name
+                    variable: parameters.item.variable.expression
                 };
 
-                if (tree.length > 1) {
+                if (!qs.variable && (tree.length > 1)) {
                     qs['expression'] = tree.join('.');
                 }
 
-                if (parameters.item.parent && (parameters.item.variable.type.code == 3 /* struct */)) {
+                if (
+                    parameters.item.parent
+                    &&
+                    (
+                        (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_STRUCT)
+                        ||
+                        (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_UNION))
+                ) {
                     qs.expression = '('+parameters.item.variable.type.name+')'+qs.expression;
                 }
 

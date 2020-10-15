@@ -347,6 +347,8 @@
                         return;
                     }
 
+                    data.clearSelected();
+
                     prev_path = path;
 
                     if (!path.length) {

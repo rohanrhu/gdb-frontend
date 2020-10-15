@@ -117,7 +117,7 @@
 }
 
 .FileTabs_editors_content {
-    background: rgba(210, 50, 50, 0.3);
+    background: #612d2d;
 }
 
 .FileTabs_editors_noItem {
@@ -231,7 +231,7 @@
 }
 
 .FileTabs_tabs {
-    background: rgb(136, 31, 31);
+    background: rgb(138 50 50);
 }
 
 .ace-tomorrow-night-bright {
@@ -264,4 +264,44 @@
 
 .Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
     background: linear-gradient(90deg, rgb(255, 0, 0, 0.5), rgba(255, 255, 255, 0));
+}
+
+.VariablesExplorer_items_item_contextMenu {
+    color: white;
+    background: #5a1515;
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: #5a1515;
+}
+
+.ace-tomorrow-night-bright .ace_print-margin {
+    width: 1px;
+    background: rgb(255, 255, 255, 0.2);
+}
+
+.LinkedListVisualizer_items_item_box {
+    background: rgb(124 26 26);
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(124, 26, 26);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(124, 26, 26);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: rgb(100, 10, 10);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: #5a1515;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: #5a1515;
 }

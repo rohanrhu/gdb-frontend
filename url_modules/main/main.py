@@ -98,6 +98,7 @@ def run(request, params):
     html_fuzzyFinder = util.readFile(util.webFSPath("/components/FuzzyFinder/html/FuzzyFinder.html"))
     html_disassembly = util.readFile(util.webFSPath("/components/Disassembly/html/Disassembly.html"))
     html_evaluateExpression = util.readFile(util.webFSPath("/components/EvaluateExpression/html/EvaluateExpression.html"))
+    html_linkedListVisualizer = util.readFile(util.webFSPath("/components/LinkedListVisualizer/html/LinkedListVisualizer.html"))
 
     html_messageBox = html_messageBox.format(**vars())
     html_aboutDialog = html_aboutDialog.format(**vars())
@@ -113,6 +114,7 @@ def run(request, params):
     html_fuzzyFinder = html_fuzzyFinder.format(**vars())
     html_disassembly = html_disassembly.format(**vars())
     html_evaluateExpression = html_evaluateExpression.format(**vars())
+    html_linkedListVisualizer = html_linkedListVisualizer.format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

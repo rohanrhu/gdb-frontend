@@ -380,6 +380,7 @@
 
                 file.variablePopup_variablesExplorer.is_mark_changes = false;
                 file.variablePopup_variablesExplorer.setMaxHeight({max_height: file.$variablePopup.css('max-height')});
+                file.variablePopup_variablesExplorer.setLinkedListVisualizerEnabled(false);
 
                 file.$variablePopup_variablesExplorer.on('VariablesExplorer_item_toggle.FileTabs', function (event, parameters) {
                     if (parameters.item.is_opened) {
@@ -396,11 +397,22 @@
                     });
     
                     var qs = {
-                        variable: parameters.item.variable.name
+                        variable: parameters.item.variable.expression
                     };
     
-                    if (tree.length > 1) {
+                    if (!qs.variable && (tree.length > 1)) {
                         qs['expression'] = tree.join('.');
+                    }
+
+                    if (
+                        parameters.item.parent
+                        &&
+                        (
+                            (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_STRUCT)
+                            ||
+                            (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_UNION))
+                    ) {
+                        qs.expression = '('+parameters.item.variable.type.name+')'+qs.expression;
                     }
     
                     $.ajax({

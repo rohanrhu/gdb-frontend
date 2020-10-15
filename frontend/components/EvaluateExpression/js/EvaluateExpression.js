@@ -24,22 +24,26 @@
 
         $elements.each(function () {
             var $evaluateExpression = $(this);
-
-            $(window).off('EvaluateExpression');
-            $(document).off('EvaluateExpression');
-            $('body').off('EvaluateExpression')
             
             $evaluateExpression.off('.EvaluateExpression');
             $evaluateExpression.find('*').off('.EvaluateExpression');
 
+            var current_data = $evaluateExpression.data('EvaluateExpression');
+            
+            if (current_data) {
+                $(window).off('EvaluateExpression-' + current_data.id);
+                $(document).off('EvaluateExpression-' + current_data.id);
+                $('html, body').off('EvaluateExpression-' + current_data.id)
+            }
+            
             var data = {};
             $evaluateExpression.data('EvaluateExpression', data);
             data.$evaluateExpression = $evaluateExpression;
-
+            
             if (!window.hasOwnProperty('EvaluateExpression_component_id')) {
                 EvaluateExpression_component_id = 0;
             }
-
+            
             data.id = ++EvaluateExpression_component_id;
 
             data.components = {};
@@ -155,7 +159,7 @@
                 data.blur();
             });
 
-            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_toggle.EvaluateExpression', function (event, parameters) {
+            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_toggle.EvaluateExpression-' + data.id, function (event, parameters) {
                 if (parameters.item.is_loading) {
                     return;
                 }
@@ -170,18 +174,25 @@
                 var tree = [];
 
                 parameters.item.tree.forEach(function (_member, _member_i) {
-                    tree.push(_member.variable.name);
+                    tree.push(_member.variable.expression ? _member.variable.expression: _member.variable.name);
                 });
 
                 var qs = {
-                    variable: parameters.item.variable.name
+                    variable: parameters.item.variable.expression
                 };
 
-                if (tree.length > 1) {
+                if (!qs.variable && (tree.length > 1)) {
                     qs['expression'] = tree.join('.');
                 }
 
-                if (parameters.item.parent && (parameters.item.variable.type.code == 3 /* struct */)) {
+                if (
+                    parameters.item.parent
+                    &&
+                    (
+                        (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_STRUCT)
+                        ||
+                        (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_UNION))
+                ) {
                     qs.expression = '('+parameters.item.variable.type.name+')'+qs.expression;
                 }
 
@@ -336,6 +347,11 @@
                 $evaluateExpression.removeClass('EvaluateExpression__focused');
             };
             
+            data.evaluate = function (parameters) {
+                data.$evaluateExpression_window_box_header_expression_input_rI.val(parameters.expression);
+                data.refresh({expression: parameters.expression});
+            };
+            
             data.setSize = function (parameters) {
                 data.$evaluateExpression_window_box_content.width(parameters.width);
                 data.$evaluateExpression_window_box_content.height(parameters.height);
@@ -358,7 +374,7 @@
                 }, 16);
             });
 
-            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_rendered.EvaluateExpression', function (event, parameters) {
+            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_rendered.EvaluateExpression-' + data.id, function (event, parameters) {
                 data.components.variablesExplorer.iterateItems({iterate: function (iteration) {
                     iteration.item.$item_pointingsSVG.css('z-index', parseInt($evaluateExpression.css('z-index'))+1);
                     iteration.item.pointing_slots.forEach(function (_slot, _slot_i) {
@@ -376,7 +392,7 @@
                 }});
             });
             
-            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_opened.EvaluateExpression', function (event, parameters) {
+            data.$evaluateExpression_variablesExplorer.on('VariablesExplorer_item_opened.EvaluateExpression-' + data.id, function (event, parameters) {
                 data.components.variablesExplorer.iterateItems({iterate: function (iteration) {
                     iteration.item.$item_pointingsSVG.css('z-index', parseInt($evaluateExpression.css('z-index'))+1);
                     iteration.item.pointing_slots.forEach(function (_slot, _slot_i) {
@@ -397,7 +413,7 @@
                 }, 250);
             });
 
-            data.$evaluateExpression_window_box_header_btn__signalEnabled.on('click.EvaluateExpression', function (event) {
+            data.$evaluateExpression_window_box_header_btn__signalEnabled.on('click.EvaluateExpression-' + data.id, function (event) {
                 data.$evaluateExpression_window_box_header_btn__signalEnabled[
                     (
                         data.components.variablesExplorer.is_signal_pointings
@@ -414,7 +430,7 @@
                 data.components.variablesExplorer.signalOthers();
             });
             
-            data.$evaluateExpression_window_box_header_btn__slotEnabled.on('click.EvaluateExpression', function (event) {
+            data.$evaluateExpression_window_box_header_btn__slotEnabled.on('click.EvaluateExpression-' + data.id, function (event) {
                 data.$evaluateExpression_window_box_header_btn__slotEnabled[
                     (
                         data.components.variablesExplorer.is_slot_pointings

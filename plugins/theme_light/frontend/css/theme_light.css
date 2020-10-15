@@ -220,3 +220,34 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 .css_MessageBox_box {
     background: #656565;
 }
+
+.VariablesExplorer_items_item_contextMenu {
+    color: white;
+    background: #656565;
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: #656565;
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(76, 76, 76);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(76, 76, 76);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: rgb(50, 50, 50);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(35, 35, 35);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(35, 35, 35);
+}

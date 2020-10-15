@@ -1,0 +1,178 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.LinkedListVisualizer {
+    text-align: center;
+    font-size: 12px;
+    text-align: left;
+    height: 100%;
+}
+
+/* ---------------------- */
+
+.LinkedListVisualizer_map {
+    display: flex;
+    min-height: 200px;
+    min-height: 28px;
+    width: 100%;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkIAL8///fmJEIdQyjCvGGEjh4QAQxYQkA0xYf64jyOMcAAAAASUVORK5CYII=) repeat;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.LinkedListVisualizer.LinkedListVisualizer__fluent .LinkedListVisualizer_content {
+    overflow: visible;
+    max-height: none;
+}
+
+/* ---------------------- */
+
+.LinkedListVisualizer.LinkedListVisualizer__passive {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.LinkedListVisualizer_items {
+    height: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    user-select: none;
+}
+
+.LinkedListVisualizer_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.LinkedListVisualizer_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.LinkedListVisualizer_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.LinkedListVisualizer_items_item {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.LinkedListVisualizer_items_item_variablesExplorerComp {
+}
+
+.LinkedListVisualizer_items_item_nextLoading {
+    display: none;
+    padding: 0px 20px;
+}
+
+.LinkedListVisualizer_items_item_next {
+    display: none;
+    padding-left: 30px;
+    position: relative;
+}
+
+.LinkedListVisualizer_items_item_next_icon {
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    font-size: 20px;
+}
+
+/* ---------------------- */
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(0 47 109);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: rgb(0 20 46);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(0 20 46);
+    width: auto;
+    left: 10px;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(0 20 46);
+    left: 10px;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_openable_content {
+    border: none;
+    background: none;
+}
+
+/* ---------------------- */
+
+.LinkedListVisualizer_settings {
+    display: flex;
+    flex-direction: row;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkIAL8///fmJEIdQyjCvGGEjh4QAQxYQkA0xYf64jyOMcAAAAASUVORK5CYII=) repeat;
+}
+
+.LinkedListVisualizer_settings_setting {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.LinkedListVisualizer_settings_setting_label {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.LinkedListVisualizer_settings_setting_input {
+    display: flex;
+    align-items: center;
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(0 47 109);
+    padding: 5px 5px;
+    border: 1px solid transparent;
+    outline: none;
+    color: white;
+}
+
+
+.LinkedListVisualizer_settings_setting_input_rI:focus {
+    border: 1px solid rgb(255, 255, 255, 0.35);
+}
+
+.LinkedListVisualizer_settings_setting__close {
+    display: flex;
+}
+
+.LinkedListVisualizer_settings_setting__close_button {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0px 5px;
+}
+
+.LinkedListVisualizer_settings_setting__close_button:hover {
+    opacity: 0.7;
+}
+
+/* ---------------------- */
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(0 54 125);
+}
+
+/* ---------------------- */

@@ -27,8 +27,15 @@
 
             $fuzzyFinder.off('.FuzzyFinder');
             $fuzzyFinder.find('*').off('.FuzzyFinder');
-            $('html, body').off('.FuzzyFinder');
-
+            
+            var current_data = $fuzzyFinder.data('FuzzyFinder');
+            
+            if (current_data) {
+                $(window).off('FuzzyFinder-' + current_data.id);
+                $(document).off('FuzzyFinder-' + current_data.id);
+                $('html, body').off('FuzzyFinder-' + current_data.id)
+            }
+            
             var data = {};
             $fuzzyFinder.data('FuzzyFinder', data);
             data.$fuzzyFinder = $fuzzyFinder;

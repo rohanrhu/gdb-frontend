@@ -66,6 +66,9 @@
 
     <script type="text/javascript" src="/components/VariablesExplorer/js/VariablesExplorer.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/VariablesExplorer/css/VariablesExplorer.css" />
+    
+    <script type="text/javascript" src="/components/LinkedListVisualizer/js/LinkedListVisualizer.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/LinkedListVisualizer/css/LinkedListVisualizer.css" />
 
     <script type="text/javascript" src="/components/AboutDialog/js/AboutDialog.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/AboutDialog/css/AboutDialog.css" />
@@ -89,7 +92,9 @@
             <div class="GDBFrontend_layout_top">
                 <div class="GDBFrontend_layout_top_left">
                     <div class="GDBFrontend_layout_top_logo">
-                        <img class="GDBFrontend_layout_top_logo_img" src="/images/bug.png" alt="GDBFrontend" draggable="false" />
+                        <a href="" target="_blank">
+                            <img class="GDBFrontend_layout_top_logo_img" src="/images/bug.png" alt="GDBFrontend" draggable="false" />
+                        </a>
                     </div>
                     <div class="GDBFrontend_mainMenu">
                         <div class="GDBFrontend_load">
@@ -289,6 +294,10 @@
         <div class="GDBFrontend_evaluateExpressionComp">
             {html_evaluateExpression}
         </div>
+        <div class="GDBFrontend_variablesExplorerProto">
+            {html_variablesExplorer}
+        </div>
+        
         <div class="GDBFrontend_evaluaters">
             <div class="GDBFrontend_pointings">
             </div>

@@ -192,7 +192,7 @@ You will get this warning when a thread-safe GDBFrontend function needs to work 
 ```bash
 (gdb) shell
 $ ...
-[GDBFrontend] GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)
+[GDBFrontend] GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must terminate it for GDBFrontend to continue work properly.)
 ```
 
 When you exit shell, blocking GDBFrontend functions will continue working.
@@ -203,6 +203,12 @@ Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you ca
 ```bash
 tmux kill-session -t gdb-frontend
 ```
+
+### Expression Evaluater Performance Tips
+If you are using **ExpressionEvaluater** with very long depth expanded variables/members, your scroll and evaluater window move performance may be affected bad for pointer visualization. In this situation, you can turn off **signal** and **slot** pointings for that evaluater window.
+
+![Evaluater Pointer Visualization Buttons](media/evaluater-pointing-buttons.png)
+
 
 ## GDB-Related Issues and Tips
 * GDB does not give sources of linked object **until stepping a line that calls a function from the linked object once**.

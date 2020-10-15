@@ -75,7 +75,7 @@ def threadSafe(callback):
                 if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
                     is_warned = True
                     print("")
-                    print("[GDBFrontend]", "GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)")
+                    print("[GDBFrontend]", "GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must terminate it for GDBFrontend to continue work properly.)")
                 
                 time.sleep(0.1)
         else:
@@ -344,34 +344,7 @@ def getState():
                                 except Exception as e:
                                     print("[Error]", e)
 
-                                variable = {}
-                                variable["is_global"] = block.is_global
-                                variable["name"] = symbol.name
-                                variable["is_pointer"] = symbol.type.code == gdb.TYPE_CODE_PTR
-
-                                variable["value"] = ""
-
-                                try:
-                                    variable["value"] = value.string()[:1000]
-                                    variable["is_nts"] = True
-                                except gdb.error as e:
-                                    variable["is_nts"] = False
-                                    variable["value"] = str(value)
-                                except UnicodeDecodeError as e:
-                                    variable["is_nts"] = False
-                                    variable["value"] = str(value)
-
-                                if symbol.type:
-                                    terminalType = resolveTerminalType(symbol.type)
-                                    type_tree = serializableTypeTree(resolveTypeTree(symbol.type))
-
-                                    variable["type"] = serializableType(symbol.type)
-                                    if variable["type"]:
-                                        variable["type"]["terminal"] = serializableType(terminalType)
-                                    variable["type_tree"] = type_tree
-                                else:
-                                    variable["type"] = False
-
+                                variable = getVariableByExpression(symbol.name, no_error=False).serializable()
                                 variables.append(variable)
 
 
@@ -735,7 +708,7 @@ def serializableRepresentation(value):
     return serializable
 
 @threadSafe
-def getSerializableStructMembers(value, ctype):
+def getSerializableStructMembers(value, ctype, parent_expression=False):
     members = []
 
     if ctype.code not in [gdb.TYPE_CODE_STRUCT, gdb.TYPE_CODE_UNION]:
@@ -756,7 +729,7 @@ def getSerializableStructMembers(value, ctype):
             continue
 
         if _field.is_base_class:
-            base_members = getSerializableStructMembers(memberValue, _field.type)
+            base_members = getSerializableStructMembers(memberValue, _field.type, parent_expression)
             members.extend(base_members)
             continue
 
@@ -789,6 +762,11 @@ def getSerializableStructMembers(value, ctype):
         member["type"]["terminal"] = serializableType(resolveTerminalType(_field.type))
         member["type_tree"] = serializableTypeTree(resolveTypeTree(_field.type))
         member["parent_type"] = serializableTypeTree(resolveTypeTree(_field.type))
+
+        if parent_expression:
+            member["expression"] = parent_expression + "." + _field.name
+        else:
+            member["expression"] = _field.name
 
         members.append(member)
 
@@ -964,6 +942,7 @@ class Variable():
         serializable = {}
         serializable["is_global"] = block.is_global
         serializable["name"] = self.name
+        serializable["expression"] = self.expression
         serializable["is_pointer"] = value.type.code == gdb.TYPE_CODE_PTR
         serializable["address"] = str(value.address) if value.address else "0x0"
 
@@ -988,7 +967,7 @@ class Variable():
             serializable["type"]["terminal"] = serializableType(terminalType)
             serializable["type_tree"] = serializableTypeTree(type_tree)
 
-            serializable["members"] = getSerializableStructMembers(value, terminalType)
+            serializable["members"] = getSerializableStructMembers(value, terminalType, self.expression)
         else:
             serializable["type"] = False
 
