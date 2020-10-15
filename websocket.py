@@ -99,7 +99,7 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
         if mlen < 126:
             frame = struct.pack("!BB", 0b10000001, mlen)
         elif mlen < (1 << 16):
-            frame = struct.pack("!BBh", 0b10000001, 126, mlen)
+            frame = struct.pack("!BBH", 0b10000001, 126, mlen)
         else:
             frame = struct.pack("!BBQ", 0b10000001, 127, mlen)
         
