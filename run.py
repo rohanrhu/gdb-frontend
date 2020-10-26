@@ -59,6 +59,10 @@ def argHandler_terminalId(name):
 def argHandler_credentials(_credentials):
     global credentials
 
+    if ":" not in _credentials:
+        print("[Error] Credentials format must be such as USER:PASS.\n")
+        exit(0)
+
     credentials = _credentials
 
     arg_config["CREDENTIALS"] = credentials
