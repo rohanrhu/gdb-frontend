@@ -227,7 +227,7 @@ In fact, gdb-frontend is able to run on Windows but there are some serious issue
 You can use gdb-frontend on WSL (Windows Subsystem for Linux).
 
 ### Issues about WSL
-* Random port option is not usable on WSL becasue `/proc/net/tcp` interface is not working on WSL.
+* On WSL 1, Random port option is not usable on WSL becasue `/proc/net/tcp` interface is not working on WSL. (WSL 2 does not has this problem.)
 
 ## Versioning
 Since v0.2.0-beta, GDBFrontend switched to a new versioning strategy.
