@@ -279,6 +279,7 @@
     display: inline-flex;
     align-items: center;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
+    width: 35px;
 }
 
 .VariablesExplorer_items_item_contextMenu_menu_item_icon_img {

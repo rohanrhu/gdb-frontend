@@ -295,7 +295,7 @@ try:
         )
 
     if credentials:
-        gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-c", "user:pass", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
+        gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-c", credentials, "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
     else:
         gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
 
