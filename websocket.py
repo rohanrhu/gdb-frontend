@@ -34,7 +34,13 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
         if self.path != "/debug-server":
             return False
         
-        if self.headers.get("Connection") != "Upgrade" or self.headers.get("Upgrade") != "websocket":
+        connection = self.headers.get("Connection")
+        if connection:
+            connection = connection.split(", ")
+        else:
+            connection = []
+        
+        if "Upgrade" not in connection or self.headers.get("Upgrade") != "websocket":
             return True
         
         key = self.headers.get("Sec-WebSocket-Key")
