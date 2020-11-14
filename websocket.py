@@ -54,7 +54,7 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
             ).digest()
         ).decode("ascii")
 
-        self.send_response(101, 'Switching Protocols')
+        self.wfile.write(b"HTTP/1.1 101 Switching Protocols\r\n")
         self.send_header('Upgrade', 'websocket')
         self.send_header('Connection', 'Upgrade')
         self.send_header('Sec-WebSocket-Accept', accept)
@@ -70,19 +70,19 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
     def _wsRead(self):
         while self.ws_connected:
             try:
-                header0_16 = struct.unpack("!cc", self.connection.recv(2, socket.MSG_WAITALL))
+                header0_16 = struct.unpack("!BB", self.connection.recv(2, socket.MSG_WAITALL))
                 opcode = ord(header0_16[0]) & 0b00001111
                 
                 is_masked = ord(header0_16[1]) & -128
                 plen = ord(header0_16[1]) & 127
 
                 if plen == 126:
-                    plen = int.from_bytes(struct.unpack("!cc", self.connection.recv(2, socket.MSG_WAITALL)), "big")
+                    plen = int.from_bytes(struct.unpack("!BB", self.connection.recv(2, socket.MSG_WAITALL)), "big")
                 elif plen == 127:
-                    plen = int.from_bytes(struct.unpack("!cccccccc", self.connection.recv(2, socket.MSG_WAITALL)), "big")
+                    plen = int.from_bytes(struct.unpack("!BBBBBBBB", self.connection.recv(2, socket.MSG_WAITALL)), "big")
                 
                 if is_masked:
-                    mkey = struct.unpack("!cccc", self.connection.recv(4, socket.MSG_WAITALL))
+                    mkey = struct.unpack("!BBBB", self.connection.recv(4, socket.MSG_WAITALL))
                 
                 self.message = list(self.connection.recv(plen, socket.MSG_WAITALL))
 
