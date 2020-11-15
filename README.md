@@ -259,6 +259,12 @@ You can donate to support the project.
 
 <a href="https://liberapay.com/EvrenselKisilik/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 
+or you can make donation with Bitcoin:
+
+| QR Code | Bitcoin address for donations |
+|---|---|
+| ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
+
 ## License
 GNU General Public License v3 (GPL-3)
 
