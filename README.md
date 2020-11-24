@@ -5,6 +5,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 [![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
 [![GitHub forks](https://img.shields.io/github/forks/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/network)
 [![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
+[![Discord](https://img.shields.io/badge/chat-on%20discord-blue.svg?style=flat-square&logo=discord)](https://discord.gg/RyVY9MtB4S)
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg?style=flat-square&logo=gitter)](https://gitter.im/gdb-frontend/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Donate](https://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square&color=green)](https://liberapay.com/EvrenselKisilik/donate)
 

@@ -165,7 +165,8 @@
 
 .Disassembly_items_item_asm_mnemonic {
     color: #78ff7c;
-    margin-right: 10px;
+    padding-right: 10px;
+    width: 35px;
 }
 
 /* ---------------------- */
