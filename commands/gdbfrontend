@@ -1,0 +1,10 @@
+#!/bin/bash
+
+PYCMD=python
+
+if command -v python3 > /dev/null
+then
+    PYCMD=python3
+fi
+
+$PYCMD -m gdbfrontend $@
