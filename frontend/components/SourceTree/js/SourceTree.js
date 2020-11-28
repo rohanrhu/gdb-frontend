@@ -59,6 +59,12 @@
             $sourceTree.data('SourceTree', data);
             data.$sourceTree = $sourceTree;
 
+            if (!window.hasOwnProperty('EvaluateExpression_component_id')) {
+                EvaluateExpression_component_id = 0;
+            }
+            
+            data.id = ++EvaluateExpression_component_id;
+
             var $sourceTree_path = $sourceTree.find('.SourceTree_path');
 
             var $sourceTree_items = $sourceTree.find('.SourceTree_items');
@@ -146,7 +152,8 @@
                         $item.appendTo($items);
 
                         var $item_button = $item.find('.SourceTree_items_item_button');
-                        var $item_button_indent = $item.find('.SourceTree_items_item_button_indent');
+                        var $item_button_openBtn = $item.find('.SourceTree_items_item_button_openBtn');
+                        var $item_button_indent = $item.find('.SourceTree_items_item_button_label_indent');
                         var $item_items = $item.find('.SourceTree_items_item_items');
                         var $item_line = $item.find('.SourceTree_items_item_line');
 
@@ -159,7 +166,7 @@
                         item.$item_button_indent = $item_button_indent;
                         item.$item_items = $item_items;
                         item.$item_line = $item_line;
-                        item.$item_name = $item.find('.SourceTree_items_item_name');
+                        item.$item_name = $item.find('.SourceTree_items_item_button_label_name');
                         item.is_opened = false;
 
                         item.open = function () {
@@ -215,7 +222,21 @@
                             item.open();
                         }
 
-                        item.$item.on('click.SourceTree', function (event) {
+                        $item_button_openBtn.on('click.SourceTree-'+data.id, function (event) {
+                            event.stopPropagation();
+
+                            GDBFrontend.components.fileBrowser.open({
+                                path: _file[$.fn.SourceTree.TREE_ITEM_PATH],
+                                onFileSelected: function (parameters) {
+                                    GDBFrontend.components.gdbFrontend.openSource({
+                                        file: {path: parameters.file.path}
+                                    });
+                                    GDBFrontend.components.fileBrowser.close();
+                                }
+                            });
+                        })
+                        
+                        item.$item.on('click.SourceTree-'+data.id, function (event) {
                             event.stopPropagation();
 
                             if (_file[$.fn.SourceTree.TREE_ITEM_TYPE] == $.fn.SourceTree.TREE_ITEM_TYPE__FILE) {
@@ -236,11 +257,11 @@
                 $sourceTree.trigger('SourceTree_rendered');
             };
 
-            $sourceTree.on('SourceTree_initialize.SourceTree', function (event) {
+            $sourceTree.on('SourceTree_initialize.SourceTree-'+data.id, function (event) {
                 data.init();
             });
 
-            $sourceTree.on('SourceTree_comply.SourceTree', function (event) {
+            $sourceTree.on('SourceTree_comply.SourceTree-'+data.id, function (event) {
                 data.comply();
             });
 

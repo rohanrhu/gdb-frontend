@@ -104,64 +104,92 @@
 .SourceTree_items_item_button {
     display: flex;
     flex-direction: row;
-    min-height: 28px;
     align-items: center;
-    padding: 0px 10px;
+    position: relative;
 }
 
-.SourceTree_items_item_button_indent {
+.SourceTree_items_item_button_label {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    padding: 0px 10px;
+    min-height: 28px;
+}
+
+.SourceTree_items_item_button_openBtn {
+    height: 100%;
+    font-size: 10px;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    min-height: 28px;
+    display: none;
+}
+
+.SourceTree_items_item_button_openBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.SourceTree_items_item.SourceTree_items_item__dir > .SourceTree_items_item_button:hover .SourceTree_items_item_button_openBtn {
+    display: flex;
+}
+
+.SourceTree_items_item_button_label_indent {
     content: ' ';
 }
 
-.SourceTree_items_item_icon {
+.SourceTree_items_item_button_label_icon {
     display: none;
     margin-right: 5px;
+    align-items: center;
 }
 
-.SourceTree_items_item__dir .SourceTree_items_item_icon {
+.SourceTree_items_item__dir .SourceTree_items_item_button_label_icon {
     color: #f7db4c;
 }
 
-.SourceTree_items_item__file .SourceTree_items_item_icon {
+.SourceTree_items_item__file .SourceTree_items_item_button_label_icon {
 }
 
-.SourceTree_items_item__dir .SourceTree_items_item_icon__closedDir {
-    display: block;
+.SourceTree_items_item__dir .SourceTree_items_item_button_label_icon__closedDir {
+    display: flex;
 }
 
-.SourceTree_items_item__dir.SourceTree__opened .SourceTree_items_item_icon__openedDir {
-    display: block;
+.SourceTree_items_item__dir.SourceTree__opened .SourceTree_items_item_button_label_icon__openedDir {
+    display: flex;
 }
 
-.SourceTree_items_item__dir.SourceTree__opened .SourceTree_items_item_icon__closedDir {
+.SourceTree_items_item__dir.SourceTree__opened .SourceTree_items_item_button_label_icon__closedDir {
     display: none;
 }
 
-.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_icon__file {
-    display: block;
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_button_label_icon__file {
+    display: flex;
     color: #0591d3;
 }
 
-.SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_icon__closedDir {
-    display: block;
+.SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_button_label_icon__closedDir {
+    display: flex;
 }
 
-.SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_icon__openedDir {
+.SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_button_label_icon__openedDir {
     display: none;
 }
 
-.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_icon__openedDir {
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_button_label_icon__openedDir {
     display: none;
 }
 
-.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_icon__closedDir {
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_button_label_icon__closedDir {
     display: none;
 }
 
-.SourceTree_items_item_name {
+.SourceTree_items_item_button_label_name {
+    display: flex;
+    align-items: center;
 }
 
-.SourceTree_items_item_name.SourceTree__dir {
+.SourceTree_items_item_button_label_name.SourceTree__dir {
     font-weight: bold;
 }
 
