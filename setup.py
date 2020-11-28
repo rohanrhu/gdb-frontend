@@ -28,10 +28,9 @@ for d in glob.glob("*"):
     else:
         package_data.append(d)
 
-
 setuptools.setup(
     name = "gdbfrontend",
-    version = "0.4.0-git",
+    version = "0.3.4",
     description = "GDBFrontend is a easy, flexible and extensionable gui debugger.",
     long_description = long_description,
     long_description_content_type='text/markdown',
