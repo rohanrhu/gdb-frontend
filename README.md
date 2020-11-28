@@ -11,13 +11,18 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss6.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
-## Installing 
+## Installing
+
+### Requirements
+* GDB => 8.2 (with python3)
+* python3
+* tmux
 
 ### PIP Package (Python Wheel)
 You can install GDBFrontend with `pip`.
 
 ```bash
-pip install gdbfrontend
+python -m pip install gdbfrontend
 ```
 
 or if you want to install specific GIT snapshot:
@@ -55,11 +60,6 @@ gdbfrontend
 
 ### Running From GIT
 You can download latest source and run it.
-
-#### Requirements
-* GDB => 8.2 (with python3)
-* python3
-* tmux
 
 You can run gdb-frontend with following commands:
 ```bash
