@@ -1,2 +1,2 @@
 [MASTER]
-init-hook='import sys; sys.path.append("python-libs")'
+init-hook='import sys, os; sys.path.append("python-libs"); sys.path.append(os.getcwd());'
