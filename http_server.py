@@ -9,6 +9,10 @@
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
 import websocket
+import http
+import socket
 
 class GDBFrontendHTTPServer(websocket.HTTPServer):
-    pass
+    def server_bind(self):
+        http.server.HTTPServer.server_bind(self)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
