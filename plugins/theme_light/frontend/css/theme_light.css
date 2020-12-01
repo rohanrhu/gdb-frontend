@@ -256,3 +256,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 .LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
     background: rgb(62, 62, 62);
 }
+
+.GDBFrontend_layout_status {
+    color: white;
+}

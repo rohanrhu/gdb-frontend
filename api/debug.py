@@ -171,6 +171,7 @@ def getState():
     state["breakpoints"] = getBreakpoints()
     state["objfiles"] = getFiles()
     state["sources"] = getSources()
+    state["step_time"] = api.globalvars.step_time
 
     try:
         current_frame = gdb.selected_frame()
@@ -194,6 +195,11 @@ def getState():
     state["inferior"]["num"] = inferior.num
     state["inferior"]["threads"] = []
 
+    if inferior.num in api.globalvars.inferior_run_times.keys():
+        state["inferior"]["run_time"] = api.globalvars.inferior_run_times[inferior.num]
+    else:
+        state["inferior"]["run_time"] = 0
+    
     th0 = gdb.selected_thread()
 
     for _thread in threads:

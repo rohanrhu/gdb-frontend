@@ -47,37 +47,51 @@
 
             data.$gdbFrontend_layout_bottom = $gdbFrontend.find('.GDBFrontend_layout_bottom');
 
+            data.$gdbFrontend_layout_status = $gdbFrontend.find('.GDBFrontend_layout_status');
+
+            data.$gdbFrontend_layout_status_runningStatus = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus');
+            data.$gdbFrontend_layout_status_runningStatus__notRunning = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus_status__notRunning');
+            data.$gdbFrontend_layout_status_runningStatus__running = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus_status__running');
+            data.$gdbFrontend_layout_status_runningStatus__stopped = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus_status__stopped');
+            
+            data.$gdbFrontend_layout_status_inferior = $gdbFrontend.find('.GDBFrontend_layout_status_inferior');
+            data.$gdbFrontend_layout_status_inferior_value = $gdbFrontend.find('.GDBFrontend_layout_status_inferior_value');
+            data.$gdbFrontend_layout_status_runTime = $gdbFrontend.find('.GDBFrontend_layout_status_runTime');
+            data.$gdbFrontend_layout_status_runTime_value = $gdbFrontend.find('.GDBFrontend_layout_status_runTime_value');
+            data.$gdbFrontend_layout_status_stepTime = $gdbFrontend.find('.GDBFrontend_layout_status_stepTime');
+            data.$gdbFrontend_layout_status_stepTime_value = $gdbFrontend.find('.GDBFrontend_layout_status_stepTime_value');
+
             data.$gdbFrontend_load = $gdbFrontend.find('.GDBFrontend_load');
             data.$gdbFrontend_load_loadBtn = data.$gdbFrontend_load.find('.GDBFrontend_load_loadBtn');
 
-            data.$GDBFrontend_load_connectBtn = data.$gdbFrontend_load.find('.GDBFrontend_load_connectBtn');
-            data.$GDBFrontend_load_connectBtn_openable = data.$GDBFrontend_load_connectBtn.find('.GDBFrontend_load_connectBtn_openable');
-            data.$GDBFrontend_load_connectBtn_openable_addressInput = data.$GDBFrontend_load_connectBtn_openable.find('.GDBFrontend_load_connectBtn_openable_addressInput');
-            data.$GDBFrontend_load_connectBtn_openable_connectBtn = data.$GDBFrontend_load_connectBtn_openable.find('.GDBFrontend_load_connectBtn_openable_connectBtn');
+            data.$gdbFrontend_load_connectBtn = data.$gdbFrontend_load.find('.GDBFrontend_load_connectBtn');
+            data.$gdbFrontend_load_connectBtn_openable = data.$gdbFrontend_load_connectBtn.find('.GDBFrontend_load_connectBtn_openable');
+            data.$gdbFrontend_load_connectBtn_openable_addressInput = data.$gdbFrontend_load_connectBtn_openable.find('.GDBFrontend_load_connectBtn_openable_addressInput');
+            data.$gdbFrontend_load_connectBtn_openable_connectBtn = data.$gdbFrontend_load_connectBtn_openable.find('.GDBFrontend_load_connectBtn_openable_connectBtn');
 
-            data.$GDBFrontend_terminal = $gdbFrontend.find('.GDBFrontend_terminal');
-            data.$GDBFrontend_terminal_terminal = data.$GDBFrontend_terminal.find('.GDBFrontend_terminal_terminal');
-            data.$GDBFrontend_terminalOpenBtn = $gdbFrontend.find('.GDBFrontend_terminalOpenBtn');
-            data.$GDBFrontend_terminalCloseBtn = $gdbFrontend.find('.GDBFrontend_terminalCloseBtn');
+            data.$gdbFrontend_terminal = $gdbFrontend.find('.GDBFrontend_terminal');
+            data.$gdbFrontend_terminal_terminal = data.$gdbFrontend_terminal.find('.GDBFrontend_terminal_terminal');
+            data.$gdbFrontend_terminalOpenBtn = $gdbFrontend.find('.GDBFrontend_terminalOpenBtn');
+            data.$gdbFrontend_terminalCloseBtn = $gdbFrontend.find('.GDBFrontend_terminalCloseBtn');
 
-            data.$GDBFrontend_runtimeControls = $gdbFrontend.find('.GDBFrontend_runtimeControls');
-            data.$GDBFrontend_runtimeControls_btn__run = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__run');
-            data.$GDBFrontend_runtimeControls_btn__run_btn = data.$GDBFrontend_runtimeControls_btn__run.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__run_argsInput = data.$GDBFrontend_runtimeControls_btn__run.find('.GDBFrontend_runtimeControls_btn__run_argsInput');
-            data.$GDBFrontend_runtimeControls_btn__pause = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__pause');
-            data.$GDBFrontend_runtimeControls_btn__pause_btn = data.$GDBFrontend_runtimeControls_btn__pause.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__continue = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__continue');
-            data.$GDBFrontend_runtimeControls_btn__continue_btn = data.$GDBFrontend_runtimeControls_btn__continue.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__s = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__s');
-            data.$GDBFrontend_runtimeControls_btn__s_btn = data.$GDBFrontend_runtimeControls_btn__s.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__n = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__n');
-            data.$GDBFrontend_runtimeControls_btn__n_btn = data.$GDBFrontend_runtimeControls_btn__n.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__si = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__si');
-            data.$GDBFrontend_runtimeControls_btn__si_btn = data.$GDBFrontend_runtimeControls_btn__si.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__t = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__t');
-            data.$GDBFrontend_runtimeControls_btn__t_btn = data.$GDBFrontend_runtimeControls_btn__t.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$GDBFrontend_runtimeControls_btn__evaluate = data.$GDBFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
-            data.$GDBFrontend_runtimeControls_btn__evaluate_btn = data.$GDBFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls = $gdbFrontend.find('.GDBFrontend_runtimeControls');
+            data.$gdbFrontend_runtimeControls_btn__run = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__run');
+            data.$gdbFrontend_runtimeControls_btn__run_btn = data.$gdbFrontend_runtimeControls_btn__run.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__run_argsInput = data.$gdbFrontend_runtimeControls_btn__run.find('.GDBFrontend_runtimeControls_btn__run_argsInput');
+            data.$gdbFrontend_runtimeControls_btn__pause = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__pause');
+            data.$gdbFrontend_runtimeControls_btn__pause_btn = data.$gdbFrontend_runtimeControls_btn__pause.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__continue = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__continue');
+            data.$gdbFrontend_runtimeControls_btn__continue_btn = data.$gdbFrontend_runtimeControls_btn__continue.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__s = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__s');
+            data.$gdbFrontend_runtimeControls_btn__s_btn = data.$gdbFrontend_runtimeControls_btn__s.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__n = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__n');
+            data.$gdbFrontend_runtimeControls_btn__n_btn = data.$gdbFrontend_runtimeControls_btn__n.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__si = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__si');
+            data.$gdbFrontend_runtimeControls_btn__si_btn = data.$gdbFrontend_runtimeControls_btn__si.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__t = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__t');
+            data.$gdbFrontend_runtimeControls_btn__t_btn = data.$gdbFrontend_runtimeControls_btn__t.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__evaluate = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
+            data.$gdbFrontend_runtimeControls_btn__evaluate_btn = data.$gdbFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
 
             data.$gdbFrontend_variablesExplorer__proto = $gdbFrontend.find('.GDBFrontend_variablesExplorerProto > .VariablesExplorer');
 
@@ -86,7 +100,7 @@
             
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
-            data.$GDBFrontend_sources_title_buttons_button__openSource = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button');
+            data.$gdbFrontend_sources_title_buttons_button__openSource = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button');
             data.$gdbFrontend_sourceTreeComp = data.$gdbFrontend_sources.find('.GDBFrontend_sourceTreeComp');
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
@@ -97,6 +111,10 @@
             
             data.sourceOpener_current_dir = GDBFrontend.config.workdir ? GDBFrontend.config.workdir: '/';
 
+            data.loadFile = function () {
+                
+            };
+            
             data.openSourceOpener = function () {
                 GDBFrontend.components.fileBrowser.open({
                     path: data.sourceOpener_current_dir,
@@ -111,7 +129,7 @@
                 });
             };
 
-            data.$GDBFrontend_sources_title_buttons_button__openSource.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_sources_title_buttons_button__openSource.on('click.GDBFrontend', function (event) {
                 data.openSourceOpener();
             });
             
@@ -492,8 +510,8 @@
                 });
             });
 
-            data.$GDBFrontend_load_connectBtn_openable_connectBtn.on('click.GDBFrontend', function (event) {
-                var address = data.$GDBFrontend_load_connectBtn_openable_addressInput.val().trim();
+            data.$gdbFrontend_load_connectBtn_openable_connectBtn.on('click.GDBFrontend', function (event) {
+                var address = data.$gdbFrontend_load_connectBtn_openable_addressInput.val().trim();
 
                 if (
                     ((address[0] == '/') && (address.length < 2))
@@ -536,7 +554,7 @@
                 if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
                     var $iframe = $('<iframe></iframe>');
                     $iframe.addClass('GDBFrontend_terminal_iframe');
-                    $iframe.appendTo(data.$GDBFrontend_terminal_terminal);
+                    $iframe.appendTo(data.$gdbFrontend_terminal_terminal);
                     $iframe.attr('src', 'http://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.gotty_port);
                     data.$gdbFrontend_layout_bottom.show();
                     data.is_terminal_opened = true;
@@ -644,7 +662,7 @@
                 data.debug.socket.onerror = function (event) {
                     GDBFrontend.verbose('Debugging server message error.');
                 };
-
+                
                 data.initSem.leave();
 
                 data.comply();
@@ -1006,6 +1024,66 @@
 
                 data.debug.state = parameters.state;
 
+                var running_threads_count = 0;
+                var current_thread_num = 0;
+                
+                data.debug.state.inferior.threads.forEach(function (_thread, _thread_i) {
+                    if (_thread.is_running) {
+                        running_threads_count++;
+                    }
+
+                    if (_thread.is_current) {
+                        current_thread_num = _thread.num;
+                    }
+                });
+
+                data.$gdbFrontend_layout_status_inferior_value.html(data.debug.state.inferior.num);
+                data.$gdbFrontend_layout_status_inferior.css('display', 'flex');
+                
+                if (running_threads_count) {
+                    data.$gdbFrontend_layout_status_runningStatus__notRunning.hide();
+                    data.$gdbFrontend_layout_status_runningStatus__running.css('display', 'flex');
+                    data.$gdbFrontend_layout_status_runningStatus__running
+                    .find('.GDBFrontend_layout_status_runningStatus_status_label')
+                    .html('Running ('+running_threads_count+' / '+data.debug.state.inferior.threads.length+' threads)');
+                    data.$gdbFrontend_layout_status_runningStatus__stopped.hide();
+
+                    data.$gdbFrontend_layout_status_runTime.css('display', 'flex');
+                } else if (data.debug.state.inferior.threads.length) {
+                    data.$gdbFrontend_layout_status_runningStatus__notRunning.hide();
+                    data.$gdbFrontend_layout_status_runningStatus__running.hide();
+                    data.$gdbFrontend_layout_status_runningStatus__stopped.css('display', 'flex');
+                    data.$gdbFrontend_layout_status_runningStatus__stopped
+                    .find('.GDBFrontend_layout_status_runningStatus_status_label')
+                    .html('Stopped ('+data.debug.state.inferior.threads.length+' threads total)');
+                    
+                    data.$gdbFrontend_layout_status_runTime.css('display', 'flex');
+                } else {
+                    data.$gdbFrontend_layout_status_runningStatus__notRunning.css('display', 'flex');
+                    data.$gdbFrontend_layout_status_runningStatus__running.hide();
+                    data.$gdbFrontend_layout_status_runningStatus__stopped.hide();
+
+                    data.$gdbFrontend_layout_status_runTime.hide();
+                }
+
+                if (data.debug.state.inferior.run_time) {
+                    var runned_at = new Date(data.debug.state.inferior.run_time*1000);
+                        
+                    data.$gdbFrontend_layout_status_runTime_value.html(
+                        runned_at.getHours() + ":" + runned_at.getMinutes()
+                    );
+                }
+                
+                if (data.debug.state.step_time !== false) {
+                    data.$gdbFrontend_layout_status_stepTime.css('display', 'flex');
+                    data.$gdbFrontend_layout_status_stepTime_value.html(
+                        parseInt(Math.round(data.debug.state.step_time * 1000) / 1000)
+                        + ' ms'
+                    );
+                } else {
+                    data.$gdbFrontend_layout_status_stepTime.hide();
+                }
+                
                 if (parameters.state.selected_frame) {
                     data.gdbFrontend_disassembly.load({
                         pc: parameters.state.selected_frame.pc,
@@ -1657,13 +1735,13 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__run_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__run_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/run',
                     cache: false,
                     method: 'get',
                     data: {
-                        args: data.$GDBFrontend_runtimeControls_btn__run_argsInput.val()
+                        args: data.$gdbFrontend_runtimeControls_btn__run_argsInput.val()
                     },
                     success: function (result_json) {
                     },
@@ -1674,7 +1752,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__pause_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__pause_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/pause',
                     cache: false,
@@ -1690,7 +1768,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__continue_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__continue_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/continue',
                     cache: false,
@@ -1706,7 +1784,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__n_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__n_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/next',
                     cache: false,
@@ -1722,7 +1800,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__s_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__s_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/step',
                     cache: false,
@@ -1738,7 +1816,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__si_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__si_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/stepi',
                     cache: false,
@@ -1754,7 +1832,7 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__t_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__t_btn.on('click.GDBFrontend', function (event) {
                 $.ajax({
                     url: '/api/runtime/terminate',
                     cache: false,
@@ -1770,30 +1848,30 @@
                 });
             });
 
-            data.$GDBFrontend_runtimeControls_btn__evaluate_btn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_runtimeControls_btn__evaluate_btn.on('click.GDBFrontend', function (event) {
                 data.createEvaluater();
             });
 
             data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
-                data.$GDBFrontend_terminalCloseBtn.show();
+                data.$gdbFrontend_terminalCloseBtn.show();
             });
             
-            data.$GDBFrontend_terminal.on('mouseout.GDBFrontend', function (event) {
-                data.$GDBFrontend_terminalCloseBtn.hide();
+            data.$gdbFrontend_terminal.on('mouseout.GDBFrontend', function (event) {
+                data.$gdbFrontend_terminalCloseBtn.hide();
             });
             
-            data.$GDBFrontend_terminalOpenBtn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_terminalOpenBtn.on('click.GDBFrontend', function (event) {
                 data.openTerminal();
             });
             
-            data.$GDBFrontend_terminalCloseBtn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_terminalCloseBtn.on('click.GDBFrontend', function (event) {
                 data.closeTerminal();
             });
 
             data.openTerminal = function (parameters) {
                 data.is_terminal_opened = true;
                 data.$gdbFrontend_layout_bottom.show();
-                data.$GDBFrontend_terminalOpenBtn.hide();
+                data.$gdbFrontend_terminalOpenBtn.hide();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace && _file.ace.resize();
@@ -1804,7 +1882,7 @@
             data.closeTerminal = function (parameters) {
                 data.is_terminal_opened = false;
                 data.$gdbFrontend_layout_bottom.hide();
-                data.$GDBFrontend_terminalOpenBtn.show();
+                data.$gdbFrontend_terminalOpenBtn.show();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace && _file.ace.resize();

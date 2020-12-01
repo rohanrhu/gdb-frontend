@@ -310,3 +310,8 @@
 .LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
     background: rgb(93 29 29);
 }
+
+.GDBFrontend_layout_status {
+    color: white;
+    background: rgb(86, 7, 7);
+}

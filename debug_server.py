@@ -12,6 +12,7 @@ import threading
 import importlib
 import json
 import sys
+import time
 
 import config
 import util
@@ -25,6 +26,8 @@ gdb = importlib.import_module("gdb")
 class GDBFrontendSocket(websocket.WebSocketHandler):
     def __init__(self, request, client_address, server):
         websocket.WebSocketHandler.__init__(self, request, client_address, server)
+
+        self.cont_time = False
     
     def handleConnection(self):
         util.verbose(self.client_address[0], "is connected.")
@@ -60,9 +63,15 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_new_objfile(self, event):
         util.verbose("gdb_on_new_objfile()")
-        gdb.post_event(self.gdb_on_new_objfile__mT)
 
-    def gdb_on_new_objfile__mT(self):
+        api.globalvars.inferior_run_times[gdb.selected_inferior().num] = int(time.time())
+
+        def _mt():
+            self.gdb_on_new_objfile__mT(event)
+        
+        gdb.post_event(_mt)
+
+    def gdb_on_new_objfile__mT(self, event):
         response = {}
 
         response["event"] = "new_objfile"
@@ -125,6 +134,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_stop(self, event):
         util.verbose("gdb_on_stop()")
+
+        api.globalvars.step_time = time.time() * 1000 - self.cont_time
+        
         gdb.post_event(self.gdb_on_stop__mT)
 
     def gdb_on_stop__mT(self):
@@ -170,9 +182,16 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_new_thread(self, event):
         util.verbose("gdb_on_new_thread()")
-        gdb.post_event(self.gdb_on_new_thread__mT)
 
-    def gdb_on_new_thread__mT(self):
+        if event.inferior_thread.inferior.num == 1:
+            api.globalvars.inferior_run_times[event.inferior_thread.inferior.num] = int(time.time())
+            
+        def _mt():
+            self.gdb_on_new_thread__mT(event)
+
+        gdb.post_event(_mt)
+
+    def gdb_on_new_thread__mT(self, event):
         response = {}
 
         response["event"] = "new_thread"
@@ -182,6 +201,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_cont(self, event):
         util.verbose("gdb_on_cont()")
+
+        self.cont_time = time.time() * 1000
+        
         gdb.post_event(self.gdb_on_cont__mT)
 
     def gdb_on_cont__mT(self):
@@ -194,10 +216,18 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_exited(self, event):
         util.verbose("gdb_on_exited()")
-        gdb.post_event(self.gdb_on_exited__mT)
 
-    def gdb_on_exited__mT(self):
+        api.globalvars.step_time = False
+
+        def _mt():
+            self.gdb_on_exited__mT(event)
+        
+        gdb.post_event(_mt)
+
+    def gdb_on_exited__mT(self, event):
         response = {}
+
+        del api.globalvars.inferior_run_times[event.inferior.num]
 
         response["event"] = "exited"
         response["state"] = api.debug.getState()
@@ -208,9 +238,15 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_new_inferior(self, event):
         util.verbose("gdb_on_new_inferior()")
-        gdb.post_event(self.gdb_on_new_inferior__mT)
 
-    def gdb_on_new_inferior__mT(self):
+        api.globalvars.inferior_run_times[event.inferior.num] = int(time.time())
+
+        def _mt():
+            self.gdb_on_new_inferior__mT(event)
+        
+        gdb.post_event(_mt)
+
+    def gdb_on_new_inferior__mT(self, event):
         response = {}
 
         response["event"] = "new_inferior"
@@ -220,10 +256,16 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_inferior_deleted(self, event):
         util.verbose("gdb_on_inferior_deleted()")
-        gdb.post_event(self.gdb_on_inferior_deleted__mT)
+
+        def _mt():
+            self.gdb_on_inferior_deleted__mT(event)
         
-    def gdb_on_inferior_deleted__mT(self):
+        gdb.post_event(_mt)
+        
+    def gdb_on_inferior_deleted__mT(self, event):
         response = {}
+
+        del api.globalvars.inferior_run_times[event.inferior.num]
 
         response["event"] = "inferior_deleted"
         response["state"] = api.debug.getState()
