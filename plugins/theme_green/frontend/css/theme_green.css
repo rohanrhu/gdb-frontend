@@ -121,7 +121,7 @@
 }
 
 .FileTabs_editors_noItem {
-    background: rgb(111 37 37);
+    background: #295626;
     color: white;
 }
 
@@ -268,11 +268,11 @@
 
 .VariablesExplorer_items_item_contextMenu {
     color: white;
-    background: #5a1515;
+    background: #12560d;
 }
 
 .VariablesExplorer_items_item_contextMenu:before {
-    background: #5a1515;
+    background: #12560d;
 }
 
 .ace-tomorrow-night-bright .ace_print-margin {
@@ -285,30 +285,30 @@
 }
 
 .LinkedListVisualizer_settings_setting_input_rI {
-    background: rgb(124, 26, 26);
+    background: rgb(22, 96, 17);
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
-    background: rgb(124, 26, 26);
+    background: rgb(22, 96, 17);
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
-    background: rgb(100, 10, 10);
+    background: rgb(22, 96, 17);
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
-    background: #5a1515;
+    background: #12560d;
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
-    background: #5a1515;
+    background: #12560d;
 }
 
 .LinkedListVisualizer_items_item .LinkedListVisualizer_map,
 .LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
-    background: rgb(93 29 29);
+    background: rgb(3, 72, 0);
 }
 
 .GDBFrontend_layout_status {
