@@ -40,9 +40,12 @@ def run(request, params):
 
         load_plugins.append(serializable)
 
+    install_directory = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
     js_init = """
     GDBFrontend = {};
     GDBFrontend.version = '"""+util.versionString(statics.VERSION)+"""';
+    GDBFrontend.install_directory = '"""+install_directory+"""';
     GDBFrontend.config = {};
     GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
     GDBFrontend.config.bind_address = '"""+str(config.BIND_ADDRESS)+"""';

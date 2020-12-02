@@ -89,6 +89,8 @@
 
             data.init = function () {
                 $aboutDialog.find('.AboutDialog_version').html(GDBFrontend.version);
+                $aboutDialog.find('.AboutDialog_installDirectory_value').html(GDBFrontend.install_directory);
+                $aboutDialog.find('.AboutDialog_pluginsDirectory_value').html(GDBFrontend.config.plugins_dir);
             };
 
             data.init();
