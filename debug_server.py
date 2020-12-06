@@ -24,10 +24,10 @@ import websocket
 gdb = importlib.import_module("gdb")
 
 class GDBFrontendSocket(websocket.WebSocketHandler):
+    cont_time = False
+    
     def __init__(self, request, client_address, server):
         websocket.WebSocketHandler.__init__(self, request, client_address, server)
-
-        self.cont_time = False
     
     def handleConnection(self):
         util.verbose(self.client_address[0], "is connected.")

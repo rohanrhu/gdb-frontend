@@ -136,7 +136,7 @@ def load(file):
     """
 
     try:
-        gdb.execute("symbol-file")
+        gdb.execute("file")
         gdb.execute("file %s" % file)
 
         if settings.SET_CWD_TO_EXECUTABLE:
@@ -154,6 +154,7 @@ def connect(host, port):
     """
 
     try:
+        gdb.execute("file")
         gdb.execute("target remote %s:%s" % (str(host), str(port)))
         return True
     except Exception as e:
@@ -618,13 +619,21 @@ def terminate():
         print("[Error]", e)
         is_need_interrupt = True
 
-    if is_need_interrupt and (gdb.selected_inferior().threads().__len__() > 0):
-        try:
-            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
-            gdb.execute("interrupt")
-        except Exception as e:
-            print("[Error]", e)
-            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
+    is_running = True
+
+    try:
+        is_running = gdb.selected_inferior().threads().__len__() > 0
+    except gdb.error:
+        gdb.execute("interrupt")
+        gdb.execute("kill")
+    finally:
+        if is_need_interrupt and is_running:
+            try:
+                api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
+                gdb.execute("interrupt")
+            except Exception as e:
+                print("[Error]", e)
+                api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
 
 @threadSafe
 def resolveTerminalType(ctype):
