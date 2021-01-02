@@ -243,8 +243,12 @@ if value_expected_arg:
     print("Missing value for option:", value_expected_arg[0] + (", " + value_expected_arg[1]) if value_expected_arg[1] else "")
     exit(0)
 
+if gdb_executable == "gdb" and not shutil.which("gdb"):
+    print("\033[0;32;31m[Error] GDB is not installed. Please install GDB on your system and run GDBFrontend again.\033[0m")
+    exit(1)
+
 if tmux_executable == "tmux" and not shutil.which("tmux"):
-    print("\033[0;32;31m[Error] Tmux is not installed. Please install tmux on your system and run GDBFrontend again.\033[0m")
+    print("\033[0;32;31m[Error] Tmux is not installed. Please install Tmux on your system and run GDBFrontend again.\033[0m")
     exit(1)
 
 print("GDBFrontend "+statics.VERSION_STRING)
