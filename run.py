@@ -253,12 +253,13 @@ if tmux_executable == "tmux" and not shutil.which("tmux"):
 
 print("GDBFrontend "+statics.VERSION_STRING)
 
-try:
-    if 0 in (config.HTTP_PORT, config.GOTTY_PORT):
+if 0 in (config.HTTP_PORT, config.GOTTY_PORT):
+    try:
         import psutil
-except ImportError:
-    print("\033[0;32;31m[Error] The \"psutil\" module is not found. It is necessary for random ports (--port 0).\033[0m")
-    print("You can install \"psutil\" module with the command: \033[0;32;40mpython3 -m pip install psutil\033[0m")
+    except ImportError:
+        print("\033[0;32;31m[Error] The \"psutil\" module is not found. It is necessary for random ports (--port 0).\033[0m")
+        print("You can install \"psutil\" module with the command: \033[0;32;40mpython3 -m pip install psutil\033[0m")
+        exit(1)
 
 if is_random_port:
     import mmap
