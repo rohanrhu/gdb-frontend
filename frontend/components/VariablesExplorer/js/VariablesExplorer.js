@@ -344,6 +344,7 @@
                 }
 
                 item.$item_llVis_linkedListVisualizer.on('LinkedListVisualizer_close.VariablesExplorer-' + data.id, function (event) {
+                    if (!$(event.target).is(item.$item_llVis_linkedListVisualizer)) return;
                     item.closeLinkedListVisualizer();
                 });
 
