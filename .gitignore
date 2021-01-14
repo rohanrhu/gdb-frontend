@@ -10,3 +10,4 @@ plugins
 build
 dist
 gdbfrontend.egg-info
+mingw64
