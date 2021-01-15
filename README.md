@@ -9,7 +9,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg?style=flat-square&logo=gitter)](https://gitter.im/gdb-frontend/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Donate](https://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square&color=green)](https://liberapay.com/EvrenselKisilik/donate)
 
-![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss6.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
+![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss8.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
 ## Installing
 
