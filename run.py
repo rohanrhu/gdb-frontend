@@ -15,6 +15,8 @@ import json
 import base64
 import subprocess
 import time
+import re
+import signal
 
 import config
 config.init()
@@ -157,23 +159,35 @@ def argHandler_version():
 
     exit(0)
 
-
 def quit_tmux_gdb():
     global tmux_executable
     global terminal_id
     
-    for i in range(5):
-        subprocess.Popen([
-            tmux_executable,
-            "-f",
-            "tmux.conf",
-            "send-keys", 
-            "-t",
-            terminal_id,
-            "C-c", "C-c", "C-d", "C-d", "ENTER"
-        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
-        
-        time.sleep(0.1)
+    proc = subprocess.Popen([
+        tmux_executable,
+        "list-panes", 
+        "-t",
+        terminal_id,
+        "-F",
+        "\"#{pane_pid}\""
+    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    proc.wait()
+
+    tmux_bash_pid = False
+
+    try:
+        tmux_bash_pid = int(re.search("(\\d+)", proc.stdout.readline().__str__())[0])
+    except Exception as e:
+        print("[Error] Tmux Bash PID is not found.", e)
+    
+    if tmux_bash_pid:
+        print("Sending SIGKILL to PGID: %s." % tmux_bash_pid)
+
+        try:
+            os.killpg(tmux_bash_pid, signal.SIGKILL)
+        except Exception as e:
+            print("[Error] Process group can not stopped.", e)
 
 args = [
     ["--verbose", "-V", argHandler_verbose, False],
