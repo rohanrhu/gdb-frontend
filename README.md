@@ -57,7 +57,7 @@ sudo apt upgrade gdbfrontend
 You can install Arch Linux package for Arch-based distributions. ([AUR Package](https://aur.archlinux.org/packages/gdb-frontend-bin/))
 
 ```bash
-yay -S gdbfrontend
+yay -S gdb-frontend-bin
 ```
 
 and you can run it:
