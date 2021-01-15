@@ -14,11 +14,6 @@ urls = {
         "match": "^/$",
         "module": "url_modules.main.main"
     },
-    "main-layout": {
-        "url": "/{layout}/",
-        "match": "^/(.+?)/$",
-        "module": "url_modules.main.main"
-    },
     "api-state": {
         "url": "/api/state",
         "match": "^/api/state$",
@@ -148,5 +143,11 @@ urls = {
         "url": "/api/disassemble-frame",
         "match": "^/api/disassemble-frame$",
         "module": "url_modules.api.disassemble_frame"
+    },
+    "main-layout": {
+        "url": "/{layout}/",
+        "match": "^/(.+?)/?$",
+        "module": "url_modules.main.main",
+        "force_slash": True
     }
 }
