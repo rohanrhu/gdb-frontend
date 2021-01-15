@@ -246,7 +246,6 @@ In fact, gdb-frontend is able to run on Windows but there are some serious issue
 
 * GDB's main-thread is being blocked during running process. (gdb-frontend has an interrupting mechanism to fixing this but it is not enough yet.)
 * Windows-GDB's prompt is being blocked during running process and there are some issues about interrupting the application.
-* Current release of Windows-GDB contains Python2. New GDB 9 have Python3 but it is not released yet.
 
 ## WSL
 You can use gdb-frontend on WSL (Windows Subsystem for Linux).
