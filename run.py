@@ -17,6 +17,7 @@ import subprocess
 import time
 import re
 import signal
+import platform
 
 import config
 config.init()
@@ -32,6 +33,13 @@ terminal_id = "gdb-frontend"
 credentials = False
 is_random_port = False
 workdir = False
+
+gotty_executable = "./bin/gotty"
+
+if platform.machine() == "x86":
+    gotty_executable = "./bin/gotty_32"
+elif platform.machine()[:3] == "arm":
+    gotty_executable = "./bin/gotty_arm"
 
 arg_config = {}
 
@@ -318,9 +326,9 @@ try:
         )
 
     if credentials:
-        gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-c", credentials, "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
+        gotty_args = [gotty_executable, "--config", "gotty.conf", "-c", credentials, "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
     else:
-        gotty_args = ["./bin/gotty", "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
+        gotty_args = [gotty_executable, "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
 
     gotty = subprocess.Popen(
         gotty_args,
