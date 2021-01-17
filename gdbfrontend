@@ -1,3 +1,10 @@
 #!/bin/bash
 
-python3 $(realpath $(dirname "${BASH_SOURCE[0]}"))/run.py $@
+PYCMD=python
+
+if command -v python3 > /dev/null
+then
+    PYCMD=python3
+fi
+
+$PYCMD $(realpath $(dirname "${BASH_SOURCE[0]}"))/run.py $@
