@@ -20,10 +20,17 @@ This setting is seconds to wait for print warning.
 """
 GDB_MT_WARNING_TIME: int
 
+"""
+Maximum recursion number of recursive functions that are used in somewhere like backtracing.
+"""
+MAX_RECURSIONS: int
+
 def init():
     global SET_CWD_TO_EXECUTABLE
     SET_CWD_TO_EXECUTABLE = True
 
-
     global GDB_MT_WARNING_TIME
     GDB_MT_WARNING_TIME = 3
+
+    global MAX_RECURSIONS
+    MAX_RECURSIONS = 100

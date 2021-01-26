@@ -555,8 +555,16 @@ def backTraceFrame(frame):
     """
 
     trace = []
+    recursion_num = 0
 
     def _back(frame):
+        nonlocal recursion_num
+        
+        if recursion_num > settings.MAX_RECURSIONS:
+            return
+        
+        recursion_num += 1
+
         parent = frame.older()
 
         if parent is not None:
