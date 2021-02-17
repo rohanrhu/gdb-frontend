@@ -8,7 +8,9 @@
 # Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-urls = {
+import api.url
+
+urls = api.url.URLS({
     "main": {
         "url": "/",
         "match": "^/$",
@@ -150,4 +152,4 @@ urls = {
         "module": "url_modules.main.main",
         "force_slash": True
     }
-}
+})

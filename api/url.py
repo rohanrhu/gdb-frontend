@@ -12,6 +12,16 @@ import re
 import string
 import urllib
 import importlib
+import collections
+
+class URLS(collections.OrderedDict):
+    def append(self, key, value):
+        self[key] = value
+        self.move_to_end(key, last=True)
+    
+    def prepend(self, key, value):
+        self[key] = value
+        self.move_to_end(key, last=False)
 
 class URL:
     def __init__(self, urls):

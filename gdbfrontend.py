@@ -44,7 +44,7 @@ all_urls = urls.urls
 
 for _plugin_name, _plugin in plugin.plugins.items():
     for _url_name, _url in _plugin.urls.items():
-        all_urls[_url_name] = _url
+        all_urls.prepend(_url_name, _url)
 
 http_handler.url = api.url.URL(all_urls)
 

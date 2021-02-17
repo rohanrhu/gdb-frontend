@@ -15,7 +15,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 ### Requirements
 * GDB => 8.2 (with python3)
-* python3
+* python3 => 3.2
 * tmux
 
 ### PIP Package (Python Wheel)
