@@ -11,6 +11,9 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss8.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
+## Maintenance Notice
+Hi, I was not able to look to issues for a while because I'm in the military and I will back in 26 August, until that time you can maintain the GDBFrontend project if you are interested.
+
 ## Installing
 
 ### Requirements
