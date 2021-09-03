@@ -8,7 +8,7 @@
 # Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-VERSION = [0, 5, 3, "beta"]
+VERSION = [0, 5, 4, "git"]
 VERSION_STRING = "v"+".".join([str(i) for i in VERSION[:-1]])+"-"+VERSION[-1]
 
 """

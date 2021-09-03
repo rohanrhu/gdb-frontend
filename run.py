@@ -27,6 +27,7 @@ import util
 
 path = os.path.dirname(os.path.realpath(__file__))
 
+gdb_args = ""
 gdb_executable = "gdb"
 tmux_executable = "tmux"
 terminal_id = "gdb-frontend"
@@ -42,6 +43,11 @@ elif platform.machine()[:3] == "arm":
     gotty_executable = "./bin/gotty_arm"
 
 arg_config = {}
+
+def argHandler_gdbArgs(args):
+    global gdb_args
+
+    gdb_args = args
 
 def argHandler_gdbExecutable(path):
     global gdb_executable
@@ -60,6 +66,11 @@ def argHandler_tmuxExecutable(path):
         exit(0)
 
     tmux_executable = path
+
+def argHandler_tmuxArgs(args):
+    global tmux_args
+
+    tmux_args = " " + str.strip(args) + " "
 
 def argHandler_terminalId(name):
     global terminal_id
@@ -141,6 +152,7 @@ def argHandler_help():
     print("Options:")
     print("  --help, -h:\t\t\t\t\tShows this help message.")
     print("  --version, -v:\t\t\t\tShows version.")
+    print("  --gdb-args=\"ARGS\", -G \"ARGS\":\t\t\tSpecifies GDB command line arguments. (Optional)")
     print("  --gdb-executable=PATH, -g PATH:\t\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\t\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
     print("  --terminal-id=NAME, -t NAME:\t\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
@@ -199,6 +211,7 @@ def quit_tmux_gdb():
 
 args = [
     ["--verbose", "-V", argHandler_verbose, False],
+    ["--gdb-args", "-G", argHandler_gdbArgs, True],
     ["--gdb-executable", "-g", argHandler_gdbExecutable, True],
     ["--tmux-executable", "-tmux", argHandler_tmuxExecutable, True],
     ["--terminal-id", "-t", argHandler_terminalId, True],
@@ -308,6 +321,7 @@ try:
             tmux_executable +
             " -f tmux.conf new-session -s " + terminal_id +
             " -d '" + gdb_executable +
+            " " + gdb_args +
             " -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); " +
             "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import gdbfrontend\"; read;'"
         )
@@ -359,6 +373,7 @@ try:
             " -f tmux.conf send-keys -t " + terminal_id +
             " \"" +
             gdb_executable +
+            " " + gdb_args +
             " -ex \\\"python import sys, os; sys.path.insert(0, '"+path+"'); import config, json, base64; config.init(); " +
             "config.setJSON(base64.b64decode('"+base64.b64encode(json.dumps(arg_config).encode()).decode()+"').decode()); import gdbfrontend\\\"; read;"
             "\" "

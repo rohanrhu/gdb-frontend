@@ -104,6 +104,7 @@ GDBFrontend is a easy, flexible and extensionable gui debugger.
 Options:
   --help, -h:                                   Shows this help message.
   --version, -v:                                Shows version.
+  --gdb-args="ARGS", -G "ARGS":                 Specifies GDB command line arguments. (Optional)
   --gdb-executable=PATH, -g PATH:               Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
   --tmux-executable=PATH, -tmux PATH:           Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
   --terminal-id=NAME, -t NAME:                  Specifies tmux terminal identifier name (Default is "gdb-frontend".)
@@ -125,6 +126,9 @@ Shows help text.
 
 #### `--version`, `-v`
 Shows version.
+
+#### `--gdb-args="ARGS", `-G "PATH`"
+Specifies GDB command line arguments. (Optional)
 
 #### `--gdb-executable=PATH`, `-g PATH`
 You can specify GDB executable path like `gdbfrontend --gdb-executable=/path/to/gdb`. (Optional)
