@@ -92,6 +92,8 @@
             data.$gdbFrontend_runtimeControls_btn__t_btn = data.$gdbFrontend_runtimeControls_btn__t.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__evaluate = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
             data.$gdbFrontend_runtimeControls_btn__evaluate_btn = data.$gdbFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluateInNativeWindow');
+            data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow.find('.GDBFrontend_runtimeControls_btn_btn');
 
             data.$gdbFrontend_variablesExplorer__proto = $gdbFrontend.find('.GDBFrontend_variablesExplorerProto > .VariablesExplorer');
 
@@ -252,6 +254,23 @@
                 if (parameters.expression) {
                     evaluater.evaluateExpression.evaluate({expression: parameters.expression});
                 }
+
+                return {evaluater: evaluater};
+            };
+
+            data.createEvaluaterOnNativeWindow = function (parameters) {
+                var nw = window.open(
+                    "/",
+                    "Evaluate Expression - " + Math.random().toString(36).substr(2, 9),
+                    "menubar=no,location=no,resizable=yes,scrollbars=no,status=no,toolbar=no,width=400,height=400,top=500,left=500"
+                );
+
+                nw.onload = function () {
+                    var evaluater = nw.GDBFrontend.components.gdbFrontend.createEvaluater(parameters).evaluater;
+                    
+                    evaluater.evaluateExpression.setOnNativewindow({is_on_native_window: true});
+                    evaluater.evaluateExpression.setFullScreen({is_fullscreen: true});
+                };
             };
             
             data.debug.getBreakpoint = function (parameters) {
@@ -1850,6 +1869,10 @@
 
             data.$gdbFrontend_runtimeControls_btn__evaluate_btn.on('click.GDBFrontend', function (event) {
                 data.createEvaluater();
+            });
+            
+            data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn.on('click.GDBFrontend', function (event) {
+                data.createEvaluaterOnNativeWindow();
             });
 
             data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {

@@ -30,7 +30,7 @@ for d in glob.glob("*"):
 
 setuptools.setup(
     name = "gdbfrontend",
-    version = "0.5.3",
+    version = "0.6.0",
     description = "GDBFrontend is a easy, flexible and extensionable gui debugger.",
     long_description = long_description,
     long_description_content_type='text/markdown',

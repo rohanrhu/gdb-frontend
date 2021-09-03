@@ -64,6 +64,7 @@
             data.$evaluateExpression_items_item__proto = $evaluateExpression.find('.EvaluateExpression_items_item.__proto');
             data.$evaluateExpression_items_parentBtn = $evaluateExpression.find('.EvaluateExpression_items_parentBtn');
             
+            data.$evaluateExpression_window_box = $evaluateExpression.find('.EvaluateExpression_window_box');
             data.$evaluateExpression_window_box_content = $evaluateExpression.find('.EvaluateExpression_window_box_content');
 
             data.$evaluateExpression_value = $evaluateExpression.find('.EvaluateExpression_value');
@@ -85,6 +86,9 @@
 
             data.is_passive = false;
             data.is_opened = false;
+
+            data.is_fullscreen = false;
+            data.is_on_native_window = false;
 
             data.$pointingPlaceholder = t_init.parameters.$pointingPlaceholder ? t_init.parameters.$pointingPlaceholder: false;
 
@@ -320,6 +324,11 @@
                 if (parameters === undefined) {
                     parameters = {};
                 }
+
+                if (data.is_on_native_window) {
+                    window.close();
+                    return;
+                }
                 
                 data.is_opened = false;
 
@@ -357,8 +366,73 @@
                 data.$evaluateExpression_window_box_content.height(parameters.height);
             };
 
+            var last_css_translate = 'translate(0px, 0px)';
+            
+            var on_resize = function (event) {
+                if (!data.is_fullscreen) {
+                    return;
+                }
+
+                data.$evaluateExpression_window_box.width($(window).width());
+                data.$evaluateExpression_window_box.height($(window).height());
+
+                data.$evaluateExpression_window_box_content.width('auto');
+                data.$evaluateExpression_window_box_content.height('auto');
+                data.$evaluateExpression_window_box_content.css('resize', 'none');
+
+                last_css_translate = data.$evaluateExpression.css('transform');
+                data.$evaluateExpression.css('transform', 'translate(0px, 0px)');
+            };
+            
+            $(window).on('resize.EvaluateExpression-' + data.id, on_resize)
+
+            data.setFullScreen = function (parameters) {
+                data.is_fullscreen = parameters.is_fullscreen;
+                
+                if (data.is_fullscreen) {
+                    on_resize();
+                } else {
+                    data.$evaluateExpression_window_box.width('');
+                    data.$evaluateExpression_window_box.height('');
+
+                    data.$evaluateExpression_window_box_content.width('');
+                    data.$evaluateExpression_window_box_content.height('');
+                    data.$evaluateExpression_window_box_content.css('resize', 'both');
+
+                    data.$evaluateExpression.css('transform', last_css_translate);
+                }
+
+                $evaluateExpression.data().Movable.is_passive = data.is_fullscreen;
+            };
+            
             data.toggle = function (parameters) {
                 data[data.is_opened ? 'close': 'open']();
+            };
+
+            data.setOnNativewindow = function (parameters) {
+                data.$evaluateExpression_window_box_header_btn__slotEnabled[
+                    parameters.is_on_native_window
+                    ? 'addClass'
+                    : 'removeClass'
+                ]('EvaluateExpression__checked');
+                
+                data.$evaluateExpression_window_box_header_btn__signalEnabled[
+                    parameters.is_on_native_window
+                    ? 'addClass'
+                    : 'removeClass'
+                ]('EvaluateExpression__checked');
+                
+                if (data.is_on_native_window = parameters.is_on_native_window) {
+                    data.$evaluateExpression_window_box_header_btn__signalEnabled.hide();
+                    data.$evaluateExpression_window_box_header_btn__slotEnabled.hide();
+                    data.$evaluateExpression_window_mover.hide();
+                } else {
+                    data.$evaluateExpression_window_box_header_btn__signalEnabled.show();
+                    data.$evaluateExpression_window_box_header_btn__slotEnabled.show();
+                    data.$evaluateExpression_window_mover.show();
+                }
+
+                data.components.variablesExplorer.open_in_evaluater_on_native_window = true;
             };
 
             var move_timeout = 0;

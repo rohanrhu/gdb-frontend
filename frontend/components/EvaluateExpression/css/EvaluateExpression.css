@@ -21,6 +21,9 @@
     background: #003f91;
     transition: opacity 500ms;
     border: 1px solid rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    
 }
 
 .EvaluateExpression_window_box_header {
@@ -213,6 +216,7 @@
     resize: both;
     flex-direction: column;
     font-size: 14px;
+    flex-grow: 1;
 }
 
 /* ---------------------- */

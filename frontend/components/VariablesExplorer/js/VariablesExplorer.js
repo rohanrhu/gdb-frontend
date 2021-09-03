@@ -75,6 +75,8 @@
             data.is_linked_list_visualizer
             data.is_linked_list_visualizer_enabled = true;
 
+            data.open_in_evaluater_on_native_window = false;
+
             data.$pointingPlaceholder = t_init.parameters.$pointingPlaceholder ? t_init.parameters.$pointingPlaceholder: false;
 
             data.signal_bounds = {};
@@ -873,7 +875,14 @@
                 };
 
                 item.openInEvaluater = function () {
-                    GDBFrontend.components.gdbFrontend.createEvaluater({expression: item.resolveExpression()});
+                    if (!data.open_in_evaluater_on_native_window) {
+                        GDBFrontend.components.gdbFrontend.createEvaluater({expression: item.resolveExpression()});
+                    } else {
+                        var evaluater = GDBFrontend.components.gdbFrontend.createEvaluaterOnNativeWindow({expression: item.resolveExpression()}).evaluater;
+                        
+                        evaluater.evaluateExpression.setOnNativewindow({is_on_native_window: true});
+                        evaluater.evaluateExpression.setFullScreen({is_fullscreen: true});
+                    }
                 };
                 
                 item.openLinkedListVisualizer = function () {

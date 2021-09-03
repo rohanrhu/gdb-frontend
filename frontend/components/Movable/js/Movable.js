@@ -64,6 +64,10 @@ if (!window.Movable_zIndex_i) {
             var py = 0;
             
             data.$movable_mover.on('mousedown.Movable-'+data.id, function (event) {
+                if (data.is_passive) {
+                    return;
+                }
+                
                 data.is_moving = true;
 
                 var px = event.clientX;
@@ -95,6 +99,10 @@ if (!window.Movable_zIndex_i) {
             });
             
             data.update = function (parameters) {
+                if (data.is_passive) {
+                    return;
+                }
+                
                 if (!data.is_moving) {
                     return;
                 }
