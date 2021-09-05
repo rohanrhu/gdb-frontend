@@ -109,6 +109,10 @@
             
             data.$gdbFrontend_disassembly_title_buttons_button__openTab = $gdbFrontend.find('.GDBFrontend_disassembly_title_buttons_button__openTab');
 
+            data.$gdbFrontend_layout_top_themeMenu = data.$gdbFrontend.find('.GDBFrontend_layout_top_themeMenu');
+            data.$gdbFrontend_layout_top_themeMenu_items = data.$gdbFrontend_layout_top_themeMenu.find('.GDBFrontend_layout_top_themeMenu_items');
+            data.$gdbFrontend_layout_top_themeMenu_items_item_s = data.$gdbFrontend_layout_top_themeMenu_items.find('.GDBFrontend_layout_top_themeMenu_items_item');
+
             data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
             
             data.sourceOpener_current_dir = GDBFrontend.config.workdir ? GDBFrontend.config.workdir: '/';
@@ -1889,6 +1893,26 @@
             
             data.$gdbFrontend_terminalCloseBtn.on('click.GDBFrontend', function (event) {
                 data.closeTerminal();
+            });
+
+            data.$gdbFrontend_layout_top_themeMenu_items_item_s.on('click.GDBFrontend', function (event) {
+                var $item = $(this);
+                var theme_name = $item.attr('GDBFrontend_theme');
+                
+                $.ajax({
+                    url: '/api/switch-theme',
+                    cache: false,
+                    method: 'get',
+                    data: {
+                        theme: theme_name
+                    },
+                    success: function (result_json) {
+                    },
+                    error: function () {
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                        console.trace('An error occured.');
+                    }
+                });
             });
 
             data.openTerminal = function (parameters) {

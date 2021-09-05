@@ -146,6 +146,11 @@ urls = api.url.URLS({
         "match": "^/api/disassemble-frame$",
         "module": "url_modules.api.disassemble_frame"
     },
+    "api-switch-theme": {
+        "url": "/api/switch-theme",
+        "match": "^/api/switch-theme$",
+        "module": "url_modules.api.switch_theme"
+    },
     "main-layout": {
         "url": "/{layout}/",
         "match": "^/(.+?)/?$",
