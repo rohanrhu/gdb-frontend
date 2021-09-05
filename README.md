@@ -7,7 +7,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 [![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
 [![Discord](https://img.shields.io/badge/chat-on%20discord-blue.svg?style=flat-square&logo=discord)](https://discord.gg/RyVY9MtB4S)
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg?style=flat-square&logo=gitter)](https://gitter.im/gdb-frontend/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Donate](https://img.shields.io/liberapay/receives/EvrenselKisilik.svg?logo=liberapay&style=flat-square&color=green)](https://liberapay.com/EvrenselKisilik/donate)
+[![Donate with BTC](https://shields.io/badge/donate-3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL-yellow?logo=bitcoin&style=flat-square)](#donate)
 
 ![gdb-frontend](https://oguzhaneroglu.com/static/images/gdbfrontend-ss8.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
@@ -304,10 +304,6 @@ You can contribute with commiting to project or developing a plugin. All commits
 ## Donate
 You can donate to support the project.
 
-<a href="https://liberapay.com/EvrenselKisilik/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
-
-or you can make donation with Bitcoin:
-
 | QR Code | Bitcoin address for donations |
 |---|---|
 | ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
@@ -316,4 +312,5 @@ or you can make donation with Bitcoin:
 Copyright (C) 2019, Oğuzhan Eroğlu <rohanrhu2@gmail.com>> (https://oguzhaneroglu.com/)
 
 GNU General Public License v3 (GPL-3)
+
 You may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build & install instructions.
