@@ -18,7 +18,7 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 * python3 => 3.2
 * tmux
 
-### PIP Package (Python Wheel)
+### PIP Package (Python Wheel) [Recommended]
 You can install GDBFrontend with `pip`.
 
 ```bash
@@ -31,36 +31,6 @@ python3 setup.py install
 ```
 
 and you can run
-```bash
-gdbfrontend
-```
-
-### Deb Package (Debian / Ubuntu / KDE Neon)
-You can install GDBFrontend via deb package for Debian-based distributions.
-
-You can install it from following commands:
-```bash
-echo "deb [trusted=yes] https://oguzhaneroglu.com/deb/ ./" | sudo tee -a /etc/apt/sources.list > /dev/null
-sudo apt update
-sudo apt install gdbfrontend
-```
-
-After installing with APT, you will get updates for new releases on APT upgrade.
-
-You can get upgrades with following commands:
-```bash
-sudo apt update
-sudo apt upgrade gdbfrontend
-```
-
-### Arch Linux (AUR)
-You can install Arch Linux package for Arch-based distributions. ([AUR Package](https://aur.archlinux.org/packages/gdb-frontend-bin/))
-
-```bash
-yay -S gdb-frontend-bin
-```
-
-and you can run it:
 ```bash
 gdbfrontend
 ```
@@ -91,6 +61,36 @@ You can open GDB shell with the command:
 
 ```bash
 tmux a -t gdb-frontend
+```
+
+### Deb Package (Debian / Ubuntu / KDE Neon)
+You can install GDBFrontend via deb package for Debian-based distributions.
+
+You can install it from following commands:
+```bash
+echo "deb [trusted=yes] https://oguzhaneroglu.com/deb/ ./" | sudo tee -a /etc/apt/sources.list > /dev/null
+sudo apt update
+sudo apt install gdbfrontend
+```
+
+After installing with APT, you will get updates for new releases on APT upgrade.
+
+You can get upgrades with following commands:
+```bash
+sudo apt update
+sudo apt upgrade gdbfrontend
+```
+
+### Arch Linux (AUR)
+You can install Arch Linux package for Arch-based distributions. ([AUR Package](https://aur.archlinux.org/packages/gdb-frontend-bin/))
+
+```bash
+yay -S gdb-frontend-bin
+```
+
+and you can run it:
+```bash
+gdbfrontend
 ```
 
 ### Flatpak
