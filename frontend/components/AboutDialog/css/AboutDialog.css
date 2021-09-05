@@ -78,3 +78,12 @@
 .AboutDialog a:hover {
     text-decoration: underline;
 }
+
+.AboutDialog_licenses {
+    padding-top: 4px;
+}
+
+.AboutDialog_licenses_license {
+    padding: 2px 0px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);;
+}

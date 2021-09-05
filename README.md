@@ -187,7 +187,26 @@ Loads GDBFrontend plugin.
 #### `gf-unload-plugin [plugin-name]`
 Unloads GDBFrontend plugin.
 
-### GDBFrontend Python API
+## Themes
+GDBFrontend has built-in themes.
+
+For switching between themes use `gf-theme [THEME]` command on GDB shell.
+```
+(gdb) gf-theme cyberpunk
+(gdb) gf-theme dark
+(gdb) gf-theme green
+(gdb) gf-theme light
+(gdb) gf-theme red
+```
+
+For switching back to the default theme.
+```
+(gdb) gf-theme
+```
+
+Also you may want to look to [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
+
+## GDBFrontend Python API
 You can access GDBFrontend's Python API via `gdbfrontend` module.
 
 ```
@@ -294,6 +313,7 @@ or you can make donation with Bitcoin:
 | ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
 
 ## License
-GNU General Public License v3 (GPL-3)
+Copyright (C) 2019, Oğuzhan Eroğlu <rohanrhu2@gmail.com>> (https://oguzhaneroglu.com/)
 
+GNU General Public License v3 (GPL-3)
 You may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build & install instructions.
