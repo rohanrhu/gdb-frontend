@@ -1,0 +1,439 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+ *
+ */
+
+ body {
+    color: #ffa4f4;
+}
+
+.GDBFrontend {
+    background-color: #471848;
+    color: #ffa4f4;
+    text-shadow: 0px 0px 10px rgb(255 0 247 / 25%);
+    animation: GDBFrontend_backgroundAnim;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes GDBFrontend_backgroundAnim {
+    0% {
+        backgroun-color: #471848;
+    }
+    50% {
+        background-color: rgb(50 11 103);
+    }
+    100% {
+        backgroun-color: #471848;
+    }
+}
+
+.Checkbox_icon_img {
+    filter: contrast(10) invert(1);
+}
+
+.button1 {
+    background: rgb(255 255 255 / 8%);
+}
+
+.button1:hover {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.GDBFrontend_layout_top {
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+ 
+.GDBFrontend_runtimeControls_btn_openable {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.Checkbox.Checkbox__checked .Checkbox_icon_img {
+    filter: hue-rotate(50deg) contrast(5);
+}
+
+.GDBFrontend_load_connectBtn_openable {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+ 
+.GDBFrontend_layout_middle_left {box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);}
+
+.GDBFrontend_sources_title {
+    background: rgb(0 0 0 / 20%);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.GDBFrontend_sources_title_buttons_button_iconImg {filter: opacity(.5) drop-shadow(0 0 0 purple);}
+
+.GDBFrontend_disassembly_title {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {filter: opacity(.5) drop-shadow(0 0 0 purple);}
+
+.GDBFrontend_watches_title {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.GDBFrontend_breakpoints_title {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.BreakpointsEditor_items_item_remove {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.BreakpointsEditor_items_item_remove:hover {
+    background: #ff4c4c;
+}
+
+.GDBFrontend_threads_title {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.ThreadsEditor_items_item_num {
+    color: #ffa4f4;
+}
+
+.ThreadsEditor_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.ThreadsEditor_items_item.ThreadsEditor__current {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.GDBFrontend_stack_title {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.StackTrace_items_item_num {
+    color: #ffa4f4;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.GDBFrontend_variables_title {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 30%);
+}
+
+.FileTabs_editors_content {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.FileTabs_editors_noItem {
+    background: rgb(111 37 37);
+    color: #ffa4f4;
+}
+
+.FileTabs_tabs_items_item_closeBtn {
+    color: #ffa4f4;
+}
+
+.FileTabs_tabs_items_item_closeBtn:hover {
+    color: #ffa4f4;
+    opacity: 0.5;
+}
+
+.FileTabs_editors_items_item_variablePopup {background: rgb(105 0 68);box-shadow: 0px 0px 40px 0px rgb(255 0 223 / 60%);border: 1px solid #ffb4e89e;}
+
+.GDBFrontend_terminalCloseBtn,
+.GDBFrontend_terminalOpenBtn {
+    background: rgb(255 255 255 / 20%);
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon {
+    color: #fff35f;
+}
+
+.Resizable_resizer_draggable {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.Watches_items_item_expression_input_rI {
+    color: #ffa4f4;
+}
+
+.Watches_items_item_value_input_rI {
+    color: #ffa4f4;
+}
+
+.Disassembly_items_item_addr {
+    color: #d9edff;
+}
+
+.VariablesExplorer_items_item_button_type {
+    color: #ffa4f4;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0,0,0,0.075);
+}
+
+.FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
+    background: rgb(255 0 200 / 25%);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box {
+    color: #ffa4f4;
+    background: rgb(105 0 68);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
+    border-bottom: 10px solid rgb(105 0 68);
+}
+
+.FileBrowser_window_box {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 40px 0px rgb(255 0 223 / 60%);
+    border: 1px solid #ffb4e89e;
+}
+
+.EvaluateExpression_window_box {
+    background: rgb(105 0 68);
+    color: #ffa4f4;
+}
+
+.EvaluateExpression_window_mover {
+    background-color: #ff5feb42;
+    box-shadow: 0px 2px 15px 0px #ff00de85;
+}
+
+.EvaluateExpression_window_box_header_btn {
+    color: #ffa4f4;
+    opacity: 0.4;
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: #ffa4f4;
+    opacity: 1;
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    background: rgb(105 0 68);
+    color: #ffa4f4;
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+    border: 1px solid rgba(47, 130, 255, 0.25);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    color: #ffa4f4;
+}
+
+.css_AboutDialog_box {
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+    border: 1px solid #ffb4e89e;
+}
+
+.FuzzyFinder_box {background: rgb(105 0 68);box-shadow: 0px 0px 40px 0px rgb(255 0 223 / 60%);}
+
+.css_MessageBox_box {background: rgb(76 12 53);box-shadow: 0px 0px 40px 0px rgb(255 0 223 / 60%);border: 1px solid #ffb4e89e;}
+
+.SourceTree_items_item_button:hover {
+    background: rgb(95, 22, 22, 0.5);
+}
+
+.FileTabs_tabs {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.ace-tomorrow-night-bright {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.ace-tomorrow-night-bright .ace_gutter {
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.GDBFrontend_layout_middle_right {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.ace-tomorrow-night-bright .ace_gutter-active-line {
+    background: rgb(255 0 106 / 35%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_active-line {
+    background: rgb(255 0 106 / 35%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_selection {
+    background: rgb(255 0 106 / 48%);
+}
+
+.FileTabs_tabs_items_item {
+    border-right: 1px solid rgb(222 142 255 / 10%);
+}
+
+.Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
+    background: linear-gradient(90deg, rgb(255 0 129 / 50%), rgba(255, 255, 255, 0));
+}
+
+.VariablesExplorer_items_item_contextMenu {
+    color: #ffa4f4;
+    background: rgb(69 27 136);
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(69 27 136);
+}
+
+.ace-tomorrow-night-bright .ace_print-margin {
+    width: 1px;
+    background: rgb(255, 255, 255, 0.2);
+}
+
+.LinkedListVisualizer_items_item_box {
+    background: rgb(124 26 26);
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(50 11 103);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(50 11 103);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: #210d3c;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(69 27 136);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(69 27 136);
+}
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(93 29 29);
+}
+
+.GDBFrontend_layout_status {
+    color: #ffa4f4;
+    background: rgb(105 0 68);
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+}
+
+.EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+    border: 1px solid #ffb4e89e;
+}
+
+.EvaluateExpression_window_box_closeBtn {
+    color: #ffa4f4;
+}
+
+.GDBFrontend_runtimeControls_btn_img {
+    filter: opacity(.5) drop-shadow(0 0 0 purple);
+}
+
+.FileBrowser {
+    color: #ffa4f4;
+}
+
+.FileBrowser_items_item_name {
+    color: #ffa4f4;
+}
+
+.ace-tomorrow-night-bright .ace_keyword, .ace-tomorrow-night-bright .ace_meta, .ace-tomorrow-night-bright .ace_storage, .ace-tomorrow-night-bright .ace_storage.ace_type, .ace-tomorrow-night-bright .ace_support.ace_type {
+    color: #ff00c8;
+}
+
+.ace-tomorrow-night-bright .ace_keyword.ace_operator {
+    color: #26d043;
+}
+
+.ace_identifier {
+    color: #ffa4f4;
+}
+
+.ace-tomorrow-night-bright .ace_constant.ace_other {
+    color: #00ff95;
+}
+
+.ace-tomorrow-night-bright .ace_constant.ace_character, .ace-tomorrow-night-bright .ace_constant.ace_language, .ace-tomorrow-night-bright .ace_constant.ace_numeric, .ace-tomorrow-night-bright .ace_keyword.ace_other.ace_unit, .ace-tomorrow-night-bright .ace_support.ace_constant, .ace-tomorrow-night-bright .ace_variable.ace_parameter {
+    color: #fff700;
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_button_label_icon {
+    color: #fb00ff;
+}
+
+.ace_gutter-cell {
+    color: rgb(255 0 224 / 77%);
+}
+
+.ThreadsEditor_items_item_function {
+    color: #00dcff;
+}
+
+.StackTrace_items_item_function {
+    color: #00dcff;
+}
+
+.VariablesExplorer_items_item_button_name {
+    color: #00dcff;
+}
+
+.VariablesExplorer_items_item:not(.VariablesExplorer__changed) .VariablesExplorer_items_item_button:hover {
+    background: #00000073;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item:not(.VariablesExplorer__changed) .VariablesExplorer_items_item_button:hover {
+    background: #1f0740;
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__stopped {
+    background: rgb(255 0 247);
+    color: white;
+}
+
+.input1 {
+    background: rgb(50 11 103);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.ace_breakpoint.FileTabs__stopped::after {
+    background: white;
+}
