@@ -18,6 +18,7 @@ import time
 import re
 import signal
 import platform
+import webbrowser
 
 import config
 config.init()
@@ -354,6 +355,11 @@ try:
     if not is_random_port:
         print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
         print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
+
+        gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
+
+        if not webbrowser.open(gf_url):
+            os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
         
         gotty.wait()
 
@@ -392,8 +398,6 @@ try:
 
         print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
         print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
-
-        import webbrowser
 
         gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
