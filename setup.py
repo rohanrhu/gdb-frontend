@@ -12,6 +12,8 @@ import os
 import glob
 import setuptools
 
+import statics
+
 exluded_files = ["build", "dist", "gdbfrontend.egg-info"]
 
 with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), "README.md")) as f:
@@ -30,7 +32,7 @@ for d in glob.glob("*"):
 
 setuptools.setup(
     name = "gdbfrontend",
-    version = "0.6.0",
+    version = ".".join([str(i) for i in statics.VERSION[:3]]),
     description = "GDBFrontend is a easy, flexible and extensionable gui debugger.",
     long_description = long_description,
     long_description_content_type='text/markdown',
