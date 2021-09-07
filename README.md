@@ -127,7 +127,7 @@ Shows help text.
 #### `--version`, `-v`
 Shows version.
 
-#### `--gdb-args="ARGS", `-G "PATH`"
+#### `--gdb-args="ARGS", -G "ARGS"`
 Specifies GDB command line arguments. (Optional)
 
 #### `--gdb-executable=PATH`, `-g PATH`
