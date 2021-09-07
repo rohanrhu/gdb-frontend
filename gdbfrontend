@@ -7,4 +7,4 @@ then
     PYCMD=python3
 fi
 
-$PYCMD $(realpath $(dirname "${BASH_SOURCE[0]}"))/run.py $@
+$PYCMD $(realpath $(dirname "${BASH_SOURCE[0]}"))/run.py "$@"
