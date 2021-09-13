@@ -38,6 +38,8 @@ workdir = False
 
 gotty_executable = "./bin/gotty"
 
+if platform.system().lower() == "darwin":
+    gotty_executable = "./bin/gotty_macos"
 if platform.machine() == "x86":
     gotty_executable = "./bin/gotty_32"
 elif platform.machine()[:3] == "arm":
