@@ -8,20 +8,19 @@
 # Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
+import sys
 import socket
 import socketserver
 import struct
 import base64
 import hashlib
+import typing
 
 import config
 import util
 import http.server
 
 MAGIC = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
-
-class HTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
-    ws_clients = []
 
 class WebSocketHandler(http.server.BaseHTTPRequestHandler):
     message = None
@@ -69,12 +68,17 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
 
     def _wsRead(self):
         while self.ws_connected:
+            header0_16 = None
+            is_masked = False
+            plen = 0
+            mkey = None
+            
             try:
                 header0_16 = struct.unpack("!BB", self.connection.recv(2, socket.MSG_WAITALL))
-                opcode = ord(header0_16[0]) & 0b00001111
+                opcode = header0_16[0] & 0b00001111
                 
-                is_masked = ord(header0_16[1]) & -128
-                plen = ord(header0_16[1]) & 127
+                is_masked = header0_16[1] & -128
+                plen = header0_16[1] & 127
 
                 if plen == 126:
                     plen = int.from_bytes(struct.unpack("!BB", self.connection.recv(2, socket.MSG_WAITALL)), "big")
@@ -88,13 +92,17 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
 
                 if is_masked:
                     for i in range(plen):
-                        self.message[i] = chr(self.message[i] ^ ord(mkey[i%4]))
+                        self.message[i] = chr(self.message[i] ^ mkey[i%4])
                 
                 self.message = "".join(self.message)
 
                 self.handleMessage()
             except Exception as e:
-                util.verbose("Websocket read error:", e)
+                util.verbose(
+                    "Websocket read error:",
+                    e,
+                    "(" + sys.exc_info()[-1].tb_frame.f_code.co_filename + ":" + str(sys.exc_info()[-1].tb_lineno) + ")"
+                )
 
                 self.ws_connected = False
                 self.handleClose()
@@ -124,3 +132,6 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
     
     def handleClose(self):
         pass
+
+class HTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    ws_clients: typing.List[WebSocketHandler] = []
