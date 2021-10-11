@@ -232,6 +232,9 @@ or you can get all plugins:
 You can use `--credentials=USER:PASS` option for adding HTTP authentication to your debugger session.
 **Note:** Your browser will ask same credentials for two times.
 
+## Browser Compatibility
+GDBFrontend is mainly developing with testing on Chromium-based browsers. It will work properly with other browsers especially with Firefox but if you face some problems on other browsers, you can [send a bug-report](https://github.com/rohanrhu/gdb-frontend/issues/new).
+
 ## Troubleshooting
 ### Blocking GDB shell/main-thread
 Most of GDBFrontend functions are thread-safe and work on GDB's main-thread. So, if you run something that is blocking on the GDB shell, GDBFrontend functions have to wait it until finish.

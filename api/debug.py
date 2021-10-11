@@ -169,6 +169,10 @@ def getState():
 
     state = {}
 
+    state["is_enhanced_collabration"] = api.globalvars.is_enhanced_collabration
+    state["collabration"] = {}
+    state["collabration"]["state"] = api.globalvars.collabration_state
+
     state["breakpoints"] = getBreakpoints()
     state["objfiles"] = getFiles()
     state["sources"] = getSources()

@@ -112,6 +112,7 @@
     cursor: pointer;
     align-items: center;
     position: relative;
+    margin-right: 5px;
 }
 
 .GDBFrontend_runtimeControls_btn_btn {
@@ -119,6 +120,10 @@
     align-items: center;
     height: 34px;
     padding: 0px 10px;
+}
+
+.GDBFrontend_runtimeControls_btn.GDBFrontend__enabled .GDBFrontend_runtimeControls_btn_btn {
+    background: rgb(0 255 20 / 10%);
 }
 
 .GDBFrontend_runtimeControls_btn_openable {
@@ -141,7 +146,71 @@
 
 .GDBFrontend_runtimeControls_btn_img {
     height: 22px;
-    margin-right: 5px;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration {
+    position: relative;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    text-align: center;
+    width: 350px;
+    left: -160px;
+    display: none;
+    animation: GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_openAnim linear 250ms;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background: #003f91;
+    font-size: 16px;
+    display: inline-block;
+    box-shadow: 0px 0px 20px 0px rgba(0, 25, 0, 0.5);
+    padding: 10px 10px;
+    line-height: 18px;
+    font-size: 15px;
+    position: relative;
+    cursor: default;
+    margin: auto;
+    text-align: left;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox a,
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox a:visited {
+    color: #e4ff00;
+    text-decoration: underline;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -5px;
+    content: ' ';
+    border: 10px solid transparent;
+    border-bottom: 10px solid #003f91;
+    width: 0px;
+    height: 0px;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration:hover .GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox {
+    display: block;
+}
+
+@keyframes GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_openAnim {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
 /* ---------------------- */
@@ -207,6 +276,13 @@
     flex-wrap: wrap;
     flex-grow: 1;
     flex-basis: 0%;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.GDBFrontend_layout_middle_center:focus {
+    border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .GDBFrontend_layout_middle_left {
@@ -370,6 +446,85 @@
     height: 100%;
 }
 
+.GDBFrontend_layout_status_collabration {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual {
+    color: #ff7676;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+    align-items: center;
+    height: 100%;
+    padding: 0px 10px;
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual_icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual_label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual.GDBFrontend__show {
+    animation: GDBFrontend_layout_status_fadeAnim linear 500ms;
+    display: flex;
+}
+
+.GDBFrontend_layout_status_collabration_clearDrawings,
+.GDBFrontend_layout_status_collabration_toggleDrawing {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+    align-items: center;
+    height: 100%;
+    padding: 0px 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.GDBFrontend_layout_status_collabration_clearDrawings:hover,
+.GDBFrontend_layout_status_collabration_toggleDrawing:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.GDBFrontend_layout_status_collabration_clearDrawings_icon,
+.GDBFrontend_layout_status_collabration_toggleDrawing_icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.GDBFrontend_layout_status_collabration_clearDrawings_label,
+.GDBFrontend_layout_status_collabration_toggleDrawing_label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-right: 5px;
+}
+
+@keyframes GDBFrontend_layout_status_fadeAnim {
+    0% {
+        transform: scale(1, 1);
+    }
+    50% {
+        transform: scale(1.5, 1.2);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
 .GDBFrontend_layout_top_menuBtn {
     position: relative;
     height: 100%;
@@ -453,6 +608,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
     display: flex;
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 .GDBFrontend_sources_title_label {
@@ -509,6 +666,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
     display: flex;
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 .GDBFrontend_disassembly_title_label {
@@ -551,6 +710,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     line-height: 40px;
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 /* ---------------------- */
@@ -565,6 +726,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     line-height: 40px;
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 /* ---------------------- */
@@ -579,6 +742,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     line-height: 40px;
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 /* ---------------------- */
@@ -593,6 +758,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     line-height: 40px;
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 /* ---------------------- */
@@ -607,6 +774,8 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     line-height: 40px;
     font-size: 16px;
     background: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 /* ---------------------- */
@@ -619,3 +788,21 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     height: 0px;
     z-index: 5000;
 }
+
+.GDBFrontend_collabration_drawLayer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 50000;
+    display: block !important;
+    pointer-events: none;
+}
+
+.GDBFrontend_collabration_drawLayer.GDBFrontend__drawing {
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: all;
+}
+
+/* ---------------------- */

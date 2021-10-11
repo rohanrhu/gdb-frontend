@@ -14,17 +14,23 @@ import json
 import sys
 import time
 
-import config
+import plugin
 import util
 import api.debug
+import api.collabration
 import api.flags
 import api.globalvars
+import api.collabration
 import websocket
 
 gdb = importlib.import_module("gdb")
 
+plugin.init()
+api.collabration.init()
+
 class GDBFrontendSocket(websocket.WebSocketHandler):
     cont_time = False
+    screen_resolution = [0, 0]
     
     def __init__(self, request, client_address, server):
         websocket.WebSocketHandler.__init__(self, request, client_address, server)
@@ -286,13 +292,38 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def handleMessage(self):
         message = json.loads(self.message)
+        event = message["event"]
 
-        if message["event"] == "get_sources":
+        if event == "get_state":
+            self.emit(message["return_event"], {
+                "state": api.debug.getState()
+            })
+        elif event == "get_sources":
             self.emit(message["return_event"], {
                 "state": {
                     "sources": api.debug.getSources()
                 }
             })
-        elif message["event"] == "signal":
+        elif event == "signal":
             api.debug.signal(message["signal"])
             self.emit(message["return_event"], {})
+        elif event == "enhanced_collabration_enable":
+            api.collabration.enableEnhancedCollabration()
+        elif event == "enhanced_collabration_disable":
+            api.collabration.disableEnhancedCollabration()
+        elif event == "collabration_state":
+            api.collabration.setState(message["state"], client_id=self.client_id)
+        elif event == "collabration_state__scroll":
+            api.collabration.setState__scroll(message["scroll_position"], client_id=self.client_id)
+        elif event == "collabration_state__cursor":
+            api.collabration.setState__cursor(message["cursor_position"], client_id=self.client_id)
+        elif event == "collabration_state__watches":
+            api.collabration.setState__watches(message["watches"], client_id=self.client_id)
+        elif event == "collabration_state__draw_path":
+            api.collabration.setState__draw_path(message["path"], client_id=self.client_id)
+        elif event == "collabration_state__draw_clear":
+            api.collabration.setState__draw_clear(client_id=self.client_id)
+
+        for _plugin_name, _plugin in plugin.plugins.items():
+            if hasattr(_plugin, "event"):
+                _plugin.event(self, event, message)

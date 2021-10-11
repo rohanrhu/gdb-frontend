@@ -24,6 +24,9 @@ def run(request, params):
     url_path = urllib.parse.urlparse(request.path)
     qs_params = urllib.parse.parse_qs(url_path.query)
 
+    is_verbose = "false"
+    if config.VERBOSE: is_verbose = "true"
+
     load_plugins = []
 
     for _plugin_name, _plugin in plugin.plugins.items():
@@ -56,6 +59,7 @@ def run(request, params):
     GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
     GDBFrontend.config.is_readonly = """+json.dumps(config.IS_READONLY)+""";
     GDBFrontend.config.workdir = """+json.dumps(config.WORKDIR)+""";
+    GDBFrontend.imports = {};
     GDBFrontend.load_plugins = JSON.parse('"""+json.dumps(load_plugins)+"""');
     """
 

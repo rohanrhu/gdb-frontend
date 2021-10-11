@@ -10,14 +10,27 @@
 
 import threading
 
+import http_server
 import api.flags
 
 lock = False
 debugFlags = None
-httpServer = None
-wsServer = None
+httpServer: http_server.GDBFrontendHTTPServer = None
 inferior_run_times = {}
 step_time = False
+is_enhanced_collabration = False
+
+collabration_state = {
+    "editor": {
+        "file": False,
+        "open_files": []
+    },
+    "watches": [],
+    "draw": {
+        "paths": [],
+        "path_color": 0
+    }
+}
 
 def init():
     global lock
@@ -28,17 +41,19 @@ def init():
 
     global httpServer
     global httpServer
-    global wsServer
     global inferior_run_times
     global step_time
+    global is_enhanced_collabration
+    global collabration_state
 
 def access(function):
     global lock
     global debugFlags
     global httpServer
-    global wsServer
     global inferior_run_times
     global step_time
+    global is_enhanced_collabration
+    global collabration_state
 
     lock.acquire()
     function()

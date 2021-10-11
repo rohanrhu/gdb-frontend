@@ -67,6 +67,14 @@
     flex-grow: 1;
     min-height: 100%;
     white-space: nowrap;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    outline: none;
+}
+
+.SourceTree_items:focus {
+    border: 1px solid rgb(255 255 255 / 25%);
+    outline: none;
 }
 
 .SourceTree_items::-webkit-scrollbar {

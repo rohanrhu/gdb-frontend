@@ -25,6 +25,11 @@ Maximum recursion number of recursive functions that are used in somewhere like 
 """
 MAX_RECURSIONS: int
 
+"""
+Height and width synchronizing tresholds in enhanced collabration mode. (In pixels.)
+"""
+ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD: int
+
 def init():
     global SET_CWD_TO_EXECUTABLE
     SET_CWD_TO_EXECUTABLE = True
@@ -34,3 +39,6 @@ def init():
 
     global MAX_RECURSIONS
     MAX_RECURSIONS = 100
+    
+    global ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD
+    ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD = 10

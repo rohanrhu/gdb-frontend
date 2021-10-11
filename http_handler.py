@@ -24,6 +24,8 @@ import debug_server
 url = None
 
 class RequestHandler(debug_server.GDBFrontendSocket):
+    frontend_resolution = None
+
     def __init__(self, request, client_address, server):
         debug_server.GDBFrontendSocket.__init__(self, request, client_address, server)
         
