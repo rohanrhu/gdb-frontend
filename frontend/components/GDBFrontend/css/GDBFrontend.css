@@ -22,6 +22,7 @@
 .GDBFrontend_terminal {
     position: relative;
     height: 100%;
+    background: rgb(0 0 0 / 40%);
 }
 
 .GDBFrontend_terminal_terminal {
@@ -569,12 +570,12 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     display: block;
     color: white;
     padding: 10px 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgb(0 0 0 / 20%);
     cursor: pointer;
 }
 
 .GDBFrontend_layout_top_menuBtn_openable_items_item:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgb(0 0 0 / 20%);
 }
 
 .GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {

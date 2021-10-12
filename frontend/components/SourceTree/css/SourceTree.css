@@ -153,7 +153,7 @@
 }
 
 .SourceTree_items_item__dir .SourceTree_items_item_button_label_icon {
-    color: #f7db4c;
+    color: #3487ed;
 }
 
 .SourceTree_items_item__file .SourceTree_items_item_button_label_icon {
@@ -173,7 +173,7 @@
 
 .SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_button_label_icon__file {
     display: flex;
-    color: #0591d3;
+    color: #f74848;
 }
 
 .SourceTree_items_item:not(.SourceTree__opened) .SourceTree_items_item_button_label_icon__closedDir {

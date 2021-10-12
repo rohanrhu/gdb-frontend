@@ -1,0 +1,410 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+ *
+ */
+
+.GDBFrontend {
+    color: white;
+    background-color: #620c4c;
+    background-image: url('../images/monika.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: luminosity;
+}
+
+.Checkbox_icon_img {
+    filter: contrast(10) invert(1);
+}
+
+.button1 {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.button1:hover {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_layout_top {
+    background: rgb(0 0 0 / 60%);
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgb(211 0 107);
+}
+ 
+.GDBFrontend_runtimeControls_btn_openable {
+    background: rgb(211 0 107);
+}
+
+.Checkbox.Checkbox__checked .Checkbox_icon_img {
+    filter: hue-rotate(65deg) contrast(1);
+}
+
+.GDBFrontend_load_connectBtn_openable {
+    background: rgb(211 0 107);
+}
+ 
+.GDBFrontend_layout_middle_left {
+}
+
+.GDBFrontend_sources_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_sources_title_buttons_button_iconImg {
+}
+
+.GDBFrontend_disassembly_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {
+}
+
+.GDBFrontend_watches_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_breakpoints_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.BreakpointsEditor_items_item_remove {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.BreakpointsEditor_items_item_remove:hover {
+    background: #ff4c4c;
+}
+
+.GDBFrontend_threads_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ThreadsEditor_items_item_num {
+    color: white;
+}
+
+.ThreadsEditor_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.ThreadsEditor_items_item.ThreadsEditor__current {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_stack_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.StackTrace_items_item_num {
+    color: white;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_variables_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.FileTabs_editors_content {
+    background: rgb(0 0 0 / 10%);
+}
+
+.FileTabs_editors_noItem {
+    background: rgb(0 0 0 / 30%);
+    color: white;
+}
+
+.FileTabs_tabs_items_item_closeBtn {
+    color: white;
+}
+
+.FileTabs_tabs_items_item_closeBtn:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.FileTabs_editors_items_item_variablePopup {
+    background: #7e1052;
+}
+
+.GDBFrontend_terminalCloseBtn,
+.GDBFrontend_terminalOpenBtn {
+    background: rgb(211 0 107);
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon {
+    color: #fff35f;
+}
+
+.Resizable_resizer_draggable {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.Watches_items_item_expression_input_rI {
+    color: white;
+}
+
+.Watches_items_item_value_input_rI {
+    color: white;
+}
+
+.Disassembly_items_item_addr {
+    color: #d9edff;
+}
+
+.VariablesExplorer_items_item_button_type {
+    color: white;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0,0,0,0.075);
+}
+
+.FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
+    background: rgb(0, 0, 0, 0.25);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box {
+    color: white;
+    background: rgb(211 0 107);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
+    border-bottom: 10px solid rgb(211 0 107);
+}
+
+.FileBrowser_window_box {
+    background: #7e1052;
+}
+
+.EvaluateExpression_window_box {
+    background: rgb(126 16 82 / 75%);
+    color: white;
+}
+
+.EvaluateExpression_window_mover {
+    background-color: rgb(211 0 107);
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: rgb(211 0 107);
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    background: rgb(211 0 107);
+    color: white;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    color: white;
+}
+
+.css_AboutDialog_box {
+    background: #7e1052;
+}
+
+.FuzzyFinder_box {
+    background: rgb(187 6 115 / 75%);
+}
+
+.css_MessageBox_box {
+    background: #7e1052;
+}
+
+.SourceTree_items_item_button:hover {
+    background: rgb(95, 22, 22, 0.5);
+}
+
+.FileTabs_tabs {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ace-tomorrow-night-bright {
+    background: rgb(0 0 0 / 20%);
+}
+
+.ace-tomorrow-night-bright .ace_gutter {
+    background: rgb(26 1 126 / 10%);
+}
+
+.GDBFrontend_layout_middle_right {
+}
+
+.ace-tomorrow-night-bright .ace_gutter-active-line {
+    background: rgb(185 0 77 / 48%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_active-line {
+    background: rgb(255 0 106 / 48%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_selection {
+    background: rgb(255 0 106 / 48%);
+}
+
+.FileTabs_tabs_items_item {
+    border-right: 1px solid rgb(255, 255, 255, 0.1);
+}
+
+.Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
+    background: linear-gradient(90deg, rgb(211 0 107), rgba(255, 255, 255, 0));
+}
+
+.VariablesExplorer_items_item_contextMenu {
+    color: white;
+    background: rgb(211 0 107);
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(211 0 107);
+}
+
+.ace-tomorrow-night-bright .ace_print-margin {
+    width: 1px;
+    background: rgb(255, 255, 255, 0.2);
+}
+
+.LinkedListVisualizer_items_item_box {
+    background: rgb(124 26 26);
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: #6a1b31;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(159 0 73);
+}
+
+.GDBFrontend_layout_status {
+    color: white;
+    background: rgb(0 0 0 / 75%);
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: rgb(211 0 107);
+    color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid rgb(211 0 107);
+}
+
+.input1 {
+    background: rgb(0 0 0 / 75%);
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual_label {
+    color: #ff88aa;
+}
+
+.Disassembly_content {
+    background: rgb(0 0 0 / 30%);
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed > .VariablesExplorer_items_item_button {
+    background: rgb(116 0 59) !important;
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item_icon {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {
+    border: 1px solid rgb(255 84 147 / 50%);
+    background: rgb(126 16 82 / 90%);
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item:hover {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ace-tomorrow-night-bright .ace_heading, .ace-tomorrow-night-bright .ace_markup.ace_heading, .ace-tomorrow-night-bright .ace_string {
+    color: #ff95cb;
+}
+
+.ace-tomorrow-night-bright .ace_constant.ace_character, .ace-tomorrow-night-bright .ace_constant.ace_language, .ace-tomorrow-night-bright .ace_constant.ace_numeric, .ace-tomorrow-night-bright .ace_keyword.ace_other.ace_unit, .ace-tomorrow-night-bright .ace_support.ace_constant, .ace-tomorrow-night-bright .ace_variable.ace_parameter {
+    color: #56f5df;
+}
+
+.ace_identifier {
+    color: white;
+}
+
+.ace_storage.ace_type {
+    color: #d98fff;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_keyword.ace_operator {
+    color: #ff6e89;
+}
+
+.ace-tomorrow-night-bright .ace_entity.ace_name.ace_function, .ace-tomorrow-night-bright .ace_support.ace_function, .ace-tomorrow-night-bright .ace_variable {
+    color: #6aadff;
+}
+
+.ace_paren {
+    color: #fffca8;
+}
+
+.ace_keyword.ace_control {
+    color: #c67bff;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_keyword, .ace-tomorrow-night-bright .ace_meta, .ace-tomorrow-night-bright .ace_storage, .ace-tomorrow-night-bright .ace_storage.ace_type, .ace-tomorrow-night-bright .ace_support.ace_type {
+    color: #00fff3;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_comment {
+    color: #bf83a9;
+}
+
+.GDBFrontend.GDBFrontend__evaluaterWindow .EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {background: rgb(126 16 82);}
+
+.GDBFrontend_layout_status_stepTime_value {
+    color: #ff9cce;
+}
