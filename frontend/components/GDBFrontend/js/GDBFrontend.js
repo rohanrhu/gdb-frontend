@@ -324,6 +324,10 @@
                     return;
                 }
 
+                if (data.is_evaluater_window) {
+                    return;
+                }
+
                 data.collabration.sendEnhancedCollabrationState();
             };
             
