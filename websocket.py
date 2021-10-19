@@ -43,10 +43,10 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
         
         http.server.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
     
-    def wsHandle(self):
+    def wsHandle(self, path):
         global client_id_i
         
-        if self.path != "/debug-server":
+        if self.path != path:
             return False
         
         connection = self.headers.get("Connection")

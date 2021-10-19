@@ -131,7 +131,7 @@ class RequestHandler(debug_server.GDBFrontendSocket):
         if not self.checkAuth():
             return
 
-        if self.wsHandle():
+        if self.wsHandle("/debug-server"):
             return
         
         try: self.handleRequest()
