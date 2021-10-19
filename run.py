@@ -19,19 +19,21 @@ import re
 import signal
 import platform
 import webbrowser
+import atexit
 
 import config
 config.init()
 
 import statics
 import util
+import api.globalvars
 
 path = os.path.dirname(os.path.realpath(__file__))
 
 gdb_args = ""
 gdb_executable = "gdb"
 tmux_executable = "tmux"
-terminal_id = "gdb-frontend"
+terminal_id = api.globalvars.terminal_id = "gdb-frontend"
 credentials = False
 is_random_port = False
 workdir = False
@@ -76,7 +78,7 @@ def argHandler_tmuxArgs(args):
 def argHandler_terminalId(name):
     global terminal_id
 
-    terminal_id = name
+    terminal_id = api.globalvars.terminal_id = name
 
 def argHandler_credentials(_credentials):
     global credentials
@@ -313,6 +315,14 @@ if is_random_port:
 
     mmapBuff = mmap.mmap(fd, mmap.PAGESIZE, mmap.MAP_SHARED, mmap.PROT_WRITE)
 
+@atexit.register
+def exiting():
+    gotty.kill()
+    quit_tmux_gdb()
+    subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+
+    print("Stopped GDBFrontend.")
+
 try:
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
@@ -412,14 +422,7 @@ try:
         subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
-    
-    gotty.kill()
-
-    quit_tmux_gdb()
-
-    subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+    exit(0)
 
 if is_random_port:
     os.remove(mmap_path)
-
-print("Stopped GDBFrontend.")

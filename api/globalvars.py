@@ -14,6 +14,7 @@ import http_server
 import api.flags
 
 lock = False
+terminal_id = None
 debugFlags = None
 httpServer: http_server.GDBFrontendHTTPServer = None
 inferior_run_times = {}
@@ -39,7 +40,7 @@ def init():
     global debugFlags
     debugFlags = api.flags.AtomicDebugFlags()
 
-    global httpServer
+    global terminal_id
     global httpServer
     global inferior_run_times
     global step_time
@@ -48,6 +49,7 @@ def init():
 
 def access(function):
     global lock
+    global terminal_id
     global debugFlags
     global httpServer
     global inferior_run_times
