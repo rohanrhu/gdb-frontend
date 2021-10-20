@@ -24,6 +24,9 @@ def run(request, params):
     url_path = urllib.parse.urlparse(request.path)
     qs_params = urllib.parse.parse_qs(url_path.query)
 
+    is_verbose = "false"
+    if config.VERBOSE: is_verbose = "true"
+
     load_plugins = []
 
     for _plugin_name, _plugin in plugin.plugins.items():
@@ -50,12 +53,12 @@ def run(request, params):
     GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
     GDBFrontend.config.bind_address = '"""+str(config.BIND_ADDRESS)+"""';
     GDBFrontend.config.http_port = """+str(config.HTTP_PORT)+""";
-    GDBFrontend.config.gotty_port = """+str(config.GOTTY_PORT)+""";
     GDBFrontend.config.app_path = '"""+str(config.app_path)+"""';
     GDBFrontend.config.plugins_dir = '"""+str(config.PLUGINS_DIR)+"""';
     GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
     GDBFrontend.config.is_readonly = """+json.dumps(config.IS_READONLY)+""";
     GDBFrontend.config.workdir = """+json.dumps(config.WORKDIR)+""";
+    GDBFrontend.imports = {};
     GDBFrontend.load_plugins = JSON.parse('"""+json.dumps(load_plugins)+"""');
     """
 

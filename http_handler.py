@@ -24,6 +24,8 @@ import debug_server
 url = None
 
 class RequestHandler(debug_server.GDBFrontendSocket):
+    frontend_resolution = None
+
     def __init__(self, request, client_address, server):
         debug_server.GDBFrontendSocket.__init__(self, request, client_address, server)
         
@@ -129,7 +131,7 @@ class RequestHandler(debug_server.GDBFrontendSocket):
         if not self.checkAuth():
             return
 
-        if self.wsHandle():
+        if self.wsHandle("/debug-server"):
             return
         
         try: self.handleRequest()

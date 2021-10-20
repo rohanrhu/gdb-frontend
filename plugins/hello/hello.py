@@ -11,8 +11,10 @@
 # Example GDBFrontend Plugin
 
 import importlib
+import json
 
 import plugin
+import api
 
 gdb = importlib.import_module("gdb")
 
@@ -27,4 +29,13 @@ class HelloPlugin(plugin.GDBFrontendPlugin):
         gdb.events.new_objfile.disconnect(self.gdb_on_new_objfile)
 
     def gdb_on_new_objfile(self, event):
-        print("[HELLO] Event: new_objfile:", event)
+        print("[HELLO] GDB Event: new_objfile:", event)
+    
+    def event(self, client, event, message):
+        print("[HELLO] GDBFrontend Event Client#%d: %s: %s" % (client.client_id, event, message))
+
+        for _client in api.globalvars.httpServer.ws_clients:
+            _client.wsSend(json.dumps({
+                "event": "hello",
+                "replt_to": event
+            }))

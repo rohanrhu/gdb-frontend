@@ -60,7 +60,12 @@
             data.$gdbFrontend_layout_status_runTime_value = $gdbFrontend.find('.GDBFrontend_layout_status_runTime_value');
             data.$gdbFrontend_layout_status_stepTime = $gdbFrontend.find('.GDBFrontend_layout_status_stepTime');
             data.$gdbFrontend_layout_status_stepTime_value = $gdbFrontend.find('.GDBFrontend_layout_status_stepTime_value');
-
+            
+            data.$gdbFrontend_layout_status_collabration = $gdbFrontend.find('.GDBFrontend_layout_status_collabration');
+            data.$gdbFrontend_layout_status_collabration_resolutionsNotEqual = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_resolutionsNotEqual');
+            data.$gdbFrontend_layout_status_collabration_clearDrawings = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_clearDrawings');
+            data.$gdbFrontend_layout_status_collabration_toggleDrawing = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_toggleDrawing');
+            
             data.$gdbFrontend_load = $gdbFrontend.find('.GDBFrontend_load');
             data.$gdbFrontend_load_loadBtn = data.$gdbFrontend_load.find('.GDBFrontend_load_loadBtn');
 
@@ -94,6 +99,8 @@
             data.$gdbFrontend_runtimeControls_btn__evaluate_btn = data.$gdbFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluateInNativeWindow');
             data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__enhancedCollabration = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__enhancedCollabration');
+            data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn = data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.find('.GDBFrontend_runtimeControls_btn_btn');
 
             data.$gdbFrontend_variablesExplorer__proto = $gdbFrontend.find('.GDBFrontend_variablesExplorerProto > .VariablesExplorer');
 
@@ -116,7 +123,7 @@
             data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
             
             data.sourceOpener_current_dir = GDBFrontend.config.workdir ? GDBFrontend.config.workdir: '/';
-
+            
             data.loadFile = function () {
                 
             };
@@ -224,6 +231,41 @@
             
             data.evaluaters = [];
 
+            data.is_evaluater_window = false;
+
+            data.collabration = {};
+            data.collabration.state = {
+                is_resolutions_equal: true,
+                resolution: [0, 0],
+                editor: {
+                    file: false,
+                    open_files: [],
+                    scroll_position: 0,
+                    cursor_position: 0
+                },
+                draw: {
+                    paths: [],
+                    path_color: 0
+                }
+            };
+            data.collabration.is_awaiting_event_done = false;
+
+            data.terminal = {};
+            data.terminal.xterm = new Terminal();
+            
+            data.setIsEvaluaterWindow = function (is_evaluater_window) {
+                data.is_evaluater_window = is_evaluater_window;
+
+                if (data.is_evaluater_window) {
+                    $gdbFrontend.addClass('GDBFrontend__evaluaterWindow');
+                }
+            };
+            
+            if (!data.is_evaluater_window) {
+                data.collabration.draw = GDBFrontend.imports.GDBFrontendCollabrationDraw(data);
+                data.collabration.draw.init();
+            }
+
             data.createEvaluater = function (parameters) {
                 if (parameters === undefined) {
                     parameters = {};
@@ -269,12 +311,164 @@
                     "menubar=no,location=no,resizable=yes,scrollbars=no,status=no,toolbar=no,width=400,height=400,top=500,left=500"
                 );
 
+                
                 nw.onload = function () {
+                    nw.GDBFrontend.components.gdbFrontend.setIsEvaluaterWindow(true);
+
                     var evaluater = nw.GDBFrontend.components.gdbFrontend.createEvaluater(parameters).evaluater;
                     
                     evaluater.evaluateExpression.setOnNativewindow({is_on_native_window: true});
                     evaluater.evaluateExpression.setFullScreen({is_fullscreen: true});
                 };
+            };
+            
+            data.collabration.onResize = function (parameters) {
+                if (!data.debug.state.is_enhanced_collabration) {
+                    return;
+                }
+
+                if (data.is_evaluater_window) {
+                    return;
+                }
+
+                data.collabration.sendEnhancedCollabrationState();
+            };
+            
+            $(window).on('resize.GDBFrontend', function (event) {
+                data.collabration.onResize({event: event});
+            });
+            
+            data.collabration.awaitEventDone = function (parameters) {
+                data.collabration.is_awaiting_event_done = true;
+            };
+            
+            data.collabration.eventDone = function (parameters) {
+                data.collabration.is_awaiting_event_done = false;
+            };
+            
+            data.collabration.isAwaitingEventDone = function (parameters) {
+                return data.collabration.is_awaiting_event_done;
+            };
+            
+            data.collabration.enableEnhancedCollabration = function (parameters) {
+                $.ajax({
+                    url: '/api/collabration/enhanced-collabration-enable',
+                    cache: false,
+                    method: 'get',
+                    data: {
+                    },
+                    success: function (result_json) {
+                        if (!result_json.ok) {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+                            return;
+                        }
+
+                        data.collabration.sendEnhancedCollabrationState();
+                    },
+                    error: function () {
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                        console.trace('An error occured.');
+                    }
+                });
+            };
+            
+            data.collabration.disableEnhancedCollabration = function (parameters) {
+                $.ajax({
+                    url: '/api/collabration/enhanced-collabration-disable',
+                    cache: false,
+                    method: 'get',
+                    data: {
+                    },
+                    success: function (result_json) {
+                        if (!result_json.ok) {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+                        }
+                    },
+                    error: function () {
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                        console.trace('An error occured.');
+                    }
+                });
+            };
+
+            data.collabration.sendEnhancedCollabrationState = function (parameters) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                if (document.visibilityState == "visible") {
+                    data.collabration.state.resolution = [$(window).width(), $(window).height()];
+                }
+                
+                var message = {
+                    state: {
+                        resolution: data.collabration.state.resolution,
+                        editor: {
+                            file: data.components.fileTabs.current.path ? data.components.fileTabs.current.path: false,
+                            open_files: [],
+                            scroll_position: data.collabration.state.editor.scroll_position,
+                            cursor_position: data.collabration.state.editor.cursor_position
+                        }
+                    }
+                };
+                
+                data.components.fileTabs.files.forEach(function (_file, _file_i) {
+                    message.state.editor.open_files.push(_file.path);
+                });
+                
+                data.debug.emit("collabration_state", message);
+            };
+            
+            data.collabration.sendEnhancedCollabrationState__scroll = function (parameters) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                var message = {
+                    scroll_position: parameters.scroll_position
+                };
+                
+                data.debug.emit("collabration_state__scroll", message);
+            };
+            
+            data.collabration.sendEnhancedCollabrationState__cursor = function (parameters) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                var message = {
+                    cursor_position: parameters.cursor_position+1
+                };
+                
+                data.debug.emit("collabration_state__cursor", message);
+            };
+            
+            data.collabration.sendEnhancedCollabrationState__watches = function (parameters) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                var message = {watches: []};
+                
+                data.gdbFrontend_watches.watches.forEach(function (_watch, _watch_i) {
+                    if (_watch.is_adder) {
+                        return true;
+                    }
+                    
+                    message.watches.push(_watch.expression);
+                });
+                
+                data.debug.emit("collabration_state__watches", message);
+            };
+            
+            data.collabration.toggleEnhancedCollabration = function (parameters) {
+                if (data.debug.state.is_enhanced_collabration) {
+                    data.collabration.disableEnhancedCollabration();
+                } else {
+                    data.collabration.enableEnhancedCollabration();
+                }
             };
             
             data.debug.getBreakpoint = function (parameters) {
@@ -374,12 +568,33 @@
                 }
             };
 
+            data.$gdbFrontend_watches.on('Watches_save_state.GDBFrontend', function (event, parameters) {
+                data.debug.state.is_enhanced_collabration &&
+                !data.collabration.isAwaitingEventDone() &&
+                data.collabration.sendEnhancedCollabrationState__watches();
+                data.collabration.eventDone();
+            });
+
             data.$gdbFrontend_fileTabs.on('FileTabs_breakpoints_toggle.GDBFrontend', function (event, parameters) {
                 data.debug.toggleBreakpoint({
                     file: parameters.file,
                     line: parameters.line,
                     instruction: parameters.instruction
                 });
+            });
+
+            data.$gdbFrontend_fileTabs.on('FileTabs_editor_scroll.GDBFrontend', function (event, parameters) {
+                data.debug.state.is_enhanced_collabration &&
+                !data.collabration.isAwaitingEventDone() &&
+                data.collabration.sendEnhancedCollabrationState__scroll({scroll_position: parameters.ace.event});
+                data.collabration.eventDone();
+            });
+            
+            data.$gdbFrontend_fileTabs.on('FileTabs_editor_cursor_changed.GDBFrontend', function (event, parameters) {
+                data.debug.state.is_enhanced_collabration &&
+                !data.collabration.isAwaitingEventDone() &&
+                data.collabration.sendEnhancedCollabrationState__cursor({cursor_position: parameters.file.ace.getSession().getSelection().cursor.row});
+                data.collabration.eventDone();
             });
             
             data.$gdbFrontend_disassembly.on('Disassembly_breakpoints_toggle.GDBFrontend', function (event, parameters) {
@@ -574,18 +789,6 @@
                     data.qWebChannel = new QWebChannel(qt.webChannelTransport, function (channel) {});
                 }
 
-                if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
-                    var $iframe = $('<iframe></iframe>');
-                    $iframe.addClass('GDBFrontend_terminal_iframe');
-                    $iframe.appendTo(data.$gdbFrontend_terminal_terminal);
-                    $iframe.attr('src', 'http://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.gotty_port);
-                    data.$gdbFrontend_layout_bottom.show();
-                    data.is_terminal_opened = true;
-                } else {
-                    data.$gdbFrontend_layout_bottom.hide();
-                    data.is_terminal_opened = false;
-                }
-
                 data.$gdbFrontend_layout_middle_left.Resizable();
                 data.$gdbFrontend_layout_middle_right.Resizable();
                 data.$gdbFrontend_layout_bottom.Resizable();
@@ -666,25 +869,122 @@
 
                 data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.http_port+"/debug-server");
 
-                data.debug.socket.onopen = function (event) {
+                data.debug.socket.addEventListener('open', function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');
-                };
 
-                data.debug.socket.onclose = function (event) {
+                    var message;
+
+                    message = {
+                        event: 'terminal_start'
+                    };
+                    
+                    data.debug.socket.send(JSON.stringify(message));
+                    
+                    message = {
+                        event: 'terminal_resize',
+                        rows: data.terminal.xterm.rows,
+                        cols: data.terminal.xterm.cols,
+                        width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
+                        height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                    };
+                    
+                    data.debug.socket.send(JSON.stringify(message));
+                });
+
+                data.debug.socket.addEventListener('close', function (event) {
                     GDBFrontend.verbose('Connection closed to debugging server.');
                     alert('Connection closed to GDBFrontend server!');
                     window.location.reload();
-                };
+                });
 
-                data.debug.socket.onmessage = function (event) {
+                data.debug.socket.addEventListener('message', function (event) {
                     GDBFrontend.verbose('Message:', event);
                     response = JSON.parse(event.data);
                     $gdbFrontend.trigger("GDBFrontend_debug_"+response.event, response);
-                };
+                });
 
-                data.debug.socket.onerror = function (event) {
+                data.debug.socket.addEventListener('error', function (event) {
                     GDBFrontend.verbose('Debugging server message error.');
-                };
+                });
+
+                if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
+                    data.terminal.xterm.setOption('rendererType', 'dom');
+                    data.terminal.xterm.setOption('allowTransparency', true);
+                    data.terminal.xterm.setOption('theme', {background: 'transparent'});
+                    
+                    var char_width = 9;
+                    var char_height = 16.84;
+
+                    var terminal_width = Math.floor((data.$gdbFrontend_terminal_terminal.innerWidth()-17) / char_width);
+                    var terminal_height = Math.floor(data.$gdbFrontend_terminal_terminal.innerHeight() / char_height);
+                    
+                    data.terminal.comply = function () {
+                        terminal_width = Math.floor((data.$gdbFrontend_terminal_terminal.innerWidth()-17) / char_width);
+                        terminal_height = Math.floor(data.$gdbFrontend_terminal_terminal.innerHeight() / char_height);
+                        
+                        data.terminal.xterm.resize(terminal_width, terminal_height);
+
+                        if (data.debug.socket && data.debug.socket.readyState == 1) {
+                            var message = {
+                                event: 'resize',
+                                rows: data.terminal.xterm.rows,
+                                cols: data.terminal.xterm.cols,
+                                width: data.$gdbFrontend_terminal_terminal.innerWidth(),
+                                height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                            };
+                            
+                            data.debug.socket.send(JSON.stringify(message));
+                        }
+                    };
+
+                    data.terminal.comply();
+
+                    window.addEventListener('resize', function (event) {
+                        data.terminal.comply();
+                    });
+
+                    var terminal_resize_timeout = 0;
+
+                    data.terminal.resizeObserver = new ResizeObserver(function (elements) {
+                        clearTimeout(terminal_resize_timeout);
+                        
+                        terminal_resize_timeout = setTimeout(function () {
+                            data.terminal.comply();
+    
+                            message = {
+                                event: 'terminal_resize',
+                                rows: data.terminal.xterm.rows,
+                                cols: data.terminal.xterm.cols,
+                                width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
+                                height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                            };
+                            
+                            data.debug.socket.send(JSON.stringify(message));
+                        }, 100);
+                    });
+
+                    data.terminal.resizeObserver.observe(data.$gdbFrontend_terminal_terminal.get(0));
+
+                    data.terminal.xterm.onData(function (terminal_data) {
+                        if (!data.debug || !data.debug.socket || (data.debug.socket.readyState != 1)) {
+                            return;
+                        }
+                        
+                        var message = {
+                            event: 'terminal_data',
+                            data: terminal_data
+                        };
+                        
+                        data.debug.socket.send(JSON.stringify(message));
+                    });
+
+                    data.terminal.xterm.open(data.$gdbFrontend_terminal_terminal.get(0));
+
+                    data.is_terminal_opened = true;
+                } else {
+                    data.$gdbFrontend_layout_bottom.hide();
+                    data.is_terminal_opened = false;
+                }
                 
                 data.initSem.leave();
 
@@ -699,7 +999,11 @@
                 }
 
                 message.event = event;
-                message = JSON.stringify(message);
+
+                if (message instanceof Object) {
+                    message = JSON.stringify(message);
+                }
+                
                 data.debug.socket.send(message);
             };
 
@@ -735,9 +1039,9 @@
                     if (_watch.is_adder) {
                         return true;
                     }
-
+                    
                     _watch.setValue({value: ''});
-
+                    
                     return true;
                 });
             };
@@ -848,6 +1152,10 @@
                 });
             };
 
+            $gdbFrontend.on('GDBFrontend_debug_terminal_data.GDBFrontend', function (event, message) {
+                data.terminal.xterm.write(message.data);
+            });
+            
             $gdbFrontend.on('GDBFrontend_debug_refresh.GDBFrontend', function (event, message) {
                 window.location.reload();
             });
@@ -900,6 +1208,152 @@
             $gdbFrontend.on('GDBFrontend_debug_get_sources_return.GDBFrontend', function (event, message) {
                 data.gdbFrontend_sourceTree.load({files: message.state.sources});
                 data.gdbFrontend_sourceTree.render();
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_enabled.GDBFrontend', function (event, message) {
+                GDBFrontend.verbose('Enhanced collabration is enabled.');
+
+                data.debug.state.is_enhanced_collabration = true;
+
+                data.collabration.onResize();
+                
+                data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.addClass('GDBFrontend__enabled');
+                data.$gdbFrontend_layout_status_collabration_toggleDrawing.css('display', 'flex');
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_disabled.GDBFrontend', function (event, message) {
+                GDBFrontend.verbose('Enhanced collabration is disabled.');
+
+                data.debug.state.is_enhanced_collabration = false;
+                
+                data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.removeClass('GDBFrontend__enabled');
+                data.$gdbFrontend_layout_status_collabration_resolutionsNotEqual.hide();
+                
+                data.collabration.draw.clear();
+
+                data.$gdbFrontend_layout_status_collabration_toggleDrawing.hide();
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state.GDBFrontend', function (event, message) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                GDBFrontend.verbose('Enhanced collabration state:', message.state);
+
+                if (message.state.is_resolutions_equal) {
+                    data.$gdbFrontend_layout_status_collabration_resolutionsNotEqual.hide();
+                } else {
+                    data.$gdbFrontend_layout_status_collabration_resolutionsNotEqual.css('display', 'flex');
+                }
+                
+                if (message.is_from_me) {
+                    return;
+                }
+                
+                if (message.state.editor.open_files) {
+                    data.collabration.state.editor.open_files = message.state.editor.open_files;
+                }
+                
+                if (message.state.editor.file !== undefined) {
+                    data.collabration.state.editor.file = message.state.editor.file;
+                }
+
+                if (data.collabration.state.editor.open_files) {
+                    data.collabration.state.editor.open_files.forEach(function (_open_file, _open_file_i) {
+                        var file = data.components.fileTabs.getFileByPath(_open_file);
+                        
+                        if (!file) {
+                            data.collabration.awaitEventDone();
+                            data.openSource({file: {path: _open_file}})
+                            return true;
+                        }
+                    });
+    
+                    data.components.fileTabs.files.forEach(function (_file, _file_i) {
+                        if (data.collabration.state.editor.open_files.indexOf(_file.path) < 0) {
+                            data.collabration.awaitEventDone();
+                            data.components.fileTabs.closeFile({file: _file});
+                        }
+                    });
+
+                    data.collabration.state.draw.path_color = message.state.draw.path_color;
+                }
+
+                if (data.collabration.state.editor.file) {
+                    data.collabration.awaitEventDone();
+                    GDBFrontend.components.gdbFrontend.openSource({file: {path: data.collabration.state.editor.file}});
+                }
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__scroll.GDBFrontend', function (event, message) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                GDBFrontend.verbose('Enhanced collabration scroll state:', message.scroll_position, message);
+
+                if (message.is_from_me) {
+                    return;
+                }
+
+                if (!data.components.fileTabs.current) {
+                    console.error("[GDBFrontend]", "Synced open file not found.");
+                    return;
+                }
+
+                data.collabration.state.editor.scroll_position = message.scroll_position;
+
+                data.collabration.awaitEventDone();
+                data.components.fileTabs.current.ace.getSession().setScrollTop(data.collabration.state.editor.scroll_position, true, true, function () {});
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__cursor.GDBFrontend', function (event, message) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                GDBFrontend.verbose('Enhanced collabration cursor state:', message.cursor_position, message);
+
+                if (message.is_from_me) {
+                    return;
+                }
+
+                if (!data.components.fileTabs.current) {
+                    console.error("[GDBFrontend]", "Synced open file not found.");
+                    return;
+                }
+
+                data.collabration.state.editor.cursor_position = message.cursor_position;
+
+                data.collabration.awaitEventDone();
+                data.components.fileTabs.current.ace.gotoLine(data.collabration.state.editor.cursor_position, 0, true);
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__watches.GDBFrontend', function (event, message) {
+                if (data.is_evaluater_window) {
+                    return;
+                }
+                
+                GDBFrontend.verbose('Enhanced collabration watches state:', message.watches, message);
+
+                if (message.is_from_me) {
+                    return;
+                }
+
+                data.gdbFrontend_watches.clear({dont_save_state: true});
+                
+                message.watches.forEach(function (_watch, _watch_i) {
+                    data.gdbFrontend_watches.add({
+                        expression: _watch,
+                        dont_save_state: true
+                    });
+                });
+
+                data.gdbFrontend_watches.add({is_adder: true});
+
+                data.collabration.awaitEventDone();
+                data.gdbFrontend_watches.saveState();
             });
 
             data.$gdbFrontend_sourceTree.on('SourceTree_item_selected.GDBFrontend', function (event, parameters) {
@@ -1047,6 +1501,15 @@
 
                 data.debug.state = parameters.state;
 
+                if (data.debug.state.is_enhanced_collabration) {
+                    data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.addClass('GDBFrontend__enabled');
+                    data.$gdbFrontend_layout_status_collabration_toggleDrawing.css('display', 'flex');
+                } else {
+                    data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.removeClass('GDBFrontend__enabled');
+                    data.$gdbFrontend_layout_status_collabration_resolutionsNotEqual.hide();
+                    data.$gdbFrontend_layout_status_collabration_toggleDrawing.hide();
+                }
+                
                 var running_threads_count = 0;
                 var current_thread_num = 0;
                 
@@ -1090,10 +1553,10 @@
                 }
 
                 if (data.debug.state.inferior.run_time) {
-                    var runned_at = new Date(data.debug.state.inferior.run_time*1000);
+                    var ran_at = new Date(data.debug.state.inferior.run_time*1000);
                         
                     data.$gdbFrontend_layout_status_runTime_value.html(
-                        runned_at.getHours() + ":" + runned_at.getMinutes()
+                        ran_at.getHours() + ":" + ran_at.getMinutes()
                     );
                 }
                 
@@ -1290,6 +1753,11 @@
                 }
                 
                 data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
+
+                if (data.debug.state.is_enhanced_collabration) {
+                    data.collabration.state = parameters.state.collabration.state;
+                    data.collabration.draw.render();
+                }
             };
 
             data.debug.clearDisassemblyBreakpoint = function (parameters) {
@@ -1471,6 +1939,22 @@
                 setTimeout(function () {
                     data.layout_middle_right_scroll_top = data.$gdbFrontend_layout_middle_right_content.scrollTop();
                 }, 250);
+            });
+
+            data.$gdbFrontend_fileTabs.on('FileTabs_switched_file.GDBFrontend', function (event) {
+                data.debug.state.is_enhanced_collabration &&
+                !data.collabration.isAwaitingEventDone() &&
+                data.collabration.sendEnhancedCollabrationState();
+
+                data.collabration.eventDone();
+            });
+            
+            data.$gdbFrontend_fileTabs.on('FileTabs_closed_file.GDBFrontend', function (event) {
+                data.debug.state.is_enhanced_collabration &&
+                !data.collabration.isAwaitingEventDone() &&
+                data.collabration.sendEnhancedCollabrationState();
+                
+                data.collabration.eventDone();
             });
 
             data.$gdbFrontend_breakpointsEditor.on('BreakpointsEditor_breakpoint_enabled_changed.GDBFrontend', function (event, parameters) {
@@ -1877,6 +2361,10 @@
             
             data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn.on('click.GDBFrontend', function (event) {
                 data.createEvaluaterOnNativeWindow();
+            });
+            
+            data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn.on('click.GDBFrontend', function (event) {
+                data.collabration.toggleEnhancedCollabration();
             });
 
             data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {

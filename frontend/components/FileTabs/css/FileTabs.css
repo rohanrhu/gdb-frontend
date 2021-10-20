@@ -21,6 +21,8 @@
     user-select: none;
     position: relative;
     z-index: 2100;
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 .FileTabs_tabs_items {
@@ -203,6 +205,7 @@
 
 .FileTabs_editors_items_item_ace {
     height: 100%;
+    border: 1px solid transparent;
 }
 
 .FileTabs_editors_items_item_ace .ace_gutter-cell {

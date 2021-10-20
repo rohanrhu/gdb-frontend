@@ -151,6 +151,16 @@ urls = api.url.URLS({
         "match": "^/api/switch-theme$",
         "module": "url_modules.api.switch_theme"
     },
+    "api-enhanced-collabration-enable": {
+        "url": "/api/collabration/enhanced-collabration-enable",
+        "match": "^/api/collabration/enhanced-collabration-enable$",
+        "module": "url_modules.api.collabration.enhanced_collabration_enable"
+    },
+    "api-enhanced-collabration-disable": {
+        "url": "/api/collabration/enhanced-collabration-disable",
+        "match": "^/api/collabration/enhanced-collabration-disable$",
+        "module": "url_modules.api.collabration.enhanced_collabration_disable"
+    },
     "main-layout": {
         "url": "/{layout}/",
         "match": "^/(.+?)/?$",

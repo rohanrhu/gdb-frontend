@@ -538,6 +538,40 @@
                     data.current.setChanged(true);
                 });
                 
+                file.ace.selection.on('changeCursor', function (event) {
+                    if (file.flags.set) {
+                        return;
+                    }
+                    
+                    if (!data.current) {
+                        return;
+                    }
+
+                    $fileTabs.trigger('FileTabs_editor_cursor_changed', {
+                        file: file,
+                        ace: {
+                            event: event
+                        }
+                    });
+                });
+                
+                file.ace.session.on('changeScrollTop', function (event) {
+                    if (file.flags.set) {
+                        return;
+                    }
+                    
+                    if (!data.current) {
+                        return;
+                    }
+
+                    $fileTabs.trigger('FileTabs_editor_scroll', {
+                        file: file,
+                        ace: {
+                            event: event
+                        }
+                    });
+                });
+                
                 $('body').on('click.FileTabs-'+data.id, function (event) {
                     clearTimeout(file.tokenMouseoverTimeout);
                     clearTimeout(file.tokenMouseoutTimeout);
@@ -786,23 +820,27 @@
                 file.$tab_pathTooltip.remove();
 
                 data.saveState();
-            };
 
+                $fileTabs.trigger('FileTabs_closed_file', {file: file});
+            };
+            
             data.switchFile = function (parameters) {
                 var file = parameters.file;
-
+                
                 $fileTabs_tabs_items.find('.FileTabs_tabs_items_item').removeClass('FileTabs_tabs_items_item__current');
                 $fileTabs_editors_items.find('.FileTabs_editors_items_item').hide();
-
+                
                 file.$tab.addClass('FileTabs_tabs_items_item__current');
                 file.$editor.show();
                 file.ace && file.ace.resize();
-
+                
                 data.current = file;
-
+                
                 if (!parameters.is_initial) {
                     data.saveState();
                 }
+
+                $fileTabs.trigger('FileTabs_switched_file', {file: file});
             };
 
             data.getFileById = function (id) {

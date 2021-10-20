@@ -10,7 +10,7 @@
  */
 
 .GDBFrontend {
-    background: white;
+    background: #3ea337;
     color: white;
 }
 
@@ -314,4 +314,12 @@
 .GDBFrontend_layout_status {
     color: white;
     background: #032f00;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: #1b6416;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid #1b6416;
 }

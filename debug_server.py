@@ -15,16 +15,26 @@ import sys
 import time
 
 import config
+config.init()
+import plugin
 import util
 import api.debug
+import api.collabration
 import api.flags
 import api.globalvars
+import api.collabration
 import websocket
+import terminal_daemon
 
 gdb = importlib.import_module("gdb")
 
+plugin.init()
+api.collabration.init()
+
 class GDBFrontendSocket(websocket.WebSocketHandler):
     cont_time = False
+    screen_resolution = [0, 0]
+    terminalDaemon = None
     
     def __init__(self, request, client_address, server):
         websocket.WebSocketHandler.__init__(self, request, client_address, server)
@@ -32,8 +42,12 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def handleConnection(self):
         util.verbose(self.client_address[0], "is connected.")
 
+        self.terminalDaemon = terminal_daemon.TerminalDaemon(ws=self, terminal_command=["tmux", "a", "-t", config.TERMINAL_ID])
+
         self.server.ws_clients.append(self)
         self.connectGDBEvents()
+
+        util.verbose("Starting terminal daemon for client#%d" % self.client_id)
 
     def connectGDBEvents(self):
         gdb.events.new_objfile.connect(self.gdb_on_new_objfile)
@@ -275,6 +289,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def handleClose(self):
         util.verbose(self.client_address[0], "is disconnected.")
 
+        self.terminalDaemon.stop()
+
         if self in self.server.ws_clients:
             self.server.ws_clients.remove(self)
 
@@ -285,14 +301,42 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         self.wsSend(json.dumps(message))
 
     def handleMessage(self):
+        if self.terminalDaemon.handleMessage():
+            return
+        
         message = json.loads(self.message)
+        event = message["event"]
 
-        if message["event"] == "get_sources":
+        if event == "get_state":
+            self.emit(message["return_event"], {
+                "state": api.debug.getState()
+            })
+        elif event == "get_sources":
             self.emit(message["return_event"], {
                 "state": {
                     "sources": api.debug.getSources()
                 }
             })
-        elif message["event"] == "signal":
+        elif event == "signal":
             api.debug.signal(message["signal"])
             self.emit(message["return_event"], {})
+        elif event == "enhanced_collabration_enable":
+            api.collabration.enableEnhancedCollabration()
+        elif event == "enhanced_collabration_disable":
+            api.collabration.disableEnhancedCollabration()
+        elif event == "collabration_state":
+            api.collabration.setState(message["state"], client_id=self.client_id)
+        elif event == "collabration_state__scroll":
+            api.collabration.setState__scroll(message["scroll_position"], client_id=self.client_id)
+        elif event == "collabration_state__cursor":
+            api.collabration.setState__cursor(message["cursor_position"], client_id=self.client_id)
+        elif event == "collabration_state__watches":
+            api.collabration.setState__watches(message["watches"], client_id=self.client_id)
+        elif event == "collabration_state__draw_path":
+            api.collabration.setState__draw_path(message["path"], client_id=self.client_id)
+        elif event == "collabration_state__draw_clear":
+            api.collabration.setState__draw_clear(client_id=self.client_id)
+
+        for _plugin_name, _plugin in plugin.plugins.items():
+            if hasattr(_plugin, "event"):
+                _plugin.event(self, event, message)

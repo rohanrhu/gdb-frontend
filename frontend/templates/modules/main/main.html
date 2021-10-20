@@ -19,11 +19,15 @@
     <script type="text/javascript" src="/thirdparty/ace/ace.js"></script>
     <script type="text/javascript" src="/thirdparty/ace/ext-modelist.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="/thirdparty/xterm/css/xterm.css" />
+    <script type="text/javascript" src="/thirdparty/xterm/lib/xterm.js"></script>
+
     <script type="text/javascript" src="/js/lib/AsynchronousSemaphore.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/thirdparty/icofont/icofont.min.css" />
 
+    <script type="text/javascript" src="/components/GDBFrontend/js/CollabrationDraw.js"></script>
     <script type="text/javascript" src="/components/GDBFrontend/js/GDBFrontend.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/GDBFrontend/css/GDBFrontend.css" />
 
@@ -31,6 +35,7 @@
 
     <script type="text/javascript">
         GDBFrontend.gui_mode = {gui_mode};
+        GDBFrontend.is_verbose = {is_verbose};
     </script>
 </head>
 <body>
@@ -164,6 +169,17 @@
                                     <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/fx-windowed.png" alt="" draggable="false" />
                                 </div>
                             </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__enhancedCollabration">
+                                <div class="GDBFrontend_runtimeControls_btn_btn">
+                                    <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/collabration.png" alt="" draggable="false" />
+                                </div>
+                                <div class="GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox">
+                                    <div class="GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box">
+                                        <b>Enhanced Collabration</b> is currently an experimental feature!
+                                        You can <a href="https://github.com/rohanrhu/gdb-frontend/issues/new" target="_blank">open an issue</a> if you encounter any problem.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -176,6 +192,9 @@
                             <div class="GDBFrontend_layout_top_menuBtn_openable_items GDBFrontend_layout_top_themeMenu_items">
                                 <div class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_themeMenu_items_item" GDBFrontend_theme="default">
                                     Default
+                                </div>
+                                <div class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_themeMenu_items_item" GDBFrontend_theme="doki">
+                                    Doki
                                 </div>
                                 <div class="GDBFrontend_layout_top_menuBtn_openable_items_item GDBFrontend_layout_top_themeMenu_items_item" GDBFrontend_theme="cyberpunk">
                                     Cyberpunk
@@ -237,7 +256,7 @@
                         <div draggable="false" class="Resizable_resizer_draggable"></div>
                     </div>
                 </div>
-                <div class="GDBFrontend_layout_middle_center">
+                <div class="GDBFrontend_layout_middle_center" tabindex="0">
                     <div class="GDBFrontend_fileTabsComp">
                         {html_fileTabs}
                     </div>
@@ -360,7 +379,7 @@
                         <i class="icofont-clock-time"></i>
                     </div>
                     <div class="GDBFrontend_layout_status_runTime_label">
-                        Runned at:
+                        Ran at:
                     </div>
                     <div class="GDBFrontend_layout_status_runTime_value">
                     </div>
@@ -373,6 +392,32 @@
                         Step Time:
                     </div>
                     <div class="GDBFrontend_layout_status_stepTime_value">
+                    </div>
+                </div>
+                <div class="GDBFrontend_layout_status_collabration">
+                    <div class="GDBFrontend_layout_status_collabration_resolutionsNotEqual">
+                        <div class="GDBFrontend_layout_status_collabration_resolutionsNotEqual_icon">
+                            <i class="icofont-exclamation-square"></i>
+                        </div>
+                        <div class="GDBFrontend_layout_status_collabration_resolutionsNotEqual_label">
+                            Resolutions are not equal for all clients!
+                        </div>
+                    </div>
+                    <div class="GDBFrontend_layout_status_collabration_clearDrawings">
+                        <div class="GDBFrontend_layout_status_collabration_clearDrawings_icon">
+                            <i class="icofont-eraser"></i>
+                        </div>
+                        <div class="GDBFrontend_layout_status_collabration_clearDrawings_label">
+                            Clear Drawings
+                        </div>
+                    </div>
+                    <div class="GDBFrontend_layout_status_collabration_toggleDrawing">
+                        <div class="GDBFrontend_layout_status_collabration_toggleDrawing_icon">
+                            <i class="icofont-eraser"></i>
+                        </div>
+                        <div class="GDBFrontend_layout_status_collabration_toggleDrawing_label">
+                            Draw
+                        </div>
                     </div>
                 </div>
             </div>

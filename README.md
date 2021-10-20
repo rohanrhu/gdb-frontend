@@ -111,9 +111,7 @@ Options:
   --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger (Browser asks it for two times).)
   --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
   --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
-  --port=PORT, -p PORT:                         Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).
-  --http-port=PORT:                             Specifies HTTP server port.
-  --gotty-port=PORT:                            Specifies Gotty server port.
+  --port=PORT, -p PORT:                         Specifies HTTP port. (0 for random port.)
   --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
   --workdir, -w:                                Specifies working directory.
   --plugin-dir, -P:                             Specifies plugins directory.
@@ -149,14 +147,7 @@ Specifies current host address that you can access via for HTTP and WS servers.
 Specifies listen address for HTTP and WS servers.
 
 #### `--port=PORT`, `-p PORT`
-Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).
-
-#### `--http-port=PORT`
-Specifies HTTP server port.
-
-#### `--gotty-port=PORT`
-Specifies Gotty server port.
-
+Specifies HTTP port. (0 for random port.)
 #### `--readonly, -r`
 Makes code editor readonly. (Notice: This option is not related to security.)
 
@@ -231,6 +222,9 @@ or you can get all plugins:
 ## Security with Sharing Sessions
 You can use `--credentials=USER:PASS` option for adding HTTP authentication to your debugger session.
 **Note:** Your browser will ask same credentials for two times.
+
+## Browser Compatibility
+GDBFrontend is mainly developing with testing on Chromium-based browsers. It will work properly with other browsers especially with Firefox but if you face some problems on other browsers, you can [send a bug-report](https://github.com/rohanrhu/gdb-frontend/issues/new).
 
 ## Troubleshooting
 ### Blocking GDB shell/main-thread

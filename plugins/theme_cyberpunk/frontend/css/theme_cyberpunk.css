@@ -437,3 +437,11 @@
 .FileTabs_editors_items_item_ace .ace_gutter-cell.ace_breakpoint.FileTabs__stopped::after {
     background: white;
 }
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: #672572;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid #672572;
+}

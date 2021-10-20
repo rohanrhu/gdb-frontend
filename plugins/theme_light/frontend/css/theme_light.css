@@ -50,6 +50,10 @@
     background: rgba(0, 0, 0, 0.25);
 }
 
+.GDBFrontend_layout_middle_center {
+    border-color: #dbdbdb;
+}
+
 .GDBFrontend_sources_title {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -259,4 +263,13 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 
 .GDBFrontend_layout_status {
     color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: #5e5e5e;
+    color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid #5e5e5e;
 }

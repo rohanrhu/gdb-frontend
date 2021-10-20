@@ -258,3 +258,11 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 .EvaluateExpression_window_box_closeBtn:hover {
     background: rgb(255 255 255 / 20%);
 }
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: #333333;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid #333333;
+}

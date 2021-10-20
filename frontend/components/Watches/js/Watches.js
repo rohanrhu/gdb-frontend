@@ -59,7 +59,7 @@
 
                 var watch = {};
                 data.watches.push(watch);
-                watch.id = parameters.id ? data.id_i++: data.id_i++;
+                watch.id = parameters.id ? parameters.id: data.id_i++;
                 watch.is_adder = parameters.is_adder ? true: false;
                 watch.expression = parameters.expression;
                 watch.value = parameters.value;
@@ -80,9 +80,23 @@
                 watch.$item_expression_input_rI.val(parameters.expression);
                 watch.$item_value_input_rI.val(parameters.value);
 
+                watch.is_input_events = true;
+                
+                watch.disableInputEvents = function (parameters) {
+                    watch.is_input_events = false;
+                };
+                
+                watch.enableInputEvents = function (parameters) {
+                    watch.is_input_events = true;
+                };
+                
                 var save_state_timeout = 0;
 
                 watch.$item_expression_input_rI.on('change.Watches, cut.Watches, paste.Watches, drop.Watches, keyup.Watches, focus.Watches', function (event) {
+                    if (!watch.is_input_events) {
+                        return;
+                    }
+                    
                     clearTimeout(save_state_timeout);
 
                     var expression = watch.$item_expression_input_rI.val();
@@ -94,7 +108,8 @@
                         $item.removeClass('Watches_items_item__adder');
                         data.add({is_adder: true});
                     } else if (!expression.length) {
-                        watch.remove();
+                        !watch.is_adder && watch.remove();
+
                         if (watch.id != data.adder.id) {
                             data.adder.$item_expression_input_rI.focus();
                         }
@@ -118,8 +133,8 @@
                 };
 
                 watch.remove = function (parameters) {
-                    if (watch.is_adder) {
-                        return;
+                    if (parameters === undefined) {
+                        parameters = {};
                     }
 
                     data.watches.every(function (_watch, _watch_i) {
@@ -132,10 +147,12 @@
                         return true;
                     });
 
-                    data.saveState();
+                    if (parameters.dont_save_state === undefined || !parameters.dont_save_state) {
+                        data.saveState();
+                    }
                 };
 
-                if (!watch.is_adder && !parameters.is_preload) {
+                if (!watch.is_adder && !parameters.is_preload && (parameters.dont_save_state === undefined || !parameters.dont_save_state)) {
                     data.saveState();
                 }
             };
@@ -169,6 +186,8 @@
                 });
 
                 localStorage.setItem(data.kvKey('state'), JSON.stringify(state));
+
+                $watches.trigger('Watches_save_state');
             };
 
             data.getState = function () {
@@ -199,6 +218,20 @@
 
                     return true;
                 });
+            };
+
+            data.clear = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+                
+                data.watches.slice(0).forEach(function (_watch, _watch_i) {
+                    _watch.remove({dont_save_state: true});
+                });
+
+                if (parameters.dont_save_state === undefined || !parameters.dont_save_state) {
+                    data.saveState();
+                }
             };
 
             $watches.on('Watches_initialize.Watches', function (event) {
