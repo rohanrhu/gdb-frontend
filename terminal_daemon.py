@@ -56,8 +56,12 @@ class TerminalDaemon:
 
         if self.pty_pid == 0:
             pty_proc = subprocess.Popen(self.terminal_command)
-            try: os.setpgid(pty_proc.pid, self.pty_pid)
-            except Exception as e: print(e)
+            
+            try:
+                os.setpgid(pty_proc.pid, self.pty_pid)
+            except Exception as e:
+                print(e)
+
             pty_proc.wait()
             exit(0)
         else:
@@ -65,6 +69,8 @@ class TerminalDaemon:
             def terminatePTYProc():
                 util.verbose("Sending SIGKILL on terminatePTYProc() to PTY process. (%s)" % " ".join(self.terminal_command))
                 os.killpg(self.pty_pid, signal.SIGKILL)
+                os.kill(self.pty_pid, signal.SIGKILL)
+                os.waitpid(self.pty_pid, 0)
             
             th = threading.Thread(target=self.syncTerm)
             th.setDaemon(True)
@@ -73,6 +79,8 @@ class TerminalDaemon:
     def stop(self):
         util.verbose("Sending SIGKILL on TerminalDaemon.stop() to PTY process. (%s)" % " ".join(self.terminal_command))
         os.killpg(self.pty_pid, signal.SIGKILL)
+        os.kill(self.pty_pid, signal.SIGKILL)
+        os.waitpid(self.pty_pid, 0)
 
     def syncTerm(self):
         while self.ws.ws_connected:
@@ -92,8 +100,11 @@ class TerminalDaemon:
             
             self.wsSend(json.dumps(message))
         
-        os.killpg(self.pty_pid, signal.SIGKILL)
-        os.kill(self.pty_pid, signal.SIGKILL)
+        try:
+            os.killpg(self.pty_pid, signal.SIGKILL)
+            os.kill(self.pty_pid, signal.SIGKILL)
+        except:
+            pass
 
     def wsSend(self, message):
         try:
