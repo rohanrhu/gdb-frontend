@@ -111,9 +111,7 @@ Options:
   --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger (Browser asks it for two times).)
   --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
   --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
-  --port=PORT, -p PORT:                         Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).
-  --http-port=PORT:                             Specifies HTTP server port.
-  --gotty-port=PORT:                            Specifies Gotty server port.
+  --port=PORT, -p PORT:                         Specifies HTTP port. (0 for random port.)
   --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
   --workdir, -w:                                Specifies working directory.
   --plugin-dir, -P:                             Specifies plugins directory.
@@ -149,14 +147,7 @@ Specifies current host address that you can access via for HTTP and WS servers.
 Specifies listen address for HTTP and WS servers.
 
 #### `--port=PORT`, `-p PORT`
-Specifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).
-
-#### `--http-port=PORT`
-Specifies HTTP server port.
-
-#### `--gotty-port=PORT`
-Specifies Gotty server port.
-
+Specifies HTTP port. (0 for random port.)
 #### `--readonly, -r`
 Makes code editor readonly. (Notice: This option is not related to security.)
 

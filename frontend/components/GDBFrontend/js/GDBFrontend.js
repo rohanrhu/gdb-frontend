@@ -250,6 +250,9 @@
             };
             data.collabration.is_awaiting_event_done = false;
 
+            data.terminal = {};
+            data.terminal.xterm = new Terminal();
+            
             data.setIsEvaluaterWindow = function (is_evaluater_window) {
                 data.is_evaluater_window = is_evaluater_window;
 
@@ -786,26 +789,6 @@
                     data.qWebChannel = new QWebChannel(qt.webChannelTransport, function (channel) {});
                 }
 
-                if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
-                    var $iframe = $('<iframe></iframe>');
-                    $iframe.css('display', 'none');
-                    $iframe.addClass('GDBFrontend_terminal_iframe');
-                    $iframe.appendTo(data.$gdbFrontend_terminal_terminal);
-                    $iframe.attr('src', 'http://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.gotty_port);
-                    data.$gdbFrontend_layout_bottom.show();
-                    data.is_terminal_opened = true;
-
-                    $(window).on('load.GDBFrontend', function (event) {
-                        $iframe.show();
-                        setTimeout(() => {
-                            data.$gdbFrontend_sourceTree.find('.SourceTree_items').focus();
-                        }, 100);
-                    });
-                } else {
-                    data.$gdbFrontend_layout_bottom.hide();
-                    data.is_terminal_opened = false;
-                }
-
                 data.$gdbFrontend_layout_middle_left.Resizable();
                 data.$gdbFrontend_layout_middle_right.Resizable();
                 data.$gdbFrontend_layout_bottom.Resizable();
@@ -886,25 +869,122 @@
 
                 data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.http_port+"/debug-server");
 
-                data.debug.socket.onopen = function (event) {
+                data.debug.socket.addEventListener('open', function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');
-                };
 
-                data.debug.socket.onclose = function (event) {
+                    var message;
+
+                    message = {
+                        event: 'terminal_start'
+                    };
+                    
+                    data.debug.socket.send(JSON.stringify(message));
+                    
+                    message = {
+                        event: 'terminal_resize',
+                        rows: data.terminal.xterm.rows,
+                        cols: data.terminal.xterm.cols,
+                        width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
+                        height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                    };
+                    
+                    data.debug.socket.send(JSON.stringify(message));
+                });
+
+                data.debug.socket.addEventListener('close', function (event) {
                     GDBFrontend.verbose('Connection closed to debugging server.');
                     alert('Connection closed to GDBFrontend server!');
                     window.location.reload();
-                };
+                });
 
-                data.debug.socket.onmessage = function (event) {
+                data.debug.socket.addEventListener('message', function (event) {
                     GDBFrontend.verbose('Message:', event);
                     response = JSON.parse(event.data);
                     $gdbFrontend.trigger("GDBFrontend_debug_"+response.event, response);
-                };
+                });
 
-                data.debug.socket.onerror = function (event) {
+                data.debug.socket.addEventListener('error', function (event) {
                     GDBFrontend.verbose('Debugging server message error.');
-                };
+                });
+
+                if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
+                    data.terminal.xterm.setOption('rendererType', 'dom');
+                    data.terminal.xterm.setOption('allowTransparency', true);
+                    data.terminal.xterm.setOption('theme', {background: 'transparent'});
+                    
+                    var char_width = 9;
+                    var char_height = 16.84;
+
+                    var terminal_width = Math.floor((data.$gdbFrontend_terminal_terminal.innerWidth()-17) / char_width);
+                    var terminal_height = Math.floor(data.$gdbFrontend_terminal_terminal.innerHeight() / char_height);
+                    
+                    data.terminal.comply = function () {
+                        terminal_width = Math.floor((data.$gdbFrontend_terminal_terminal.innerWidth()-17) / char_width);
+                        terminal_height = Math.floor(data.$gdbFrontend_terminal_terminal.innerHeight() / char_height);
+                        
+                        data.terminal.xterm.resize(terminal_width, terminal_height);
+
+                        if (data.debug.socket && data.debug.socket.readyState == 1) {
+                            var message = {
+                                event: 'resize',
+                                rows: data.terminal.xterm.rows,
+                                cols: data.terminal.xterm.cols,
+                                width: data.$gdbFrontend_terminal_terminal.innerWidth(),
+                                height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                            };
+                            
+                            data.debug.socket.send(JSON.stringify(message));
+                        }
+                    };
+
+                    data.terminal.comply();
+
+                    window.addEventListener('resize', function (event) {
+                        data.terminal.comply();
+                    });
+
+                    var terminal_resize_timeout = 0;
+
+                    data.terminal.resizeObserver = new ResizeObserver(function (elements) {
+                        clearTimeout(terminal_resize_timeout);
+                        
+                        terminal_resize_timeout = setTimeout(function () {
+                            data.terminal.comply();
+    
+                            message = {
+                                event: 'terminal_resize',
+                                rows: data.terminal.xterm.rows,
+                                cols: data.terminal.xterm.cols,
+                                width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
+                                height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                            };
+                            
+                            data.debug.socket.send(JSON.stringify(message));
+                        }, 100);
+                    });
+
+                    data.terminal.resizeObserver.observe(data.$gdbFrontend_terminal_terminal.get(0));
+
+                    data.terminal.xterm.onData(function (terminal_data) {
+                        if (!data.debug || !data.debug.socket || (data.debug.socket.readyState != 1)) {
+                            return;
+                        }
+                        
+                        var message = {
+                            event: 'terminal_data',
+                            data: terminal_data
+                        };
+                        
+                        data.debug.socket.send(JSON.stringify(message));
+                    });
+
+                    data.terminal.xterm.open(data.$gdbFrontend_terminal_terminal.get(0));
+
+                    data.is_terminal_opened = true;
+                } else {
+                    data.$gdbFrontend_layout_bottom.hide();
+                    data.is_terminal_opened = false;
+                }
                 
                 data.initSem.leave();
 
@@ -1072,6 +1152,10 @@
                 });
             };
 
+            $gdbFrontend.on('GDBFrontend_debug_terminal_data.GDBFrontend', function (event, message) {
+                data.terminal.xterm.write(message.data);
+            });
+            
             $gdbFrontend.on('GDBFrontend_debug_refresh.GDBFrontend', function (event, message) {
                 window.location.reload();
             });

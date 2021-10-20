@@ -26,26 +26,23 @@ config.init()
 
 import statics
 import util
+
 import api.globalvars
+api.globalvars.init()
 
 path = os.path.dirname(os.path.realpath(__file__))
 
 gdb_args = ""
 gdb_executable = "gdb"
 tmux_executable = "tmux"
-terminal_id = api.globalvars.terminal_id = "gdb-frontend"
+terminal_id = "gdb-frontend"
+api.globalvars.terminal_id = terminal_id
 credentials = False
 is_random_port = False
 workdir = False
 
-gotty_executable = "./bin/gotty"
-
-if platform.machine() == "x86":
-    gotty_executable = "./bin/gotty_32"
-elif platform.machine()[:3] == "arm":
-    gotty_executable = "./bin/gotty_arm"
-
 arg_config = {}
+arg_config["TERMINAL_ID"] = terminal_id
 
 def argHandler_gdbArgs(args):
     global gdb_args
@@ -78,7 +75,9 @@ def argHandler_tmuxArgs(args):
 def argHandler_terminalId(name):
     global terminal_id
 
-    terminal_id = api.globalvars.terminal_id = name
+    terminal_id = name
+    api.globalvars.terminal_id = terminal_id
+    arg_config["TERMINAL_ID"] = terminal_id
 
 def argHandler_credentials(_credentials):
     global credentials
@@ -107,30 +106,11 @@ def argHandler_port(port):
 
     if port == 0:
         is_random_port = True
-        
-        arg_config["GOTTY_PORT"] = 0
         arg_config["HTTP_PORT"] = 0
-
-        config.GOTTY_PORT = 0
         config.HTTP_PORT = 0
     else:
-        arg_config["GOTTY_PORT"] = port
-        arg_config["HTTP_PORT"] = port+1
-
-        config.GOTTY_PORT = port
-        config.HTTP_PORT = port+1
-
-def argHandler_httpPort(port):
-    port = int(port)
-
-    arg_config["HTTP_PORT"] = port
-    config.HTTP_PORT = port
-
-def argHandler_gottyPort(port):
-    port = int(port)
-    
-    arg_config["GOTTY_PORT"] = port
-    config.GOTTY_PORT = port
+        arg_config["HTTP_PORT"] = port
+        config.HTTP_PORT = port
 
 def argHandler_readonly():
     arg_config["IS_READONLY"] = True
@@ -162,9 +142,7 @@ def argHandler_help():
     print("  --credentials=USER:PASS, -c USER:PASS:\tSpecifies username and password for accessing to debugger (Browser asks it for two times).)")
     print("  --host=IP, -H IP:\t\t\t\tSpecifies current host address that you can access via for HTTP and WS servers.")
     print("  --listen=IP, -l IP:\t\t\t\tSpecifies listen address for HTTP and WS servers.")
-    print("  --port=PORT, -p PORT:\t\t\t\tSpecifies port range for three ports to (Gotty: PORT, HTTP: PORT+1 or 0 for random ports).")
-    print("  --http-port=PORT:\t\t\t\tSpecifies HTTP server port.")
-    print("  --gotty-port=PORT:\t\t\t\tSpecifies Gotty server port.")
+    print("  --port=PORT, -p PORT:\t\t\t\tSpecifies HTTP port. (0 for random port.)")
     print("  --readonly, -r:\t\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
     print("  --workdir, -w:\t\t\t\tSpecifies working directory.")
     print("  --plugin-dir, -P:\t\t\t\tSpecifies plugins directory.")
@@ -210,7 +188,7 @@ def quit_tmux_gdb():
         try:
             os.killpg(tmux_bash_pid, signal.SIGKILL)
         except Exception as e:
-            print("[Error] Process group can not stopped.", e)
+            print("[Error] Process group can not stopped with SIGKILL.", e)
 
 args = [
     ["--verbose", "-V", argHandler_verbose, False],
@@ -222,8 +200,6 @@ args = [
     ["--host", "-H", argHandler_host, True],
     ["--listen", "-l", argHandler_listen, True],
     ["--port", "-p", argHandler_port, True],
-    ["--http-port", False, argHandler_httpPort, True],
-    ["--gotty-port", False, argHandler_gottyPort, True],
     ["--readonly", "-r", argHandler_readonly, False],
     ["--workdir", "-w", argHandler_workdir, True],
     ["--plugins-dir", "-P", argHandler_pluginsDir, True],
@@ -291,14 +267,6 @@ if tmux_executable == "tmux" and not shutil.which("tmux"):
 
 print("GDBFrontend "+statics.VERSION_STRING)
 
-if 0 in (config.HTTP_PORT, config.GOTTY_PORT):
-    try:
-        import psutil
-    except ImportError:
-        print("\033[0;32;31m[Error] The \"psutil\" module is not found. It is necessary for random ports (--port 0).\033[0m")
-        print("You can install \"psutil\" module with the command: \033[0;32;40mpython3 -m pip install psutil\033[0m")
-        exit(1)
-
 if is_random_port:
     import mmap
     import ctypes
@@ -317,9 +285,14 @@ if is_random_port:
 
 @atexit.register
 def exiting():
-    gotty.kill()
+    global is_random_port
+    global mmap_path
+    
     quit_tmux_gdb()
     subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+
+    if is_random_port:
+        os.remove(mmap_path)
 
     print("Stopped GDBFrontend.")
 
@@ -350,18 +323,6 @@ try:
             " ENTER"
         )
 
-    if credentials:
-        gotty_args = [gotty_executable, "--config", "gotty.conf", "-c", credentials, "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
-    else:
-        gotty_args = [gotty_executable, "--config", "gotty.conf", "-a", config.BIND_ADDRESS, "-p", str(config.GOTTY_PORT), "-w", tmux_executable, "a", "-t", terminal_id]
-
-    gotty = subprocess.Popen(
-        gotty_args,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        stdin=subprocess.PIPE
-    )
-
     if not is_random_port:
         print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
         print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
@@ -370,20 +331,9 @@ try:
 
         if not webbrowser.open(gf_url):
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
-        
-        gotty.wait()
 
-        quit_tmux_gdb()
-        
-        subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+        while True: pass
     else:
-        gottyProc = psutil.Process(gotty.pid)
-
-        while gottyProc.connections().__len__() == 0: pass
-
-        config.GOTTY_PORT = gottyProc.connections()[0].laddr.port
-        arg_config["GOTTY_PORT"] = config.GOTTY_PORT
-
         os.system(
             tmux_executable +
             " -f tmux.conf send-keys -t " + terminal_id +
@@ -413,16 +363,8 @@ try:
 
         if not webbrowser.open(gf_url):
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
-        
-        gotty.wait()
-        gotty.kill()
 
-        quit_tmux_gdb()
-        
-        subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
+        while True: pass
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
     exit(0)
-
-if is_random_port:
-    os.remove(mmap_path)
