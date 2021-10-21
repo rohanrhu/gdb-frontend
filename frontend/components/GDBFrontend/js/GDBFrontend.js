@@ -252,6 +252,8 @@
 
             data.terminal = {};
             data.terminal.xterm = new Terminal();
+
+            data.terminal.xterm.setOption('fontFamily', 'Consolas, courier-new, courier, monospace');
             
             data.setIsEvaluaterWindow = function (is_evaluater_window) {
                 data.is_evaluater_window = is_evaluater_window;
