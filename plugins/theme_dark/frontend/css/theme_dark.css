@@ -266,3 +266,11 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 .GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
     border-bottom: 10px solid #333333;
 }
+
+* {
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.7);
+}
