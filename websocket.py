@@ -118,9 +118,9 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
 
                 if is_masked:
                     for i in range(plen):
-                        self.message[i] = chr(self.message[i] ^ mkey[i%4])
+                        self.message[i] = self.message[i] ^ mkey[i%4]
                 
-                self.message = "".join(self.message)
+                self.message = bytes(self.message).decode("utf-8")
 
                 self.handleMessage()
             except Exception as e:

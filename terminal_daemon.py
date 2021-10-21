@@ -123,7 +123,7 @@ class TerminalDaemon:
             fcntl.ioctl(self.pty_fd, termios.TIOCSWINSZ, size)
             return True
         elif message["event"] == "terminal_data":
-            os.write(self.pty_fd, message["data"].encode())
+            os.write(self.pty_fd, message["data"].encode("utf-8"))
             return True
         
         return False
