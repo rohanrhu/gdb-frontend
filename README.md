@@ -48,13 +48,13 @@ cd gdb-frontend
 and you can open it with:
 
 ```
-http://127.0.0.1:5551/terminal/
+http://127.0.0.1:5550/terminal/
 ```
 
 or without terminal:
 
 ```
-http://127.0.0.1:5551/
+http://127.0.0.1:5550/
 ```
 
 You can open GDB shell with the command:
