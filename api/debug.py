@@ -355,8 +355,11 @@ def getState():
                                 except Exception as e:
                                     print("[Error]", e)
 
-                                variable = getVariableByExpression(symbol.name, no_error=False).serializable()
-                                variables.append(variable)
+                                try:
+                                    variable = getVariableByExpression(symbol.name, no_error=False).serializable()
+                                    variables.append(variable)
+                                except:
+                                    pass
 
 
                         block = block.superblock
