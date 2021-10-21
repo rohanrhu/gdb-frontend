@@ -177,6 +177,27 @@
                     event.preventDefault();
                     
                     data.openSourceOpener();
+                } else if (keycode == 116) {
+                    event.preventDefault();
+                    data.debug.run();
+                } else if (keycode == 117) {
+                    event.preventDefault();
+                    data.debug.continue();
+                } else if (keycode == 118) {
+                    event.preventDefault();
+                    data.debug.pause();
+                } else if (keycode == 119) {
+                    event.preventDefault();
+                    data.debug.stepOver();
+                } else if (keycode == 120) {
+                    event.preventDefault();
+                    data.debug.stepInto();
+                } else if (keycode == 121) {
+                    event.preventDefault();
+                    data.debug.stepInstruction();
+                } else if (keycode == 122) {
+                    event.preventDefault();
+                    data.debug.terminate();
                 }
             });
 
@@ -2251,7 +2272,7 @@
                 });
             });
 
-            data.$gdbFrontend_runtimeControls_btn__run_btn.on('click.GDBFrontend', function (event) {
+            data.debug.run = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/run',
                     cache: false,
@@ -2266,9 +2287,9 @@
                         console.trace('An error occured.');
                     }
                 });
-            });
+            };
 
-            data.$gdbFrontend_runtimeControls_btn__pause_btn.on('click.GDBFrontend', function (event) {
+            data.debug.pause = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/pause',
                     cache: false,
@@ -2282,9 +2303,9 @@
                         console.trace('An error occured.');
                     }
                 });
-            });
-
-            data.$gdbFrontend_runtimeControls_btn__continue_btn.on('click.GDBFrontend', function (event) {
+            };
+            
+            data.debug.continue = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/continue',
                     cache: false,
@@ -2298,9 +2319,9 @@
                         console.trace('An error occured.');
                     }
                 });
-            });
-
-            data.$gdbFrontend_runtimeControls_btn__n_btn.on('click.GDBFrontend', function (event) {
+            };
+            
+            data.debug.stepOver = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/next',
                     cache: false,
@@ -2314,9 +2335,9 @@
                         console.trace('An error occured.');
                     }
                 });
-            });
-
-            data.$gdbFrontend_runtimeControls_btn__s_btn.on('click.GDBFrontend', function (event) {
+            };
+            
+            data.debug.stepInto = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/step',
                     cache: false,
@@ -2330,9 +2351,9 @@
                         console.trace('An error occured.');
                     }
                 });
-            });
-
-            data.$gdbFrontend_runtimeControls_btn__si_btn.on('click.GDBFrontend', function (event) {
+            };
+            
+            data.debug.stepInstruction = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/stepi',
                     cache: false,
@@ -2346,9 +2367,9 @@
                         console.trace('An error occured.');
                     }
                 });
-            });
-
-            data.$gdbFrontend_runtimeControls_btn__t_btn.on('click.GDBFrontend', function (event) {
+            };
+            
+            data.debug.terminate = function (parameters) {
                 $.ajax({
                     url: '/api/runtime/terminate',
                     cache: false,
@@ -2362,6 +2383,34 @@
                         console.trace('An error occured.');
                     }
                 });
+            };
+            
+            data.$gdbFrontend_runtimeControls_btn__run_btn.on('click.GDBFrontend', function (event) {
+                data.debug.run();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__pause_btn.on('click.GDBFrontend', function (event) {
+                data.debug.pause();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__continue_btn.on('click.GDBFrontend', function (event) {
+                data.debug.continue();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__n_btn.on('click.GDBFrontend', function (event) {
+                data.debug.stepOver();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__s_btn.on('click.GDBFrontend', function (event) {
+                data.debug.stepInto();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__si_btn.on('click.GDBFrontend', function (event) {
+                data.debug.stepInstruction();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__t_btn.on('click.GDBFrontend', function (event) {
+                data.debug.terminate();
             });
 
             data.$gdbFrontend_runtimeControls_btn__evaluate_btn.on('click.GDBFrontend', function (event) {
