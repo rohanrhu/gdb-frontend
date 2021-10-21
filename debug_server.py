@@ -14,6 +14,8 @@ import json
 import sys
 import time
 
+import config
+config.init()
 import plugin
 import util
 import api.debug
@@ -22,6 +24,7 @@ import api.flags
 import api.globalvars
 import api.collabration
 import websocket
+import terminal_daemon
 
 gdb = importlib.import_module("gdb")
 
@@ -31,6 +34,7 @@ api.collabration.init()
 class GDBFrontendSocket(websocket.WebSocketHandler):
     cont_time = False
     screen_resolution = [0, 0]
+    terminalDaemon = False
     
     def __init__(self, request, client_address, server):
         websocket.WebSocketHandler.__init__(self, request, client_address, server)
@@ -40,6 +44,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
         self.server.ws_clients.append(self)
         self.connectGDBEvents()
+
+        util.verbose("Starting terminal daemon for client#%d" % self.client_id)
 
     def connectGDBEvents(self):
         gdb.events.new_objfile.connect(self.gdb_on_new_objfile)
@@ -281,6 +287,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def handleClose(self):
         util.verbose(self.client_address[0], "is disconnected.")
 
+        if self.terminalDaemon:
+            self.terminalDaemon.stop()
+
         if self in self.server.ws_clients:
             self.server.ws_clients.remove(self)
 
@@ -291,10 +300,16 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         self.wsSend(json.dumps(message))
 
     def handleMessage(self):
+        if self.terminalDaemon and self.terminalDaemon.handleMessage():
+            return
+        
         message = json.loads(self.message)
         event = message["event"]
 
-        if event == "get_state":
+        if event == "start_terminal":
+            self.terminalDaemon = terminal_daemon.TerminalDaemon(ws=self, terminal_command=["tmux", "a", "-t", config.TERMINAL_ID])
+            self.terminalDaemon.start()
+        elif event == "get_state":
             self.emit(message["return_event"], {
                 "state": api.debug.getState()
             })

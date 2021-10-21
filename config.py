@@ -25,27 +25,28 @@ disabled_plugins = [
     "hello"
 ]
 
+VERBOSE = False
+HOST_ADDRESS = "127.0.0.1"
+BIND_ADDRESS = "127.0.0.1"
+HTTP_PORT = 5550
+PLUGINS_DIR = os.path.join(app_path, "plugins")
+IS_READONLY = False
+MMAP_PATH = False
+WORKDIR = False
+CREDENTIALS = None
+TERMINAL_ID = False
+
 def init():
     global VERBOSE
-    VERBOSE = False
     global HOST_ADDRESS
-    HOST_ADDRESS = "127.0.0.1"
     global BIND_ADDRESS
-    BIND_ADDRESS = "127.0.0.1"
-    global GOTTY_PORT
-    GOTTY_PORT = 5550
     global HTTP_PORT
-    HTTP_PORT = 5551
     global PLUGINS_DIR
-    PLUGINS_DIR = os.path.join(app_path, "plugins")
     global IS_READONLY
-    IS_READONLY = False
     global MMAP_PATH
-    MMAP_PATH = False
     global WORKDIR
-    WORKDIR = False
     global CREDENTIALS
-    CREDENTIALS = None
+    global TERMINAL_ID
 
 def setJSON(config_json):
     new_config = json.loads(config_json)

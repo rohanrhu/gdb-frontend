@@ -23,7 +23,7 @@ import struct
 import base64
 import hashlib
 import typing
-import traceback
+import threading
 
 import config
 import util
@@ -32,6 +32,8 @@ import http.server
 MAGIC = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 client_id_i = 1
+
+wsSend_lock = threading.Lock()
 
 class WebSocketHandler(http.server.BaseHTTPRequestHandler):
     message = None
@@ -116,9 +118,9 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
 
                 if is_masked:
                     for i in range(plen):
-                        self.message[i] = chr(self.message[i] ^ mkey[i%4])
+                        self.message[i] = self.message[i] ^ mkey[i%4]
                 
-                self.message = "".join(self.message)
+                self.message = bytes(self.message).decode("utf-8")
 
                 self.handleMessage()
             except Exception as e:
@@ -128,26 +130,34 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
                     "(" + sys.exc_info()[-1].tb_frame.f_code.co_filename + ":" + str(sys.exc_info()[-1].tb_lineno) + ")"
                 )
 
-                print(''.join(traceback.format_exception(None, e, e.__traceback__)))
+                if (config.VERBOSE):
+                    raise e
 
                 self.ws_connected = False
                 self.handleClose()
         
     def wsSend(self, message):
-        if isinstance(message, str):
-            message = message.encode("utf-8")
+        wsSend_lock.acquire()
         
-        mlen = len(message)
+        try:
+            if isinstance(message, str):
+                message = message.encode("utf-8")
+            
+            mlen = len(message)
 
-        if mlen < 126:
-            frame = struct.pack("!BB", 0b10000001, mlen)
-        elif mlen < (1 << 16):
-            frame = struct.pack("!BBH", 0b10000001, 126, mlen)
-        else:
-            frame = struct.pack("!BBQ", 0b10000001, 127, mlen)
-        
-        self.wfile.write(frame)
-        self.wfile.write(message)
+            if mlen < 126:
+                frame = struct.pack("!BB", 0b10000001, mlen)
+            elif mlen < (1 << 16):
+                frame = struct.pack("!BBH", 0b10000001, 126, mlen)
+            else:
+                frame = struct.pack("!BBQ", 0b10000001, 127, mlen)
+            
+            self.wfile.write(frame)
+            self.wfile.write(message)
+        except:
+            wsSend_lock.release()
+        finally:
+            wsSend_lock.release()
     
     def handleMessage(self):
         pass
