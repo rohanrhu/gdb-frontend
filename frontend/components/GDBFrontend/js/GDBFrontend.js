@@ -177,6 +177,9 @@
                     event.preventDefault();
                     
                     data.openSourceOpener();
+                } else if (event.ctrlKey && keycode == 82) {
+                    event.preventDefault();
+                    data.createEvaluater();
                 } else if (keycode == 116) {
                     event.preventDefault();
                     data.debug.run();
