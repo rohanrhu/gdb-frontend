@@ -1,0 +1,7738 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+ *
+ */
+
+ .GDBFrontend {
+    color: white;
+    background-color: #620c4c;
+}
+
+.Checkbox_icon_img {
+    filter: contrast(10) invert(1);
+}
+
+.button1 {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.button1:hover {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_layout_top {
+    background: rgb(0 0 0 / 60%);
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgb(211 0 107);
+}
+ 
+.GDBFrontend_runtimeControls_btn_openable {
+    background: rgb(211 0 107);
+}
+
+.Checkbox.Checkbox__checked .Checkbox_icon_img {
+    filter: hue-rotate(65deg) contrast(1);
+}
+
+.GDBFrontend_load_connectBtn_openable {
+    background: rgb(211 0 107);
+}
+ 
+.GDBFrontend_layout_middle_left {
+}
+
+.GDBFrontend_sources_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_sources_title_buttons_button_iconImg {
+}
+
+.GDBFrontend_disassembly_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {
+}
+
+.GDBFrontend_watches_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_breakpoints_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.BreakpointsEditor_items_item_remove {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.BreakpointsEditor_items_item_remove:hover {
+    background: #ff4c4c;
+}
+
+.GDBFrontend_threads_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ThreadsEditor_items_item_num {
+    color: white;
+}
+
+.ThreadsEditor_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.ThreadsEditor_items_item.ThreadsEditor__current {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_stack_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.StackTrace_items_item_num {
+    color: white;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_variables_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.FileTabs_editors_content {
+    background: rgb(0 0 0 / 10%);
+}
+
+.FileTabs_editors_noItem {
+    background: rgb(0 0 0 / 30%);
+    color: white;
+}
+
+.FileTabs_tabs_items_item_closeBtn {
+    color: white;
+}
+
+.FileTabs_tabs_items_item_closeBtn:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.FileTabs_editors_items_item_variablePopup {
+    background: #7e1052;
+}
+
+.GDBFrontend_terminalCloseBtn,
+.GDBFrontend_terminalOpenBtn {
+    background: rgb(211 0 107);
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon {
+    color: #fff35f;
+}
+
+.Resizable_resizer_draggable {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.Watches_items_item_expression_input_rI {
+    color: white;
+}
+
+.Watches_items_item_value_input_rI {
+    color: white;
+}
+
+.Disassembly_items_item_addr {
+    color: #d9edff;
+}
+
+.VariablesExplorer_items_item_button_type {
+    color: white;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0,0,0,0.075);
+}
+
+.FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
+    background: rgb(0, 0, 0, 0.25);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box {
+    color: white;
+    background: rgb(211 0 107);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
+    border-bottom: 10px solid rgb(211 0 107);
+}
+
+.FileBrowser_window_box {
+    background: #7e1052;
+}
+
+.EvaluateExpression_window_box {
+    background: rgb(126 16 82 / 75%);
+    color: white;
+}
+
+.EvaluateExpression_window_mover {
+    background-color: rgb(211 0 107);
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: rgb(211 0 107);
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgb(211 0 107);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    background: rgb(211 0 107);
+    color: white;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    color: white;
+}
+
+.css_AboutDialog_box {
+    background: #7e1052;
+}
+
+.FuzzyFinder_box {
+    background: rgb(187 6 115 / 75%);
+}
+
+.css_MessageBox_box {
+    background: #7e1052;
+}
+
+.SourceTree_items_item_button:hover {
+    background: rgb(95, 22, 22, 0.5);
+}
+
+.FileTabs_tabs {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ace-tomorrow-night-bright {
+    background: rgb(0 0 0 / 20%);
+}
+
+.ace-tomorrow-night-bright .ace_gutter {
+    background: rgb(26 1 126 / 10%);
+}
+
+.GDBFrontend_layout_middle_right {
+}
+
+.ace-tomorrow-night-bright .ace_gutter-active-line {
+    background: rgb(185 0 77 / 48%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_active-line {
+    background: rgb(255 0 106 / 48%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_selection {
+    background: rgb(255 0 106 / 48%);
+}
+
+.FileTabs_tabs_items_item {
+    border-right: 1px solid rgb(255, 255, 255, 0.1);
+}
+
+.Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
+    background: linear-gradient(90deg, rgb(211 0 107), rgba(255, 255, 255, 0));
+}
+
+.VariablesExplorer_items_item_contextMenu {
+    color: white;
+    background: rgb(211 0 107);
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(211 0 107);
+}
+
+.ace-tomorrow-night-bright .ace_print-margin {
+    width: 1px;
+    background: rgb(255, 255, 255, 0.2);
+}
+
+.LinkedListVisualizer_items_item_box {
+    background: rgb(124 26 26);
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: #6a1b31;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(211 0 107);
+}
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(159 0 73);
+}
+
+.GDBFrontend_layout_status {
+    color: white;
+    background: rgb(0 0 0 / 75%);
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: rgb(211 0 107);
+    color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid rgb(211 0 107);
+}
+
+.input1 {
+    background: rgb(0 0 0 / 75%);
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual_label {
+    color: #ff88aa;
+}
+
+.Disassembly_content {
+    background: rgb(0 0 0 / 30%);
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed > .VariablesExplorer_items_item_button {
+    background: rgb(116 0 59) !important;
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item_icon {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {
+    border: 1px solid rgb(255 84 147 / 50%);
+    background: rgb(126 16 82 / 90%);
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item:hover {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ace-tomorrow-night-bright .ace_heading, .ace-tomorrow-night-bright .ace_markup.ace_heading, .ace-tomorrow-night-bright .ace_string {
+    color: #ff95cb;
+}
+
+.ace-tomorrow-night-bright .ace_constant.ace_character, .ace-tomorrow-night-bright .ace_constant.ace_language, .ace-tomorrow-night-bright .ace_constant.ace_numeric, .ace-tomorrow-night-bright .ace_keyword.ace_other.ace_unit, .ace-tomorrow-night-bright .ace_support.ace_constant, .ace-tomorrow-night-bright .ace_variable.ace_parameter {
+    color: #56f5df;
+}
+
+.ace_identifier {
+    color: white;
+}
+
+.ace_storage.ace_type {
+    color: #d98fff;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_keyword.ace_operator {
+    color: #ff6e89;
+}
+
+.ace-tomorrow-night-bright .ace_entity.ace_name.ace_function, .ace-tomorrow-night-bright .ace_support.ace_function, .ace-tomorrow-night-bright .ace_variable {
+    color: #6aadff;
+}
+
+.ace_paren {
+    color: #fffca8;
+}
+
+.ace_keyword.ace_control {
+    color: #c67bff;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_keyword, .ace-tomorrow-night-bright .ace_meta, .ace-tomorrow-night-bright .ace_storage, .ace-tomorrow-night-bright .ace_storage.ace_type, .ace-tomorrow-night-bright .ace_support.ace_type {
+    color: #00fff3;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_comment {
+    color: #bf83a9;
+}
+
+.GDBFrontend.GDBFrontend__evaluaterWindow .EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {background: rgb(126 16 82);}
+
+.GDBFrontend_layout_status_stepTime_value {
+    color: #ff9cce;
+}
+
+.GDBFrontend_theme_sky_container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none;
+}
+
+.GDBFrontend_theme_sky_background {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: radial-gradient(white 0%, white 30%, transparent 80%, transparent);
+    mask-image: radial-gradient(white 0%, white 30%, transparent 80%, transparent);
+    opacity: 0.5;
+}
+
+.GDBFrontend_theme_sky_circle-container {
+    position: absolute;
+    transform: translateY(-10vh);
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+.GDBFrontend_theme_sky_circle-container .GDBFrontend_theme_sky_circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    background-image: radial-gradient(#99ffff, #99ffff 10%, rgba(153, 255, 255, 0) 56%);
+    -webkit-animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
+    animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
+}
+
+@-webkit-keyframes fade-frames {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-frames {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes scale-frames {
+    0% {
+        transform: scale3d(0.4, 0.4, 1);
+    }
+
+    50% {
+        transform: scale3d(2.2, 2.2, 1);
+    }
+
+    100% {
+        transform: scale3d(0.4, 0.4, 1);
+    }
+}
+
+@keyframes scale-frames {
+    0% {
+        transform: scale3d(0.4, 0.4, 1);
+    }
+
+    50% {
+        transform: scale3d(2.2, 2.2, 1);
+    }
+
+    100% {
+        transform: scale3d(0.4, 0.4, 1);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(1) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-1;
+    animation-name: GDBFrontend_theme_sky_move_frames-1;
+    -webkit-animation-duration: 28021ms;
+    animation-duration: 28021ms;
+    -webkit-animation-delay: 35311ms;
+    animation-delay: 35311ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-1 {
+    from {
+        transform: translate3d(38vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(23vw, -105vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-1 {
+    from {
+        transform: translate3d(38vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(23vw, -105vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(1) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3901ms;
+    animation-delay: 3901ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(2) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-2;
+    animation-name: GDBFrontend_theme_sky_move_frames-2;
+    -webkit-animation-duration: 33013ms;
+    animation-duration: 33013ms;
+    -webkit-animation-delay: 32181ms;
+    animation-delay: 32181ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-2 {
+    from {
+        transform: translate3d(49vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(58vw, -112vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-2 {
+    from {
+        transform: translate3d(49vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(58vw, -112vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(2) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 878ms;
+    animation-delay: 878ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(3) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-3;
+    animation-name: GDBFrontend_theme_sky_move_frames-3;
+    -webkit-animation-duration: 35087ms;
+    animation-duration: 35087ms;
+    -webkit-animation-delay: 520ms;
+    animation-delay: 520ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-3 {
+    from {
+        transform: translate3d(88vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -115vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-3 {
+    from {
+        transform: translate3d(88vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -115vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(3) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1058ms;
+    animation-delay: 1058ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(4) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-4;
+    animation-name: GDBFrontend_theme_sky_move_frames-4;
+    -webkit-animation-duration: 34544ms;
+    animation-duration: 34544ms;
+    -webkit-animation-delay: 29010ms;
+    animation-delay: 29010ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-4 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(91vw, -124vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-4 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(91vw, -124vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(4) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2561ms;
+    animation-delay: 2561ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(5) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-5;
+    animation-name: GDBFrontend_theme_sky_move_frames-5;
+    -webkit-animation-duration: 35020ms;
+    animation-duration: 35020ms;
+    -webkit-animation-delay: 490ms;
+    animation-delay: 490ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-5 {
+    from {
+        transform: translate3d(29vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(69vw, -139vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-5 {
+    from {
+        transform: translate3d(29vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(69vw, -139vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(5) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3309ms;
+    animation-delay: 3309ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(6) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-6;
+    animation-name: GDBFrontend_theme_sky_move_frames-6;
+    -webkit-animation-duration: 35414ms;
+    animation-duration: 35414ms;
+    -webkit-animation-delay: 27879ms;
+    animation-delay: 27879ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-6 {
+    from {
+        transform: translate3d(84vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(55vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-6 {
+    from {
+        transform: translate3d(84vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(55vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(6) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3622ms;
+    animation-delay: 3622ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(7) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-7;
+    animation-name: GDBFrontend_theme_sky_move_frames-7;
+    -webkit-animation-duration: 31575ms;
+    animation-duration: 31575ms;
+    -webkit-animation-delay: 24798ms;
+    animation-delay: 24798ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-7 {
+    from {
+        transform: translate3d(7vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(85vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-7 {
+    from {
+        transform: translate3d(7vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(85vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(7) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2511ms;
+    animation-delay: 2511ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(8) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-8;
+    animation-name: GDBFrontend_theme_sky_move_frames-8;
+    -webkit-animation-duration: 35957ms;
+    animation-duration: 35957ms;
+    -webkit-animation-delay: 27908ms;
+    animation-delay: 27908ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-8 {
+    from {
+        transform: translate3d(22vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(56vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-8 {
+    from {
+        transform: translate3d(22vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(56vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(8) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2445ms;
+    animation-delay: 2445ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(9) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-9;
+    animation-name: GDBFrontend_theme_sky_move_frames-9;
+    -webkit-animation-duration: 31086ms;
+    animation-duration: 31086ms;
+    -webkit-animation-delay: 34985ms;
+    animation-delay: 34985ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-9 {
+    from {
+        transform: translate3d(20vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(45vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-9 {
+    from {
+        transform: translate3d(20vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(45vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(9) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3071ms;
+    animation-delay: 3071ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(10) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-10;
+    animation-name: GDBFrontend_theme_sky_move_frames-10;
+    -webkit-animation-duration: 36932ms;
+    animation-duration: 36932ms;
+    -webkit-animation-delay: 7645ms;
+    animation-delay: 7645ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-10 {
+    from {
+        transform: translate3d(83vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(75vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-10 {
+    from {
+        transform: translate3d(83vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(75vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(10) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1503ms;
+    animation-delay: 1503ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(11) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-11;
+    animation-name: GDBFrontend_theme_sky_move_frames-11;
+    -webkit-animation-duration: 28937ms;
+    animation-duration: 28937ms;
+    -webkit-animation-delay: 33255ms;
+    animation-delay: 33255ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-11 {
+    from {
+        transform: translate3d(81vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -125vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-11 {
+    from {
+        transform: translate3d(81vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -125vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(11) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 120ms;
+    animation-delay: 120ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(12) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-12;
+    animation-name: GDBFrontend_theme_sky_move_frames-12;
+    -webkit-animation-duration: 29458ms;
+    animation-duration: 29458ms;
+    -webkit-animation-delay: 4355ms;
+    animation-delay: 4355ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-12 {
+    from {
+        transform: translate3d(24vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(94vw, -122vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-12 {
+    from {
+        transform: translate3d(24vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(94vw, -122vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(12) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3729ms;
+    animation-delay: 3729ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(13) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-13;
+    animation-name: GDBFrontend_theme_sky_move_frames-13;
+    -webkit-animation-duration: 32050ms;
+    animation-duration: 32050ms;
+    -webkit-animation-delay: 13701ms;
+    animation-delay: 13701ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-13 {
+    from {
+        transform: translate3d(75vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(96vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-13 {
+    from {
+        transform: translate3d(75vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(96vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(13) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2277ms;
+    animation-delay: 2277ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(14) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-14;
+    animation-name: GDBFrontend_theme_sky_move_frames-14;
+    -webkit-animation-duration: 33802ms;
+    animation-duration: 33802ms;
+    -webkit-animation-delay: 25984ms;
+    animation-delay: 25984ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-14 {
+    from {
+        transform: translate3d(2vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(89vw, -116vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-14 {
+    from {
+        transform: translate3d(2vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(89vw, -116vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(14) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1883ms;
+    animation-delay: 1883ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(15) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-15;
+    animation-name: GDBFrontend_theme_sky_move_frames-15;
+    -webkit-animation-duration: 32864ms;
+    animation-duration: 32864ms;
+    -webkit-animation-delay: 402ms;
+    animation-delay: 402ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-15 {
+    from {
+        transform: translate3d(72vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(25vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-15 {
+    from {
+        transform: translate3d(72vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(25vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(15) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3351ms;
+    animation-delay: 3351ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(16) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-16;
+    animation-name: GDBFrontend_theme_sky_move_frames-16;
+    -webkit-animation-duration: 36137ms;
+    animation-duration: 36137ms;
+    -webkit-animation-delay: 27756ms;
+    animation-delay: 27756ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-16 {
+    from {
+        transform: translate3d(45vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(51vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-16 {
+    from {
+        transform: translate3d(45vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(51vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(16) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1058ms;
+    animation-delay: 1058ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(17) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-17;
+    animation-name: GDBFrontend_theme_sky_move_frames-17;
+    -webkit-animation-duration: 35970ms;
+    animation-duration: 35970ms;
+    -webkit-animation-delay: 2745ms;
+    animation-delay: 2745ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-17 {
+    from {
+        transform: translate3d(58vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(3vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-17 {
+    from {
+        transform: translate3d(58vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(3vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(17) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 854ms;
+    animation-delay: 854ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(18) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-18;
+    animation-name: GDBFrontend_theme_sky_move_frames-18;
+    -webkit-animation-duration: 31640ms;
+    animation-duration: 31640ms;
+    -webkit-animation-delay: 31698ms;
+    animation-delay: 31698ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-18 {
+    from {
+        transform: translate3d(70vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(38vw, -135vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-18 {
+    from {
+        transform: translate3d(70vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(38vw, -135vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(18) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1034ms;
+    animation-delay: 1034ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(19) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-19;
+    animation-name: GDBFrontend_theme_sky_move_frames-19;
+    -webkit-animation-duration: 33028ms;
+    animation-duration: 33028ms;
+    -webkit-animation-delay: 35371ms;
+    animation-delay: 35371ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-19 {
+    from {
+        transform: translate3d(36vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(5vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-19 {
+    from {
+        transform: translate3d(36vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(5vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(19) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2607ms;
+    animation-delay: 2607ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(20) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-20;
+    animation-name: GDBFrontend_theme_sky_move_frames-20;
+    -webkit-animation-duration: 28914ms;
+    animation-duration: 28914ms;
+    -webkit-animation-delay: 4885ms;
+    animation-delay: 4885ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-20 {
+    from {
+        transform: translate3d(44vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(55vw, -116vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-20 {
+    from {
+        transform: translate3d(44vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(55vw, -116vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(20) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 909ms;
+    animation-delay: 909ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(21) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-21;
+    animation-name: GDBFrontend_theme_sky_move_frames-21;
+    -webkit-animation-duration: 35394ms;
+    animation-duration: 35394ms;
+    -webkit-animation-delay: 15996ms;
+    animation-delay: 15996ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-21 {
+    from {
+        transform: translate3d(20vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -134vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-21 {
+    from {
+        transform: translate3d(20vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -134vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(21) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1751ms;
+    animation-delay: 1751ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(22) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-22;
+    animation-name: GDBFrontend_theme_sky_move_frames-22;
+    -webkit-animation-duration: 34219ms;
+    animation-duration: 34219ms;
+    -webkit-animation-delay: 34791ms;
+    animation-delay: 34791ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-22 {
+    from {
+        transform: translate3d(85vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(68vw, -116vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-22 {
+    from {
+        transform: translate3d(85vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(68vw, -116vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(22) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1928ms;
+    animation-delay: 1928ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(23) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-23;
+    animation-name: GDBFrontend_theme_sky_move_frames-23;
+    -webkit-animation-duration: 35749ms;
+    animation-duration: 35749ms;
+    -webkit-animation-delay: 15364ms;
+    animation-delay: 15364ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-23 {
+    from {
+        transform: translate3d(86vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(57vw, -114vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-23 {
+    from {
+        transform: translate3d(86vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(57vw, -114vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(23) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2609ms;
+    animation-delay: 2609ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(24) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-24;
+    animation-name: GDBFrontend_theme_sky_move_frames-24;
+    -webkit-animation-duration: 29304ms;
+    animation-duration: 29304ms;
+    -webkit-animation-delay: 30228ms;
+    animation-delay: 30228ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-24 {
+    from {
+        transform: translate3d(78vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(4vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-24 {
+    from {
+        transform: translate3d(78vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(4vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(24) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 599ms;
+    animation-delay: 599ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(25) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-25;
+    animation-name: GDBFrontend_theme_sky_move_frames-25;
+    -webkit-animation-duration: 33099ms;
+    animation-duration: 33099ms;
+    -webkit-animation-delay: 26178ms;
+    animation-delay: 26178ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-25 {
+    from {
+        transform: translate3d(90vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(12vw, -132vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-25 {
+    from {
+        transform: translate3d(90vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(12vw, -132vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(25) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1929ms;
+    animation-delay: 1929ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(26) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-26;
+    animation-name: GDBFrontend_theme_sky_move_frames-26;
+    -webkit-animation-duration: 32471ms;
+    animation-duration: 32471ms;
+    -webkit-animation-delay: 3220ms;
+    animation-delay: 3220ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-26 {
+    from {
+        transform: translate3d(58vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -125vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-26 {
+    from {
+        transform: translate3d(58vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -125vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(26) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2810ms;
+    animation-delay: 2810ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(27) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-27;
+    animation-name: GDBFrontend_theme_sky_move_frames-27;
+    -webkit-animation-duration: 29522ms;
+    animation-duration: 29522ms;
+    -webkit-animation-delay: 33092ms;
+    animation-delay: 33092ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-27 {
+    from {
+        transform: translate3d(10vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(26vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-27 {
+    from {
+        transform: translate3d(10vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(26vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(27) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 67ms;
+    animation-delay: 67ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(28) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-28;
+    animation-name: GDBFrontend_theme_sky_move_frames-28;
+    -webkit-animation-duration: 34401ms;
+    animation-duration: 34401ms;
+    -webkit-animation-delay: 403ms;
+    animation-delay: 403ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-28 {
+    from {
+        transform: translate3d(84vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(96vw, -114vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-28 {
+    from {
+        transform: translate3d(84vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(96vw, -114vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(28) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3363ms;
+    animation-delay: 3363ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(29) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-29;
+    animation-name: GDBFrontend_theme_sky_move_frames-29;
+    -webkit-animation-duration: 31436ms;
+    animation-duration: 31436ms;
+    -webkit-animation-delay: 15898ms;
+    animation-delay: 15898ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-29 {
+    from {
+        transform: translate3d(15vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(28vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-29 {
+    from {
+        transform: translate3d(15vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(28vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(29) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1665ms;
+    animation-delay: 1665ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(30) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-30;
+    animation-name: GDBFrontend_theme_sky_move_frames-30;
+    -webkit-animation-duration: 33418ms;
+    animation-duration: 33418ms;
+    -webkit-animation-delay: 30691ms;
+    animation-delay: 30691ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-30 {
+    from {
+        transform: translate3d(7vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(69vw, -128vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-30 {
+    from {
+        transform: translate3d(7vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(69vw, -128vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(30) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 162ms;
+    animation-delay: 162ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(31) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-31;
+    animation-name: GDBFrontend_theme_sky_move_frames-31;
+    -webkit-animation-duration: 33126ms;
+    animation-duration: 33126ms;
+    -webkit-animation-delay: 13796ms;
+    animation-delay: 13796ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-31 {
+    from {
+        transform: translate3d(35vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(76vw, -105vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-31 {
+    from {
+        transform: translate3d(35vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(76vw, -105vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(31) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 890ms;
+    animation-delay: 890ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(32) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-32;
+    animation-name: GDBFrontend_theme_sky_move_frames-32;
+    -webkit-animation-duration: 35098ms;
+    animation-duration: 35098ms;
+    -webkit-animation-delay: 19644ms;
+    animation-delay: 19644ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-32 {
+    from {
+        transform: translate3d(12vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-32 {
+    from {
+        transform: translate3d(12vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(32) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 351ms;
+    animation-delay: 351ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(33) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-33;
+    animation-name: GDBFrontend_theme_sky_move_frames-33;
+    -webkit-animation-duration: 29442ms;
+    animation-duration: 29442ms;
+    -webkit-animation-delay: 26981ms;
+    animation-delay: 26981ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-33 {
+    from {
+        transform: translate3d(49vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(95vw, -128vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-33 {
+    from {
+        transform: translate3d(49vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(95vw, -128vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(33) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3052ms;
+    animation-delay: 3052ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(34) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-34;
+    animation-name: GDBFrontend_theme_sky_move_frames-34;
+    -webkit-animation-duration: 31116ms;
+    animation-duration: 31116ms;
+    -webkit-animation-delay: 15483ms;
+    animation-delay: 15483ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-34 {
+    from {
+        transform: translate3d(75vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(100vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-34 {
+    from {
+        transform: translate3d(75vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(100vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(34) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3076ms;
+    animation-delay: 3076ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(35) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-35;
+    animation-name: GDBFrontend_theme_sky_move_frames-35;
+    -webkit-animation-duration: 28583ms;
+    animation-duration: 28583ms;
+    -webkit-animation-delay: 530ms;
+    animation-delay: 530ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-35 {
+    from {
+        transform: translate3d(80vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -124vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-35 {
+    from {
+        transform: translate3d(80vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -124vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(35) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 364ms;
+    animation-delay: 364ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(36) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-36;
+    animation-name: GDBFrontend_theme_sky_move_frames-36;
+    -webkit-animation-duration: 29520ms;
+    animation-duration: 29520ms;
+    -webkit-animation-delay: 15526ms;
+    animation-delay: 15526ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-36 {
+    from {
+        transform: translate3d(59vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-36 {
+    from {
+        transform: translate3d(59vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(36) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3502ms;
+    animation-delay: 3502ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(37) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-37;
+    animation-name: GDBFrontend_theme_sky_move_frames-37;
+    -webkit-animation-duration: 32757ms;
+    animation-duration: 32757ms;
+    -webkit-animation-delay: 11753ms;
+    animation-delay: 11753ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-37 {
+    from {
+        transform: translate3d(59vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(31vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-37 {
+    from {
+        transform: translate3d(59vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(31vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(37) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 280ms;
+    animation-delay: 280ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(38) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-38;
+    animation-name: GDBFrontend_theme_sky_move_frames-38;
+    -webkit-animation-duration: 36701ms;
+    animation-duration: 36701ms;
+    -webkit-animation-delay: 22201ms;
+    animation-delay: 22201ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-38 {
+    from {
+        transform: translate3d(29vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-38 {
+    from {
+        transform: translate3d(29vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(38) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3323ms;
+    animation-delay: 3323ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(39) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-39;
+    animation-name: GDBFrontend_theme_sky_move_frames-39;
+    -webkit-animation-duration: 28939ms;
+    animation-duration: 28939ms;
+    -webkit-animation-delay: 4893ms;
+    animation-delay: 4893ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-39 {
+    from {
+        transform: translate3d(9vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(93vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-39 {
+    from {
+        transform: translate3d(9vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(93vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(39) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2348ms;
+    animation-delay: 2348ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(40) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-40;
+    animation-name: GDBFrontend_theme_sky_move_frames-40;
+    -webkit-animation-duration: 34758ms;
+    animation-duration: 34758ms;
+    -webkit-animation-delay: 6400ms;
+    animation-delay: 6400ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-40 {
+    from {
+        transform: translate3d(20vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-40 {
+    from {
+        transform: translate3d(20vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(40) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3800ms;
+    animation-delay: 3800ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(41) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-41;
+    animation-name: GDBFrontend_theme_sky_move_frames-41;
+    -webkit-animation-duration: 33599ms;
+    animation-duration: 33599ms;
+    -webkit-animation-delay: 29747ms;
+    animation-delay: 29747ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-41 {
+    from {
+        transform: translate3d(32vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -116vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-41 {
+    from {
+        transform: translate3d(32vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -116vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(41) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 694ms;
+    animation-delay: 694ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(42) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-42;
+    animation-name: GDBFrontend_theme_sky_move_frames-42;
+    -webkit-animation-duration: 33794ms;
+    animation-duration: 33794ms;
+    -webkit-animation-delay: 23727ms;
+    animation-delay: 23727ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-42 {
+    from {
+        transform: translate3d(96vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(29vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-42 {
+    from {
+        transform: translate3d(96vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(29vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(42) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1647ms;
+    animation-delay: 1647ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(43) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-43;
+    animation-name: GDBFrontend_theme_sky_move_frames-43;
+    -webkit-animation-duration: 30516ms;
+    animation-duration: 30516ms;
+    -webkit-animation-delay: 20932ms;
+    animation-delay: 20932ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-43 {
+    from {
+        transform: translate3d(70vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(84vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-43 {
+    from {
+        transform: translate3d(70vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(84vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(43) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1342ms;
+    animation-delay: 1342ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(44) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-44;
+    animation-name: GDBFrontend_theme_sky_move_frames-44;
+    -webkit-animation-duration: 34712ms;
+    animation-duration: 34712ms;
+    -webkit-animation-delay: 26022ms;
+    animation-delay: 26022ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-44 {
+    from {
+        transform: translate3d(2vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(82vw, -139vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-44 {
+    from {
+        transform: translate3d(2vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(82vw, -139vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(44) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2385ms;
+    animation-delay: 2385ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(45) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-45;
+    animation-name: GDBFrontend_theme_sky_move_frames-45;
+    -webkit-animation-duration: 31641ms;
+    animation-duration: 31641ms;
+    -webkit-animation-delay: 31527ms;
+    animation-delay: 31527ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-45 {
+    from {
+        transform: translate3d(85vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(23vw, -110vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-45 {
+    from {
+        transform: translate3d(85vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(23vw, -110vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(45) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 788ms;
+    animation-delay: 788ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(46) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-46;
+    animation-name: GDBFrontend_theme_sky_move_frames-46;
+    -webkit-animation-duration: 30788ms;
+    animation-duration: 30788ms;
+    -webkit-animation-delay: 16662ms;
+    animation-delay: 16662ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-46 {
+    from {
+        transform: translate3d(87vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-46 {
+    from {
+        transform: translate3d(87vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(46) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 264ms;
+    animation-delay: 264ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(47) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-47;
+    animation-name: GDBFrontend_theme_sky_move_frames-47;
+    -webkit-animation-duration: 33723ms;
+    animation-duration: 33723ms;
+    -webkit-animation-delay: 23380ms;
+    animation-delay: 23380ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-47 {
+    from {
+        transform: translate3d(60vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(87vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-47 {
+    from {
+        transform: translate3d(60vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(87vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(47) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3760ms;
+    animation-delay: 3760ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(48) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-48;
+    animation-name: GDBFrontend_theme_sky_move_frames-48;
+    -webkit-animation-duration: 29154ms;
+    animation-duration: 29154ms;
+    -webkit-animation-delay: 49ms;
+    animation-delay: 49ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-48 {
+    from {
+        transform: translate3d(37vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(44vw, -126vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-48 {
+    from {
+        transform: translate3d(37vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(44vw, -126vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(48) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 999ms;
+    animation-delay: 999ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(49) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-49;
+    animation-name: GDBFrontend_theme_sky_move_frames-49;
+    -webkit-animation-duration: 35773ms;
+    animation-duration: 35773ms;
+    -webkit-animation-delay: 15278ms;
+    animation-delay: 15278ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-49 {
+    from {
+        transform: translate3d(38vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -117vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-49 {
+    from {
+        transform: translate3d(38vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -117vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(49) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 463ms;
+    animation-delay: 463ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(50) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-50;
+    animation-name: GDBFrontend_theme_sky_move_frames-50;
+    -webkit-animation-duration: 34735ms;
+    animation-duration: 34735ms;
+    -webkit-animation-delay: 24502ms;
+    animation-delay: 24502ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-50 {
+    from {
+        transform: translate3d(77vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(43vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-50 {
+    from {
+        transform: translate3d(77vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(43vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(50) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3197ms;
+    animation-delay: 3197ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(51) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-51;
+    animation-name: GDBFrontend_theme_sky_move_frames-51;
+    -webkit-animation-duration: 30340ms;
+    animation-duration: 30340ms;
+    -webkit-animation-delay: 6268ms;
+    animation-delay: 6268ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-51 {
+    from {
+        transform: translate3d(88vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(82vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-51 {
+    from {
+        transform: translate3d(88vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(82vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(51) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1485ms;
+    animation-delay: 1485ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(52) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-52;
+    animation-name: GDBFrontend_theme_sky_move_frames-52;
+    -webkit-animation-duration: 34611ms;
+    animation-duration: 34611ms;
+    -webkit-animation-delay: 27236ms;
+    animation-delay: 27236ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-52 {
+    from {
+        transform: translate3d(12vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(46vw, -132vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-52 {
+    from {
+        transform: translate3d(12vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(46vw, -132vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(52) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 205ms;
+    animation-delay: 205ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(53) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-53;
+    animation-name: GDBFrontend_theme_sky_move_frames-53;
+    -webkit-animation-duration: 36729ms;
+    animation-duration: 36729ms;
+    -webkit-animation-delay: 13782ms;
+    animation-delay: 13782ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-53 {
+    from {
+        transform: translate3d(13vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(7vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-53 {
+    from {
+        transform: translate3d(13vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(7vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(53) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3025ms;
+    animation-delay: 3025ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(54) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-54;
+    animation-name: GDBFrontend_theme_sky_move_frames-54;
+    -webkit-animation-duration: 28078ms;
+    animation-duration: 28078ms;
+    -webkit-animation-delay: 36939ms;
+    animation-delay: 36939ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-54 {
+    from {
+        transform: translate3d(39vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -112vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-54 {
+    from {
+        transform: translate3d(39vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -112vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(54) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 462ms;
+    animation-delay: 462ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(55) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-55;
+    animation-name: GDBFrontend_theme_sky_move_frames-55;
+    -webkit-animation-duration: 28618ms;
+    animation-duration: 28618ms;
+    -webkit-animation-delay: 14320ms;
+    animation-delay: 14320ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-55 {
+    from {
+        transform: translate3d(82vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -114vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-55 {
+    from {
+        transform: translate3d(82vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -114vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(55) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1865ms;
+    animation-delay: 1865ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(56) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-56;
+    animation-name: GDBFrontend_theme_sky_move_frames-56;
+    -webkit-animation-duration: 32827ms;
+    animation-duration: 32827ms;
+    -webkit-animation-delay: 29391ms;
+    animation-delay: 29391ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-56 {
+    from {
+        transform: translate3d(18vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(38vw, -124vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-56 {
+    from {
+        transform: translate3d(18vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(38vw, -124vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(56) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2183ms;
+    animation-delay: 2183ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(57) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-57;
+    animation-name: GDBFrontend_theme_sky_move_frames-57;
+    -webkit-animation-duration: 35527ms;
+    animation-duration: 35527ms;
+    -webkit-animation-delay: 21824ms;
+    animation-delay: 21824ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-57 {
+    from {
+        transform: translate3d(86vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(42vw, -103vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-57 {
+    from {
+        transform: translate3d(86vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(42vw, -103vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(57) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 941ms;
+    animation-delay: 941ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(58) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-58;
+    animation-name: GDBFrontend_theme_sky_move_frames-58;
+    -webkit-animation-duration: 28733ms;
+    animation-duration: 28733ms;
+    -webkit-animation-delay: 25951ms;
+    animation-delay: 25951ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-58 {
+    from {
+        transform: translate3d(68vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(14vw, -110vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-58 {
+    from {
+        transform: translate3d(68vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(14vw, -110vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(58) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 198ms;
+    animation-delay: 198ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(59) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-59;
+    animation-name: GDBFrontend_theme_sky_move_frames-59;
+    -webkit-animation-duration: 35328ms;
+    animation-duration: 35328ms;
+    -webkit-animation-delay: 34289ms;
+    animation-delay: 34289ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-59 {
+    from {
+        transform: translate3d(35vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-59 {
+    from {
+        transform: translate3d(35vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(59) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 902ms;
+    animation-delay: 902ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(60) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-60;
+    animation-name: GDBFrontend_theme_sky_move_frames-60;
+    -webkit-animation-duration: 29140ms;
+    animation-duration: 29140ms;
+    -webkit-animation-delay: 22806ms;
+    animation-delay: 22806ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-60 {
+    from {
+        transform: translate3d(27vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(63vw, -117vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-60 {
+    from {
+        transform: translate3d(27vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(63vw, -117vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(60) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3471ms;
+    animation-delay: 3471ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(61) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-61;
+    animation-name: GDBFrontend_theme_sky_move_frames-61;
+    -webkit-animation-duration: 34512ms;
+    animation-duration: 34512ms;
+    -webkit-animation-delay: 8390ms;
+    animation-delay: 8390ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-61 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(90vw, -120vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-61 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(90vw, -120vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(61) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1924ms;
+    animation-delay: 1924ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(62) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-62;
+    animation-name: GDBFrontend_theme_sky_move_frames-62;
+    -webkit-animation-duration: 28516ms;
+    animation-duration: 28516ms;
+    -webkit-animation-delay: 13818ms;
+    animation-delay: 13818ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-62 {
+    from {
+        transform: translate3d(96vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-62 {
+    from {
+        transform: translate3d(96vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(62) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1037ms;
+    animation-delay: 1037ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(63) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-63;
+    animation-name: GDBFrontend_theme_sky_move_frames-63;
+    -webkit-animation-duration: 28752ms;
+    animation-duration: 28752ms;
+    -webkit-animation-delay: 35501ms;
+    animation-delay: 35501ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-63 {
+    from {
+        transform: translate3d(1vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(93vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-63 {
+    from {
+        transform: translate3d(1vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(93vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(63) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1109ms;
+    animation-delay: 1109ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(64) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-64;
+    animation-name: GDBFrontend_theme_sky_move_frames-64;
+    -webkit-animation-duration: 28491ms;
+    animation-duration: 28491ms;
+    -webkit-animation-delay: 27442ms;
+    animation-delay: 27442ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-64 {
+    from {
+        transform: translate3d(26vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(11vw, -132vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-64 {
+    from {
+        transform: translate3d(26vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(11vw, -132vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(64) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3555ms;
+    animation-delay: 3555ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(65) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-65;
+    animation-name: GDBFrontend_theme_sky_move_frames-65;
+    -webkit-animation-duration: 30206ms;
+    animation-duration: 30206ms;
+    -webkit-animation-delay: 27640ms;
+    animation-delay: 27640ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-65 {
+    from {
+        transform: translate3d(36vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(60vw, -132vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-65 {
+    from {
+        transform: translate3d(36vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(60vw, -132vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(65) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1335ms;
+    animation-delay: 1335ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(66) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-66;
+    animation-name: GDBFrontend_theme_sky_move_frames-66;
+    -webkit-animation-duration: 29567ms;
+    animation-duration: 29567ms;
+    -webkit-animation-delay: 35996ms;
+    animation-delay: 35996ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-66 {
+    from {
+        transform: translate3d(99vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(14vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-66 {
+    from {
+        transform: translate3d(99vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(14vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(66) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2731ms;
+    animation-delay: 2731ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(67) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-67;
+    animation-name: GDBFrontend_theme_sky_move_frames-67;
+    -webkit-animation-duration: 31796ms;
+    animation-duration: 31796ms;
+    -webkit-animation-delay: 20688ms;
+    animation-delay: 20688ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-67 {
+    from {
+        transform: translate3d(93vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(95vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-67 {
+    from {
+        transform: translate3d(93vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(95vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(67) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3139ms;
+    animation-delay: 3139ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(68) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-68;
+    animation-name: GDBFrontend_theme_sky_move_frames-68;
+    -webkit-animation-duration: 31368ms;
+    animation-duration: 31368ms;
+    -webkit-animation-delay: 32652ms;
+    animation-delay: 32652ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-68 {
+    from {
+        transform: translate3d(79vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -137vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-68 {
+    from {
+        transform: translate3d(79vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -137vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(68) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3517ms;
+    animation-delay: 3517ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(69) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-69;
+    animation-name: GDBFrontend_theme_sky_move_frames-69;
+    -webkit-animation-duration: 29085ms;
+    animation-duration: 29085ms;
+    -webkit-animation-delay: 20753ms;
+    animation-delay: 20753ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-69 {
+    from {
+        transform: translate3d(23vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(12vw, -125vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-69 {
+    from {
+        transform: translate3d(23vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(12vw, -125vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(69) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2676ms;
+    animation-delay: 2676ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(70) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-70;
+    animation-name: GDBFrontend_theme_sky_move_frames-70;
+    -webkit-animation-duration: 29734ms;
+    animation-duration: 29734ms;
+    -webkit-animation-delay: 14481ms;
+    animation-delay: 14481ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-70 {
+    from {
+        transform: translate3d(15vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(61vw, -116vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-70 {
+    from {
+        transform: translate3d(15vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(61vw, -116vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(70) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 395ms;
+    animation-delay: 395ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(71) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-71;
+    animation-name: GDBFrontend_theme_sky_move_frames-71;
+    -webkit-animation-duration: 36911ms;
+    animation-duration: 36911ms;
+    -webkit-animation-delay: 22919ms;
+    animation-delay: 22919ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-71 {
+    from {
+        transform: translate3d(65vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(81vw, -125vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-71 {
+    from {
+        transform: translate3d(65vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(81vw, -125vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(71) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 606ms;
+    animation-delay: 606ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(72) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-72;
+    animation-name: GDBFrontend_theme_sky_move_frames-72;
+    -webkit-animation-duration: 36899ms;
+    animation-duration: 36899ms;
+    -webkit-animation-delay: 35796ms;
+    animation-delay: 35796ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-72 {
+    from {
+        transform: translate3d(20vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -127vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-72 {
+    from {
+        transform: translate3d(20vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -127vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(72) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 291ms;
+    animation-delay: 291ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(73) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-73;
+    animation-name: GDBFrontend_theme_sky_move_frames-73;
+    -webkit-animation-duration: 33130ms;
+    animation-duration: 33130ms;
+    -webkit-animation-delay: 36462ms;
+    animation-delay: 36462ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-73 {
+    from {
+        transform: translate3d(38vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -125vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-73 {
+    from {
+        transform: translate3d(38vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -125vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(73) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3031ms;
+    animation-delay: 3031ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(74) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-74;
+    animation-name: GDBFrontend_theme_sky_move_frames-74;
+    -webkit-animation-duration: 36015ms;
+    animation-duration: 36015ms;
+    -webkit-animation-delay: 12497ms;
+    animation-delay: 12497ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-74 {
+    from {
+        transform: translate3d(26vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-74 {
+    from {
+        transform: translate3d(26vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(74) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 859ms;
+    animation-delay: 859ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(75) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-75;
+    animation-name: GDBFrontend_theme_sky_move_frames-75;
+    -webkit-animation-duration: 34684ms;
+    animation-duration: 34684ms;
+    -webkit-animation-delay: 17445ms;
+    animation-delay: 17445ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-75 {
+    from {
+        transform: translate3d(30vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(56vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-75 {
+    from {
+        transform: translate3d(30vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(56vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(75) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2805ms;
+    animation-delay: 2805ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(76) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-76;
+    animation-name: GDBFrontend_theme_sky_move_frames-76;
+    -webkit-animation-duration: 36734ms;
+    animation-duration: 36734ms;
+    -webkit-animation-delay: 16906ms;
+    animation-delay: 16906ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-76 {
+    from {
+        transform: translate3d(47vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -114vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-76 {
+    from {
+        transform: translate3d(47vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -114vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(76) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 299ms;
+    animation-delay: 299ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(77) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-77;
+    animation-name: GDBFrontend_theme_sky_move_frames-77;
+    -webkit-animation-duration: 28859ms;
+    animation-duration: 28859ms;
+    -webkit-animation-delay: 27801ms;
+    animation-delay: 27801ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-77 {
+    from {
+        transform: translate3d(86vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-77 {
+    from {
+        transform: translate3d(86vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(77) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 818ms;
+    animation-delay: 818ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(78) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-78;
+    animation-name: GDBFrontend_theme_sky_move_frames-78;
+    -webkit-animation-duration: 32066ms;
+    animation-duration: 32066ms;
+    -webkit-animation-delay: 13896ms;
+    animation-delay: 13896ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-78 {
+    from {
+        transform: translate3d(34vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -132vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-78 {
+    from {
+        transform: translate3d(34vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -132vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(78) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3668ms;
+    animation-delay: 3668ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(79) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-79;
+    animation-name: GDBFrontend_theme_sky_move_frames-79;
+    -webkit-animation-duration: 31098ms;
+    animation-duration: 31098ms;
+    -webkit-animation-delay: 28122ms;
+    animation-delay: 28122ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-79 {
+    from {
+        transform: translate3d(76vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(52vw, -124vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-79 {
+    from {
+        transform: translate3d(76vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(52vw, -124vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(79) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3941ms;
+    animation-delay: 3941ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(80) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-80;
+    animation-name: GDBFrontend_theme_sky_move_frames-80;
+    -webkit-animation-duration: 33451ms;
+    animation-duration: 33451ms;
+    -webkit-animation-delay: 18515ms;
+    animation-delay: 18515ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-80 {
+    from {
+        transform: translate3d(59vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(34vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-80 {
+    from {
+        transform: translate3d(59vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(34vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(80) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3579ms;
+    animation-delay: 3579ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(81) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-81;
+    animation-name: GDBFrontend_theme_sky_move_frames-81;
+    -webkit-animation-duration: 30843ms;
+    animation-duration: 30843ms;
+    -webkit-animation-delay: 30447ms;
+    animation-delay: 30447ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-81 {
+    from {
+        transform: translate3d(70vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(58vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-81 {
+    from {
+        transform: translate3d(70vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(58vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(81) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2571ms;
+    animation-delay: 2571ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(82) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-82;
+    animation-name: GDBFrontend_theme_sky_move_frames-82;
+    -webkit-animation-duration: 34252ms;
+    animation-duration: 34252ms;
+    -webkit-animation-delay: 32680ms;
+    animation-delay: 32680ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-82 {
+    from {
+        transform: translate3d(96vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-82 {
+    from {
+        transform: translate3d(96vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(82) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 88ms;
+    animation-delay: 88ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(83) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-83;
+    animation-name: GDBFrontend_theme_sky_move_frames-83;
+    -webkit-animation-duration: 33535ms;
+    animation-duration: 33535ms;
+    -webkit-animation-delay: 5652ms;
+    animation-delay: 5652ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-83 {
+    from {
+        transform: translate3d(90vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(43vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-83 {
+    from {
+        transform: translate3d(90vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(43vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(83) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 910ms;
+    animation-delay: 910ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(84) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-84;
+    animation-name: GDBFrontend_theme_sky_move_frames-84;
+    -webkit-animation-duration: 34600ms;
+    animation-duration: 34600ms;
+    -webkit-animation-delay: 623ms;
+    animation-delay: 623ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-84 {
+    from {
+        transform: translate3d(25vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(31vw, -134vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-84 {
+    from {
+        transform: translate3d(25vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(31vw, -134vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(84) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2127ms;
+    animation-delay: 2127ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(85) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-85;
+    animation-name: GDBFrontend_theme_sky_move_frames-85;
+    -webkit-animation-duration: 33689ms;
+    animation-duration: 33689ms;
+    -webkit-animation-delay: 3773ms;
+    animation-delay: 3773ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-85 {
+    from {
+        transform: translate3d(36vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(8vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-85 {
+    from {
+        transform: translate3d(36vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(8vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(85) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2282ms;
+    animation-delay: 2282ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(86) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-86;
+    animation-name: GDBFrontend_theme_sky_move_frames-86;
+    -webkit-animation-duration: 36058ms;
+    animation-duration: 36058ms;
+    -webkit-animation-delay: 2827ms;
+    animation-delay: 2827ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-86 {
+    from {
+        transform: translate3d(95vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -102vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-86 {
+    from {
+        transform: translate3d(95vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -102vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(86) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3617ms;
+    animation-delay: 3617ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(87) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-87;
+    animation-name: GDBFrontend_theme_sky_move_frames-87;
+    -webkit-animation-duration: 30035ms;
+    animation-duration: 30035ms;
+    -webkit-animation-delay: 29796ms;
+    animation-delay: 29796ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-87 {
+    from {
+        transform: translate3d(10vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(5vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-87 {
+    from {
+        transform: translate3d(10vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(5vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(87) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3698ms;
+    animation-delay: 3698ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(88) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-88;
+    animation-name: GDBFrontend_theme_sky_move_frames-88;
+    -webkit-animation-duration: 33007ms;
+    animation-duration: 33007ms;
+    -webkit-animation-delay: 6554ms;
+    animation-delay: 6554ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-88 {
+    from {
+        transform: translate3d(46vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -117vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-88 {
+    from {
+        transform: translate3d(46vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -117vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(88) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2998ms;
+    animation-delay: 2998ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(89) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-89;
+    animation-name: GDBFrontend_theme_sky_move_frames-89;
+    -webkit-animation-duration: 28373ms;
+    animation-duration: 28373ms;
+    -webkit-animation-delay: 20050ms;
+    animation-delay: 20050ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-89 {
+    from {
+        transform: translate3d(86vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-89 {
+    from {
+        transform: translate3d(86vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(89) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 489ms;
+    animation-delay: 489ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(90) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-90;
+    animation-name: GDBFrontend_theme_sky_move_frames-90;
+    -webkit-animation-duration: 32373ms;
+    animation-duration: 32373ms;
+    -webkit-animation-delay: 8749ms;
+    animation-delay: 8749ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-90 {
+    from {
+        transform: translate3d(44vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-90 {
+    from {
+        transform: translate3d(44vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(90) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1545ms;
+    animation-delay: 1545ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(91) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-91;
+    animation-name: GDBFrontend_theme_sky_move_frames-91;
+    -webkit-animation-duration: 32016ms;
+    animation-duration: 32016ms;
+    -webkit-animation-delay: 33451ms;
+    animation-delay: 33451ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-91 {
+    from {
+        transform: translate3d(10vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(12vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-91 {
+    from {
+        transform: translate3d(10vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(12vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(91) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3082ms;
+    animation-delay: 3082ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(92) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-92;
+    animation-name: GDBFrontend_theme_sky_move_frames-92;
+    -webkit-animation-duration: 32908ms;
+    animation-duration: 32908ms;
+    -webkit-animation-delay: 9727ms;
+    animation-delay: 9727ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-92 {
+    from {
+        transform: translate3d(37vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(71vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-92 {
+    from {
+        transform: translate3d(37vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(71vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(92) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 347ms;
+    animation-delay: 347ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(93) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-93;
+    animation-name: GDBFrontend_theme_sky_move_frames-93;
+    -webkit-animation-duration: 35121ms;
+    animation-duration: 35121ms;
+    -webkit-animation-delay: 10649ms;
+    animation-delay: 10649ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-93 {
+    from {
+        transform: translate3d(100vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-93 {
+    from {
+        transform: translate3d(100vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(93) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2298ms;
+    animation-delay: 2298ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(94) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-94;
+    animation-name: GDBFrontend_theme_sky_move_frames-94;
+    -webkit-animation-duration: 28268ms;
+    animation-duration: 28268ms;
+    -webkit-animation-delay: 31670ms;
+    animation-delay: 31670ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-94 {
+    from {
+        transform: translate3d(99vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(25vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-94 {
+    from {
+        transform: translate3d(99vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(25vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(94) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2246ms;
+    animation-delay: 2246ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(95) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-95;
+    animation-name: GDBFrontend_theme_sky_move_frames-95;
+    -webkit-animation-duration: 29486ms;
+    animation-duration: 29486ms;
+    -webkit-animation-delay: 2884ms;
+    animation-delay: 2884ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-95 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -132vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-95 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -132vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(95) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 982ms;
+    animation-delay: 982ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(96) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-96;
+    animation-name: GDBFrontend_theme_sky_move_frames-96;
+    -webkit-animation-duration: 32081ms;
+    animation-duration: 32081ms;
+    -webkit-animation-delay: 27831ms;
+    animation-delay: 27831ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-96 {
+    from {
+        transform: translate3d(79vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(42vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-96 {
+    from {
+        transform: translate3d(79vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(42vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(96) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2931ms;
+    animation-delay: 2931ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(97) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-97;
+    animation-name: GDBFrontend_theme_sky_move_frames-97;
+    -webkit-animation-duration: 35848ms;
+    animation-duration: 35848ms;
+    -webkit-animation-delay: 12331ms;
+    animation-delay: 12331ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-97 {
+    from {
+        transform: translate3d(53vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(84vw, -128vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-97 {
+    from {
+        transform: translate3d(53vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(84vw, -128vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(97) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1823ms;
+    animation-delay: 1823ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(98) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-98;
+    animation-name: GDBFrontend_theme_sky_move_frames-98;
+    -webkit-animation-duration: 35715ms;
+    animation-duration: 35715ms;
+    -webkit-animation-delay: 26318ms;
+    animation-delay: 26318ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-98 {
+    from {
+        transform: translate3d(1vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(66vw, -126vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-98 {
+    from {
+        transform: translate3d(1vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(66vw, -126vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(98) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3834ms;
+    animation-delay: 3834ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(99) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-99;
+    animation-name: GDBFrontend_theme_sky_move_frames-99;
+    -webkit-animation-duration: 33641ms;
+    animation-duration: 33641ms;
+    -webkit-animation-delay: 30713ms;
+    animation-delay: 30713ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-99 {
+    from {
+        transform: translate3d(64vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-99 {
+    from {
+        transform: translate3d(64vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(99) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1392ms;
+    animation-delay: 1392ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(100) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-100;
+    animation-name: GDBFrontend_theme_sky_move_frames-100;
+    -webkit-animation-duration: 30787ms;
+    animation-duration: 30787ms;
+    -webkit-animation-delay: 21411ms;
+    animation-delay: 21411ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-100 {
+    from {
+        transform: translate3d(24vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-100 {
+    from {
+        transform: translate3d(24vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(100) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 910ms;
+    animation-delay: 910ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(101) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-101;
+    animation-name: GDBFrontend_theme_sky_move_frames-101;
+    -webkit-animation-duration: 29444ms;
+    animation-duration: 29444ms;
+    -webkit-animation-delay: 22388ms;
+    animation-delay: 22388ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-101 {
+    from {
+        transform: translate3d(82vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -128vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-101 {
+    from {
+        transform: translate3d(82vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(78vw, -128vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(101) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1870ms;
+    animation-delay: 1870ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(102) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-102;
+    animation-name: GDBFrontend_theme_sky_move_frames-102;
+    -webkit-animation-duration: 34341ms;
+    animation-duration: 34341ms;
+    -webkit-animation-delay: 23043ms;
+    animation-delay: 23043ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-102 {
+    from {
+        transform: translate3d(10vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(39vw, -127vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-102 {
+    from {
+        transform: translate3d(10vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(39vw, -127vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(102) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2315ms;
+    animation-delay: 2315ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(103) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-103;
+    animation-name: GDBFrontend_theme_sky_move_frames-103;
+    -webkit-animation-duration: 30788ms;
+    animation-duration: 30788ms;
+    -webkit-animation-delay: 19434ms;
+    animation-delay: 19434ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-103 {
+    from {
+        transform: translate3d(97vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(75vw, -106vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-103 {
+    from {
+        transform: translate3d(97vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(75vw, -106vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(103) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 676ms;
+    animation-delay: 676ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(104) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-104;
+    animation-name: GDBFrontend_theme_sky_move_frames-104;
+    -webkit-animation-duration: 32588ms;
+    animation-duration: 32588ms;
+    -webkit-animation-delay: 8507ms;
+    animation-delay: 8507ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-104 {
+    from {
+        transform: translate3d(13vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-104 {
+    from {
+        transform: translate3d(13vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(104) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 435ms;
+    animation-delay: 435ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(105) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-105;
+    animation-name: GDBFrontend_theme_sky_move_frames-105;
+    -webkit-animation-duration: 35205ms;
+    animation-duration: 35205ms;
+    -webkit-animation-delay: 1078ms;
+    animation-delay: 1078ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-105 {
+    from {
+        transform: translate3d(25vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(26vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-105 {
+    from {
+        transform: translate3d(25vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(26vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(105) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3127ms;
+    animation-delay: 3127ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(106) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-106;
+    animation-name: GDBFrontend_theme_sky_move_frames-106;
+    -webkit-animation-duration: 33876ms;
+    animation-duration: 33876ms;
+    -webkit-animation-delay: 21231ms;
+    animation-delay: 21231ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-106 {
+    from {
+        transform: translate3d(30vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(82vw, -110vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-106 {
+    from {
+        transform: translate3d(30vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(82vw, -110vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(106) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1291ms;
+    animation-delay: 1291ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(107) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-107;
+    animation-name: GDBFrontend_theme_sky_move_frames-107;
+    -webkit-animation-duration: 32534ms;
+    animation-duration: 32534ms;
+    -webkit-animation-delay: 23719ms;
+    animation-delay: 23719ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-107 {
+    from {
+        transform: translate3d(31vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(44vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-107 {
+    from {
+        transform: translate3d(31vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(44vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(107) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3731ms;
+    animation-delay: 3731ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(108) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-108;
+    animation-name: GDBFrontend_theme_sky_move_frames-108;
+    -webkit-animation-duration: 35245ms;
+    animation-duration: 35245ms;
+    -webkit-animation-delay: 13016ms;
+    animation-delay: 13016ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-108 {
+    from {
+        transform: translate3d(85vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-108 {
+    from {
+        transform: translate3d(85vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(108) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3033ms;
+    animation-delay: 3033ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(109) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-109;
+    animation-name: GDBFrontend_theme_sky_move_frames-109;
+    -webkit-animation-duration: 28134ms;
+    animation-duration: 28134ms;
+    -webkit-animation-delay: 9152ms;
+    animation-delay: 9152ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-109 {
+    from {
+        transform: translate3d(27vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(60vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-109 {
+    from {
+        transform: translate3d(27vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(60vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(109) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 683ms;
+    animation-delay: 683ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(110) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-110;
+    animation-name: GDBFrontend_theme_sky_move_frames-110;
+    -webkit-animation-duration: 33090ms;
+    animation-duration: 33090ms;
+    -webkit-animation-delay: 9193ms;
+    animation-delay: 9193ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-110 {
+    from {
+        transform: translate3d(30vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(80vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-110 {
+    from {
+        transform: translate3d(30vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(80vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(110) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1539ms;
+    animation-delay: 1539ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(111) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-111;
+    animation-name: GDBFrontend_theme_sky_move_frames-111;
+    -webkit-animation-duration: 32993ms;
+    animation-duration: 32993ms;
+    -webkit-animation-delay: 33469ms;
+    animation-delay: 33469ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-111 {
+    from {
+        transform: translate3d(68vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(45vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-111 {
+    from {
+        transform: translate3d(68vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(45vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(111) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 530ms;
+    animation-delay: 530ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(112) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-112;
+    animation-name: GDBFrontend_theme_sky_move_frames-112;
+    -webkit-animation-duration: 34647ms;
+    animation-duration: 34647ms;
+    -webkit-animation-delay: 27738ms;
+    animation-delay: 27738ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-112 {
+    from {
+        transform: translate3d(12vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(30vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-112 {
+    from {
+        transform: translate3d(12vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(30vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(112) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1262ms;
+    animation-delay: 1262ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(113) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-113;
+    animation-name: GDBFrontend_theme_sky_move_frames-113;
+    -webkit-animation-duration: 36919ms;
+    animation-duration: 36919ms;
+    -webkit-animation-delay: 36460ms;
+    animation-delay: 36460ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-113 {
+    from {
+        transform: translate3d(80vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-113 {
+    from {
+        transform: translate3d(80vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(113) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3519ms;
+    animation-delay: 3519ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(114) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-114;
+    animation-name: GDBFrontend_theme_sky_move_frames-114;
+    -webkit-animation-duration: 30726ms;
+    animation-duration: 30726ms;
+    -webkit-animation-delay: 35759ms;
+    animation-delay: 35759ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-114 {
+    from {
+        transform: translate3d(64vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(54vw, -125vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-114 {
+    from {
+        transform: translate3d(64vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(54vw, -125vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(114) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1037ms;
+    animation-delay: 1037ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(115) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-115;
+    animation-name: GDBFrontend_theme_sky_move_frames-115;
+    -webkit-animation-duration: 33251ms;
+    animation-duration: 33251ms;
+    -webkit-animation-delay: 31534ms;
+    animation-delay: 31534ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-115 {
+    from {
+        transform: translate3d(43vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(91vw, -118vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-115 {
+    from {
+        transform: translate3d(43vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(91vw, -118vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(115) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2749ms;
+    animation-delay: 2749ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(116) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-116;
+    animation-name: GDBFrontend_theme_sky_move_frames-116;
+    -webkit-animation-duration: 28044ms;
+    animation-duration: 28044ms;
+    -webkit-animation-delay: 1141ms;
+    animation-delay: 1141ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-116 {
+    from {
+        transform: translate3d(84vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(7vw, -110vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-116 {
+    from {
+        transform: translate3d(84vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(7vw, -110vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(116) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 762ms;
+    animation-delay: 762ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(117) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-117;
+    animation-name: GDBFrontend_theme_sky_move_frames-117;
+    -webkit-animation-duration: 28331ms;
+    animation-duration: 28331ms;
+    -webkit-animation-delay: 36675ms;
+    animation-delay: 36675ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-117 {
+    from {
+        transform: translate3d(40vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-117 {
+    from {
+        transform: translate3d(40vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(117) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 10ms;
+    animation-delay: 10ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(118) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-118;
+    animation-name: GDBFrontend_theme_sky_move_frames-118;
+    -webkit-animation-duration: 35063ms;
+    animation-duration: 35063ms;
+    -webkit-animation-delay: 28830ms;
+    animation-delay: 28830ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-118 {
+    from {
+        transform: translate3d(5vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(80vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-118 {
+    from {
+        transform: translate3d(5vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(80vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(118) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3505ms;
+    animation-delay: 3505ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(119) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-119;
+    animation-name: GDBFrontend_theme_sky_move_frames-119;
+    -webkit-animation-duration: 36914ms;
+    animation-duration: 36914ms;
+    -webkit-animation-delay: 13173ms;
+    animation-delay: 13173ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-119 {
+    from {
+        transform: translate3d(41vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(7vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-119 {
+    from {
+        transform: translate3d(41vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(7vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(119) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1247ms;
+    animation-delay: 1247ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(120) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-120;
+    animation-name: GDBFrontend_theme_sky_move_frames-120;
+    -webkit-animation-duration: 33645ms;
+    animation-duration: 33645ms;
+    -webkit-animation-delay: 5470ms;
+    animation-delay: 5470ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-120 {
+    from {
+        transform: translate3d(38vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -127vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-120 {
+    from {
+        transform: translate3d(38vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -127vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(120) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1894ms;
+    animation-delay: 1894ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(121) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-121;
+    animation-name: GDBFrontend_theme_sky_move_frames-121;
+    -webkit-animation-duration: 28456ms;
+    animation-duration: 28456ms;
+    -webkit-animation-delay: 36509ms;
+    animation-delay: 36509ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-121 {
+    from {
+        transform: translate3d(7vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(89vw, -137vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-121 {
+    from {
+        transform: translate3d(7vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(89vw, -137vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(121) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2711ms;
+    animation-delay: 2711ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(122) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-122;
+    animation-name: GDBFrontend_theme_sky_move_frames-122;
+    -webkit-animation-duration: 36262ms;
+    animation-duration: 36262ms;
+    -webkit-animation-delay: 13223ms;
+    animation-delay: 13223ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-122 {
+    from {
+        transform: translate3d(21vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -117vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-122 {
+    from {
+        transform: translate3d(21vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -117vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(122) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 950ms;
+    animation-delay: 950ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(123) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-123;
+    animation-name: GDBFrontend_theme_sky_move_frames-123;
+    -webkit-animation-duration: 30882ms;
+    animation-duration: 30882ms;
+    -webkit-animation-delay: 16672ms;
+    animation-delay: 16672ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-123 {
+    from {
+        transform: translate3d(71vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(55vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-123 {
+    from {
+        transform: translate3d(71vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(55vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(123) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 811ms;
+    animation-delay: 811ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(124) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-124;
+    animation-name: GDBFrontend_theme_sky_move_frames-124;
+    -webkit-animation-duration: 32531ms;
+    animation-duration: 32531ms;
+    -webkit-animation-delay: 36780ms;
+    animation-delay: 36780ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-124 {
+    from {
+        transform: translate3d(34vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(32vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-124 {
+    from {
+        transform: translate3d(34vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(32vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(124) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1887ms;
+    animation-delay: 1887ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(125) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-125;
+    animation-name: GDBFrontend_theme_sky_move_frames-125;
+    -webkit-animation-duration: 28698ms;
+    animation-duration: 28698ms;
+    -webkit-animation-delay: 23424ms;
+    animation-delay: 23424ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-125 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(76vw, -122vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-125 {
+    from {
+        transform: translate3d(56vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(76vw, -122vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(125) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1410ms;
+    animation-delay: 1410ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(126) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-126;
+    animation-name: GDBFrontend_theme_sky_move_frames-126;
+    -webkit-animation-duration: 30180ms;
+    animation-duration: 30180ms;
+    -webkit-animation-delay: 22975ms;
+    animation-delay: 22975ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-126 {
+    from {
+        transform: translate3d(83vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(75vw, -131vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-126 {
+    from {
+        transform: translate3d(83vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(75vw, -131vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(126) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2695ms;
+    animation-delay: 2695ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(127) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-127;
+    animation-name: GDBFrontend_theme_sky_move_frames-127;
+    -webkit-animation-duration: 35798ms;
+    animation-duration: 35798ms;
+    -webkit-animation-delay: 34753ms;
+    animation-delay: 34753ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-127 {
+    from {
+        transform: translate3d(93vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(89vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-127 {
+    from {
+        transform: translate3d(93vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(89vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(127) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1883ms;
+    animation-delay: 1883ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(128) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-128;
+    animation-name: GDBFrontend_theme_sky_move_frames-128;
+    -webkit-animation-duration: 30189ms;
+    animation-duration: 30189ms;
+    -webkit-animation-delay: 14192ms;
+    animation-delay: 14192ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-128 {
+    from {
+        transform: translate3d(17vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(33vw, -106vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-128 {
+    from {
+        transform: translate3d(17vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(33vw, -106vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(128) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3111ms;
+    animation-delay: 3111ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(129) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-129;
+    animation-name: GDBFrontend_theme_sky_move_frames-129;
+    -webkit-animation-duration: 32609ms;
+    animation-duration: 32609ms;
+    -webkit-animation-delay: 28927ms;
+    animation-delay: 28927ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-129 {
+    from {
+        transform: translate3d(8vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-129 {
+    from {
+        transform: translate3d(8vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(129) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 22ms;
+    animation-delay: 22ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(130) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-130;
+    animation-name: GDBFrontend_theme_sky_move_frames-130;
+    -webkit-animation-duration: 31959ms;
+    animation-duration: 31959ms;
+    -webkit-animation-delay: 16794ms;
+    animation-delay: 16794ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-130 {
+    from {
+        transform: translate3d(35vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-130 {
+    from {
+        transform: translate3d(35vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(130) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1676ms;
+    animation-delay: 1676ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(131) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-131;
+    animation-name: GDBFrontend_theme_sky_move_frames-131;
+    -webkit-animation-duration: 36606ms;
+    animation-duration: 36606ms;
+    -webkit-animation-delay: 20138ms;
+    animation-delay: 20138ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-131 {
+    from {
+        transform: translate3d(67vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -138vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-131 {
+    from {
+        transform: translate3d(67vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(47vw, -138vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(131) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3077ms;
+    animation-delay: 3077ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(132) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-132;
+    animation-name: GDBFrontend_theme_sky_move_frames-132;
+    -webkit-animation-duration: 29290ms;
+    animation-duration: 29290ms;
+    -webkit-animation-delay: 33737ms;
+    animation-delay: 33737ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-132 {
+    from {
+        transform: translate3d(84vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-132 {
+    from {
+        transform: translate3d(84vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(132) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1383ms;
+    animation-delay: 1383ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(133) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-133;
+    animation-name: GDBFrontend_theme_sky_move_frames-133;
+    -webkit-animation-duration: 28957ms;
+    animation-duration: 28957ms;
+    -webkit-animation-delay: 33ms;
+    animation-delay: 33ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-133 {
+    from {
+        transform: translate3d(10vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(16vw, -124vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-133 {
+    from {
+        transform: translate3d(10vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(16vw, -124vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(133) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 503ms;
+    animation-delay: 503ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(134) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-134;
+    animation-name: GDBFrontend_theme_sky_move_frames-134;
+    -webkit-animation-duration: 34910ms;
+    animation-duration: 34910ms;
+    -webkit-animation-delay: 19324ms;
+    animation-delay: 19324ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-134 {
+    from {
+        transform: translate3d(48vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(30vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-134 {
+    from {
+        transform: translate3d(48vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(30vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(134) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 655ms;
+    animation-delay: 655ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(135) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-135;
+    animation-name: GDBFrontend_theme_sky_move_frames-135;
+    -webkit-animation-duration: 28988ms;
+    animation-duration: 28988ms;
+    -webkit-animation-delay: 10604ms;
+    animation-delay: 10604ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-135 {
+    from {
+        transform: translate3d(66vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(28vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-135 {
+    from {
+        transform: translate3d(66vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(28vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(135) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3977ms;
+    animation-delay: 3977ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(136) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-136;
+    animation-name: GDBFrontend_theme_sky_move_frames-136;
+    -webkit-animation-duration: 34729ms;
+    animation-duration: 34729ms;
+    -webkit-animation-delay: 22684ms;
+    animation-delay: 22684ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-136 {
+    from {
+        transform: translate3d(74vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(83vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-136 {
+    from {
+        transform: translate3d(74vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(83vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(136) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1756ms;
+    animation-delay: 1756ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(137) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-137;
+    animation-name: GDBFrontend_theme_sky_move_frames-137;
+    -webkit-animation-duration: 28298ms;
+    animation-duration: 28298ms;
+    -webkit-animation-delay: 32650ms;
+    animation-delay: 32650ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-137 {
+    from {
+        transform: translate3d(85vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(45vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-137 {
+    from {
+        transform: translate3d(85vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(45vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(137) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 497ms;
+    animation-delay: 497ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(138) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-138;
+    animation-name: GDBFrontend_theme_sky_move_frames-138;
+    -webkit-animation-duration: 35132ms;
+    animation-duration: 35132ms;
+    -webkit-animation-delay: 4887ms;
+    animation-delay: 4887ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-138 {
+    from {
+        transform: translate3d(18vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(20vw, -117vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-138 {
+    from {
+        transform: translate3d(18vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(20vw, -117vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(138) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3276ms;
+    animation-delay: 3276ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(139) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-139;
+    animation-name: GDBFrontend_theme_sky_move_frames-139;
+    -webkit-animation-duration: 34313ms;
+    animation-duration: 34313ms;
+    -webkit-animation-delay: 750ms;
+    animation-delay: 750ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-139 {
+    from {
+        transform: translate3d(97vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(17vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-139 {
+    from {
+        transform: translate3d(97vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(17vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(139) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1935ms;
+    animation-delay: 1935ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(140) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-140;
+    animation-name: GDBFrontend_theme_sky_move_frames-140;
+    -webkit-animation-duration: 32056ms;
+    animation-duration: 32056ms;
+    -webkit-animation-delay: 31143ms;
+    animation-delay: 31143ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-140 {
+    from {
+        transform: translate3d(21vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-140 {
+    from {
+        transform: translate3d(21vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(140) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2143ms;
+    animation-delay: 2143ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(141) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-141;
+    animation-name: GDBFrontend_theme_sky_move_frames-141;
+    -webkit-animation-duration: 34563ms;
+    animation-duration: 34563ms;
+    -webkit-animation-delay: 9602ms;
+    animation-delay: 9602ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-141 {
+    from {
+        transform: translate3d(98vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(67vw, -135vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-141 {
+    from {
+        transform: translate3d(98vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(67vw, -135vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(141) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1179ms;
+    animation-delay: 1179ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(142) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-142;
+    animation-name: GDBFrontend_theme_sky_move_frames-142;
+    -webkit-animation-duration: 30907ms;
+    animation-duration: 30907ms;
+    -webkit-animation-delay: 15002ms;
+    animation-delay: 15002ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-142 {
+    from {
+        transform: translate3d(37vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(3vw, -114vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-142 {
+    from {
+        transform: translate3d(37vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(3vw, -114vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(142) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2167ms;
+    animation-delay: 2167ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(143) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-143;
+    animation-name: GDBFrontend_theme_sky_move_frames-143;
+    -webkit-animation-duration: 31195ms;
+    animation-duration: 31195ms;
+    -webkit-animation-delay: 15028ms;
+    animation-delay: 15028ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-143 {
+    from {
+        transform: translate3d(99vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(72vw, -104vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-143 {
+    from {
+        transform: translate3d(99vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(72vw, -104vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(143) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1871ms;
+    animation-delay: 1871ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(144) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-144;
+    animation-name: GDBFrontend_theme_sky_move_frames-144;
+    -webkit-animation-duration: 30641ms;
+    animation-duration: 30641ms;
+    -webkit-animation-delay: 20291ms;
+    animation-delay: 20291ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-144 {
+    from {
+        transform: translate3d(5vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(6vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-144 {
+    from {
+        transform: translate3d(5vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(6vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(144) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 722ms;
+    animation-delay: 722ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(145) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-145;
+    animation-name: GDBFrontend_theme_sky_move_frames-145;
+    -webkit-animation-duration: 32848ms;
+    animation-duration: 32848ms;
+    -webkit-animation-delay: 21025ms;
+    animation-delay: 21025ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-145 {
+    from {
+        transform: translate3d(97vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-145 {
+    from {
+        transform: translate3d(97vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(145) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1521ms;
+    animation-delay: 1521ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(146) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-146;
+    animation-name: GDBFrontend_theme_sky_move_frames-146;
+    -webkit-animation-duration: 32984ms;
+    animation-duration: 32984ms;
+    -webkit-animation-delay: 22026ms;
+    animation-delay: 22026ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-146 {
+    from {
+        transform: translate3d(50vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -122vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-146 {
+    from {
+        transform: translate3d(50vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -122vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(146) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1146ms;
+    animation-delay: 1146ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(147) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-147;
+    animation-name: GDBFrontend_theme_sky_move_frames-147;
+    -webkit-animation-duration: 31501ms;
+    animation-duration: 31501ms;
+    -webkit-animation-delay: 18213ms;
+    animation-delay: 18213ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-147 {
+    from {
+        transform: translate3d(10vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -110vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-147 {
+    from {
+        transform: translate3d(10vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(50vw, -110vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(147) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3891ms;
+    animation-delay: 3891ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(148) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-148;
+    animation-name: GDBFrontend_theme_sky_move_frames-148;
+    -webkit-animation-duration: 33970ms;
+    animation-duration: 33970ms;
+    -webkit-animation-delay: 10355ms;
+    animation-delay: 10355ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-148 {
+    from {
+        transform: translate3d(33vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(35vw, -115vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-148 {
+    from {
+        transform: translate3d(33vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(35vw, -115vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(148) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1619ms;
+    animation-delay: 1619ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(149) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-149;
+    animation-name: GDBFrontend_theme_sky_move_frames-149;
+    -webkit-animation-duration: 30146ms;
+    animation-duration: 30146ms;
+    -webkit-animation-delay: 13491ms;
+    animation-delay: 13491ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-149 {
+    from {
+        transform: translate3d(26vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(46vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-149 {
+    from {
+        transform: translate3d(26vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(46vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(149) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3224ms;
+    animation-delay: 3224ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(150) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-150;
+    animation-name: GDBFrontend_theme_sky_move_frames-150;
+    -webkit-animation-duration: 28707ms;
+    animation-duration: 28707ms;
+    -webkit-animation-delay: 30871ms;
+    animation-delay: 30871ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-150 {
+    from {
+        transform: translate3d(26vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(28vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-150 {
+    from {
+        transform: translate3d(26vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(28vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(150) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2622ms;
+    animation-delay: 2622ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(151) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-151;
+    animation-name: GDBFrontend_theme_sky_move_frames-151;
+    -webkit-animation-duration: 29403ms;
+    animation-duration: 29403ms;
+    -webkit-animation-delay: 36797ms;
+    animation-delay: 36797ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-151 {
+    from {
+        transform: translate3d(4vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-151 {
+    from {
+        transform: translate3d(4vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(22vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(151) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1313ms;
+    animation-delay: 1313ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(152) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-152;
+    animation-name: GDBFrontend_theme_sky_move_frames-152;
+    -webkit-animation-duration: 28176ms;
+    animation-duration: 28176ms;
+    -webkit-animation-delay: 24943ms;
+    animation-delay: 24943ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-152 {
+    from {
+        transform: translate3d(3vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(51vw, -106vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-152 {
+    from {
+        transform: translate3d(3vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(51vw, -106vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(152) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 435ms;
+    animation-delay: 435ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(153) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-153;
+    animation-name: GDBFrontend_theme_sky_move_frames-153;
+    -webkit-animation-duration: 28056ms;
+    animation-duration: 28056ms;
+    -webkit-animation-delay: 36208ms;
+    animation-delay: 36208ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-153 {
+    from {
+        transform: translate3d(16vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-153 {
+    from {
+        transform: translate3d(16vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(153) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1785ms;
+    animation-delay: 1785ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(154) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-154;
+    animation-name: GDBFrontend_theme_sky_move_frames-154;
+    -webkit-animation-duration: 32571ms;
+    animation-duration: 32571ms;
+    -webkit-animation-delay: 32370ms;
+    animation-delay: 32370ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-154 {
+    from {
+        transform: translate3d(71vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(5vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-154 {
+    from {
+        transform: translate3d(71vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(5vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(154) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 766ms;
+    animation-delay: 766ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(155) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-155;
+    animation-name: GDBFrontend_theme_sky_move_frames-155;
+    -webkit-animation-duration: 30488ms;
+    animation-duration: 30488ms;
+    -webkit-animation-delay: 27390ms;
+    animation-delay: 27390ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-155 {
+    from {
+        transform: translate3d(68vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -110vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-155 {
+    from {
+        transform: translate3d(68vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -110vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(155) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3777ms;
+    animation-delay: 3777ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(156) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-156;
+    animation-name: GDBFrontend_theme_sky_move_frames-156;
+    -webkit-animation-duration: 29541ms;
+    animation-duration: 29541ms;
+    -webkit-animation-delay: 22065ms;
+    animation-delay: 22065ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-156 {
+    from {
+        transform: translate3d(42vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -114vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-156 {
+    from {
+        transform: translate3d(42vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -114vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(156) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1456ms;
+    animation-delay: 1456ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(157) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-157;
+    animation-name: GDBFrontend_theme_sky_move_frames-157;
+    -webkit-animation-duration: 31196ms;
+    animation-duration: 31196ms;
+    -webkit-animation-delay: 21811ms;
+    animation-delay: 21811ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-157 {
+    from {
+        transform: translate3d(77vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-157 {
+    from {
+        transform: translate3d(77vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(79vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(157) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2071ms;
+    animation-delay: 2071ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(158) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-158;
+    animation-name: GDBFrontend_theme_sky_move_frames-158;
+    -webkit-animation-duration: 36267ms;
+    animation-duration: 36267ms;
+    -webkit-animation-delay: 19526ms;
+    animation-delay: 19526ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-158 {
+    from {
+        transform: translate3d(55vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(32vw, -120vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-158 {
+    from {
+        transform: translate3d(55vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(32vw, -120vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(158) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2161ms;
+    animation-delay: 2161ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(159) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-159;
+    animation-name: GDBFrontend_theme_sky_move_frames-159;
+    -webkit-animation-duration: 33661ms;
+    animation-duration: 33661ms;
+    -webkit-animation-delay: 24972ms;
+    animation-delay: 24972ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-159 {
+    from {
+        transform: translate3d(22vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -120vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-159 {
+    from {
+        transform: translate3d(22vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(9vw, -120vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(159) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3276ms;
+    animation-delay: 3276ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(160) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-160;
+    animation-name: GDBFrontend_theme_sky_move_frames-160;
+    -webkit-animation-duration: 28567ms;
+    animation-duration: 28567ms;
+    -webkit-animation-delay: 19591ms;
+    animation-delay: 19591ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-160 {
+    from {
+        transform: translate3d(5vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(98vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-160 {
+    from {
+        transform: translate3d(5vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(98vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(160) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3994ms;
+    animation-delay: 3994ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(161) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-161;
+    animation-name: GDBFrontend_theme_sky_move_frames-161;
+    -webkit-animation-duration: 36441ms;
+    animation-duration: 36441ms;
+    -webkit-animation-delay: 9757ms;
+    animation-delay: 9757ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-161 {
+    from {
+        transform: translate3d(19vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-161 {
+    from {
+        transform: translate3d(19vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(13vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(161) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3132ms;
+    animation-delay: 3132ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(162) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-162;
+    animation-name: GDBFrontend_theme_sky_move_frames-162;
+    -webkit-animation-duration: 33600ms;
+    animation-duration: 33600ms;
+    -webkit-animation-delay: 11203ms;
+    animation-delay: 11203ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-162 {
+    from {
+        transform: translate3d(6vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(37vw, -127vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-162 {
+    from {
+        transform: translate3d(6vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(37vw, -127vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(162) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2987ms;
+    animation-delay: 2987ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(163) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-163;
+    animation-name: GDBFrontend_theme_sky_move_frames-163;
+    -webkit-animation-duration: 29279ms;
+    animation-duration: 29279ms;
+    -webkit-animation-delay: 39ms;
+    animation-delay: 39ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-163 {
+    from {
+        transform: translate3d(18vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(35vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-163 {
+    from {
+        transform: translate3d(18vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(35vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(163) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 804ms;
+    animation-delay: 804ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(164) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-164;
+    animation-name: GDBFrontend_theme_sky_move_frames-164;
+    -webkit-animation-duration: 33934ms;
+    animation-duration: 33934ms;
+    -webkit-animation-delay: 14208ms;
+    animation-delay: 14208ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-164 {
+    from {
+        transform: translate3d(75vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(30vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-164 {
+    from {
+        transform: translate3d(75vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(30vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(164) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 646ms;
+    animation-delay: 646ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(165) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-165;
+    animation-name: GDBFrontend_theme_sky_move_frames-165;
+    -webkit-animation-duration: 32562ms;
+    animation-duration: 32562ms;
+    -webkit-animation-delay: 18826ms;
+    animation-delay: 18826ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-165 {
+    from {
+        transform: translate3d(9vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(60vw, -126vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-165 {
+    from {
+        transform: translate3d(9vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(60vw, -126vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(165) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1089ms;
+    animation-delay: 1089ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(166) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-166;
+    animation-name: GDBFrontend_theme_sky_move_frames-166;
+    -webkit-animation-duration: 36989ms;
+    animation-duration: 36989ms;
+    -webkit-animation-delay: 10365ms;
+    animation-delay: 10365ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-166 {
+    from {
+        transform: translate3d(77vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(37vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-166 {
+    from {
+        transform: translate3d(77vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(37vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(166) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1623ms;
+    animation-delay: 1623ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(167) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-167;
+    animation-name: GDBFrontend_theme_sky_move_frames-167;
+    -webkit-animation-duration: 35090ms;
+    animation-duration: 35090ms;
+    -webkit-animation-delay: 16866ms;
+    animation-delay: 16866ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-167 {
+    from {
+        transform: translate3d(70vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(39vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-167 {
+    from {
+        transform: translate3d(70vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(39vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(167) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3441ms;
+    animation-delay: 3441ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(168) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-168;
+    animation-name: GDBFrontend_theme_sky_move_frames-168;
+    -webkit-animation-duration: 36232ms;
+    animation-duration: 36232ms;
+    -webkit-animation-delay: 15543ms;
+    animation-delay: 15543ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-168 {
+    from {
+        transform: translate3d(63vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(37vw, -128vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-168 {
+    from {
+        transform: translate3d(63vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(37vw, -128vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(168) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1210ms;
+    animation-delay: 1210ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(169) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-169;
+    animation-name: GDBFrontend_theme_sky_move_frames-169;
+    -webkit-animation-duration: 34688ms;
+    animation-duration: 34688ms;
+    -webkit-animation-delay: 17185ms;
+    animation-delay: 17185ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-169 {
+    from {
+        transform: translate3d(54vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(20vw, -112vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-169 {
+    from {
+        transform: translate3d(54vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(20vw, -112vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(169) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 596ms;
+    animation-delay: 596ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(170) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-170;
+    animation-name: GDBFrontend_theme_sky_move_frames-170;
+    -webkit-animation-duration: 35500ms;
+    animation-duration: 35500ms;
+    -webkit-animation-delay: 26139ms;
+    animation-delay: 26139ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-170 {
+    from {
+        transform: translate3d(96vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(66vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-170 {
+    from {
+        transform: translate3d(96vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(66vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(170) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3174ms;
+    animation-delay: 3174ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(171) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-171;
+    animation-name: GDBFrontend_theme_sky_move_frames-171;
+    -webkit-animation-duration: 31412ms;
+    animation-duration: 31412ms;
+    -webkit-animation-delay: 31705ms;
+    animation-delay: 31705ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-171 {
+    from {
+        transform: translate3d(34vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(52vw, -113vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-171 {
+    from {
+        transform: translate3d(34vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(52vw, -113vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(171) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 313ms;
+    animation-delay: 313ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(172) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-172;
+    animation-name: GDBFrontend_theme_sky_move_frames-172;
+    -webkit-animation-duration: 31622ms;
+    animation-duration: 31622ms;
+    -webkit-animation-delay: 5960ms;
+    animation-delay: 5960ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-172 {
+    from {
+        transform: translate3d(31vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-172 {
+    from {
+        transform: translate3d(31vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(27vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(172) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 389ms;
+    animation-delay: 389ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(173) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-173;
+    animation-name: GDBFrontend_theme_sky_move_frames-173;
+    -webkit-animation-duration: 35336ms;
+    animation-duration: 35336ms;
+    -webkit-animation-delay: 24013ms;
+    animation-delay: 24013ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-173 {
+    from {
+        transform: translate3d(54vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(76vw, -127vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-173 {
+    from {
+        transform: translate3d(54vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(76vw, -127vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(173) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2251ms;
+    animation-delay: 2251ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(174) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-174;
+    animation-name: GDBFrontend_theme_sky_move_frames-174;
+    -webkit-animation-duration: 32908ms;
+    animation-duration: 32908ms;
+    -webkit-animation-delay: 23731ms;
+    animation-delay: 23731ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-174 {
+    from {
+        transform: translate3d(92vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(54vw, -112vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-174 {
+    from {
+        transform: translate3d(92vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(54vw, -112vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(174) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 307ms;
+    animation-delay: 307ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(175) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-175;
+    animation-name: GDBFrontend_theme_sky_move_frames-175;
+    -webkit-animation-duration: 32965ms;
+    animation-duration: 32965ms;
+    -webkit-animation-delay: 2220ms;
+    animation-delay: 2220ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-175 {
+    from {
+        transform: translate3d(26vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(34vw, -122vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-175 {
+    from {
+        transform: translate3d(26vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(34vw, -122vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(175) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3161ms;
+    animation-delay: 3161ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(176) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-176;
+    animation-name: GDBFrontend_theme_sky_move_frames-176;
+    -webkit-animation-duration: 33367ms;
+    animation-duration: 33367ms;
+    -webkit-animation-delay: 30588ms;
+    animation-delay: 30588ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-176 {
+    from {
+        transform: translate3d(97vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(74vw, -130vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-176 {
+    from {
+        transform: translate3d(97vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(74vw, -130vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(176) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3648ms;
+    animation-delay: 3648ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(177) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-177;
+    animation-name: GDBFrontend_theme_sky_move_frames-177;
+    -webkit-animation-duration: 29780ms;
+    animation-duration: 29780ms;
+    -webkit-animation-delay: 26062ms;
+    animation-delay: 26062ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-177 {
+    from {
+        transform: translate3d(90vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(32vw, -126vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-177 {
+    from {
+        transform: translate3d(90vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(32vw, -126vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(177) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1110ms;
+    animation-delay: 1110ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(178) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-178;
+    animation-name: GDBFrontend_theme_sky_move_frames-178;
+    -webkit-animation-duration: 28284ms;
+    animation-duration: 28284ms;
+    -webkit-animation-delay: 13782ms;
+    animation-delay: 13782ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-178 {
+    from {
+        transform: translate3d(42vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-178 {
+    from {
+        transform: translate3d(42vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(1vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(178) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2330ms;
+    animation-delay: 2330ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(179) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-179;
+    animation-name: GDBFrontend_theme_sky_move_frames-179;
+    -webkit-animation-duration: 28940ms;
+    animation-duration: 28940ms;
+    -webkit-animation-delay: 31479ms;
+    animation-delay: 31479ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-179 {
+    from {
+        transform: translate3d(96vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -119vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-179 {
+    from {
+        transform: translate3d(96vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -119vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(179) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3529ms;
+    animation-delay: 3529ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(180) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-180;
+    animation-name: GDBFrontend_theme_sky_move_frames-180;
+    -webkit-animation-duration: 28898ms;
+    animation-duration: 28898ms;
+    -webkit-animation-delay: 28226ms;
+    animation-delay: 28226ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-180 {
+    from {
+        transform: translate3d(56vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(35vw, -107vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-180 {
+    from {
+        transform: translate3d(56vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(35vw, -107vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(180) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2197ms;
+    animation-delay: 2197ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(181) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-181;
+    animation-name: GDBFrontend_theme_sky_move_frames-181;
+    -webkit-animation-duration: 33350ms;
+    animation-duration: 33350ms;
+    -webkit-animation-delay: 20637ms;
+    animation-delay: 20637ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-181 {
+    from {
+        transform: translate3d(69vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-181 {
+    from {
+        transform: translate3d(69vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(48vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(181) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3318ms;
+    animation-delay: 3318ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(182) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-182;
+    animation-name: GDBFrontend_theme_sky_move_frames-182;
+    -webkit-animation-duration: 29232ms;
+    animation-duration: 29232ms;
+    -webkit-animation-delay: 1832ms;
+    animation-delay: 1832ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-182 {
+    from {
+        transform: translate3d(91vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(62vw, -109vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-182 {
+    from {
+        transform: translate3d(91vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(62vw, -109vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(182) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3011ms;
+    animation-delay: 3011ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(183) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-183;
+    animation-name: GDBFrontend_theme_sky_move_frames-183;
+    -webkit-animation-duration: 33956ms;
+    animation-duration: 33956ms;
+    -webkit-animation-delay: 14762ms;
+    animation-delay: 14762ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-183 {
+    from {
+        transform: translate3d(21vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(62vw, -108vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-183 {
+    from {
+        transform: translate3d(21vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(62vw, -108vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(183) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3825ms;
+    animation-delay: 3825ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(184) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-184;
+    animation-name: GDBFrontend_theme_sky_move_frames-184;
+    -webkit-animation-duration: 32209ms;
+    animation-duration: 32209ms;
+    -webkit-animation-delay: 21428ms;
+    animation-delay: 21428ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-184 {
+    from {
+        transform: translate3d(26vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(63vw, -136vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-184 {
+    from {
+        transform: translate3d(26vw, 107vh, 0);
+    }
+
+    to {
+        transform: translate3d(63vw, -136vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(184) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1549ms;
+    animation-delay: 1549ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(185) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-185;
+    animation-name: GDBFrontend_theme_sky_move_frames-185;
+    -webkit-animation-duration: 33922ms;
+    animation-duration: 33922ms;
+    -webkit-animation-delay: 28878ms;
+    animation-delay: 28878ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-185 {
+    from {
+        transform: translate3d(69vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(8vw, -139vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-185 {
+    from {
+        transform: translate3d(69vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(8vw, -139vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(185) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3154ms;
+    animation-delay: 3154ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(186) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-186;
+    animation-name: GDBFrontend_theme_sky_move_frames-186;
+    -webkit-animation-duration: 30427ms;
+    animation-duration: 30427ms;
+    -webkit-animation-delay: 29707ms;
+    animation-delay: 29707ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-186 {
+    from {
+        transform: translate3d(45vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(86vw, -134vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-186 {
+    from {
+        transform: translate3d(45vw, 108vh, 0);
+    }
+
+    to {
+        transform: translate3d(86vw, -134vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(186) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3836ms;
+    animation-delay: 3836ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(187) {
+    width: 3px;
+    height: 3px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-187;
+    animation-name: GDBFrontend_theme_sky_move_frames-187;
+    -webkit-animation-duration: 36963ms;
+    animation-duration: 36963ms;
+    -webkit-animation-delay: 8139ms;
+    animation-delay: 8139ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-187 {
+    from {
+        transform: translate3d(83vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(19vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-187 {
+    from {
+        transform: translate3d(83vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(19vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(187) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3324ms;
+    animation-delay: 3324ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(188) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-188;
+    animation-name: GDBFrontend_theme_sky_move_frames-188;
+    -webkit-animation-duration: 30460ms;
+    animation-duration: 30460ms;
+    -webkit-animation-delay: 2138ms;
+    animation-delay: 2138ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-188 {
+    from {
+        transform: translate3d(28vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(18vw, -111vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-188 {
+    from {
+        transform: translate3d(28vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(18vw, -111vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(188) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 56ms;
+    animation-delay: 56ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(189) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-189;
+    animation-name: GDBFrontend_theme_sky_move_frames-189;
+    -webkit-animation-duration: 36412ms;
+    animation-duration: 36412ms;
+    -webkit-animation-delay: 15102ms;
+    animation-delay: 15102ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-189 {
+    from {
+        transform: translate3d(51vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -115vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-189 {
+    from {
+        transform: translate3d(51vw, 110vh, 0);
+    }
+
+    to {
+        transform: translate3d(2vw, -115vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(189) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2153ms;
+    animation-delay: 2153ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(190) {
+    width: 8px;
+    height: 8px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-190;
+    animation-name: GDBFrontend_theme_sky_move_frames-190;
+    -webkit-animation-duration: 31262ms;
+    animation-duration: 31262ms;
+    -webkit-animation-delay: 2578ms;
+    animation-delay: 2578ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-190 {
+    from {
+        transform: translate3d(2vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -124vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-190 {
+    from {
+        transform: translate3d(2vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(97vw, -124vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(190) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 471ms;
+    animation-delay: 471ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(191) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-191;
+    animation-name: GDBFrontend_theme_sky_move_frames-191;
+    -webkit-animation-duration: 30078ms;
+    animation-duration: 30078ms;
+    -webkit-animation-delay: 13682ms;
+    animation-delay: 13682ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-191 {
+    from {
+        transform: translate3d(39vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -106vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-191 {
+    from {
+        transform: translate3d(39vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(92vw, -106vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(191) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 2573ms;
+    animation-delay: 2573ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(192) {
+    width: 6px;
+    height: 6px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-192;
+    animation-name: GDBFrontend_theme_sky_move_frames-192;
+    -webkit-animation-duration: 31785ms;
+    animation-duration: 31785ms;
+    -webkit-animation-delay: 640ms;
+    animation-delay: 640ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-192 {
+    from {
+        transform: translate3d(36vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(20vw, -121vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-192 {
+    from {
+        transform: translate3d(36vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(20vw, -121vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(192) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1514ms;
+    animation-delay: 1514ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(193) {
+    width: 1px;
+    height: 1px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-193;
+    animation-name: GDBFrontend_theme_sky_move_frames-193;
+    -webkit-animation-duration: 30874ms;
+    animation-duration: 30874ms;
+    -webkit-animation-delay: 114ms;
+    animation-delay: 114ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-193 {
+    from {
+        transform: translate3d(60vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(44vw, -123vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-193 {
+    from {
+        transform: translate3d(60vw, 102vh, 0);
+    }
+
+    to {
+        transform: translate3d(44vw, -123vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(193) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3151ms;
+    animation-delay: 3151ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(194) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-194;
+    animation-name: GDBFrontend_theme_sky_move_frames-194;
+    -webkit-animation-duration: 33767ms;
+    animation-duration: 33767ms;
+    -webkit-animation-delay: 12716ms;
+    animation-delay: 12716ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-194 {
+    from {
+        transform: translate3d(100vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(31vw, -135vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-194 {
+    from {
+        transform: translate3d(100vw, 109vh, 0);
+    }
+
+    to {
+        transform: translate3d(31vw, -135vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(194) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1478ms;
+    animation-delay: 1478ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(195) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-195;
+    animation-name: GDBFrontend_theme_sky_move_frames-195;
+    -webkit-animation-duration: 29265ms;
+    animation-duration: 29265ms;
+    -webkit-animation-delay: 16750ms;
+    animation-delay: 16750ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-195 {
+    from {
+        transform: translate3d(84vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(85vw, -129vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-195 {
+    from {
+        transform: translate3d(84vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(85vw, -129vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(195) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3592ms;
+    animation-delay: 3592ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(196) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-196;
+    animation-name: GDBFrontend_theme_sky_move_frames-196;
+    -webkit-animation-duration: 31069ms;
+    animation-duration: 31069ms;
+    -webkit-animation-delay: 10502ms;
+    animation-delay: 10502ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-196 {
+    from {
+        transform: translate3d(88vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(6vw, -136vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-196 {
+    from {
+        transform: translate3d(88vw, 106vh, 0);
+    }
+
+    to {
+        transform: translate3d(6vw, -136vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(196) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3081ms;
+    animation-delay: 3081ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(197) {
+    width: 4px;
+    height: 4px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-197;
+    animation-name: GDBFrontend_theme_sky_move_frames-197;
+    -webkit-animation-duration: 28011ms;
+    animation-duration: 28011ms;
+    -webkit-animation-delay: 22416ms;
+    animation-delay: 22416ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-197 {
+    from {
+        transform: translate3d(69vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(71vw, -122vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-197 {
+    from {
+        transform: translate3d(69vw, 101vh, 0);
+    }
+
+    to {
+        transform: translate3d(71vw, -122vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(197) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3727ms;
+    animation-delay: 3727ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(198) {
+    width: 7px;
+    height: 7px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-198;
+    animation-name: GDBFrontend_theme_sky_move_frames-198;
+    -webkit-animation-duration: 31115ms;
+    animation-duration: 31115ms;
+    -webkit-animation-delay: 8407ms;
+    animation-delay: 8407ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-198 {
+    from {
+        transform: translate3d(86vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -120vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-198 {
+    from {
+        transform: translate3d(86vw, 104vh, 0);
+    }
+
+    to {
+        transform: translate3d(59vw, -120vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(198) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1386ms;
+    animation-delay: 1386ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(199) {
+    width: 5px;
+    height: 5px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-199;
+    animation-name: GDBFrontend_theme_sky_move_frames-199;
+    -webkit-animation-duration: 33805ms;
+    animation-duration: 33805ms;
+    -webkit-animation-delay: 33487ms;
+    animation-delay: 33487ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-199 {
+    from {
+        transform: translate3d(74vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(98vw, -133vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-199 {
+    from {
+        transform: translate3d(74vw, 103vh, 0);
+    }
+
+    to {
+        transform: translate3d(98vw, -133vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(199) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 3763ms;
+    animation-delay: 3763ms;
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(200) {
+    width: 2px;
+    height: 2px;
+    -webkit-animation-name: GDBFrontend_theme_sky_move_frames-200;
+    animation-name: GDBFrontend_theme_sky_move_frames-200;
+    -webkit-animation-duration: 35657ms;
+    animation-duration: 35657ms;
+    -webkit-animation-delay: 23548ms;
+    animation-delay: 23548ms;
+}
+
+@-webkit-keyframes GDBFrontend_theme_sky_move_frames-200 {
+    from {
+        transform: translate3d(89vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(86vw, -107vh, 0);
+    }
+}
+
+@keyframes GDBFrontend_theme_sky_move_frames-200 {
+    from {
+        transform: translate3d(89vw, 105vh, 0);
+    }
+
+    to {
+        transform: translate3d(86vw, -107vh, 0);
+    }
+}
+
+.GDBFrontend_theme_sky_circle-container:nth-child(200) .GDBFrontend_theme_sky_circle {
+    -webkit-animation-delay: 1988ms;
+    animation-delay: 1988ms;
+}
+
+.GDBFrontend_theme_sky_message {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    color: white;
+    font-family: "Josefin Slab", serif;
+    line-height: 27px;
+    font-size: 18px;
+    text-align: right;
+    pointer-events: none;
+    -webkit-animation: message-frames 1.5s ease 5s forwards;
+    animation: message-frames 1.5s ease 5s forwards;
+    opacity: 0;
+}
+
+@-webkit-keyframes message-frames {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes message-frames {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
