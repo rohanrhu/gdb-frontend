@@ -251,9 +251,7 @@
             data.collabration.is_awaiting_event_done = false;
 
             data.terminal = {};
-            data.terminal.xterm = new Terminal();
-
-            data.terminal.xterm.setOption('fontFamily', 'Consolas, courier-new, courier, monospace');
+            data.terminal.xterm = false;
             
             data.setIsEvaluaterWindow = function (is_evaluater_window) {
                 data.is_evaluater_window = is_evaluater_window;
@@ -875,7 +873,7 @@
                 data.debug.socket.addEventListener('open', function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');
 
-                    if (!window.GDBFrontend_is_evaluater_window) {
+                    if (!window.GDBFrontend_is_evaluater_window && (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX)) {
                         var message;
     
                         message = {
@@ -913,6 +911,8 @@
                 });
 
                 if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
+                    data.terminal.xterm = new Terminal();
+
                     data.terminal.xterm.setOption('rendererType', 'dom');
                     data.terminal.xterm.setOption('allowTransparency', true);
                     data.terminal.xterm.setOption('theme', {background: 'transparent'});
