@@ -115,10 +115,7 @@ class TerminalDaemon:
     def handleMessage(self):
         message = json.loads(self.ws.message)
 
-        if message["event"] == "terminal_start":
-            self.start()
-            return True
-        elif message["event"] == "terminal_resize":
+        if message["event"] == "terminal_resize":
             size = struct.pack("HHHH", message["rows"], message["cols"], message["width"], message["height"])
             fcntl.ioctl(self.pty_fd, termios.TIOCSWINSZ, size)
             return True

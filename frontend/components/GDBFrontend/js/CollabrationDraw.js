@@ -183,7 +183,7 @@ GDBFrontend.imports.GDBFrontendCollabrationDraw = function (component) {
     };
     
     data.collabration.sendEnhancedCollabrationState__draw_path = function (parameters) {
-        if (data.is_evaluater_window) {
+        if (window.GDBFrontend_is_evaluater_window) {
             return;
         }
         
@@ -197,7 +197,7 @@ GDBFrontend.imports.GDBFrontendCollabrationDraw = function (component) {
     };
 
     data.$gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__draw_path.GDBFrontend', function (event, message) {
-        if (data.is_evaluater_window) {
+        if (window.GDBFrontend_is_evaluater_window) {
             return;
         }
         
@@ -223,7 +223,7 @@ GDBFrontend.imports.GDBFrontendCollabrationDraw = function (component) {
     });
     
     data.$gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__draw_clear.GDBFrontend', function (event, message) {
-        if (data.is_evaluater_window) {
+        if (window.GDBFrontend_is_evaluater_window) {
             return;
         }
         

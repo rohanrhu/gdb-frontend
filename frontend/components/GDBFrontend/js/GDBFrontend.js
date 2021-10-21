@@ -256,7 +256,7 @@
             data.setIsEvaluaterWindow = function (is_evaluater_window) {
                 data.is_evaluater_window = is_evaluater_window;
 
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     $gdbFrontend.addClass('GDBFrontend__evaluaterWindow');
                 }
             };
@@ -311,6 +311,7 @@
                     "menubar=no,location=no,resizable=yes,scrollbars=no,status=no,toolbar=no,width=400,height=400,top=500,left=500"
                 );
 
+                nw.GDBFrontend_is_evaluater_window = true;
                 
                 nw.onload = function () {
                     nw.GDBFrontend.components.gdbFrontend.setIsEvaluaterWindow(true);
@@ -327,7 +328,7 @@
                     return;
                 }
 
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
 
@@ -394,7 +395,7 @@
             };
 
             data.collabration.sendEnhancedCollabrationState = function (parameters) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -422,7 +423,7 @@
             };
             
             data.collabration.sendEnhancedCollabrationState__scroll = function (parameters) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -434,7 +435,7 @@
             };
             
             data.collabration.sendEnhancedCollabrationState__cursor = function (parameters) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -446,7 +447,7 @@
             };
             
             data.collabration.sendEnhancedCollabrationState__watches = function (parameters) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -872,23 +873,25 @@
                 data.debug.socket.addEventListener('open', function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');
 
-                    var message;
-
-                    message = {
-                        event: 'terminal_start'
-                    };
-                    
-                    data.debug.socket.send(JSON.stringify(message));
-                    
-                    message = {
-                        event: 'terminal_resize',
-                        rows: data.terminal.xterm.rows,
-                        cols: data.terminal.xterm.cols,
-                        width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
-                        height: data.$gdbFrontend_terminal_terminal.innerHeight()
-                    };
-                    
-                    data.debug.socket.send(JSON.stringify(message));
+                    if (!window.GDBFrontend_is_evaluater_window) {
+                        var message;
+    
+                        message = {
+                            event: 'start_terminal'
+                        };
+                        
+                        data.debug.socket.send(JSON.stringify(message));
+                        
+                        message = {
+                            event: 'terminal_resize',
+                            rows: data.terminal.xterm.rows,
+                            cols: data.terminal.xterm.cols,
+                            width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
+                            height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                        };
+                        
+                        data.debug.socket.send(JSON.stringify(message));
+                    }
                 });
 
                 data.debug.socket.addEventListener('close', function (event) {
@@ -1235,7 +1238,7 @@
             });
             
             $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state.GDBFrontend', function (event, message) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -1261,6 +1264,10 @@
 
                 if (data.collabration.state.editor.open_files) {
                     data.collabration.state.editor.open_files.forEach(function (_open_file, _open_file_i) {
+                        if (!_open_file) {
+                            return;
+                        }
+                        
                         var file = data.components.fileTabs.getFileByPath(_open_file);
                         
                         if (!file) {
@@ -1287,7 +1294,7 @@
             });
             
             $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__scroll.GDBFrontend', function (event, message) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -1309,7 +1316,7 @@
             });
             
             $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__cursor.GDBFrontend', function (event, message) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -1331,7 +1338,7 @@
             });
             
             $gdbFrontend.on('GDBFrontend_debug_enhanced_collabration_state__watches.GDBFrontend', function (event, message) {
-                if (data.is_evaluater_window) {
+                if (window.GDBFrontend_is_evaluater_window) {
                     return;
                 }
                 
@@ -1754,7 +1761,7 @@
                 
                 data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
 
-                if (data.debug.state.is_enhanced_collabration) {
+                if (!window.GDBFrontend_is_evaluater_window && data.debug.state.is_enhanced_collabration) {
                     data.collabration.state = parameters.state.collabration.state;
                     data.collabration.draw.render();
                 }
