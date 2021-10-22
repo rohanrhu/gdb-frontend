@@ -15,12 +15,8 @@ terminal sharing fundementals over WebSocket.
 """
 
 import os
-import sys
-import urllib
-import mimetypes
 import pty
 import json
-import base64
 import subprocess
 import threading
 import time
@@ -31,10 +27,7 @@ import termios
 import signal
 import atexit
 
-import config
-import api.globalvars
 import util
-import websocket
 
 class TerminalDaemon:
     ws = False

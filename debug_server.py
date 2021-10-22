@@ -8,10 +8,8 @@
 # Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
-import threading
 import importlib
 import json
-import sys
 import time
 
 import config
