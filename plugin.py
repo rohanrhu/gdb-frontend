@@ -40,6 +40,7 @@ Plugin Backend Class: ThemeLightPlugin, ThemeNightBluePlugin
 
 import os
 import importlib
+import importlib.util
 import json
 
 import config
