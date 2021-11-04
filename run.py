@@ -333,7 +333,7 @@ try:
         if not webbrowser.open(gf_url):
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
 
-        while True: pass
+        while True: time.sleep(0.1)
     else:
         os.system(
             tmux_executable +
@@ -365,7 +365,7 @@ try:
         if not webbrowser.open(gf_url):
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
 
-        while True: pass
+        while True: time.sleep(0.1)
 except KeyboardInterrupt as e:
     print("Keyboard interrupt.")
     exit(0)
