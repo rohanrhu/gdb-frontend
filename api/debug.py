@@ -494,8 +494,12 @@ def getSources():
 
     try:
         sources = gdb.execute("i sources", to_string=True).split("\n")
+
         if len(sources) < 3: return []
-        return sources[2].replace("\\", "/").split(", ")
+
+        for i in range(len(sources)):
+            if sources[i] == "" and len(sources) > (i + 2):
+                return sources[i+1].replace("\\", "/").split(", ")
     except gdb.error as e:
         return []
     except Exception as e:
