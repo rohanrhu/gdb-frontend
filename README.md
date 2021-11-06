@@ -185,6 +185,8 @@ GDBFrontend has built-in themes.
 
 For switching between themes use `gf-theme [THEME]` command on GDB shell.
 ```
+(gdb) gf-theme doki
+(gdb) gf-theme sky
 (gdb) gf-theme cyberpunk
 (gdb) gf-theme dark
 (gdb) gf-theme green
