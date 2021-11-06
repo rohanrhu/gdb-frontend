@@ -112,8 +112,11 @@ class TerminalDaemon:
         message = json.loads(self.ws.message)
 
         if message["event"] == "terminal_resize":
-            size = struct.pack("HHHH", message["rows"], message["cols"], message["width"], message["height"])
-            fcntl.ioctl(self.pty_fd, termios.TIOCSWINSZ, size)
+            try:
+                size = struct.pack("HHHH", message["rows"], message["cols"], message["width"], message["height"])
+                fcntl.ioctl(self.pty_fd, termios.TIOCSWINSZ, size)
+            except:
+                pass
             return True
         elif message["event"] == "terminal_data":
             os.write(self.pty_fd, message["data"].encode("utf-8"))
