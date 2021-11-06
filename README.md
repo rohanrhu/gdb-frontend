@@ -21,13 +21,15 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 ### PIP Package (Python Wheel) [Recommended]
 You can install GDBFrontend with `pip`.
 
+**Important: You must run PIP install command as root.**
+
 ```bash
-python3 -m pip install gdbfrontend
+sudo python3 -m pip install gdbfrontend
 ```
 
 or if you want to install specific GIT snapshot:
 ```bash
-python3 setup.py install
+sudo python3 setup.py install
 ```
 
 and you can run
