@@ -2473,6 +2473,16 @@
                     _file.ace && _file.ace.resize();
                     return true;
                 });
+
+                message = {
+                    event: 'terminal_resize',
+                    rows: data.terminal.xterm.rows,
+                    cols: data.terminal.xterm.cols,
+                    width: data.$gdbFrontend_terminal_terminal.innerWidth()-17,
+                    height: data.$gdbFrontend_terminal_terminal.innerHeight()
+                };
+                
+                data.debug.socket.send(JSON.stringify(message));
             };
            
             data.closeTerminal = function (parameters) {
