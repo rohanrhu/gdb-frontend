@@ -84,7 +84,10 @@ class TerminalDaemon:
             if not ready_fds:
                 continue
 
-            output = os.read(self.pty_fd, 4094)
+            try:
+                output = os.read(self.pty_fd, 4094)
+            except IOError:
+                continue
             
             message = {
                 "event": "terminal_data",
