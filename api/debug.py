@@ -137,7 +137,7 @@ def load(file):
 
     try:
         gdb.execute("file")
-        gdb.execute("file %s" % file)
+        gdb.execute("file \"%s\"" % file)
 
         if settings.SET_CWD_TO_EXECUTABLE:
             gdb.execute("set cwd %s" % os.path.dirname(file))
