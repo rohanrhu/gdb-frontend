@@ -244,10 +244,11 @@ $ ...
 When you exit shell, blocking GDBFrontend functions will continue working.
 
 ### Zombie Processes
-Sometimes GDB and gdb-frontend may not be closed correctly. In this case, you can terminate gdb-frontend shell.
+GDBFrontend sends SIGTERM to its sub-processes, your application and its sub-processes.
+If your application is forking new processes and setting their PGIDs, GDBFrontend may not close them. In this case you should send SIGKILL to your processes.
 
 ```bash
-tmux kill-session -t gdb-frontend
+pkill -f gdb
 ```
 
 ### Expression Evaluater Performance Tips
