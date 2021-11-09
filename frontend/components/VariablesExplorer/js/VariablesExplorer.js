@@ -507,7 +507,7 @@
                 };
 
                 item.toggle = function (parameters) {
-                    item[item.is_opened ? 'close': 'close']();
+                    item[item.is_opened ? 'close': 'open']();
                 };
 
                 item.render = function (parameters) {
