@@ -317,6 +317,10 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
                     "sources": api.debug.getSources()
                 }
             })
+        elif event == "get_registers":
+            self.emit(message["return_event"], {
+                "registers": api.debug.getRegisters()
+            })
         elif event == "signal":
             api.debug.signal(message["signal"])
             self.emit(message["return_event"], {})

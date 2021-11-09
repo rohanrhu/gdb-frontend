@@ -119,7 +119,10 @@ class TerminalDaemon:
                 pass
             return True
         elif message["event"] == "terminal_data":
-            os.write(self.pty_fd, message["data"].encode("utf-8"))
+            try:
+                os.write(self.pty_fd, message["data"].encode("utf-8"))
+            except:
+                return True
             return True
         
         return False

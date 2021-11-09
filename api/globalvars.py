@@ -9,6 +9,7 @@
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
 import threading
+import multiprocessing
 
 import http_server
 import api.flags
@@ -20,6 +21,7 @@ httpServer: http_server.GDBFrontendHTTPServer = None
 inferior_run_times = {}
 step_time = False
 is_enhanced_collabration = False
+changed_registers = multiprocessing.Manager().dict()
 
 collabration_state = {
     "editor": {
@@ -45,6 +47,7 @@ def init():
     global inferior_run_times
     global step_time
     global is_enhanced_collabration
+    global changed_registers
     global collabration_state
 
 def access(function):
@@ -55,6 +58,7 @@ def access(function):
     global inferior_run_times
     global step_time
     global is_enhanced_collabration
+    global changed_registers
     global collabration_state
 
     lock.acquire()

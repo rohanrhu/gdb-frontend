@@ -28,6 +28,8 @@ import util
 import api.flags
 import api.globalvars
 
+api.globalvars.init()
+
 gdb = importlib.import_module("gdb")
 
 def threadSafe(callback):
@@ -176,6 +178,7 @@ def getState():
     state["breakpoints"] = getBreakpoints()
     state["objfiles"] = getFiles()
     state["sources"] = getSources()
+    state["registers"] = getRegisters()
     state["step_time"] = api.globalvars.step_time
 
     try:
@@ -1006,3 +1009,30 @@ class Variable():
             serializable["type"] = False
 
         return serializable
+
+@threadSafe
+def getRegisters():
+    result = {}
+
+    try:
+        lines = gdb.execute("i registers", to_string=True).split("\n")
+    except gdb.error:
+        return {}
+
+    for line in lines:
+        vals = re.findall("(.+?) +(.+?) +(.+)", line, flags=re.IGNORECASE)
+        
+        if len(vals) < 1: continue
+        if len(vals[0]) < 3: continue
+
+        vals = vals[0]
+
+        result[vals[0]] = (
+            vals[1],
+            vals[2],
+            vals[0] in api.globalvars.changed_registers and vals[1] != api.globalvars.changed_registers[vals[0]][1]
+        )
+
+        api.globalvars.changed_registers[vals[0]] = vals[1]
+
+    return result

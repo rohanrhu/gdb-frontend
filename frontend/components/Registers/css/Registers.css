@@ -1,0 +1,91 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.Registers {
+    text-align: center;
+    font-size: 14px;
+    overflow-y: auto;
+    text-align: left;
+    height: 100%;
+}
+
+.Registers_content {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.Registers.Registers__passive {
+    opacity: 0.4;
+}
+
+.Registers_items {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.Registers_items::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.Registers_items::-webkit-scrollbar-thumb {
+  background: #121212; 
+}
+
+.Registers_items:hover::-webkit-scrollbar-thumb {
+  background: #414141; 
+}
+
+.Registers_items_item {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.05);
+    height: 30px;
+    flex-grow: 1;
+}
+
+.Registers_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.1);
+}
+
+.Registers_items_item_name {
+    flex-basis: 80px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #78ff7c;
+}
+
+.Registers_items_item_hexVal {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.Registers_items_item_decVal {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.Registers_items_item.Registers__changed {
+    color: #78ff7c;
+}
+
+.Registers_items_item.Registers__changed .Registers_items_item_name {
+    background: linear-gradient(90deg, rgba(136, 173, 255, 0.5), rgba(255, 255, 255, 0));
+    color: white;
+}

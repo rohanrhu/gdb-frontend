@@ -717,6 +717,22 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 
 /* ---------------------- */
 
+.GDBFrontend_registers {
+
+}
+
+.GDBFrontend_registers_title {
+    padding: 0px 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid transparent;
+}
+
+/* ---------------------- */
+
 .GDBFrontend_breakpoints {
 
 }

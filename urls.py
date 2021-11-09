@@ -51,6 +51,11 @@ urls = api.url.URLS({
         "match": "^/api/sources$",
         "module": "url_modules.api.sources"
     },
+    "api-registers": {
+        "url": "/api/registers$",
+        "match": "^/api/registers$",
+        "module": "url_modules.api.registers"
+    },
     "api-breakpoint-add": {
         "url": "/api/breakpoint/add",
         "match": "^/api/breakpoint/add$",

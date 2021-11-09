@@ -408,3 +408,7 @@
 .GDBFrontend_layout_status_stepTime_value {
     color: #ff9cce;
 }
+
+.Registers_items_item.Registers__changed .Registers_items_item_name {
+    background: linear-gradient(90deg, rgb(211 0 107), rgba(255, 255, 255, 0));
+}

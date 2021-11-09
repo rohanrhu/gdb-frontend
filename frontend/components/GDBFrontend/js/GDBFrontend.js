@@ -211,6 +211,10 @@
             data.$gdbFrontend_watchesComp = $gdbFrontend.find('.GDBFrontend_watchesComp');
             data.$gdbFrontend_watches = data.$gdbFrontend_watchesComp.find('> .Watches');
             data.gdbFrontend_watches = null;
+            
+            data.$gdbFrontend_registersComp = $gdbFrontend.find('.GDBFrontend_registersComp');
+            data.$gdbFrontend_registers = data.$gdbFrontend_registersComp.find('> .Registers');
+            data.gdbFrontend_registers = null;
 
             data.$gdbFrontend_fileTabsComp = $gdbFrontend.find('.GDBFrontend_fileTabsComp');
             data.$gdbFrontend_fileTabs = data.$gdbFrontend_fileTabsComp.find('> .FileTabs');
@@ -860,6 +864,10 @@
                 data.$gdbFrontend_watches.Watches();
                 data.gdbFrontend_watches = data.$gdbFrontend_watches.data('Watches');
                 data.components.watches = data.gdbFrontend_watches;
+                
+                data.$gdbFrontend_registers.Registers();
+                data.gdbFrontend_registers = data.$gdbFrontend_registers.data('Registers');
+                data.components.registers = data.gdbFrontend_registers;
 
                 data.$gdbFrontend_sourceTree.SourceTree();
                 data.gdbFrontend_sourceTree = data.$gdbFrontend_sourceTree.data('SourceTree');
@@ -1783,6 +1791,10 @@
 
                 if (parameters.is_stop && parameters.state.selected_frame) {
                     await data.debug.setWatches();
+                }
+                
+                if (parameters.is_stop && parameters.state.selected_frame) {
+                    data.gdbFrontend_registers.load({registers: data.debug.state.registers});
                 }
                 
                 data.$gdbFrontend_layout_middle_right_content.scrollTop(data.layout_middle_right_scroll_top);
