@@ -330,8 +330,10 @@ try:
 
         gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
-        if not webbrowser.open(gf_url):
+        if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
+        else:
+            webbrowser.open(gf_url)
 
         while True: time.sleep(0.1)
     else:
@@ -362,8 +364,10 @@ try:
 
         gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
-        if not webbrowser.open(gf_url):
+        if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
+        else:
+            webbrowser.open(gf_url)
 
         while True: time.sleep(0.1)
 except KeyboardInterrupt as e:
