@@ -928,8 +928,12 @@
 
                 data.debug.socket.addEventListener('close', function (event) {
                     GDBFrontend.verbose('Connection closed to debugging server.');
-                    alert('Connection closed to GDBFrontend server!');
-                    window.location.reload();
+                    GDBFrontend.showMessageBox({
+                        text: 'Connection is closed to GDBFrontend server!',
+                        on_close: function () {
+                            window.location.reload();
+                        }
+                    });
                 });
 
                 data.debug.socket.addEventListener('message', function (event) {

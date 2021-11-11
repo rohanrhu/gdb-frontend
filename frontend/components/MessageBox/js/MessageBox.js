@@ -40,6 +40,7 @@
             data.is_opened = false;
             data.defaults = {};
             data.defaults.width = 500;
+            data.on_close = false;
 
             data.init = function () {
 
@@ -56,6 +57,12 @@
                     data.$messageBox_box.width(parameters.width);
                 } else {
                     data.$messageBox_box.width(data.defaults.width);
+                }
+                
+                if (typeof parameters.on_close != 'undefined') {
+                    data.on_close = parameters.on_close;
+                } else {
+                    data.on_close = false;
                 }
 
                 data.is_opened = true;
@@ -86,7 +93,11 @@
 
             data.close = function () {
                 data.is_opened = false;
-                $messageBox.stop().fadeOut(data.fade_duration);
+                $messageBox.stop().fadeOut(data.fade_duration, function (event) {
+                    if (data.on_close) {
+                        data.on_close();
+                    }
+                });
             };
 
             data.$messageBox_box.on('click.MessageBox', function (event) {
