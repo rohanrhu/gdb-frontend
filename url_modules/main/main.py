@@ -101,7 +101,7 @@ def run(request, params):
     html_stackTrace = util.readFile(util.webFSPath("/components/StackTrace/html/StackTrace.html"))
     html_variablesExplorer = util.readFile(util.webFSPath("/components/VariablesExplorer/html/VariablesExplorer.html"))
     html_watches = util.readFile(util.webFSPath("/components/Watches/html/Watches.html"))
-    html_registers = util.readFile(util.webFSPath("/components/registers/html/registers.html"))
+    html_registers = util.readFile(util.webFSPath("/components/Registers/html/Registers.html"))
     html_fuzzyFinder = util.readFile(util.webFSPath("/components/FuzzyFinder/html/FuzzyFinder.html"))
     html_disassembly = util.readFile(util.webFSPath("/components/Disassembly/html/Disassembly.html"))
     html_evaluateExpression = util.readFile(util.webFSPath("/components/EvaluateExpression/html/EvaluateExpression.html"))
