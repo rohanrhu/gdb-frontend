@@ -110,7 +110,7 @@ Options:
   --gdb-executable=PATH, -g PATH:               Specifies GDB executable path (Default is "gdb" command on PATH environment variable.)
   --tmux-executable=PATH, -tmux PATH:           Specifies Tmux executable path (Default is "tmux" command on PATH environment variable.)
   --terminal-id=NAME, -t NAME:                  Specifies tmux terminal identifier name (Default is "gdb-frontend".)
-  --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger (Browser asks it for two times).)
+  --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger.
   --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
   --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
   --port=PORT, -p PORT:                         Specifies HTTP port. (0 for random port.)
@@ -140,7 +140,7 @@ You can specify Tmux executable path like `gdbfrontend --tmux-executable=/path/t
 You can specify Tmux terminal id like `gdbfrontend --terminal-id=terminal-name`. (Default: `gdb-frontend`)
 
 #### `--credentials=USER:PASS`, `-c USER:PASS`
-Specifies username and password for accessing to debugger (Browser asks it for two times).)
+Specifies username and password for accessing to debugger.
 
 #### `--host=IP`, `-H IP`
 Specifies current host address that you can access via for HTTP and WS servers.
@@ -225,7 +225,6 @@ or you can get all plugins:
 
 ## Security with Sharing Sessions
 You can use `--credentials=USER:PASS` option for adding HTTP authentication to your debugger session.
-**Note:** Your browser will ask same credentials for two times.
 
 ## Browser Compatibility
 GDBFrontend is mainly developing with testing on Chromium-based browsers. It will work properly with other browsers especially with Firefox but if you face some problems on other browsers, you can [send a bug-report](https://github.com/rohanrhu/gdb-frontend/issues/new).

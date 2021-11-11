@@ -140,7 +140,7 @@ def argHandler_help():
     print("  --gdb-executable=PATH, -g PATH:\t\tSpecifies GDB executable path (Default is \"gdb\" command on PATH environment variable.)")
     print("  --tmux-executable=PATH, -tmux PATH:\t\tSpecifies Tmux executable path (Default is \"tmux\" command on PATH environment variable.)")
     print("  --terminal-id=NAME, -t NAME:\t\t\tSpecifies tmux terminal identifier name (Default is \"gdb-frontend\".)")
-    print("  --credentials=USER:PASS, -c USER:PASS:\tSpecifies username and password for accessing to debugger (Browser asks it for two times).)")
+    print("  --credentials=USER:PASS, -c USER:PASS:\tSpecifies username and password for accessing to debugger.")
     print("  --host=IP, -H IP:\t\t\t\tSpecifies current host address that you can access via for HTTP and WS servers.")
     print("  --listen=IP, -l IP:\t\t\t\tSpecifies listen address for HTTP and WS servers.")
     print("  --port=PORT, -p PORT:\t\t\t\tSpecifies HTTP port. (0 for random port.)")
