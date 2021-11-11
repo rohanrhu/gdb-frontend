@@ -1020,7 +1020,7 @@ def getRegisters():
         return {}
 
     for line in lines:
-        vals = re.findall("(.+?) +(.+?) +(.+)", line, flags=re.IGNORECASE)
+        vals = re.findall("(.+?)\\s+(.+?)\\s+(.+)", line, flags=re.IGNORECASE)
         
         if len(vals) < 1: continue
         if len(vals[0]) < 3: continue
