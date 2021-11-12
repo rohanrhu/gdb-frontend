@@ -37,5 +37,5 @@ class HelloPlugin(plugin.GDBFrontendPlugin):
         for _client in api.globalvars.httpServer.ws_clients:
             _client.wsSend(json.dumps({
                 "event": "hello",
-                "replt_to": event
+                "reply_to": event
             }))
