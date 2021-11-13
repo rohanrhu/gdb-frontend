@@ -66,7 +66,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    color: #78ff7c;
+    color: #ffff6e;
 }
 
 .Registers_items_item_hexVal {
@@ -87,5 +87,5 @@
 
 .Registers_items_item.Registers__changed .Registers_items_item_name {
     background: linear-gradient(90deg, rgba(136, 173, 255, 0.5), rgba(255, 255, 255, 0));
-    color: white;
+    color: #78ff7c;
 }
