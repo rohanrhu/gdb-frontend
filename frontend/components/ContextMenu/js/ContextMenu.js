@@ -117,6 +117,8 @@
                 data.render();
 
                 data.$ContextMenuWindow.on('click.ContextMenu, contextmenu.ContextMenu', function (event) {
+                    event.preventDefault();
+                    
                     if (event.target != data.$ContextMenuWindow[0]) {
                         return;
                     }
