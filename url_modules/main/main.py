@@ -45,10 +45,32 @@ def run(request, params):
 
     install_directory = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
+    uname = os.uname()
+    config_uname = False
+
+    is_wsl = False
+
+    if os.name == 'posix':
+        config_uname = {
+            "sysname": uname.sysname,
+            "nodename": uname.nodename,
+            "release": uname.release,
+            "version": uname.version,
+            "machine": uname.machine
+        }
+        
+        is_wsl = 'Microsoft' in uname.release or 'microsoft' in uname.release
+
     js_init = """
     GDBFrontend = {};
     GDBFrontend.version = '"""+util.versionString(statics.VERSION)+"""';
     GDBFrontend.install_directory = '"""+install_directory+"""';
+
+    GDBFrontend.os = {};
+    GDBFrontend.os.name = '"""+os.name+"""';
+    GDBFrontend.os.uname = """+json.dumps(config_uname)+""";
+    GDBFrontend.os.is_wsl = """+json.dumps(is_wsl)+""";
+
     GDBFrontend.config = {};
     GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
     GDBFrontend.config.bind_address = '"""+str(config.BIND_ADDRESS)+"""';
