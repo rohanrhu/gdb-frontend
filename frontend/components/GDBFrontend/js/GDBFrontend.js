@@ -1058,6 +1058,7 @@
             };
 
             data.debug.setExited = function (parameters) {
+                data.gdbFrontend_registers.clear();
                 data.debug.emptyWatches();
                 data.debug.clearEditorStops();
                 data.debug.setState({
