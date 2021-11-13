@@ -961,10 +961,17 @@
                     }
                 };
                 
-                item.$item_button.on('contextmenu.VariablesExplorer.'+data.id, function (event) {
-                    event.preventDefault();
-
-                    item.toggleContextMenu();
+                item.$item_button.ContextMenu({
+                    actions: {
+                        openInEvaluater: {
+                            label: 'Open in Evaluater',
+                            function: item.openInEvaluater
+                        },
+                        visualizeLinkedlist: {
+                            label: 'Visualize Linked-List',
+                            function: item.openLinkedListVisualizer
+                        }
+                    }
                 });
 
                 item.$item_llVis.on('click.VariablesExplorer.'+data.id, function (event) {
