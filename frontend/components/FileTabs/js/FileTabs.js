@@ -796,7 +796,7 @@
                                     cache: false,
                                     method: 'get',
                                     data: {
-                                        command: 'xdg-open ' + path
+                                        command: !GDBFrontend.os.is_wsl ? 'xdg-open "' + path + '"': '/mnt/c/Windows/explorer.exe $(wslpath -w "' + path + '")'
                                     },
                                     success: function (result_json) {
                                         if (result_json.error || !result_json.ok) {
