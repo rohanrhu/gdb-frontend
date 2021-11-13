@@ -27,7 +27,15 @@ def run(request, params):
     if qs_params.get("command") is None:
         result_json["ok"] = False
 
-    subprocess.Popen(qs_params["command"][0].split(" "), stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True)
+    subprocess.Popen(
+        qs_params["command"][0],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        close_fds=True,
+        shell=True,
+        executable='/bin/bash'
+    )
 
     request.send_response(200)
     request.send_header("Content-Type", "application/json; charset=utf-8")
