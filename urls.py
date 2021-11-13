@@ -26,6 +26,11 @@ urls = api.url.URLS({
         "match": "^/api/state/(.+)$",
         "module": "url_modules.api.state"
     },
+    "api-shell": {
+        "url": "/api/shell",
+        "match": "^/api/shell$",
+        "module": "url_modules.api.shell"
+    },
     "api-event": {
         "url": "/api/event",
         "match": "^/api/event$",
