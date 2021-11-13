@@ -784,6 +784,54 @@
                     data.saveState();
                 }
 
+                file.$tab_fileName.ContextMenu({
+                    actions: {
+                        revealInExplorer: {
+                            label: 'Reveal in Explorer',
+                            function: function () {
+                                var path = file.path.split('/').slice(0, -1).join('/');
+                                
+                                $.ajax({
+                                    url: '/api/shell',
+                                    cache: false,
+                                    method: 'get',
+                                    data: {
+                                        command: 'xdg-open ' + path
+                                    },
+                                    success: function (result_json) {
+                                        if (result_json.error || !result_json.ok) {
+                                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                                console.trace('An error occured.');
+                                            return;
+                                        }
+                                    },
+                                    error: function () {
+                                        GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                        console.trace("Path not found.");
+                                        resolve();
+                                    }
+                                });
+                            }
+                        },
+                        openInFileBrowser: {
+                            label: 'Open in File Browser',
+                            function: function () {
+                                var path = file.path.split('/').slice(0, -1).join('/');
+
+                                GDBFrontend.components.fileBrowser.open({
+                                    path: path,
+                                    onFileSelected: function (parameters) {
+                                        GDBFrontend.components.gdbFrontend.openSource({
+                                            file: {path: parameters.file.path}
+                                        });
+                                        GDBFrontend.components.fileBrowser.close();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+
                 return {
                     file: file,
                     is_switched: is_switched
