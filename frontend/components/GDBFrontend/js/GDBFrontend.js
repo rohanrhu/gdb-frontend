@@ -1797,7 +1797,9 @@
                     await data.debug.setWatches();
                 }
                 
-                if (parameters.is_stop && parameters.state.selected_frame) {
+                if (running_threads_count) {
+                    data.gdbFrontend_registers.clear();
+                } else if (parameters.is_stop && parameters.state.selected_frame) {
                     data.gdbFrontend_registers.load({registers: data.debug.state.registers});
                 }
                 
