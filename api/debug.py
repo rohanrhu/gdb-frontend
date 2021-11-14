@@ -77,8 +77,7 @@ def threadSafe(callback):
             while lockCounter.get() > 0:
                 if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
                     is_warned = True
-                    print("")
-                    print("[GDBFrontend]", "GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must terminate it for GDBFrontend to continue work properly.)")
+                    api.globalvars.httpServer.wsSendAll("{\"event\": \"mt_blocking\"}")
                 
                 time.sleep(0.1)
         else:
@@ -122,8 +121,7 @@ def execCommand(command, buff_output=False):
         while lockCounter.get() > 0:
             if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
                 is_warned = True
-                print("")
-                print("[GDBFrontend]", "GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)")
+                api.globalvars.httpServer.wsSendAll("{\"event\": \"mt_blocking\"}")
             
             time.sleep(0.1)
     else:

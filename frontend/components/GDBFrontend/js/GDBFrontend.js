@@ -1194,6 +1194,10 @@
                 });
             };
 
+            $gdbFrontend.on('GDBFrontend_debug_mt_blocking.GDBFrontend', function (event, message) {
+                GDBFrontend.showMessageBox({text: 'GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)'});
+            });
+            
             $gdbFrontend.on('GDBFrontend_debug_terminal_data.GDBFrontend', function (event, message) {
                 data.terminal.xterm.write(message.data);
             });
