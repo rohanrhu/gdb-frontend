@@ -158,7 +158,7 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
             wsSend_lock.release()
         finally:
             wsSend_lock.release()
-    
+
     def handleMessage(self):
         pass
     
@@ -177,3 +177,7 @@ class HTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
                 return client
         
         return False
+    
+    def wsSendAll(self, message):
+        for client in self.ws_clients:
+            client.wsSend(message)
