@@ -21,6 +21,7 @@ import traceback
 import time
 import sys
 import re
+import multiprocessing
 
 import config
 import settings
@@ -1027,10 +1028,16 @@ def getRegisters():
 
         vals = vals[0]
 
+        try:
+            is_changed = vals[0] in api.globalvars.changed_registers and vals[1] != api.globalvars.changed_registers[vals[0]][1]
+        except BrokenPipeError:
+            api.globalvars.changed_registers = multiprocessing.Manager().dict()
+            is_changed = False
+
         result[vals[0]] = (
             vals[1],
             vals[2],
-            vals[0] in api.globalvars.changed_registers and vals[1] != api.globalvars.changed_registers[vals[0]][1]
+            is_changed
         )
 
         api.globalvars.changed_registers[vals[0]] = vals[1]
