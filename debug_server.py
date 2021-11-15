@@ -193,15 +193,19 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_new_thread(self, event):
         util.verbose("gdb_on_new_thread()")
 
-        if event.inferior_thread.inferior.num == 1:
-            api.globalvars.inferior_run_times[event.inferior_thread.inferior.num] = int(time.time())
-            
         def _mt():
             self.gdb_on_new_thread__mT(event)
 
         gdb.post_event(_mt)
 
     def gdb_on_new_thread__mT(self, event):
+        inferior_thread = event.inferior_thread
+        
+        if isinstance(inferior_thread, gdb.InferiorThread):
+            api.globalvars.inferior_run_times[event.inferior_thread.inferior.num] = int(time.time())
+        elif isinstance(inferior_thread, gdb.Inferior):
+            api.globalvars.inferior_run_times[event.inferior_thread.num] = int(time.time())
+        
         response = {}
 
         response["event"] = "new_thread"
