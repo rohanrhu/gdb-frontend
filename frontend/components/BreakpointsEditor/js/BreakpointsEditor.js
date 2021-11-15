@@ -109,6 +109,8 @@
                     breakpoint.$item_check = $item.find('.BreakpointsEditor_items_item_check');
                     breakpoint.$item_loc = $item.find('.BreakpointsEditor_items_item_loc');
                     breakpoint.$item_loc_val = $item.find('.BreakpointsEditor_items_item_loc_val');
+                    breakpoint.$item_cond = $item.find('.BreakpointsEditor_items_item_cond');
+                    breakpoint.$item_cond_val = $item.find('.BreakpointsEditor_items_item_cond_val');
 
                     breakpoint.$item_check_checkboxComp = breakpoint.$item_check.find('.BreakpointsEditor_items_item_check_checkboxComp');
                     breakpoint.$item_check_checkboxComp_checkbox = breakpoint.$item_check_checkboxComp.find('> .Checkbox');
@@ -140,6 +142,13 @@
                     }
 
                     breakpoint.$item_loc_val.html(loc);
+
+                    if (breakpoint.gdb_breakpoint.condition && breakpoint.gdb_breakpoint.condition.trim()) {
+                        breakpoint.$item_cond.show();
+                        breakpoint.$item_cond_val.html(breakpoint.gdb_breakpoint.condition);
+                    } else {
+                        breakpoint.$item_cond.hide();
+                    }
 
                     breakpoint.$item_loc.on('click.BreakpointsEditor', function (event) {
                         if (!breakpoint.file || !breakpoint.line) {

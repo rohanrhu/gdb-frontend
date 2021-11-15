@@ -77,6 +77,16 @@
     width: min-content;
 }
 
+.BreakpointsEditor_items_item_cond {
+    display: flex;
+    padding: 5px 5px;
+    flex-grow: 1;
+    align-items: center;
+    width: min-content;
+    color: #7cb6ff;
+    font-style: italic;
+}
+
 .BreakpointsEditor_items_item:hover {
     background: rgba(255,255,255,0.025);
 }

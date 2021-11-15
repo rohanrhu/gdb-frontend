@@ -370,6 +370,153 @@
                 file.$editor.removeClass('__proto');
                 file.$editor.appendTo($fileTabs_editors_items);
 
+                file.breakpointDetails = {};
+                file.breakpointDetails.$breakpointDetails = file.$editor.find('.FileTabs_editors_items_item_breakpointDetails');
+                file.breakpointDetails.$breakpointDetails_box = file.breakpointDetails.$breakpointDetails.find('.FileTabs_editors_items_item_breakpointDetails_box');
+                file.breakpointDetails.$breakpointDetails_box_condition_input_rI = file.breakpointDetails.$breakpointDetails.find('.FileTabs_editors_items_item_breakpointDetails_box_condition_input_rI');
+                file.breakpointDetails.$breakpointDetails_box_buttons_button__save = file.breakpointDetails.$breakpointDetails.find('.FileTabs_editors_items_item_breakpointDetails_box_buttons_button__save');
+                file.breakpointDetails.$breakpointDetails_box_buttons_button__cancel = file.breakpointDetails.$breakpointDetails.find('.FileTabs_editors_items_item_breakpointDetails_box_buttons_button__cancel');
+
+                file.breakpointDetails.is_opened = false;
+                file.breakpointDetails.is_loading = false;
+                
+                file.breakpointDetails.$gutter_cell = false;
+                file.breakpointDetails.line  = false;
+
+                file.breakpointDetails.breakpoint = false;
+
+                file.breakpointDetails.open = function (parameters) {
+                    file.breakpointDetails.is_opened = true;
+                    
+                    file.breakpointDetails.$gutter_cell = parameters.$gutter_cell;
+
+                    file.breakpointDetails.$gutter_cell.addClass('FileTabs__detailsOpened')
+                    
+                    var x = file.breakpointDetails.$gutter_cell.offset().left + file.breakpointDetails.$gutter_cell.outerWidth() + 10;
+                    var y = file.breakpointDetails.$gutter_cell.offset().top;
+                    
+                    file.breakpointDetails.$breakpointDetails.show();
+                    file.breakpointDetails.$breakpointDetails_box.css({
+                        left: x,
+                        top: y
+                    });
+
+                    file.breakpointDetails.breakpoint = false;
+
+                    GDBFrontend.components.gdbFrontend.debug.breakpoints.every(function (_bp, _bp_i) {
+                        if (_bp.file != file.path || _bp.line != file.breakpointDetails.line) {
+                            return true;
+                        }
+
+                        file.breakpointDetails.breakpoint = _bp;
+
+                        return false;
+                    });
+                    
+                    if (!file.breakpointDetails.breakpoint) {
+                        return;
+                    }
+                    
+                    if (file.breakpointDetails.breakpoint.gdb_breakpoint.condition) {
+                        file.breakpointDetails.$breakpointDetails_box_condition_input_rI.val(file.breakpointDetails.breakpoint.gdb_breakpoint.condition);
+                    } else {
+                        file.breakpointDetails.$breakpointDetails_box_condition_input_rI.val('');
+                    }
+
+                    file.breakpointDetails.$breakpointDetails_box_condition_input_rI.focus();
+                };
+                
+                file.breakpointDetails.close = function (parameters) {
+                    file.breakpointDetails.is_opened = false;
+
+                    file.breakpointDetails.$breakpointDetails_box_condition_input_rI.blur();
+                    file.breakpointDetails.$breakpointDetails.hide();
+                    file.breakpointDetails.$gutter_cell.removeClass('FileTabs__detailsOpened')
+                };
+                
+                file.breakpointDetails.save = function (parameters) {
+                    if (file.breakpointDetails.is_loading) {
+                        return;
+                    }
+                    
+                    file.breakpointDetails.is_loading = true;
+
+                    var condition = file.breakpointDetails.$breakpointDetails_box_condition_input_rI.val()
+                                  ? file.breakpointDetails.$breakpointDetails_box_condition_input_rI.val()
+                                  : '';
+                    
+                    $.ajax({
+                        url: '/api/breakpoint/set_condition',
+                        cache: false,
+                        method: 'get',
+                        data: {
+                            number: file.breakpointDetails.breakpoint.gdb_breakpoint.number,
+                            condition: condition
+                        },
+                        success: function (result_json) {
+                            if (!result_json.ok) {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
+
+                                parameters.item.setLoading(false);
+
+                                file.breakpointDetails.is_loading = false;
+                                file.breakpointDetails.close();
+                                
+                                return;
+                            }
+
+                            file.breakpointDetails.is_loading = false;
+                            file.breakpointDetails.close();
+                        },
+                        error: function () {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+
+                            parameters.item.setLoading(false);
+
+                            file.breakpointDetails.is_loading = false;
+                            file.breakpointDetails.close();
+                        }
+                    });
+                };
+
+                file.breakpointDetails.$breakpointDetails.on('click.FileTabs', function (event) {
+                    if (event.target !=  this) {
+                        return;
+                    }
+
+                    file.breakpointDetails.close();
+                });
+
+                file.breakpointDetails.$breakpointDetails_box_buttons_button__save.on('click.FileTabs', function (event) {
+                    file.breakpointDetails.save();
+                });
+                
+                file.breakpointDetails.$breakpointDetails_box_buttons_button__cancel.on('click.FileTabs', function (event) {
+                    file.breakpointDetails.$breakpointDetails_box_condition_input_rI.val('');
+                    file.breakpointDetails.close();
+                });
+
+                file.breakpointDetails.$breakpointDetails_box_condition_input_rI.on('keydown.FileTabs', function (event) {
+                    var keycode = event.keyCode ? event.keyCode: event.which;
+                    if (keycode == 13) {
+                        file.breakpointDetails.save();
+                    }
+                });
+
+                $(window).on('keyup.FileTabs', function (event) {
+                    if (!file.breakpointDetails.is_opened) {
+                        return;
+                    }
+    
+                    event.stopPropagation();
+                    var keycode = event.keyCode ? event.keyCode: event.which;
+                    if (keycode == 27) {
+                        file.breakpointDetails.close();
+                    }
+                });
+                
                 file.$variablePopup = file.$editor.find('.FileTabs_editors_items_item_variablePopup');
                 file.$variablePopup_variablesExplorerComp = file.$variablePopup.find('.FileTabs_editors_items_item_variablePopup_variablesExplorerComp');
                 file.$variablePopup_variablesExplorer = file.$variablePopup_variablesExplorerComp.find('> .VariablesExplorer');
@@ -511,18 +658,52 @@
                 file.ace.session.on('changeBreakpoint', function (event) {
                 });
 
+                var current_guttermousedown = false;
+                
                 file.ace.on('guttermousedown', function (event) {
+                    current_guttermousedown = event;
+                    
                     var target = event.domEvent.target;
-
-                    if (target.className.indexOf('ace_gutter-cell') == -1) {
+                    var $target = $(target);
+                    var line = event.getDocumentPosition().row+1;
+    
+                    if (!$target.hasClass('ace_gutter-cell')) {
                         return;
                     }
 
                     event.stop();
+                    
+                    if (event.domEvent.which == 3) {
+                        file.breakpointDetails.$gutter_cell = $target;
+                        file.breakpointDetails.line  = line;
+                    } else {
+                        $fileTabs.trigger('FileTabs_breakpoints_toggle', {
+                            file: file,
+                            line: line
+                        });
+                    }                    
+                });
 
-                    $fileTabs.trigger('FileTabs_breakpoints_toggle', {
+                file.$editor.on('contextmenu', function (event) {
+                    var $target = $(event.target);
+                    var line = current_guttermousedown.getDocumentPosition().row+1;
+                    
+                    if (!$target.hasClass('ace_gutter-cell')) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    
+                    if (!$target.hasClass('FileTabs__breakpoint') && !$target.hasClass('FileTabs__conditionalBreakpoint')) {
+                        GDBFrontend.showMessageBox({text: 'You must set brekapoint for this line to set details.'});
+                        return;
+                    }
+
+                    file.breakpointDetails.open({$gutter_cell: $target, line: line});
+                        
+                    $fileTabs.trigger('FileTabs_breakpoints_contextToggle', {
                         file: file,
-                        line: event.getDocumentPosition().row+1
+                        line: line
                     });
                 });
 
@@ -727,7 +908,17 @@
                     if (is_exists) return false;
 
                     file.breakpoints.push({line: parameters.line});
-                    file.ace.session.setBreakpoint(parameters.line-1);
+
+                    var cell_class = 'FileTabs__breakpoint';
+
+                    if (parameters.breakpoint && parameters.breakpoint.gdb_breakpoint.condition && parameters.breakpoint.gdb_breakpoint.condition.trim()) {
+                        cell_class = 'FileTabs__conditionalBreakpoint';
+                    }
+                    
+                    file.ace.session.setBreakpoint(
+                        parameters.line-1,
+                        cell_class
+                    );
 
                     return true;
                 };

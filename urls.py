@@ -76,6 +76,11 @@ urls = api.url.URLS({
         "match": "^/api/breakpoint/set_enabled$",
         "module": "url_modules.api.breakpoint.set_enabled"
     },
+    "api-breakpoint-set-condition": {
+        "url": "/api/breakpoint/set_condition",
+        "match": "^/api/breakpoint/set_condition$",
+        "module": "url_modules.api.breakpoint.set_condition"
+    },
     "api-runtime-signal": {
         "url": "/api/runtime/signal",
         "match": "^/api/runtime/signal",

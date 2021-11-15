@@ -1952,7 +1952,8 @@
                 if (!editor_file) return false;
 
                 return editor_file.addBreakpoint({
-                    line: parameters.line
+                    line: parameters.line,
+                    breakpoint: parameters.breakpoint
                 });
             };
 
@@ -1969,7 +1970,7 @@
                     if (!_bp.file || (_bp.file != editor_file.path)) return true;
 
                     if (_bp.gdb_breakpoint.enabled) {
-                        data.debug.placeEditorFileBreakpoint({editor_file: editor_file, line: _bp.line});
+                        data.debug.placeEditorFileBreakpoint({editor_file: editor_file, line: _bp.line, breakpoint: _bp});
                     }
                 });
             };
@@ -1981,7 +1982,7 @@
                     if (!_bp.file) return true;
 
                     if (_bp.gdb_breakpoint.enabled) {
-                        data.debug.placeEditorFileBreakpoint({file: _bp.file, line: _bp.line});
+                        data.debug.placeEditorFileBreakpoint({file: _bp.file, line: _bp.line, breakpoint: _bp});
                     }
                 });
             };

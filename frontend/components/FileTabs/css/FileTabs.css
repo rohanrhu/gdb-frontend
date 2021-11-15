@@ -210,9 +210,12 @@
 
 .FileTabs_editors_items_item_ace .ace_gutter-cell {
     cursor: pointer;
+    box-sizing: border-box;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 }
 
-.FileTabs_editors_items_item_ace .ace_gutter-cell.ace_breakpoint {
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__breakpoint {
 }
 
 .FileTabs_editors_items_item_ace .ace_gutter-cell:hover::after {
@@ -227,14 +230,26 @@
     opacity: 0.5;
 }
 
-.FileTabs_editors_items_item_ace .ace_gutter-cell.ace_breakpoint::after {
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__breakpoint::after {
     content: ' ';
     position: absolute;
     width: 10px;
     height: 10px;
     left: 4px;
-    top: 2px;
+    top: 1px;
     background: #ff4c4c;
+    border-radius: 100%;
+    opacity: 1;
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__conditionalBreakpoint::after {
+    content: ' ';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 4px;
+    top: 1px;
+    background: #3487ed;
     border-radius: 100%;
     opacity: 1;
 }
@@ -244,25 +259,109 @@
     color: black;
 }
 
-/*.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__stopped::before {
-    content: ' ';
+.FileTabs_editors_items_item_breakpointDetails {
     position: absolute;
-    width: 0px;
-    height: 0px;
-    border: 7px solid transparent;
-    border-left: 7px solid white;
-    right: -14px;
+    left: 0px;
     top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 5000;
+    display: none;
+    font-size: 14px;
 }
 
-/* ---------------------- */
-
-/*.ace_gutter {
-    overflow: visible;
+.FileTabs_editors_items_item_breakpointDetails_box {
+    min-width: 300px;
+    min-height: 100px;
+    color: white;
+    text-align: left;
+    background: #003f91;
+    transition: opacity 500ms;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 25%), 0px 0px 40px 0px rgb(0 0 0 / 15%);
+    border: 1px solid rgba(47, 130, 255, 0.25);
+    position: fixed;
+    pointer-events: all;
+    margin-top: -8px;
+    margin-left: 5px;
 }
 
-.ace_gutter-layer {
-    overflow: visible;
-}*/
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    content: ' ';
+    background: #003f91;
+    position: absolute;
+    left: -6px;
+    top: 10px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+}
 
-/* ---------------------- */
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    background: #003f91;
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 25%), 0px 0px 40px 0px rgb(0 0 0 / 15%);
+    border-top: 1px solid rgba(47, 130, 255, 0.25);
+    border-bottom: 1px solid rgba(47, 130, 255, 0.25);
+    color: white;
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_condition {
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_condition_title {
+    margin-bottom: 10px;
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_condition_input {
+
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_condition_input_rI {
+    background: rgb(255 255 255 / 40%);
+    border: 1px solid rgb(255 255 255 / 25%);
+    box-sizing: border-box;
+    width: 100%;
+    height: 32px;
+    padding: 0px 5px;
+    font-family: 'SourceSansPro Regular';
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_condition_input_rI:focus {
+    background: rgb(255 255 255 / 60%);
+    border: 1px solid rgb(255 255 255 / 40%);
+    outline: none;
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_buttons_button {
+    background: rgb(0 0 0 / 40%);
+    border: 1px solid rgb(255 255 255 / 25%);
+    box-sizing: border-box;
+    height: 32px;
+    padding: 0px 5px;
+    margin: 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_buttons_button__save {
+    background-color: rgb(0 149 255 / 25%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_buttons_button__cancel {
+    background-color: rgb(255 0 0 / 25%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box_buttons_button:hover {
+    border-color: rgb(255 255 255 / 50%);
+}
