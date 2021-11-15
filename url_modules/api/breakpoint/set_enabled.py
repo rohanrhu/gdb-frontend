@@ -40,8 +40,8 @@ def run(request, params):
     if qs_params["number"] is None:
         result_json["ok"] = False
         response()
-
-    if qs_params["number"] is None:
+    
+    if qs_params["is_enabled"] is None:
         result_json["ok"] = False
         response()
 
