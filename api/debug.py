@@ -859,8 +859,10 @@ def getVariableByExpression(expression, no_error=False):
             expression=expression
         )
     except gdb.error as e:
-        if not no_error:
+        if config.VERBOSE:
             print(traceback.format_exc())
+        elif not no_error:
+            print(e)
 
         return None
     return variable
