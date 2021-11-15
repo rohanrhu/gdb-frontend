@@ -446,6 +446,30 @@
     animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
 }
 
+.ContextMenuWindow_box {
+    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(255 84 147 / 50%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box {
+    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(255 84 147 / 50%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    background: rgb(126 16 82 / 90%);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    background: rgb(126 16 82 / 90%);
+    border-color: rgb(255 84 147 / 50%);
+}
+
+.BreakpointsEditor_items_item_cond {
+    color: #00fff3;
+    text-shadow: 0px 0px 10px white;
+}
+
 @-webkit-keyframes fade-frames {
     0% {
         opacity: 1;

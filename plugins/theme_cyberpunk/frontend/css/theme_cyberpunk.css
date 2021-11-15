@@ -445,3 +445,22 @@
 .GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
     border-bottom: 10px solid #672572;
 }
+
+.ContextMenuWindow_box {
+    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(255 84 147 / 50%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box {
+    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(255 84 147 / 50%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    background: rgb(126 16 82 / 90%);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    background: rgb(126 16 82 / 90%);
+    border-color: rgb(255 84 147 / 50%);
+}

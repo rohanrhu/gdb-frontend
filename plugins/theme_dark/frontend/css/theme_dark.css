@@ -274,3 +274,22 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 ::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.7);
 }
+
+.ContextMenuWindow_box {
+    background: rgb(40 40 40);
+    border: 1px solid rgb(86 86 86);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box {
+    background: rgb(40 40 40);
+    border: 1px solid rgb(86 86 86);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    background: rgb(40 40 40);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    background: rgb(40 40 40);;
+    border-color: rgb(86 86 86);
+}

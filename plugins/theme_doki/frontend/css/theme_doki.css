@@ -412,3 +412,27 @@
 .Registers_items_item.Registers__changed .Registers_items_item_name {
     background: linear-gradient(90deg, rgb(211 0 107), rgba(255, 255, 255, 0));
 }
+
+.ContextMenuWindow_box {
+    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(255 84 147 / 50%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box {
+    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(255 84 147 / 50%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    background: rgb(126 16 82 / 90%);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    background: rgb(126 16 82 / 90%);
+    border-color: rgb(255 84 147 / 50%);
+}
+
+.BreakpointsEditor_items_item_cond {
+    color: #00fff3;
+    text-shadow: 0px 0px 10px white;
+}
