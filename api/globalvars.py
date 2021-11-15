@@ -22,6 +22,7 @@ inferior_run_times = {}
 step_time = False
 is_enhanced_collabration = False
 changed_registers = multiprocessing.Manager().dict()
+dont_emit_until_stop_or_exit = False
 
 collabration_state = {
     "editor": {
@@ -49,6 +50,7 @@ def init():
     global is_enhanced_collabration
     global changed_registers
     global collabration_state
+    global dont_emit_until_stop_or_exit
 
 def access(function):
     global lock
@@ -60,6 +62,7 @@ def access(function):
     global is_enhanced_collabration
     global changed_registers
     global collabration_state
+    global dont_emit_until_stop_or_exit
 
     lock.acquire()
     function()

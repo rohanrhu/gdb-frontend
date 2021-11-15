@@ -22,6 +22,7 @@ import time
 import sys
 import re
 import multiprocessing
+from typing import final
 
 import config
 import settings
@@ -512,6 +513,18 @@ def getSources():
 
 @threadSafe
 def run(args=""):
+    is_running = True
+
+    try:
+        is_running = gdb.selected_inferior().threads().__len__() > 0
+    except gdb.error:
+        gdb.execute("kill")
+    finally:
+        if is_running:
+            gdb.execute("kill")
+    
+    api.globalvars.dont_emit_until_stop_or_exit = True
+
     try:
         if args == "":
             gdb.execute("set args")

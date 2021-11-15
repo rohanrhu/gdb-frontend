@@ -26,6 +26,7 @@ import terminal_daemon
 
 gdb = importlib.import_module("gdb")
 
+api.globalvars.init()
 plugin.init()
 api.collabration.init()
 
@@ -76,6 +77,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
         api.globalvars.inferior_run_times[gdb.selected_inferior().num] = int(time.time())
 
+        if api.globalvars.dont_emit_until_stop_or_exit: return
+
         def _mt():
             self.gdb_on_new_objfile__mT(event)
         
@@ -91,6 +94,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_clear_objfiles(self, event):
         util.verbose("gdb_on_clear_objfiles()")
+
+        if api.globalvars.dont_emit_until_stop_or_exit: return
+
         gdb.post_event(self.gdb_on_clear_objfiles__mT)
 
     def gdb_on_clear_objfiles__mT(self):
@@ -103,10 +109,13 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_breakpoint_created(self, event):
         util.verbose("gdb_on_breakpoint_created()")
+
         gdb.post_event(self.gdb_on_breakpoint_created__mT)
 
     def gdb_on_breakpoint_created__mT(self):
         interrupted = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
+
+        if api.globalvars.dont_emit_until_stop_or_exit: return
 
         if interrupted:
             pass
@@ -120,6 +129,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_breakpoint_modified(self, event):
         util.verbose("gdb_on_breakpoint_modified()")
+
+        if api.globalvars.dont_emit_until_stop_or_exit: return
+        
         gdb.post_event(self.gdb_on_breakpoint_modified__mT)
 
     def gdb_on_breakpoint_modified__mT(self):
@@ -132,6 +144,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_breakpoint_deleted(self, event):
         util.verbose("gdb_on_breakpoint_deleted()")
+
+        if api.globalvars.dont_emit_until_stop_or_exit: return
+        
         gdb.post_event(self.gdb_on_breakpoint_deleted__mT)
 
     def gdb_on_breakpoint_deleted__mT(self):
@@ -145,6 +160,7 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_stop(self, event):
         util.verbose("gdb_on_stop()")
 
+        api.globalvars.dont_emit_until_stop_or_exit = False
         api.globalvars.step_time = time.time() * 1000 - self.cont_time
         
         gdb.post_event(self.gdb_on_stop__mT)
@@ -206,6 +222,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         elif isinstance(inferior_thread, gdb.Inferior):
             api.globalvars.inferior_run_times[event.inferior_thread.num] = int(time.time())
         
+        if api.globalvars.dont_emit_until_stop_or_exit: return
+
         response = {}
 
         response["event"] = "new_thread"
@@ -217,6 +235,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         util.verbose("gdb_on_cont()")
 
         self.cont_time = time.time() * 1000
+        
+        if api.globalvars.dont_emit_until_stop_or_exit: return
         
         gdb.post_event(self.gdb_on_cont__mT)
 
@@ -231,6 +251,7 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_exited(self, event):
         util.verbose("gdb_on_exited()")
 
+        api.globalvars.dont_emit_until_stop_or_exit = False
         api.globalvars.step_time = False
 
         def _mt():
@@ -243,17 +264,19 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
         del api.globalvars.inferior_run_times[event.inferior.num]
 
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.SELECTED_FRAMES, {})
+        
         response["event"] = "exited"
         response["state"] = api.debug.getState()
 
         self.wsSend(json.dumps(response))
 
-        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.SELECTED_FRAMES, {})
-
     def gdb_on_new_inferior(self, event):
         util.verbose("gdb_on_new_inferior()")
 
         api.globalvars.inferior_run_times[event.inferior.num] = int(time.time())
+
+        if api.globalvars.dont_emit_until_stop_or_exit: return
 
         def _mt():
             self.gdb_on_new_inferior__mT(event)
@@ -280,6 +303,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         response = {}
 
         del api.globalvars.inferior_run_times[event.inferior.num]
+
+        if api.globalvars.dont_emit_until_stop_or_exit: return
 
         response["event"] = "inferior_deleted"
         response["state"] = api.debug.getState()
