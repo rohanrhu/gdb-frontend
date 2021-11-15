@@ -495,13 +495,15 @@ def getSources():
     """
 
     try:
-        sources = gdb.execute("i sources", to_string=True).split("\n")
-
-        if len(sources) < 3: return []
-
-        for i in range(len(sources)):
-            if sources[i] == "" and len(sources) > (i + 2):
-                return sources[i+1].replace("\\", "/").split(", ")
+        sources = []
+        
+        lines = gdb.execute("i sources", to_string=True).splitlines()
+        
+        for line in lines:
+            if line.startswith("/"):
+                sources += line.split(", ")
+        
+        return sources
     except gdb.error as e:
         return []
     except Exception as e:
@@ -1014,7 +1016,7 @@ def getRegisters():
     result = {}
 
     try:
-        lines = gdb.execute("i registers", to_string=True).split("\n")
+        lines = gdb.execute("i registers", to_string=True).splitlines()
     except gdb.error:
         return {}
 
