@@ -961,18 +961,23 @@
                     }
                 };
                 
-                item.$item_button.ContextMenu({
+                var context_menu_args = {
                     actions: {
                         openInEvaluater: {
                             label: 'Open in Evaluater',
                             function: item.openInEvaluater
-                        },
-                        visualizeLinkedlist: {
-                            label: 'Visualize Linked-List',
-                            function: item.openLinkedListVisualizer
                         }
                     }
-                });
+                };
+
+                if (data.is_linked_list_visualizer_enabled) {
+                    context_menu_args.actions.visualizeLinkedlist = {
+                        label: 'Visualize Linked-List',
+                        function: item.openLinkedListVisualizer
+                    };
+                }
+
+                item.$item_button.ContextMenu(context_menu_args);
 
                 item.$item_llVis.on('click.VariablesExplorer.'+data.id, function (event) {
                     event.stopPropagation();
