@@ -32,6 +32,7 @@ import commands
 
 gdb = importlib.import_module("gdb")
 
+gdb.execute("set confirm off")
 gdb.execute("set non-stop off")
 gdb.execute("set pagination off")
 
