@@ -58,34 +58,29 @@
             var prev_registers = {};
             
             data.load = function (parameters) {
+                var prev_registers = data.registers;
+
+                data.clear();
+                
                 if (!parameters.registers) {
                     return;
                 }
                 
-                Object.keys(parameters.registers).forEach(function (_register_name) {
-                    var register = parameters.registers[_register_name];
+                Object.keys(parameters.registers).forEach(function (_register) {
+                    var $item = data.$registers_items_item__proto.clone(true);
+                    $item.removeClass('__proto');
+                    $item.appendTo(data.$registers_items);
+
+                    $item.find('.Registers_items_item_name').html(_register);
+                    $item.find('.Registers_items_item_hexVal').html(parameters.registers[_register][0]);
+                    $item.find('.Registers_items_item_decVal').html(parameters.registers[_register][1]);
                     
-                    if (register.Registers && register.Registers.$item) {
-                        $item = register.Registers.$item;
-                    } else {
-                        var $item = data.$registers_items_item__proto.clone(true);
-                        register.Registers = {$item: $item};
-                        $item.removeClass('__proto');
-                        $item.appendTo(data.$registers_items);
-                        
-                        $item.find('.Registers_items_item_name').html(_register_name);
-                        $item.find('.Registers_items_item_hexVal').html(register[0]);
-                        $item.find('.Registers_items_item_decVal').html(register[1]);
-                    }
-                    
-                    if (prev_registers.hasOwnProperty(_register_name) && (register[1] != prev_registers[_register_name][1])) {
+                    if (prev_registers.hasOwnProperty(_register) && (parameters.registers[_register][1] != prev_registers[_register][1])) {
                         $item.addClass('Registers__changed');
                     }
 
-                    prev_registers[_register_name] = register;
+                    data.registers = parameters.registers;
                 });
-                
-                data.registers = parameters.registers;
             };
 
             $registers.on('Registers_initialize.Registers', function (event) {
