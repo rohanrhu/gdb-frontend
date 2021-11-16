@@ -1,6 +1,4 @@
-# GDBFrontend The Debugger
-
-[![GDBFrontend Website](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
+# [![GDBFrontend](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&color=informational)](https://github.com/rohanrhu/gdb-frontend/releases)
 [![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
