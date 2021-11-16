@@ -1076,6 +1076,7 @@
             };
 
             data.debug.setStop = function (parameters) {
+                data.gdbFrontend_disassembly.last_rendered_pc = false;
                 data.debug.clearEditorStops();
                 data.debug.setState({
                     event: parameters.event,
