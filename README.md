@@ -1,3 +1,13 @@
+# [![GDBFrontend Website](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
+
+[![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&color=informational)](https://github.com/rohanrhu/gdb-frontend/releases)
+[![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
+[![GitHub forks](https://img.shields.io/github/forks/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/network)
+[![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
+[![GDBFrontend Discord](https://img.shields.io/discord/780821881783713813.svg?color=7289da&label=Discord&logo=discord&style=flat-square)](https://discord.gg/RyVY9MtB4S)
+[![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&style=flat-square)](https://patreon.com/EvrenselKisilik)
+[![Donate with BTC](https://shields.io/badge/donate-3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL-yellow?logo=bitcoin&style=flat-square)](#donate)
+
 GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 ![gdb-frontend](media/gdbfrontend-screenshots.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
@@ -62,27 +72,6 @@ You can open GDB shell with the command:
 tmux a -t gdb-frontend
 ```
 
-### Deb Package (Debian / Ubuntu / KDE Neon)
-
-You can install GDBFrontend via deb package for Debian-based distributions.
-
-You can install it from following commands:
-
-```bash
-echo "deb [trusted=yes] https://oguzhaneroglu.com/deb/ ./" | sudo tee -a /etc/apt/sources.list > /dev/null
-sudo apt update
-sudo apt install gdbfrontend
-```
-
-After installing with APT, you will get updates for new releases on APT upgrade.
-
-You can get upgrades with following commands:
-
-```bash
-sudo apt update
-sudo apt upgrade gdbfrontend
-```
-
 ### Arch Linux (AUR)
 
 You can install Arch Linux package for Arch-based distributions. ([AUR Package](https://aur.archlinux.org/packages/gdb-frontend-bin/))
@@ -100,6 +89,46 @@ gdbfrontend
 ### Flatpak
 
 Flatpak package is a TODO.
+
+## Features
+
+### Expression Evaluter
+
+GDBFrontend has an expression evaluater that you can use multiple in sametime.
+
+![](media/expression-evaluater.png)
+
+### Pointer Visualisation
+
+![](media/pointer-visualisation.png)
+
+### Linked-List Visualization
+
+![](media/linked-list-visualisation.png)
+
+### Conditional Breakpoints
+
+Right click to a breakpoint for setting its condition.
+
+![](media/conditional-breakpoint.png)
+
+![](media/conditional-breakpoint-2.png)
+
+### Enhanced Collabration
+
+GDBFrontend has a set of some features for collabration named as "Enhanced Collabration".
+
+![](media/enhanced-collabration.png)
+
+#### Collabration Draw
+
+Collabration draw is available when you enable Enhanced Collabration. Click to Draw or use **Ctrl + X** shortcut to draw and **Ctrl + Shift + C** to clear all drawings.
+
+![](media/enhanced-collabration-draw.png)
+
+#### Synced Source Viewing
+
+With Enhanced Collabration all debugger clients are synchronized on source viewing.
 
 ## `./gdbfrontend`
 
@@ -210,21 +239,21 @@ Unloads GDBFrontend plugin.
 
 Current hotkeys are listed below.
 
-| Action                                               | Hotkey                | Context                                      |
-| ---------------------------------------------------- | --------------------- | -------------------------------------------- |
-| *General:* Open a source file                        | **Ctrl + O**         | GDBFrontend                                  |
-| *General:* New ExpressionEvaluater                   | **Ctrl + R**         | GDBFrontend                                  |
-| *General:* New ExpressionEvaluter on native window   | **Ctrl + Shift + R** | GDBFrontend                                  |
-| *General:* Fuzzy source finder                       | **Ctrl + P**         | GDBFrontend                                  |
-| *Runtime:* Run                                       | **F5**               | GDBFrontend                                  |
-| *Runtime:* Continue                                  | **F6**               | GDBFrontend                                  |
-| *Runtime:* Pause/Interrupt                           | **F7**               | GDBFrontend                                  |
-| *Runtime:* Step Over                                 | **F8**               | GDBFrontend                                  |
-| *Runtime:* Step Into                                 | **F9**               | GDBFrontend                                  |
-| *Runtime:* Step Instruction                          | **F10**              | GDBFrontend                                  |
-| *Runtime:* Stop                                      | **F11**              | GDBFrontend                                  |
-| *Enhanced Collabration:* Toggle drawing mode         | **Ctrl + Shift + X** | GDBFrontend / Enhanced Collabration: Enabled |
-| *Enhanced Collabration:* Clear all drawings          | **Ctrl + Shift + C** | GDBFrontend / Enhanced Collabration: Enabled |
+| Action                                               | Hotkey                     | Context                                      |
+| ---------------------------------------------------- | -------------------------- | -------------------------------------------- |
+| *General:* Open a source file                      | **Ctrl + O**         | GDBFrontend                                  |
+| *General:* New ExpressionEvaluater                 | **Ctrl + R**         | GDBFrontend                                  |
+| *General:* New ExpressionEvaluter on native window | **Ctrl + Shift + R** | GDBFrontend                                  |
+| *General:* Fuzzy source finder                     | **Ctrl + P**         | GDBFrontend                                  |
+| *Runtime:* Run                                     | **F5**               | GDBFrontend                                  |
+| *Runtime:* Continue                                | **F6**               | GDBFrontend                                  |
+| *Runtime:* Pause/Interrupt                         | **F7**               | GDBFrontend                                  |
+| *Runtime:* Step Over                               | **F8**               | GDBFrontend                                  |
+| *Runtime:* Step Into                               | **F9**               | GDBFrontend                                  |
+| *Runtime:* Step Instruction                        | **F10**              | GDBFrontend                                  |
+| *Runtime:* Stop                                    | **F11**              | GDBFrontend                                  |
+| *Enhanced Collabration:* Toggle drawing mode       | **Ctrl + Shift + X** | GDBFrontend / Enhanced Collabration: Enabled |
+| *Enhanced Collabration:* Clear all drawings        | **Ctrl + Shift + C** | GDBFrontend / Enhanced Collabration: Enabled |
 
 ## Themes
 
@@ -366,11 +395,23 @@ You can read the [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-f
 
 Themes are developed as plugins.
 
-## Contributing
+## Discord
+
+Join to Discord community.
+
+[![GDBFrontend Discord](https://img.shields.io/discord/780821881783713813.svg?color=7289da&label=Discord&logo=discord&style=flat-square)](https://discord.gg/RyVY9MtB4S)
+
+## 🎊 Contributing
 
 You can contribute with commiting to project or developing a plugin. All commits are welcome.
 
-## Donate
+## ❤️ Donate
+
+### Patreon
+
+[![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&style=for-the-badge)](https://patreon.com/EvrenselKisilik)
+
+### Bitcoin
 
 You can donate to support the project.
 
