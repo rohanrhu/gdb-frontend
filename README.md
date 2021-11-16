@@ -1,4 +1,6 @@
-# [![GDBFrontend Website](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
+# GDBFrontend The Debugger
+
+[![GDBFrontend Website](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&color=informational)](https://github.com/rohanrhu/gdb-frontend/releases)
 [![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
@@ -126,6 +128,19 @@ Collabration draw is available when you enable Enhanced Collabration. Click to D
 
 ![](media/enhanced-collabration-draw.png)
 
+### Expression hover popup variable explorer
+
+
+![](media/expression-popup.png)
+
+### Extensibility
+
+GDBFrontend is very extensible and has powerful APIs. Some examples of GDBFrontend's extensibility.
+
+![](media/extensibility-1.png)
+
+![](media/extensibility-2.png)
+
 #### Synced Source Viewing
 
 With Enhanced Collabration all debugger clients are synchronized on source viewing.
@@ -241,19 +256,19 @@ Current hotkeys are listed below.
 
 | Action                                               | Hotkey                     | Context                                      |
 | ---------------------------------------------------- | -------------------------- | -------------------------------------------- |
-| *General:* Open a source file                      | **Ctrl + O**         | GDBFrontend                                  |
-| *General:* New ExpressionEvaluater                 | **Ctrl + R**         | GDBFrontend                                  |
-| *General:* New ExpressionEvaluter on native window | **Ctrl + Shift + R** | GDBFrontend                                  |
-| *General:* Fuzzy source finder                     | **Ctrl + P**         | GDBFrontend                                  |
-| *Runtime:* Run                                     | **F5**               | GDBFrontend                                  |
-| *Runtime:* Continue                                | **F6**               | GDBFrontend                                  |
-| *Runtime:* Pause/Interrupt                         | **F7**               | GDBFrontend                                  |
-| *Runtime:* Step Over                               | **F8**               | GDBFrontend                                  |
-| *Runtime:* Step Into                               | **F9**               | GDBFrontend                                  |
-| *Runtime:* Step Instruction                        | **F10**              | GDBFrontend                                  |
-| *Runtime:* Stop                                    | **F11**              | GDBFrontend                                  |
-| *Enhanced Collabration:* Toggle drawing mode       | **Ctrl + Shift + X** | GDBFrontend / Enhanced Collabration: Enabled |
-| *Enhanced Collabration:* Clear all drawings        | **Ctrl + Shift + C** | GDBFrontend / Enhanced Collabration: Enabled |
+| *General:* Open a source file                        | **Ctrl + O**               | GDBFrontend                                  |
+| *General:* New ExpressionEvaluater                   | **Ctrl + R**               | GDBFrontend                                  |
+| *General:* New ExpressionEvaluter on native window   | **Ctrl + Shift + R**       | GDBFrontend                                  |
+| *General:* Fuzzy source finder                       | **Ctrl + P**               | GDBFrontend                                  |
+| *Runtime:* Run                                       | **F5**                     | GDBFrontend                                  |
+| *Runtime:* Continue                                  | **F6**                     | GDBFrontend                                  |
+| *Runtime:* Pause/Interrupt                           | **F7**                     | GDBFrontend                                  |
+| *Runtime:* Step Over                                 | **F8**                     | GDBFrontend                                  |
+| *Runtime:* Step Into                                 | **F9**                     | GDBFrontend                                  |
+| *Runtime:* Step Instruction                          | **F10**                    | GDBFrontend                                  |
+| *Runtime:* Stop                                      | **F11**                    | GDBFrontend                                  |
+| *Enhanced Collabration:* Toggle drawing mode         | **Ctrl + Shift + X**       | GDBFrontend / Enhanced Collabration: Enabled |
+| *Enhanced Collabration:* Clear all drawings          | **Ctrl + Shift + C**       | GDBFrontend / Enhanced Collabration: Enabled |
 
 ## Themes
 
