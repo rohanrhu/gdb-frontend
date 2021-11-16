@@ -337,8 +337,9 @@ You will get this warning when a thread-safe GDBFrontend function needs to work 
 ```bash
 (gdb) shell
 $ ...
-[GDBFrontend] GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must terminate it for GDBFrontend to continue work properly.)
 ```
+
+![](media/main-thread-blocking-warning.png)
 
 When you exit shell, blocking GDBFrontend functions will continue working.
 
