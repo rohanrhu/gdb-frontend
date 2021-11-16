@@ -333,7 +333,28 @@ try:
         if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
         else:
-            webbrowser.open(gf_url)
+            if os.geteuid() != 0 and shutil.which("chrome"):
+                subprocess.Popen(
+                    "chrome --app=" + gf_url,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    close_fds=True,
+                    shell=True,
+                    executable='/bin/bash'
+                )
+            elif os.geteuid() != 0 and shutil.which("chromium"):
+                subprocess.Popen(
+                    "chromium --app=" + gf_url,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    close_fds=True,
+                    shell=True,
+                    executable='/bin/bash'
+                )
+            else:
+                webbrowser.open(gf_url)
 
         while True: time.sleep(0.1)
     else:
@@ -367,7 +388,28 @@ try:
         if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
             os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
         else:
-            webbrowser.open(gf_url)
+            if os.geteuid() != 0 and shutil.which("chrome"):
+                subprocess.Popen(
+                    "chrome --app=" + gf_url,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    close_fds=True,
+                    shell=True,
+                    executable='/bin/bash'
+                )
+            elif os.geteuid() != 0 and shutil.which("chromium"):
+                subprocess.Popen(
+                    "chromium --app=" + gf_url,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    close_fds=True,
+                    shell=True,
+                    executable='/bin/bash'
+                )
+            else:
+                webbrowser.open(gf_url)
 
         while True: time.sleep(0.1)
 except KeyboardInterrupt as e:
