@@ -128,6 +128,10 @@ Collabration draw is available when you enable Enhanced Collabration. Click to D
 
 ![](media/enhanced-collabration-draw.png)
 
+#### Synced Source Viewing
+
+With Enhanced Collabration all debugger clients are synchronized on source viewing.
+
 ### Expression hover popup variable explorer
 
 
@@ -140,10 +144,6 @@ GDBFrontend is very extensible and has powerful APIs. Some examples of GDBFronte
 ![](media/extensibility-1.png)
 
 ![](media/extensibility-2.png)
-
-#### Synced Source Viewing
-
-With Enhanced Collabration all debugger clients are synchronized on source viewing.
 
 ## `./gdbfrontend`
 
