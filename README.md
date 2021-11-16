@@ -124,7 +124,7 @@ GDBFrontend has a set of some features for collabration named as "Enhanced Colla
 
 #### Collabration Draw
 
-Collabration draw is available when you enable Enhanced Collabration. Click to Draw or use **Ctrl + X** shortcut to draw and **Ctrl + Shift + C** to clear all drawings.
+Collabration draw is available when you enable Enhanced Collabration. Click to Draw or use **Ctrl + Shift + X** shortcut to draw and **Ctrl + Shift + C** to clear all drawings.
 
 ![](media/enhanced-collabration-draw.png)
 
