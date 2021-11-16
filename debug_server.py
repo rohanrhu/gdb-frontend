@@ -222,8 +222,6 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         elif isinstance(inferior_thread, gdb.Inferior):
             api.globalvars.inferior_run_times[event.inferior_thread.num] = int(time.time())
         
-        if api.globalvars.dont_emit_until_stop_or_exit: return
-
         response = {}
 
         response["event"] = "new_thread"
