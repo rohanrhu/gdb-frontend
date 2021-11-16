@@ -72,6 +72,7 @@ def run(request, params):
     GDBFrontend.os.is_wsl = """+json.dumps(is_wsl)+""";
 
     GDBFrontend.config = {};
+    GDBFrontend.config.terminal_id = """+json.dumps(config.TERMINAL_ID)+""";
     GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
     GDBFrontend.config.bind_address = '"""+str(config.BIND_ADDRESS)+"""';
     GDBFrontend.config.http_port = """+str(config.HTTP_PORT)+""";

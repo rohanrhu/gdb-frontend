@@ -321,6 +321,20 @@
     display: flex;
 }
 
+.GDBFrontend_layout_status_spacer {
+    flex-grow: 1;
+}
+
+.GDBFrontend_layout_status_terminalId {
+    padding: 0px 10px;
+    align-items: center;
+    display: flex;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.GDBFrontend_layout_status_port {padding: 0px 10px;align-items: center;display: flex;}
+
 .GDBFrontend_layout_status_inferior {
     
 }

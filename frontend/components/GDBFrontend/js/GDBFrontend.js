@@ -49,6 +49,9 @@
 
             data.$gdbFrontend_layout_status = $gdbFrontend.find('.GDBFrontend_layout_status');
 
+            data.$gdbFrontend_layout_status_terminalId = $gdbFrontend.find('.GDBFrontend_layout_status_terminalId');
+            data.$gdbFrontend_layout_status_port = $gdbFrontend.find('.GDBFrontend_layout_status_port');
+
             data.$gdbFrontend_layout_status_runningStatus = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus');
             data.$gdbFrontend_layout_status_runningStatus__notRunning = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus_status__notRunning');
             data.$gdbFrontend_layout_status_runningStatus__running = $gdbFrontend.find('.GDBFrontend_layout_status_runningStatus_status__running');
@@ -814,6 +817,11 @@
             });
 
             data.init = function () {
+                document.title = 'GDBFrontend - Tmux: ' + GDBFrontend.config.terminal_id + ' Port: ' + GDBFrontend.config.http_port;
+
+                data.$gdbFrontend_layout_status_terminalId.html('Tmux: ' + GDBFrontend.config.terminal_id);
+                data.$gdbFrontend_layout_status_port.html('Port: ' + GDBFrontend.config.http_port);
+
                 if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_GUI) {
                     data.qWebChannel = new QWebChannel(qt.webChannelTransport, function (channel) {});
                 }
