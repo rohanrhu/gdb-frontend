@@ -68,6 +68,10 @@
             data.$gdbFrontend_layout_status_collabration_resolutionsNotEqual = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_resolutionsNotEqual');
             data.$gdbFrontend_layout_status_collabration_clearDrawings = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_clearDrawings');
             data.$gdbFrontend_layout_status_collabration_toggleDrawing = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_toggleDrawing');
+
+            data.$gdbFrontend_layout_status_split = $gdbFrontend.find('.GDBFrontend_layout_status_split');
+            data.$gdbFrontend_layout_status_split_button__horizontal = $gdbFrontend.find('.GDBFrontend_layout_status_split_button__horizontal');
+            data.$gdbFrontend_layout_status_split_button__vertical = $gdbFrontend.find('.GDBFrontend_layout_status_split_button__vertical');
             
             data.$gdbFrontend_load = $gdbFrontend.find('.GDBFrontend_load');
             data.$gdbFrontend_load_loadBtn = data.$gdbFrontend_load.find('.GDBFrontend_load_loadBtn');
@@ -2499,6 +2503,20 @@
                         console.trace('An error occured.');
                     }
                 });
+            });
+
+            data.$gdbFrontend_layout_status_split_button__vertical.on('click.GDBFrontend', function (event) {
+                GDBFrontend.components.gdbFrontend.debug.socket.send(JSON.stringify({
+                    event: 'terminal_data',
+                    data: (String.fromCharCode('B'.charCodeAt(0) & 63)) + '%'
+                }));
+            });
+            
+            data.$gdbFrontend_layout_status_split_button__horizontal.on('click.GDBFrontend', function (event) {
+                GDBFrontend.components.gdbFrontend.debug.socket.send(JSON.stringify({
+                    event: 'terminal_data',
+                    data: (String.fromCharCode('B'.charCodeAt(0) & 63)) + '"'
+                }));
             });
 
             data.openTerminal = function (parameters) {
