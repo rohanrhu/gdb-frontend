@@ -37,6 +37,7 @@ gdb.execute("set non-stop off")
 gdb.execute("set pagination off")
 
 gdb.execute("shell tmux set-option status off")
+gdb.execute("shell tmux set-option mouse off")
 
 api.globalvars.init()
 settings.init()
