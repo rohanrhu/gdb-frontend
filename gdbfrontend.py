@@ -36,6 +36,8 @@ gdb.execute("set confirm off")
 gdb.execute("set non-stop off")
 gdb.execute("set pagination off")
 
+gdb.execute("shell tmux set-option status off")
+
 api.globalvars.init()
 settings.init()
 plugin.init()
