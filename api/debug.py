@@ -534,6 +534,7 @@ def run(args=""):
         gdb.execute("r")
     except gdb.error as e:
         print("[Error] " + str(e))
+        api.globalvars.dont_emit_until_stop_or_exit = False
 
 @threadSafe
 def pause():
