@@ -80,6 +80,7 @@
                 data.$fuzzyFinder.trigger('FuzzyFinder_keydown', {event: event});
             });
 
+
             data.$fuzzyFinder_box_input_rI.on('keydown.FuzzyFinder-'+data.id, function (event) {
                 event.stopPropagation();
 
@@ -105,6 +106,8 @@
                 }
             });
 
+            var update_timeout = 0;
+
             data.$fuzzyFinder_box_input_rI.on('keyup.FuzzyFinder-'+data.id, function (event) {
                 event.stopPropagation();
 
@@ -118,7 +121,10 @@
                 } else if (keycode == 40) {
                 } else if (keycode == 13) {
                 } else {
-                    data.update();
+                    clearTimeout(update_timeout);
+                    update_timeout = setTimeout(function () {
+                        data.update();
+                    }, 300);
                 }
             });
 
