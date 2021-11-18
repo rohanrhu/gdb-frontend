@@ -744,7 +744,8 @@
                 data.debug.getState({
                     is_stop: true,
                     return: function () {
-                    }
+                    },
+                    reload_sources: true
                 });
             });
 
@@ -1257,7 +1258,7 @@
 
             $gdbFrontend.on('GDBFrontend_debug_new_objfile.GDBFrontend', async function (event, message) {
                 await data.debug.reloadFileTabs();
-                data.debug.setState({state: message.state, reload_files: true});
+                data.debug.setState({state: message.state, reload_files: true, reload_sources: true});
             });
 
             $gdbFrontend.on('GDBFrontend_debug_clear_objfiles.GDBFrontend', function (event, message) {
@@ -1544,7 +1545,8 @@
                     success: function (result_json) {
                         data.debug.setState({
                             is_stop: parameters.is_stop,
-                            state: result_json.state
+                            state: result_json.state,
+                            reload_sources: parameters.reload_sources
                         });
                         parameters.return && parameters.return();
                     },
@@ -1649,8 +1651,10 @@
 
                 data.gdbFrontend_disassembly.render();
                 
-                data.gdbFrontend_sourceTree.load({files: parameters.state.sources});
-                data.gdbFrontend_sourceTree.render();
+                if (parameters.reload_sources) {
+                    data.gdbFrontend_sourceTree.load({files: parameters.state.sources});
+                    data.gdbFrontend_sourceTree.render();
+                }
 
                 data.debug.clearEditorBreakpoints();
                 data.debug.clearDisassemblyBreakpoints();
