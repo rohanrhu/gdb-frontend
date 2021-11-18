@@ -1009,9 +1009,17 @@ class Variable():
                 serializable["value"] = str(value)
             except gdb.MemoryError as e:
                 return None
+            except gdb.error as e:
+                if config.VERBOSE:
+                    print(e)
         except UnicodeDecodeError as e:
             serializable["is_nts"] = False
             serializable["value"] = str(value)
+        except Exception as e:
+            if config.VERBOSE:
+                raise e
+            
+            return None
 
         if value.type:
             terminalType = resolveTerminalType(value.type)
