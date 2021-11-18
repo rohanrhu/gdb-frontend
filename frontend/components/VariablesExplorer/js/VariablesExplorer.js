@@ -174,6 +174,10 @@
                         var tree = [];
 
                         var _add = function (_item) {
+                            if (!_item.variable) {
+                                return;
+                            }
+
                             item.expression.push(_item.variable.name);
                             tree.push(_item);
 
@@ -267,6 +271,10 @@
 
             data.add = function (parameters) {
                 var item = parameters.item;
+
+                if (!item.variable) {
+                    return;
+                }
 
                 var $items;
 
@@ -1046,6 +1054,10 @@
                 }
 
                 data.items.forEach(function (_item, _item_i) {
+                    if (!_item.signalPointings) {
+                        return true;
+                    }
+                    
                     _item.signalPointings({is_recursive: parameters.is_recursive});
                 });
             };
