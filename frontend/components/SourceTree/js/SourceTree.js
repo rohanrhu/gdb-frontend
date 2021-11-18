@@ -159,6 +159,7 @@
 
                         var item = {};
                         _file[$.fn.SourceTree.TREE_ITEM_ITEM] = item;
+                        item.is_rendered = false;
                         item.file = _file;
                         item.$item = $item;
                         item.$item_button_indent = $item_button_indent;
@@ -170,6 +171,12 @@
                         item.is_opened = false;
 
                         item.open = function () {
+                            if (!item.is_rendered) {
+                                _put(_file[$.fn.SourceTree.TREE_ITEM_ITEMS], $item_items, level+1);
+                            }
+
+                            item.is_rendered = true;
+                            
                             item.is_opened = true;
                             $item_items.show();
                             item.$item.addClass('SourceTree__opened');
@@ -302,8 +309,6 @@
                                 }
                             }
                         });
-
-                        _put(_file[$.fn.SourceTree.TREE_ITEM_ITEMS], $item_items, level+1);
                     });
                 };
 
