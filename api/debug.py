@@ -876,7 +876,7 @@ def getSerializableStructMembers(value, ctype, parent_expression=False):
         member["type_tree"] = serializableTypeTree(resolveTypeTree(_field.type))
         member["parent_type"] = serializableTypeTree(resolveTypeTree(_field.type))
 
-        if parent_expression:
+        if parent_expression and _field.name:
             member["expression"] = parent_expression + "." + _field.name
         else:
             member["expression"] = _field.name
