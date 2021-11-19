@@ -886,10 +886,7 @@
                     if (!data.open_in_evaluater_on_native_window) {
                         GDBFrontend.components.gdbFrontend.createEvaluater({expression: item.resolveExpression()});
                     } else {
-                        var evaluater = GDBFrontend.components.gdbFrontend.createEvaluaterOnNativeWindow({expression: item.resolveExpression()}).evaluater;
-                        
-                        evaluater.evaluateExpression.setOnNativewindow({is_on_native_window: true});
-                        evaluater.evaluateExpression.setFullScreen({is_fullscreen: true});
+                        GDBFrontend.components.gdbFrontend.createEvaluaterOnNativeWindow({expression: item.resolveExpression()});
                     }
                 };
                 
@@ -901,6 +898,7 @@
                     if (!item.$item_llVis_linkedListVisualizer.data('LinkedListVisualizer')) {
                         item.$item_llVis_linkedListVisualizer.LinkedListVisualizer();
                         item.item_llVis_linkedListVisualizer = item.$item_llVis_linkedListVisualizer.data().LinkedListVisualizer;
+                        item.item_llVis_linkedListVisualizer.open_in_evaluater_on_native_window = data.open_in_evaluater_on_native_window;
                     }
 
                     item.item_llVis_linkedListVisualizer.load({

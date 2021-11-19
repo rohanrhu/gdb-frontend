@@ -82,6 +82,8 @@
 
             data.next_member = "next";
 
+            data.open_in_evaluater_on_native_window = false;
+
             data.$linkedListVisualizer_settings_setting__close_button.on('click.LinkedListVisualizer-' + data.id, function (event) {
                 $linkedListVisualizer.trigger('LinkedListVisualizer_close');
             });
@@ -288,6 +290,7 @@
                 item.item_variablesExplorer.is_signal_pointings = false;
                 item.item_variablesExplorer.is_slot_pointings = false;
                 item.item_variablesExplorer.kv_key_identifier = "llVis";
+                item.item_variablesExplorer.open_in_evaluater_on_native_window = data.open_in_evaluater_on_native_window;
 
                 item.$item_nextLoading = $item.find('.LinkedListVisualizer_items_item_nextLoading');
                 item.$item_next = $item.find('> .LinkedListVisualizer_items_item_next');
