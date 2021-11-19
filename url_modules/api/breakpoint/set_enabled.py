@@ -45,12 +45,6 @@ def run(request, params):
         result_json["ok"] = False
         response()
 
-    lockCounter = util.AtomicInteger()
-
-    @api.debug.threadSafe
-    def _setBreakpoint__mT():
-        api.debug.getBreakpoint(qs_params["number"][0]).enabled = (qs_params["is_enabled"][0] == "true")
-
-    _setBreakpoint__mT()
+    api.debug.setBreakpointEnabled(api.debug.getBreakpoint(qs_params["number"][0]), qs_params["is_enabled"][0] == "true")
 
     response()

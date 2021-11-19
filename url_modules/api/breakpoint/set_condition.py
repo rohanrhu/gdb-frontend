@@ -46,15 +46,6 @@ def run(request, params):
     else:
         condition = qs_params["condition"][0]
 
-    lockCounter = util.AtomicInteger()
-
-    @api.debug.threadSafe
-    def _setBreakpoint__mT():
-        try:
-            api.debug.getBreakpoint(qs_params["number"][0]).condition = condition
-        except gdb.error as e:
-            print(e)
-
-    _setBreakpoint__mT()
+    api.debug.setBreakpointCondition(api.debug.getBreakpoint(qs_params["number"][0]), condition)
 
     response()

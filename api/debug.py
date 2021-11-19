@@ -472,7 +472,68 @@ def delBreakpoint(bp):
     Deletes GDBFrontend.Breakpoint object.
     """
 
-    bp.delete()
+    thread = gdb.selected_thread()
+
+    if thread:
+        is_running = gdb.selected_thread().is_running()
+    else:
+        is_running = False
+
+    if is_running:
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_DEL, bp)
+        gdb.execute("interrupt")
+    else:
+        bp.delete()
+
+@threadSafe
+def setBreakpointCondition(bp, condition):
+    """
+    Sets GDBFrontend.Breakpoint's condition.
+    """
+
+    thread = gdb.selected_thread()
+
+    if thread:
+        is_running = gdb.selected_thread().is_running()
+    else:
+        is_running = False
+    
+    if is_running:
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_MOD, {
+            "breakpoint": bp,
+            "condition": condition
+        })
+        gdb.execute("interrupt")
+    else:
+        try:
+            bp.condition = condition
+        except gdb.error as e:
+            print(e)
+
+@threadSafe
+def setBreakpointEnabled(bp, is_enabled):
+    """
+    Sets GDBFrontend.Breakpoint's enabled/disabled.
+    """
+
+    thread = gdb.selected_thread()
+
+    if thread:
+        is_running = gdb.selected_thread().is_running()
+    else:
+        is_running = False
+    
+    if is_running:
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_SET, {
+            "breakpoint": bp,
+            "is_enabled": is_enabled
+        })
+        gdb.execute("interrupt")
+    else:
+        try:
+            bp.enabled = is_enabled
+        except gdb.error as e:
+            print(e)
 
 @threadSafe
 def getFiles():

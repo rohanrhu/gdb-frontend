@@ -37,6 +37,8 @@ class AtomicDebugFlags():
     """
     IS_INTERRUPTED_FOR_BREAKPOINT_ADD = 2
     IS_INTERRUPTED_FOR_BREAKPOINT_SET = 5
+    IS_INTERRUPTED_FOR_BREAKPOINT_DEL = 6
+    IS_INTERRUPTED_FOR_BREAKPOINT_MOD = 7
 
     """
     Flag for interrupt for sending posix SIGKILL to process.
@@ -56,6 +58,9 @@ class AtomicDebugFlags():
 
     def initFlags(self):
         self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_ADD] = False
+        self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_SET] = False
+        self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_DEL] = False
+        self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_MOD] = False
         self.flags[__class__.IS_INTERRUPTED_FOR_TERMINATE] = False
         self.flags[__class__.IS_INTERRUPTED_FOR_SIGNAL] = False
         self.flags[__class__.SELECTED_FRAMES] = {}

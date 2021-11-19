@@ -115,8 +115,6 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_breakpoint_created__mT(self):
         interrupted = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
 
-        if api.globalvars.dont_emit_until_stop_or_exit: return
-
         if interrupted:
             pass
         else:
@@ -130,17 +128,21 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_breakpoint_modified(self, event):
         util.verbose("gdb_on_breakpoint_modified()")
 
-        if api.globalvars.dont_emit_until_stop_or_exit: return
-        
         gdb.post_event(self.gdb_on_breakpoint_modified__mT)
 
     def gdb_on_breakpoint_modified__mT(self):
-        response = {}
+        interrupted = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_MOD)
+        interrupted = interrupted or api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_SET)
+        
+        if interrupted:
+            pass
+        else:
+            response = {}
 
-        response["event"] = "breakpoint_modified"
-        response["state"] = api.debug.getState()
+            response["event"] = "breakpoint_modified"
+            response["state"] = api.debug.getState()
 
-        self.wsSend(json.dumps(response))
+            self.wsSend(json.dumps(response))
 
     def gdb_on_breakpoint_deleted(self, event):
         util.verbose("gdb_on_breakpoint_deleted()")
@@ -150,12 +152,17 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         gdb.post_event(self.gdb_on_breakpoint_deleted__mT)
 
     def gdb_on_breakpoint_deleted__mT(self):
-        response = {}
+        interrupted = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_DEL)
+        
+        if interrupted:
+            pass
+        else:
+            response = {}
 
-        response["event"] = "breakpoint_deleted"
-        response["state"] = api.debug.getState()
+            response["event"] = "breakpoint_deleted"
+            response["state"] = api.debug.getState()
 
-        self.wsSend(json.dumps(response))
+            self.wsSend(json.dumps(response))
 
     def gdb_on_stop(self, event):
         util.verbose("gdb_on_stop()")
@@ -169,6 +176,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         interrupted_for_terminate = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE)
         interrupted_for_signal = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_SIGNAL)
         interrupted_for_breakpoint_add = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
+        interrupted_for_breakpoint_del = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_DEL)
+        interrupted_for_breakpoint_mod = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_MOD)
+        interrupted_for_breakpoint_set = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_SET)
 
         if interrupted_for_terminate:
             util.verbose("Terminating for interrupt: TERMINATE.")
@@ -193,6 +203,39 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
             )
 
             api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, False)
+
+            try:
+                gdb.execute("c")
+            except Exception as e:
+                print("[Error] (GDBFrontendSocket().gdb_on_stop__mT)", e)
+        elif interrupted_for_breakpoint_del:
+            util.verbose("Continuing for interrupt: BREAKPOINT_DEL.")
+
+            interrupted_for_breakpoint_del.delete()
+
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_DEL, False)
+
+            try:
+                gdb.execute("c")
+            except Exception as e:
+                print("[Error] (GDBFrontendSocket().gdb_on_stop__mT)", e)
+        elif interrupted_for_breakpoint_mod:
+            util.verbose("Continuing for interrupt: BREAKPOINT_MOD.")
+
+            interrupted_for_breakpoint_mod["breakpoint"].condition = interrupted_for_breakpoint_mod["condition"]
+
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_MOD, False)
+
+            try:
+                gdb.execute("c")
+            except Exception as e:
+                print("[Error] (GDBFrontendSocket().gdb_on_stop__mT)", e)
+        elif interrupted_for_breakpoint_set:
+            util.verbose("Continuing for interrupt: BREAKPOINT_SET.")
+
+            interrupted_for_breakpoint_set["breakpoint"].enabled = interrupted_for_breakpoint_set["is_enabled"]
+
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_SET, False)
 
             try:
                 gdb.execute("c")
