@@ -24,10 +24,14 @@ GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 You can install GDBFrontend with `pip`.
 
-**Important: You must run PIP install command as root.**
-
 ```bash
 sudo python3 -m pip install gdbfrontend
+```
+
+if it is already installed and you are upgrading
+
+```bash
+sudo python3 -m pip install --upgrade gdbfrontend
 ```
 
 or if you want to install specific GIT snapshot:
@@ -343,6 +347,8 @@ $ ...
 
 When you exit shell, blocking GDBFrontend functions will continue working.
 
+**Note:** Sometimes you may get this warning without running anything in GDB shell, it means something (in GDB's event-loop) is taking a long time; in this case just ignore this warning.
+
 ### Zombie Processes
 
 GDBFrontend sends SIGTERM to its sub-processes, your application and its sub-processes.
@@ -413,7 +419,7 @@ Themes are developed as plugins.
 
 Join to Discord community.
 
-[![GDBFrontend Discord](https://img.shields.io/discord/780821881783713813.svg?color=7289da&label=Discord&logo=discord&style=flat-square)](https://discord.gg/RyVY9MtB4S)
+[![GDBFrontend Discord](https://img.shields.io/discord/780821881783713813.svg?color=7289da&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/RyVY9MtB4S)
 
 ## 🎊 Contributing
 
