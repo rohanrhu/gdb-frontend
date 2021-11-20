@@ -254,7 +254,7 @@
                             }
                         });
 
-                        item.$item.ContextMenu({
+                        item.$item_button.ContextMenu({
                             actions: {
                                 revealInExplorer: {
                                     label: 'Reveal in Explorer',
