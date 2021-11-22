@@ -22,7 +22,6 @@ import socketserver
 import struct
 import base64
 import hashlib
-import typing
 import threading
 
 import config
@@ -169,7 +168,7 @@ class WebSocketHandler(http.server.BaseHTTPRequestHandler):
         pass
 
 class HTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
-    ws_clients: typing.List[WebSocketHandler] = []
+    ws_clients = []
 
     def getClientById(self, client_id):
         for client in self.ws_clients:

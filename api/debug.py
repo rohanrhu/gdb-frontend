@@ -22,7 +22,6 @@ import time
 import sys
 import re
 import multiprocessing
-from typing import final
 
 import config
 import settings
