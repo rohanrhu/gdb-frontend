@@ -45,6 +45,8 @@ workdir = False
 arg_config = {}
 arg_config["TERMINAL_ID"] = terminal_id
 
+terminate_sub_procs = True
+
 def argHandler_gdbArgs(args):
     global gdb_args
 
@@ -286,6 +288,11 @@ if is_random_port:
 
 @atexit.register
 def exiting():
+    global terminate_sub_procs
+
+    if not terminate_sub_procs:
+        return
+    
     global is_random_port
     global mmap_path
     
@@ -298,6 +305,13 @@ def exiting():
     print("Stopped GDBFrontend.")
 
 try:
+    proc = subprocess.run([gdb_executable, "--configuration"], capture_output=True)
+    
+    if "--with-python" not in repr(proc.stdout):
+        print("[Error] Your GDB ("+gdb_executable+") doesn't have embedded Python. Please install a GDB version with embedded Python or you can build it yourself.")
+        terminate_sub_procs = False
+        exit(1)
+    
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
     
