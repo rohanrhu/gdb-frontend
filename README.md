@@ -94,6 +94,10 @@ gdbfrontend
 
 Flatpak package is a TODO.
 
+## [Embedded Debugging with GDBFrontend](https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging)
+
+Follow [this quick tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging) for debugging embedded devices with GDBFrontend.
+
 ## Features
 
 ### Expression Evaluter
