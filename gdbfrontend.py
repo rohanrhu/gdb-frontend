@@ -32,12 +32,12 @@ import commands
 
 gdb = importlib.import_module("gdb")
 
-try:
-    gdb.execute("set confirm off")
-    gdb.execute("set non-stop off")
-    gdb.execute("set pagination off")
-except:
-    pass
+try: gdb.execute("set confirm off")
+except gdb.error as e: util.verbose(e)
+try: gdb.execute("set non-stop off")
+except gdb.error as e: util.verbose(e)
+try: gdb.execute("set pagination off")
+except gdb.error as e: util.verbose(e)
 
 gdb.execute("shell tmux set-option status off")
 gdb.execute("shell tmux set-option mouse on")
