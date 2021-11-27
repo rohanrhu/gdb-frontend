@@ -77,8 +77,6 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
         api.globalvars.inferior_run_times[gdb.selected_inferior().num] = int(time.time())
 
-        if api.globalvars.dont_emit_until_stop_or_exit: return
-
         def _mt():
             self.gdb_on_new_objfile__mT(event)
         
