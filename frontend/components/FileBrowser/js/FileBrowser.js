@@ -107,7 +107,12 @@
                             if (result_json.error) {
                                 if (result_json.error.not_exists) {
                                     if (!parameters.ignoreNotFound) {
-                                        GDBFrontend.showMessageBox({text: 'Path not found.'});
+                                        GDBFrontend.showMessageBox({
+                                            text: 'Path not found.',
+                                            on_close: function () {
+                                                $fileBrowser_window_box_header_path_input_rI.focus();
+                                            }
+                                        });
                                     }
                                 } else if (result_json.error.not_permitted) {
                                     if (!parameters.ignoreNotFound) {
@@ -229,7 +234,12 @@
                             data.is_passive = false;
                         },
                         error: function () {
-                            GDBFrontend.showMessageBox({text: 'Path not found.'});
+                            GDBFrontend.showMessageBox({
+                                text: 'Path not found.',
+                                on_close: function () {
+                                    $fileBrowser_window_box_header_path_input_rI.focus();
+                                }
+                            });
                         }
                     });
                 };
