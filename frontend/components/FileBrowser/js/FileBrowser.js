@@ -60,6 +60,7 @@
                 data.items = [];
                 data.current = -1;
                 data.pathUpdateRefreshTimout = 0;
+                data.dont_close_on_esc = false;
 
                 var is_first_refresh = true;
                 var dont_auto_refresh = false;
@@ -107,9 +108,12 @@
                             if (result_json.error) {
                                 if (result_json.error.not_exists) {
                                     if (!parameters.ignoreNotFound) {
+                                        data.dont_close_on_esc = true;
+                                        
                                         GDBFrontend.showMessageBox({
                                             text: 'Path not found.',
                                             on_close: function () {
+                                                data.dont_close_on_esc = false;
                                                 $fileBrowser_window_box_header_path_input_rI.focus();
                                             }
                                         });
@@ -234,9 +238,12 @@
                             data.is_passive = false;
                         },
                         error: function () {
+                            data.dont_close_on_esc = true;
+                            
                             GDBFrontend.showMessageBox({
                                 text: 'Path not found.',
                                 on_close: function () {
+                                    data.dont_close_on_esc = false;
                                     $fileBrowser_window_box_header_path_input_rI.focus();
                                 }
                             });
@@ -260,6 +267,10 @@
                     var keycode = event.keyCode ? event.keyCode : event.which;
                     if (keycode == 27) {
                         event.stopPropagation();
+
+                        if (data.dont_close_on_esc) {
+                            return;
+                        }
 
                         if (data.current > -1) {
                             data.clearSelected();
@@ -316,6 +327,10 @@
                     
                     var keycode = event.keyCode ? event.keyCode : event.which;
                     if (keycode == 27) {
+                        if (data.dont_close_on_esc) {
+                            return;
+                        }
+                        
                         if (data.current > -1) {
                             data.clearSelected();
                         } else {
