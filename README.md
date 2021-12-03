@@ -370,8 +370,8 @@ If you are using **ExpressionEvaluater** with very long depth expanded variables
 
 ## GDB-Related Issues and Tips
 
-* GDB does not give sources of linked object**until stepping a line that calls a function from the linked object once**.
-  You can add break point a line and step it once, then you will see sources from linked object hereafter during the session.
+* GDB may not give sources of dynamic linked object **until stepping a line that calls a function from the dynamic linked object once**.
+  You can add break point a line and step it once, then you will see sources from dynamic linked object hereafter during the session.
 
 ## Windows
 
@@ -445,7 +445,7 @@ You can donate to support the project.
 
 ## License
 
-Copyright (C) 2019, Oğuzhan Eroğlu <rohanrhu2@gmail.com>> (https://oguzhaneroglu.com/)
+Copyright (C) 2019, Oğuzhan Eroğlu <rohanrhu2@gmail.com> (https://oguzhaneroglu.com/)
 
 GNU General Public License v3 (GPL-3)
 
