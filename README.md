@@ -98,6 +98,10 @@ Flatpak package is a TODO.
 
 Follow [this quick tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging) for debugging embedded devices with GDBFrontend.
 
+## [Python C Extension Debugging with GDBFrontend](https://github.com/rohanrhu/gdb-frontend/wiki/How-to-debug-a-Python-C-extension-with-GDBFrontend)
+
+Follow [this quick tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/How-to-debug-a-Python-C-extension-with-GDBFrontend) for debugging native C Python extensions with GDBFrontend.
+
 ## Features
 
 ### Expression Evaluter
