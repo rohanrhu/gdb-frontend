@@ -176,6 +176,11 @@ urls = api.url.URLS({
         "match": "^/api/collabration/enhanced-collabration-disable$",
         "module": "url_modules.api.collabration.enhanced_collabration_disable"
     },
+    "api-process-all": {
+        "url": "/api/process/all",
+        "match": "^/api/process/all$",
+        "module": "url_modules.api.process.all"
+    },
     "main-layout": {
         "url": "/{layout}/",
         "match": "^/(.+?)/?$",
