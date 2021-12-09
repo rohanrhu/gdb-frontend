@@ -306,6 +306,18 @@
                                             }
                                         });
                                     }
+                                },
+                                copyName: {
+                                    label: "Copy Name",
+                                    function () {
+                                        navigator.clipboard.writeText(_file[$.fn.SourceTree.TREE_ITEM_NAME]);
+                                    }
+                                },
+                                copyPath: {
+                                    label: "Copy Path",
+                                    function () {
+                                        navigator.clipboard.writeText(_file[$.fn.SourceTree.TREE_ITEM_PATH]);
+                                    }
                                 }
                             }
                         });
