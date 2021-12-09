@@ -1019,6 +1019,18 @@
                                     }
                                 });
                             }
+                        },
+                        copyName: {
+                            label: "Copy Name",
+                            function () {
+                                navigator.clipboard.writeText(file.name);
+                            }
+                        },
+                        copyPath: {
+                            label: "Copy Path",
+                            function () {
+                                navigator.clipboard.writeText(file.path);
+                            }
                         }
                     }
                 });
