@@ -95,6 +95,9 @@
     
     <script type="text/javascript" src="/components/ContextMenu/js/ContextMenu.js"></script>
     <link rel="stylesheet" type="text/css" href="/components/ContextMenu/css/ContextMenu.css" />
+    
+    <script type="text/javascript" src="/components/ProcessManager/js/ProcessManager.js"></script>
+    <link rel="stylesheet" type="text/css" href="/components/ProcessManager/css/ProcessManager.css" />
 
     <link rel="stylesheet" type="text/css" href="/css/override.css" />
 
@@ -172,7 +175,19 @@
                             </div>
                             <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__evaluateInNativeWindow">
                                 <div class="GDBFrontend_runtimeControls_btn_btn">
-                                    <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/fx-windowed.png" alt="" draggable="false" />
+                                    <img class="GDBFrontend_runtimeControls_btn_img" src="/images/debug/fx.png" alt="" draggable="false" />
+                                    <i class="icofont-interface GDBFrontend_runtimeControls_btn_btn_img2"></i>
+                                </div>
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__processManager">
+                                <div class="GDBFrontend_runtimeControls_btn_btn">
+                                    <i class="icofont-settings-alt"></i>
+                                </div>
+                            </div>
+                            <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__processManagerInNativeWindow">
+                                <div class="GDBFrontend_runtimeControls_btn_btn">
+                                    <i class="icofont-settings-alt"></i>
+                                    <i class="icofont-interface GDBFrontend_runtimeControls_btn_btn_img2"></i>
                                 </div>
                             </div>
                             <div class="GDBFrontend_runtimeControls_btn GDBFrontend_runtimeControls_btn__enhancedCollabration">
@@ -471,10 +486,16 @@
         <div class="GDBFrontend_variablesExplorerProto">
             {html_variablesExplorer}
         </div>
+        <div class="GDBFrontend_processManagerComp">
+            {html_processManager}
+        </div>
         
         <div class="GDBFrontend_evaluaters">
             <div class="GDBFrontend_pointings">
             </div>
+        </div>
+
+        <div class="GDBFrontend_processManagers">
         </div>
     </div>
     

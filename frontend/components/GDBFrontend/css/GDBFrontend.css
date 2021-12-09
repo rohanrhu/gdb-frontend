@@ -121,6 +121,7 @@
     align-items: center;
     height: 34px;
     padding: 0px 10px;
+    position: relative;
 }
 
 .GDBFrontend_runtimeControls_btn.GDBFrontend__enabled .GDBFrontend_runtimeControls_btn_btn {
@@ -147,6 +148,17 @@
 
 .GDBFrontend_runtimeControls_btn_img {
     height: 22px;
+    position: relative;
+    z-index: 2;
+}
+
+.GDBFrontend_runtimeControls_btn_btn_img2 {
+    position: absolute;
+    right: 5px;
+    bottom: -2px;
+    font-size: 12px;
+    z-index: 1;
+    color: rgb(255 255 255 / 75%);
 }
 
 /* ---------------------- */
@@ -860,6 +872,17 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 .GDBFrontend_collabration_drawLayer.GDBFrontend__drawing {
     background: rgba(0, 0, 0, 0.25);
     pointer-events: all;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_processManagers {
+    position: absolute;
+    top: 0px;;
+    left: 0px;
+    width: 0px;
+    height: 0px;
+    z-index: 5000;
 }
 
 /* ---------------------- */

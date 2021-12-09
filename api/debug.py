@@ -1127,3 +1127,14 @@ def getRegisters():
         api.globalvars.changed_registers[vals[0]] = vals[1]
 
     return result
+
+@threadSafe
+def attach(pid):
+    try:
+        gdb.execute("attach " + str(pid))
+    except gdb.error as e:
+        print("Could not attach to process: %s (%s)" % (pid, str(e)))
+        
+        if config.VERBOSE:
+            util.verbose("[Error]", str(e))
+            raise e

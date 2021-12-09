@@ -108,6 +108,8 @@
             data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__processManager = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__processManager');
             data.$gdbFrontend_runtimeControls_btn__processManager_btn = data.$gdbFrontend_runtimeControls_btn__processManager.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__processManagerInNativeWindow');
+            data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__enhancedCollabration');
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn = data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.find('.GDBFrontend_runtimeControls_btn_btn');
 
@@ -277,6 +279,7 @@
             data.processManagers = [];
 
             data.is_evaluater_window = false;
+            data.is_process_manager_window = false;
 
             data.collabration = {};
             data.collabration.state = {
@@ -297,6 +300,14 @@
 
             data.terminal = {};
             data.terminal.xterm = false;
+            
+            data.setIsProcessManagerWindow = function (is_process_manager_window) {
+                data.is_process_manager_window = is_process_manager_window;
+
+                if (window.GDBFrontend_is_process_manager_window) {
+                    $gdbFrontend.addClass('GDBFrontend__processManagerWindow');
+                }
+            };
             
             data.setIsEvaluaterWindow = function (is_evaluater_window) {
                 data.is_evaluater_window = is_evaluater_window;
@@ -379,6 +390,25 @@
                 });
 
                 return {processManager: processManager};
+            };
+
+            data.createProcessManagerOnNativeWindow = function (parameters) {
+                var nw = window.open(
+                    "/",
+                    "Process Manager - " + Math.random().toString(36).substr(2, 9),
+                    "menubar=no,location=no,resizable=yes,scrollbars=no,status=no,toolbar=no,width=400,height=400,top=500,left=500"
+                );
+
+                nw.GDBFrontend_is_process_manager_window = true;
+                
+                nw.onload = function () {
+                    nw.GDBFrontend.components.gdbFrontend.setIsProcessManagerWindow(true);
+
+                    var processManager = nw.GDBFrontend.components.gdbFrontend.createProcessManager(parameters).processManager;
+                    
+                    processManager.processManager.setOnNativewindow({is_on_native_window: true});
+                    processManager.processManager.setFullScreen({is_fullscreen: true});
+                };
             };
 
             data.createEvaluaterOnNativeWindow = function (parameters) {
@@ -2513,6 +2543,10 @@
             
             data.$gdbFrontend_runtimeControls_btn__processManager_btn.on('click.GDBFrontend', function (event) {
                 data.createProcessManager();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow_btn.on('click.GDBFrontend', function (event) {
+                data.createProcessManagerOnNativeWindow();
             });
             
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn.on('click.GDBFrontend', function (event) {

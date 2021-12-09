@@ -91,6 +91,11 @@ urls = api.url.URLS({
         "match": "^/api/runtime/terminate",
         "module": "url_modules.api.runtime.terminate"
     },
+    "api-runtime-attach": {
+        "url": "/api/runtime/attach",
+        "match": "^/api/runtime/attach$",
+        "module": "url_modules.api.runtime.attach"
+    },
     "api-runtime-run": {
         "url": "/api/runtime/run",
         "match": "^/api/runtime/run$",

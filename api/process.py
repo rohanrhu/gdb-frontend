@@ -50,19 +50,24 @@ def access(function):
 def getProcessDetails(pid):
     pid = str(pid)
     
-    status = open("/proc/" + pid + "/status", encoding="ascii").read()
+    proc_status = open("/proc/" + pid + "/status", encoding="utf-8").read()
+    cmdline = open("/proc/" + pid + "/cmdline", encoding="utf-8").read()
 
-    details = {}
+    status = {}
     
-    for i in status.split("\n"):
+    for i in proc_status.split("\n"):
         kv = i.split("\t")
 
         if not kv or len(kv) < 2:
             continue
         
-        details[kv[0][:-1].strip()] = kv[1].strip()
+        status[kv[0][:-1].strip()] = kv[1].strip()
     
-    return details
+    return {
+        "status": status,
+        "cmdline": cmdline.replace("\x00", " "),
+        "start_time": os.stat("/proc/" + pid).st_ctime
+    }
 
 def getAllProcesses():
     pids = {}
