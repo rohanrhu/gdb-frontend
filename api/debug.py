@@ -952,23 +952,27 @@ def iterateAsmToRet():
     instructions = []
     length = 0
 
-    def _iterate(addr):
-        nonlocal instructions
-        nonlocal length
+    try:
+        addr = int(re.findall("(0x.+) <", gdb.parse_and_eval(frame.name()).__str__())[0], 16)
 
-        instruction = arch.disassemble(addr)[0]
+        while True:
+            instruction = arch.disassemble(addr)[0]
+            instruction["asm"] = str(instruction["asm"]).strip()
 
-        instructions.append(instruction)
-        length += 1
+            instructions.append(instruction)
+            length += 1
 
-        if length == 1000: return
-        if instruction['asm'][:3] == 'ret': return
-        
-        _iterate(addr + int(instruction['length']))
-
-
-    try: _iterate(int(re.findall("(0x.+) <", gdb.parse_and_eval(frame.name()).__str__())[0], 16))
-    except: return instructions
+            if length >= config.MAX_ITERATIONS_TO_RET: break
+            if instruction["asm"].startswith("ret"): break
+            if instruction["asm"].startswith("iret"): break
+            if instruction["asm"].startswith("retn"): break
+            if instruction["asm"].startswith("retf"): break
+            if instruction["asm"].startswith("iretx"): break
+            if instruction["asm"].startswith("sysret"): break
+            
+            addr += int(instruction["length"])
+    except:
+        return instructions
 
     return instructions
 
@@ -982,7 +986,7 @@ def disassembleFrame():
     
     try:
         block = frame.block()
-    except RuntimeError:
+    except:
         try:
             instructions = iterateAsmToRet()
         except:
