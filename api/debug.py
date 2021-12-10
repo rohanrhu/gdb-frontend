@@ -995,7 +995,30 @@ def disassembleFrame():
 
         return instructions
 
-    return disassemble(block.start, block.end-1)
+    pc = re.findall("\\s(0.+?)\\s+", gdb.execute("i register pc", to_string=True))
+
+    if pc and len(pc) > 0:
+        pc = int(pc[0], 16)
+        
+        start = block.start
+        end = block.end-1
+
+        size = end - start
+
+        if size > config.MAX_ITERATIONS_TO_RET:
+            start = pc - int(config.MAX_ITERATIONS_TO_RET/2)
+            
+            if start < block.start:
+                start = block.start
+            
+            end = pc + int(config.MAX_ITERATIONS_TO_RET/2)
+            
+            if end > block.end-1:
+                end = block.end-1
+
+        return disassemble(start, end)
+    else:
+        return disassemble(block.start, block.end-1)
 
 class Breakpoint(gdb.Breakpoint):
     @threadSafe
