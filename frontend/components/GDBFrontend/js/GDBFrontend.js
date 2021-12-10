@@ -106,8 +106,6 @@
             data.$gdbFrontend_runtimeControls_btn__evaluate_btn = data.$gdbFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluateInNativeWindow');
             data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow.find('.GDBFrontend_runtimeControls_btn_btn');
-            data.$gdbFrontend_runtimeControls_btn__processManager = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__processManager');
-            data.$gdbFrontend_runtimeControls_btn__processManager_btn = data.$gdbFrontend_runtimeControls_btn__processManager.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__enhancedCollabration');
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn = data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.find('.GDBFrontend_runtimeControls_btn_btn');
 
@@ -124,13 +122,10 @@
             data.gdbFrontend_sourceTree = null;
             
             data.$gdbFrontend_disassembly_title_buttons_button__openTab = $gdbFrontend.find('.GDBFrontend_disassembly_title_buttons_button__openTab');
-            
+
             data.$gdbFrontend_layout_top_themeMenu = data.$gdbFrontend.find('.GDBFrontend_layout_top_themeMenu');
             data.$gdbFrontend_layout_top_themeMenu_items = data.$gdbFrontend_layout_top_themeMenu.find('.GDBFrontend_layout_top_themeMenu_items');
             data.$gdbFrontend_layout_top_themeMenu_items_item_s = data.$gdbFrontend_layout_top_themeMenu_items.find('.GDBFrontend_layout_top_themeMenu_items_item');
-            
-            data.$gdbFrontend_processManagers = $gdbFrontend.find('.GDBFrontend_processManagers');
-            data.$gdbFrontend_processManagers = $gdbFrontend.find('.GDBFrontend_processManagers');
 
             data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
             
@@ -251,10 +246,6 @@
             data.$gdbFrontend_evaluateExpressionComp = $gdbFrontend.find('.GDBFrontend_evaluateExpressionComp');
             data.$gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpressionComp.find('> .EvaluateExpression');
             data.gdbFrontend_evaluateExpression = null;
-            
-            data.$gdbFrontend_processManagerComp = $gdbFrontend.find('.GDBFrontend_processManagerComp');
-            data.$gdbFrontend_processManager = data.$gdbFrontend_processManagerComp.find('> .ProcessManager');
-            data.gdbFrontend_processManager = null;
 
             data.components = {};
 
@@ -274,7 +265,6 @@
             data.last_not_found_source = false;
             
             data.evaluaters = [];
-            data.processManagers = [];
 
             data.is_evaluater_window = false;
 
@@ -347,38 +337,6 @@
                 }
 
                 return {evaluater: evaluater};
-            };
-            
-            data.createProcessManager = function (parameters) {
-                if (parameters === undefined) {
-                    parameters = {};
-                }
-
-                var processManager = {};
-
-                processManager.$processManager = data.$gdbFrontend_processManager.clone();
-                processManager.$processManager.appendTo(data.$gdbFrontend_processManagers);
-                processManager.$processManager.ProcessManager();
-                processManager.processManager = processManager.$processManager.data().ProcessManager;
-                processManager.processManager.open();
-                
-                data.processManagers.push(processManager);
-
-                processManager.$processManager.on('ProcessManager_closed.GDBFrontend', function (parameters) {
-                    processManager.$processManager.remove();
-                    
-                    data.processManagers.every(function (_manager, _manager_i) {
-                        if (_manager.$processManager.is(processManager.$processManager)) {
-                            data.processManagers.splice(_manager_i, 1);
-                            
-                            return false;
-                        }
-                        
-                        return true;
-                    });
-                });
-
-                return {processManager: processManager};
             };
 
             data.createEvaluaterOnNativeWindow = function (parameters) {
@@ -1145,7 +1103,7 @@
             };
 
             data.debug.setWatches = function () {
-                return new Promise(function (resolve, reject) {
+                new Promise(function (resolve, reject) {
                     data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
                         if (_watch.is_adder) {
                             return true;
@@ -1187,7 +1145,7 @@
             };
             
             data.debug.reloadFileTabs = function () {
-                return new Promise(function (resolve, reject) {
+                new Promise(function (resolve, reject) {
                     data.components.fileTabs.files.every(function (_file, _file_i) {
                         if (!_file.path) {
                             resolve();
@@ -2509,10 +2467,6 @@
             
             data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn.on('click.GDBFrontend', function (event) {
                 data.createEvaluaterOnNativeWindow();
-            });
-            
-            data.$gdbFrontend_runtimeControls_btn__processManager_btn.on('click.GDBFrontend', function (event) {
-                data.createProcessManager();
             });
             
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn.on('click.GDBFrontend', function (event) {
