@@ -63,7 +63,7 @@ def threadSafe(callback):
             try:
                 output = callback(*args, **kwargs)
             except Exception as e:
-                print(traceback.format_exc())
+                util.verbose(traceback.format_exc())
 
             if not is_mt: lockCounter.decr()
             
@@ -107,7 +107,7 @@ def execCommand(command, buff_output=False):
         try:
             output = gdb.execute(command, to_string=buff_output)
         except Exception as e:
-            print(traceback.format_exc())
+            util.verbose(traceback.format_exc())
 
         if not is_mt: lockCounter.decr()
         
@@ -355,10 +355,10 @@ def getState():
                                 try:
                                     value = symbol.value(selected_frame)
                                 except Exception as e:
-                                    print("[Error]", e)
+                                    util.verbose("[Error]", e)
 
                                 try:
-                                    variable = getVariableByExpression(symbol.name, no_error=False).serializable()
+                                    variable = getVariableByExpression(symbol.name, no_error=True).serializable()
                                     variables.append(variable)
                                 except:
                                     pass
@@ -366,7 +366,7 @@ def getState():
 
                         block = block.superblock
                 except Exception as e:
-                    print(traceback.format_exc())
+                    util.verbose(traceback.format_exc())
 
                 state["selected_frame"] = {}
                 state["selected_frame"]["pc"] = selected_frame.pc()
@@ -990,7 +990,7 @@ def disassembleFrame():
         try:
             instructions = iterateAsmToRet()
         except:
-            print("[Error] Can not disassemble frame.")
+            util.verbose("[Error] Can not disassemble frame.")
             instructions = []
 
         return instructions
@@ -1077,7 +1077,7 @@ class Variable():
         try:
             block = frame.block()
         except RuntimeError as e:
-            print("[Error]", str(e))
+            util.verbose("[Error]", str(e))
             return False
 
         serializable = {}
@@ -1085,7 +1085,8 @@ class Variable():
         serializable["name"] = self.name
         serializable["expression"] = self.expression
         serializable["is_pointer"] = value.type.code == gdb.TYPE_CODE_PTR
-        serializable["address"] = str(value.address) if value.address else "0x0"
+        try: serializable["address"] = str(value.address) if value.address else "0x0"
+        except: serializable["address"] = "0x0"
 
         try:
             serializable["value"] = value.string()
@@ -1095,10 +1096,10 @@ class Variable():
                 serializable["is_nts"] = False
                 serializable["value"] = str(value)
             except gdb.MemoryError as e:
+                util.verbose(e)
                 return None
             except gdb.error as e:
-                if config.VERBOSE:
-                    print(e)
+                util.verbose(e)
         except UnicodeDecodeError as e:
             serializable["is_nts"] = False
             serializable["value"] = str(value)
