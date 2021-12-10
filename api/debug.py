@@ -1125,6 +1125,9 @@ class Variable():
 
 @threadSafe
 def getRegisters():
+    if gdb.selected_thread().is_running():
+        return {}
+    
     result = {}
 
     try:
