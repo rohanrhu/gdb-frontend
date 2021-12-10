@@ -1175,7 +1175,7 @@
             };
 
             data.debug.setWatches = function () {
-                return new Promise(function (resolve, reject) {
+                new Promise(function (resolve, reject) {
                     data.gdbFrontend_watches.watches.every(function (_watch, _watch_i) {
                         if (_watch.is_adder) {
                             return true;
@@ -1217,7 +1217,7 @@
             };
             
             data.debug.reloadFileTabs = function () {
-                return new Promise(function (resolve, reject) {
+                new Promise(function (resolve, reject) {
                     data.components.fileTabs.files.every(function (_file, _file_i) {
                         if (!_file.path) {
                             resolve();

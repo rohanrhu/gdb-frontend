@@ -150,7 +150,7 @@
             });
 
             data.reload = function (parameters) {
-                return new Promise(function (resolve, reject) {
+                new Promise(function (resolve, reject) {
                     if (parameters === undefined) {
                         parameters = {};
                     }
