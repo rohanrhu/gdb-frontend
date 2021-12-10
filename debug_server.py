@@ -44,8 +44,6 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         self.server.ws_clients.append(self)
         self.connectGDBEvents()
 
-        util.verbose("Starting terminal daemon for client#%d" % self.client_id)
-
     def connectGDBEvents(self):
         gdb.events.new_objfile.connect(self.gdb_on_new_objfile)
         gdb.events.clear_objfiles.connect(self.gdb_on_clear_objfiles)
@@ -373,6 +371,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         event = message["event"]
 
         if event == "start_terminal":
+            util.verbose("Starting terminal daemon for client#%d" % self.client_id)
+            
             self.terminalDaemon = terminal_daemon.TerminalDaemon(ws=self, terminal_command=["tmux", "a", "-t", config.TERMINAL_ID])
             self.terminalDaemon.start()
         elif event == "get_state":
