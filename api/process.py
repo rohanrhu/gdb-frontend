@@ -76,6 +76,9 @@ def getAllProcesses():
         if pid.isnumeric() and os.path.isdir("/proc/" + pid):
             pid = int(pid)
             
-            pids[pid] = getProcessDetails(pid)
+            try:
+                pids[pid] = getProcessDetails(pid)
+            except Exception as e:
+                util.verbose("[Error] Could not get process details (PID: %s)" % str(pid), e)
     
     return pids
