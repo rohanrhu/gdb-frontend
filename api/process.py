@@ -29,8 +29,6 @@ gdb = importlib.import_module("gdb")
 
 api.globalvars.init()
 
-state = api.globalvars.collabration_state
-
 lock = False
 
 def init():
@@ -53,8 +51,15 @@ def getProcessDetails(pid):
     if not os.path.exists("/proc/" + pid):
         return False
     
-    proc_status = open("/proc/" + pid + "/status", encoding="utf-8").read()
-    cmdline = open("/proc/" + pid + "/cmdline", encoding="utf-8").read()
+    try:
+        proc_status = open("/proc/" + pid + "/status", encoding="utf-8")
+        cmdline = open("/proc/" + pid + "/cmdline", encoding="utf-8")
+        stat = os.stat("/proc/" + pid)
+    except:
+        return False
+
+    proc_status = proc_status.read()
+    cmdline = cmdline.read()
 
     status = {}
     
@@ -69,7 +74,7 @@ def getProcessDetails(pid):
     return {
         "status": status,
         "cmdline": cmdline.replace("\x00", " "),
-        "start_time": os.stat("/proc/" + pid).st_ctime
+        "start_time": stat.st_ctime
     }
 
 def getAllProcesses():

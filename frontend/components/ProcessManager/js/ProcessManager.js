@@ -290,21 +290,13 @@
                     } else {
                         var highlighted = process.cmdline.split(filter_expr);
                         
-                        if (highlighted.length > 1) {
-                            highlighted.forEach(function (_part) {
-                                var $part = $('<span></span') ;
-                                $part.addClass('ProcessManager_notHighlighted');
-                                $part.html(_part)
-                                $part.appendTo($item_cmd);
+                        var cmdline = process.cmdline;
 
-                                $part = $('<span></span') ;
-                                $part.addClass('ProcessManager_highlighted');
-                                $part.html(filter_expr);
-                                $part.appendTo($item_cmd);
-                            });
-                        } else {
-                            $item_cmd.html(process.cmdline);
+                        if (highlighted.length > 1) {
+                            cmdline = cmdline.replace(new RegExp(filter_expr, 'gi'), '<span class="ProcessManager_highlighted">'+filter_expr+'</span>');
                         }
+                        
+                        $item_cmd.html(cmdline);
                     }
 
                     $item.ContextMenu({
@@ -349,6 +341,54 @@
                                 label: "Copy Command",
                                 function () {
                                     navigator.clipboard.writeText(process.cmdline);
+                                }
+                            },
+                            sigterm: {
+                                label: "Terminate (SIGTERM)",
+                                function () {
+                                    $.ajax({
+                                        url: '/api/process/sigterm',
+                                        cache: false,
+                                        method: 'get',
+                                        data: {
+                                            pid: _pid
+                                        },
+                                        success: function (result_json) {
+                                            if (!result_json.ok) {
+                                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                                console.trace('An error occured.');
+                                                return;
+                                            }
+                                        },
+                                        error: function () {
+                                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                            console.trace('An error occured.');
+                                        }
+                                    });
+                                }
+                            },
+                            sigkill: {
+                                label: "Terminate (SIGKILL)",
+                                function () {
+                                    $.ajax({
+                                        url: '/api/process/sigkill',
+                                        cache: false,
+                                        method: 'get',
+                                        data: {
+                                            pid: _pid
+                                        },
+                                        success: function (result_json) {
+                                            if (!result_json.ok) {
+                                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                                console.trace('An error occured.');
+                                                return;
+                                            }
+                                        },
+                                        error: function () {
+                                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                            console.trace('An error occured.');
+                                        }
+                                    });
                                 }
                             }
                         }
