@@ -50,6 +50,9 @@ def access(function):
 def getProcessDetails(pid):
     pid = str(pid)
     
+    if not os.path.exists("/proc/" + pid):
+        return False
+    
     proc_status = open("/proc/" + pid + "/status", encoding="utf-8").read()
     cmdline = open("/proc/" + pid + "/cmdline", encoding="utf-8").read()
 
@@ -77,8 +80,10 @@ def getAllProcesses():
             pid = int(pid)
             
             try:
-                pids[pid] = getProcessDetails(pid)
+                details = getProcessDetails(pid)
             except Exception as e:
                 util.verbose("[Error] Could not get process details (PID: %s)" % str(pid), e)
+            
+            pids[pid] = details
     
     return pids
