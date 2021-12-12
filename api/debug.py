@@ -926,7 +926,7 @@ def getVariableInBlock(name):
     return False
 
 @threadSafe(no_interrupt=True)
-def getVariableByExpression(expression, no_error=False):
+def getVariableByExpression(expression, no_error=True):
     """
     Returns C member (api.debug.Variable) on current frame
     by given variable[->member](s) names expression or any expression.
