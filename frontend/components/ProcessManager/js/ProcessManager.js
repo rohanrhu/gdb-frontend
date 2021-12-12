@@ -209,6 +209,8 @@
 
                     if (parseInt(x.start_time) < parseInt(y.start_time)) {
                         return -1;
+                    } else if (parseInt(x.start_time) > parseInt(y.start_time)) {
+                        return 1;
                     }
 
                     return 0;
@@ -217,34 +219,65 @@
                 if (filter_expr.length) {
                     ordered_pids.sort(function (x, y) {
                         x = data.processes[x];
-                        x = data.processes[y];
+                        y = data.processes[y];
     
+                        if ((x.cmdline.indexOf(filter_expr) >= 0) && (y.cmdline.indexOf(filter_expr) >= 0)) {
+                            x.is_highlighted = true;
+                            y.is_highlighted = true;
+                            return 0;
+                        }
+
                         if (x.cmdline.indexOf(filter_expr) >= 0) {
                             x.is_highlighted = true;
+                            return 1;
+                        }
+                        
+                        if (y.cmdline.indexOf(filter_expr) >= 0) {
+                            y.is_highlighted = true;
                             return -1;
                         }
-    
-                        return 0;
                     });
                     
                     ordered_pids.sort(function (x, y) {
                         x = data.processes[x];
-                        x = data.processes[y];
-    
+                        y = data.processes[y];
+                        
+                        if ((x.status.Name.indexOf(filter_expr) >= 0) && (y.status.Name.indexOf(filter_expr) >= 0)) {
+                            x.is_highlighted = true;
+                            y.is_highlighted = true;
+                            return 0;
+                        }
+                        
                         if (x.status.Name.indexOf(filter_expr) >= 0) {
                             x.is_highlighted = true;
+                            return 1;
+                        }
+                        
+                        if (y.status.Name.indexOf(filter_expr) >= 0) {
+                            y.is_highlighted = true;
                             return -1;
                         }
-    
+                        
                         return 0;
                     });
                     
                     ordered_pids.sort(function (x, y) {
                         x = data.processes[x];
-                        x = data.processes[y];
-    
+                        y = data.processes[y];
+                        
+                        if ((x.status.Name.trim() == filter_expr.trim()) && (y.status.Name.trim() == filter_expr.trim())) {
+                            x.is_highlighted = true;
+                            y.is_highlighted = true;
+                            return 0;
+                        }
+                        
                         if (x.status.Name.trim() == filter_expr.trim()) {
                             x.is_highlighted = true;
+                            return 1;
+                        }
+                        
+                        if (y.status.Name.trim() == filter_expr.trim()) {
+                            y.is_highlighted = true;
                             return -1;
                         }
     
@@ -254,10 +287,21 @@
                     if (is_filter_pid) {
                         ordered_pids.sort(function (x, y) {
                             x = data.processes[x];
-                            x = data.processes[y];
+                            y = data.processes[y];
         
+                            if ((x.status.Pid == filter_expr) && (y.status.Pid == filter_expr)) {
+                                x.is_highlighted = true;
+                                y.is_highlighted = true;
+                                return 0;
+                            }
+
                             if (x.status.Pid == filter_expr) {
                                 x.is_highlighted = true;
+                                return 1;
+                            }
+                            
+                            if (y.status.Pid == filter_expr) {
+                                y.is_highlighted = true;
                                 return -1;
                             }
         
