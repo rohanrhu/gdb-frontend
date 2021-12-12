@@ -343,3 +343,16 @@
     background: rgb(120 35 35);
     border-color: rgb(0 0 0 / 25%);
 }
+
+.ProcessManager_window_box {
+    background: #a52323;
+    color: white;
+}
+
+.ProcessManager_window_mover {
+    background-color: #903b3b;
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: #fff35f;
+}
