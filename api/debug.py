@@ -76,7 +76,7 @@ def threadSafe(no_interrupt=False):
                 try:
                     output = callback(*args, **kwargs)
                 except Exception as e:
-                    util.verbose(traceback.format_exc())
+                    util.verbose(e, traceback.format_exc())
 
                 lockCounter.decr()
             
@@ -134,7 +134,7 @@ def execCommand(command, buff_output=False):
         try:
             output = gdb.execute(command, to_string=buff_output)
         except Exception as e:
-            util.verbose(traceback.format_exc())
+            util.verbose(e, traceback.format_exc())
 
         if not is_mt: lockCounter.decr()
         
@@ -393,7 +393,7 @@ def getState():
 
                         block = block.superblock
                 except Exception as e:
-                    util.verbose(traceback.format_exc())
+                    util.verbose(e, traceback.format_exc())
 
                 state["selected_frame"] = {}
                 state["selected_frame"]["pc"] = selected_frame.pc()
@@ -941,7 +941,7 @@ def getVariableByExpression(expression, no_error=False):
         )
     except gdb.error as e:
         if config.VERBOSE:
-            print(traceback.format_exc())
+            print(e, traceback.format_exc())
         elif not no_error:
             print(e)
 
@@ -1125,7 +1125,7 @@ class Variable():
             serializable["value"] = str(value)
         except Exception as e:
             if config.VERBOSE:
-                raise e
+                util.verbose(e, traceback.format_exc())
             
             return None
 
