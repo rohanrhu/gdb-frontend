@@ -38,7 +38,7 @@ api.globalvars.init()
 
 gdb = importlib.import_module("gdb")
 
-def threadSafe(no_interrupt=False):
+def threadSafe(no_interrupt=True):
     """
     Decorator for running something with thread-safety.
     If it is currently on main-thread, callback runs immediately,
