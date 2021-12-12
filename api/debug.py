@@ -829,7 +829,7 @@ def serializableRepresentation(value):
     serializable = {}
 
     try:
-        serializable["value"] = value.string()
+        serializable["value"] = value.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
         serializable["is_nts"] = True
     except gdb.error as e:
         serializable["is_nts"] = False
@@ -873,7 +873,7 @@ def getSerializableStructMembers(value, ctype, parent_expression=False):
             member["enumval"] = _field.enumval
 
         try:
-            member["value"] = memberValue.string()
+            member["value"] = memberValue.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
             member["is_nts"] = True
         except gdb.error as e:
             try:
@@ -1110,7 +1110,7 @@ class Variable():
         except: serializable["address"] = "0x0"
 
         try:
-            serializable["value"] = value.string()
+            serializable["value"] = value.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
             serializable["is_nts"] = True
         except gdb.error as e:
             try:

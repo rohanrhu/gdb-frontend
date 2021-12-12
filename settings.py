@@ -36,6 +36,11 @@ If enabled, interrupts the process and call the function that is given to @threa
 """
 INTERRUPT_FOR_THREAD_SAFETY: bool
 
+"""
+Max bytes to fetch for NULL-terminated strings.
+"""
+MAX_BYTES_TO_FETCH: int
+
 def init():
     global SET_CWD_TO_EXECUTABLE
     SET_CWD_TO_EXECUTABLE = True
@@ -51,3 +56,6 @@ def init():
     
     global INTERRUPT_FOR_THREAD_SAFETY
     INTERRUPT_FOR_THREAD_SAFETY = True
+    
+    global MAX_BYTES_TO_FETCH
+    MAX_BYTES_TO_FETCH = 1000
