@@ -11,7 +11,7 @@
 """
 GDBFrontend Debugging API
 
-Most of gdbfrontend.api.debug functions/methods are thread-safe.
+All gdbfrontend.api.debug functions/methods are thread-safe.
 They will be executed in GDB's main-thread and block caller thread.
 
 ! Thread-Safety:
@@ -623,6 +623,7 @@ def run(args=""):
         print("[Error] " + str(e))
         api.globalvars.dont_emit_until_stop_or_exit = False
 
+@threadSafe(no_interrupt=True)
 def pause():
     try: gdb.execute("interrupt")
     except gdb.error as e: print("[Error] " + str(e))
