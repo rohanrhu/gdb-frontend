@@ -243,6 +243,7 @@ img {
 
 * {
     scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+    scrollbar-width: thin;
 }
 
 /* ------------------------------------------------- */
