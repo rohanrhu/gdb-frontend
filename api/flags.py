@@ -16,6 +16,12 @@ class AtomicDebugFlags():
     """
 
     """
+    Flag for checking if the process is running without needing thread-safe GDB API calls.
+    ! Usable with non-stop mode is off!
+    """
+    IS_RUNNING = 9
+
+    """
     Atomic flag for selected frames.
     It is a need due to a GDB bug.
     This bug causes forgetting selected frames
@@ -49,6 +55,11 @@ class AtomicDebugFlags():
     Flag for posix-signal sending to process.
     """
     IS_INTERRUPTED_FOR_SIGNAL = 4
+    
+    """
+    Flag for interrupting to provide thread-safety and avoid main-thread blockings.
+    """
+    IS_INTERRUPTED_FOR_THREAD_SAFETY = 8
 
     def __init__(self, num=0):
         self.lock = threading.Lock()
@@ -57,6 +68,8 @@ class AtomicDebugFlags():
         self.initFlags()
 
     def initFlags(self):
+        self.flags[__class__.IS_RUNNING] = False
+        self.flags[__class__.IS_INTERRUPTED_FOR_THREAD_SAFETY] = False
         self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_ADD] = False
         self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_SET] = False
         self.flags[__class__.IS_INTERRUPTED_FOR_BREAKPOINT_DEL] = False

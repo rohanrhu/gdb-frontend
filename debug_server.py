@@ -163,12 +163,15 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_stop(self, event):
         util.verbose("gdb_on_stop()")
 
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_RUNNING, False)
+
         api.globalvars.dont_emit_until_stop_or_exit = False
         api.globalvars.step_time = time.time() * 1000 - self.cont_time
         
         gdb.post_event(self.gdb_on_stop__mT)
 
     def gdb_on_stop__mT(self):
+        interrupted_for_thread_safety = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_THREAD_SAFETY)
         interrupted_for_terminate = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE)
         interrupted_for_signal = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_SIGNAL)
         interrupted_for_breakpoint_add = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD)
@@ -176,10 +179,20 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         interrupted_for_breakpoint_mod = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_MOD)
         interrupted_for_breakpoint_set = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_SET)
 
-        if interrupted_for_terminate:
+        if interrupted_for_thread_safety:
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_THREAD_SAFETY, False)
+
+            util.verbose("Continuing for interrupt: THREAD_SAFETY.")
+            
+            try:
+                gdb.execute("c")
+            except Exception as e:
+                print("[Error] (GDBFrontendSocket.gdb_on_stop__mT)", e)
+        elif interrupted_for_terminate:
             util.verbose("Terminating for interrupt: TERMINATE.")
 
             api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
+            
             try:
                 gdb.execute("kill")
             except Exception as e:
@@ -193,12 +206,17 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         elif interrupted_for_breakpoint_add:
             util.verbose("Continuing for interrupt: BREAKPOINT_ADD.")
 
-            bp = api.debug.Breakpoint(
-                source = interrupted_for_breakpoint_add["file"],
-                line = interrupted_for_breakpoint_add["line"]
-            )
-
             api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_ADD, False)
+
+            if "address" in interrupted_for_breakpoint_add:
+                bp = api.debug.Breakpoint(
+                    address = interrupted_for_breakpoint_add["address"]
+                )
+            else:
+                bp = api.debug.Breakpoint(
+                    source = interrupted_for_breakpoint_add["file"],
+                    line = interrupted_for_breakpoint_add["line"]
+                )
 
             try:
                 gdb.execute("c")
@@ -218,9 +236,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         elif interrupted_for_breakpoint_mod:
             util.verbose("Continuing for interrupt: BREAKPOINT_MOD.")
 
-            interrupted_for_breakpoint_mod["breakpoint"].condition = interrupted_for_breakpoint_mod["condition"]
-
             api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_MOD, False)
+
+            interrupted_for_breakpoint_mod["breakpoint"].condition = interrupted_for_breakpoint_mod["condition"]
 
             try:
                 gdb.execute("c")
@@ -229,9 +247,9 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         elif interrupted_for_breakpoint_set:
             util.verbose("Continuing for interrupt: BREAKPOINT_SET.")
 
-            interrupted_for_breakpoint_set["breakpoint"].enabled = interrupted_for_breakpoint_set["is_enabled"]
-
             api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_BREAKPOINT_SET, False)
+
+            interrupted_for_breakpoint_set["breakpoint"].enabled = interrupted_for_breakpoint_set["is_enabled"]
 
             try:
                 gdb.execute("c")
@@ -271,6 +289,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_cont(self, event):
         util.verbose("gdb_on_cont()")
 
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_RUNNING, True)
+
         self.cont_time = time.time() * 1000
         
         if api.globalvars.dont_emit_until_stop_or_exit: return
@@ -278,6 +298,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         gdb.post_event(self.gdb_on_cont__mT)
 
     def gdb_on_cont__mT(self):
+        util.verbose("gdb_on_cont__mT()")
+
         response = {}
 
         response["event"] = "cont"
@@ -287,6 +309,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
 
     def gdb_on_exited(self, event):
         util.verbose("gdb_on_exited()")
+
+        api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_RUNNING, False)
 
         api.globalvars.dont_emit_until_stop_or_exit = False
         api.globalvars.step_time = False

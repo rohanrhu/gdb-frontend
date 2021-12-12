@@ -30,6 +30,12 @@ Height and width synchronizing tresholds in enhanced collabration mode. (In pixe
 """
 ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD: int
 
+"""
+If enabled, interrupts the process and call the function that is given to @threadSafe(no_interrupt=True)
+@threadSafe(no_interrupt=True) skips this setting if no_interrupt is True.
+"""
+INTERRUPT_FOR_THREAD_SAFETY: bool
+
 def init():
     global SET_CWD_TO_EXECUTABLE
     SET_CWD_TO_EXECUTABLE = True
@@ -42,3 +48,6 @@ def init():
     
     global ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD
     ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD = 10
+    
+    global INTERRUPT_FOR_THREAD_SAFETY
+    INTERRUPT_FOR_THREAD_SAFETY = True
