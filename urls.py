@@ -186,6 +186,16 @@ urls = api.url.URLS({
         "match": "^/api/process/all$",
         "module": "url_modules.api.process.all"
     },
+    "api-process-sigkill": {
+        "url": "/api/process/sigkill",
+        "match": "^/api/process/sigkill$",
+        "module": "url_modules.api.process.sigkill"
+    },
+    "api-process-sigterm": {
+        "url": "/api/process/sigterm",
+        "match": "^/api/process/sigterm$",
+        "module": "url_modules.api.process.sigterm"
+    },
     "main-layout": {
         "url": "/{layout}/",
         "match": "^/(.+?)/?$",
