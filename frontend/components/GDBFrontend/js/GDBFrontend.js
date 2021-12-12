@@ -1109,6 +1109,7 @@
                     data.is_terminal_opened = true;
                 } else {
                     data.$gdbFrontend_layout_bottom.hide();
+                    data.$gdbFrontend_layout_status_split.hide();
                     data.is_terminal_opened = false;
                 }
                 
