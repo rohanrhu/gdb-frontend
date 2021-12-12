@@ -1183,7 +1183,10 @@ def getRegisters():
 
 @threadSafe(no_interrupt=True)
 def attach(pid):
+    api.globalvars.dont_emit_until_stop_or_exit = True
+    
     try:
         gdb.execute("attach " + str(pid))
     except gdb.error as e:
+        api.globalvars.dont_emit_until_stop_or_exit = True
         print("Could not attach to process: %s (%s)" % (pid, str(e)))
