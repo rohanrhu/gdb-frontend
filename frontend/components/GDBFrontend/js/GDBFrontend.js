@@ -69,6 +69,9 @@
             data.$gdbFrontend_layout_status_collabration_clearDrawings = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_clearDrawings');
             data.$gdbFrontend_layout_status_collabration_toggleDrawing = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_toggleDrawing');
 
+            data.$gdbFrontend_layout_status_openTerminal = $gdbFrontend.find('.GDBFrontend_layout_status_openTerminal');
+            data.$gdbFrontend_layout_status_closeTerminal = $gdbFrontend.find('.GDBFrontend_layout_status_closeTerminal');
+
             data.$gdbFrontend_layout_status_split = $gdbFrontend.find('.GDBFrontend_layout_status_split');
             data.$gdbFrontend_layout_status_split_button__horizontal = $gdbFrontend.find('.GDBFrontend_layout_status_split_button__horizontal');
             data.$gdbFrontend_layout_status_split_button__vertical = $gdbFrontend.find('.GDBFrontend_layout_status_split_button__vertical');
@@ -83,8 +86,6 @@
 
             data.$gdbFrontend_terminal = $gdbFrontend.find('.GDBFrontend_terminal');
             data.$gdbFrontend_terminal_terminal = data.$gdbFrontend_terminal.find('.GDBFrontend_terminal_terminal');
-            data.$gdbFrontend_terminalOpenBtn = $gdbFrontend.find('.GDBFrontend_terminalOpenBtn');
-            data.$gdbFrontend_terminalCloseBtn = $gdbFrontend.find('.GDBFrontend_terminalCloseBtn');
 
             data.$gdbFrontend_runtimeControls = $gdbFrontend.find('.GDBFrontend_runtimeControls');
             data.$gdbFrontend_runtimeControls_btn__run = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__run');
@@ -896,6 +897,14 @@
             data.init = function () {
                 document.title = 'GDBFrontend - Tmux: ' + GDBFrontend.config.terminal_id + ' Port: ' + GDBFrontend.config.http_port;
 
+                if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
+                    data.$gdbFrontend_layout_status_openTerminal.hide(); 
+                    data.$gdbFrontend_layout_status_closeTerminal.show(); 
+                } else {
+                    data.$gdbFrontend_layout_status_openTerminal.hide(); 
+                    data.$gdbFrontend_layout_status_closeTerminal.hide(); 
+                }
+                
                 data.$gdbFrontend_layout_status_terminalId.html('Tmux: ' + GDBFrontend.config.terminal_id);
                 data.$gdbFrontend_layout_status_port.html('Port: ' + GDBFrontend.config.http_port);
 
@@ -2564,20 +2573,12 @@
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn.on('click.GDBFrontend', function (event) {
                 data.collabration.toggleEnhancedCollabration();
             });
-
-            data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
-                data.$gdbFrontend_terminalCloseBtn.show();
-            });
             
-            data.$gdbFrontend_terminal.on('mouseout.GDBFrontend', function (event) {
-                data.$gdbFrontend_terminalCloseBtn.hide();
-            });
-            
-            data.$gdbFrontend_terminalOpenBtn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_layout_status_openTerminal.on('click.GDBFrontend', function (event) {
                 data.openTerminal();
             });
             
-            data.$gdbFrontend_terminalCloseBtn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_layout_status_closeTerminal.on('click.GDBFrontend', function (event) {
                 data.closeTerminal();
             });
 
@@ -2618,7 +2619,8 @@
             data.openTerminal = function (parameters) {
                 data.is_terminal_opened = true;
                 data.$gdbFrontend_layout_bottom.show();
-                data.$gdbFrontend_terminalOpenBtn.hide();
+                data.$gdbFrontend_layout_status_openTerminal.hide();
+                data.$gdbFrontend_layout_status_closeTerminal.show();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace && _file.ace.resize();
@@ -2639,7 +2641,8 @@
             data.closeTerminal = function (parameters) {
                 data.is_terminal_opened = false;
                 data.$gdbFrontend_layout_bottom.hide();
-                data.$gdbFrontend_terminalOpenBtn.show();
+                data.$gdbFrontend_layout_status_openTerminal.show();
+                data.$gdbFrontend_layout_status_closeTerminal.hide();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace && _file.ace.resize();

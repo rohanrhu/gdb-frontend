@@ -30,30 +30,6 @@
     height: 100%;
 }
 
-.GDBFrontend_terminalOpenBtn {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    background: #003f91;
-    text-align: center;
-    padding: 5px 10px;
-    display: none;
-    cursor: pointer;
-    z-index: 2000;
-}
-
-.GDBFrontend_terminalCloseBtn {
-    position: absolute;
-    right: 17px;
-    top: 0px;
-    background: #003f91;
-    text-align: center;
-    padding: 5px 10px;
-    display: none;
-    cursor: pointer;
-    z-index: 2000;
-}
-
 .GDBFrontend_terminal_iframe {
     border: 0px;
     width: 100%;
@@ -335,6 +311,23 @@
 
 .GDBFrontend_layout_status_spacer {
     flex-grow: 1;
+}
+
+.GDBFrontend_layout_status_openTerminal,
+.GDBFrontend_layout_status_closeTerminal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    user-select: none;
+}
+
+.GDBFrontend_layout_status_openTerminal:hover,
+.GDBFrontend_layout_status_closeTerminal:hover {
+    background: rgba(255,255,255,0.25);
 }
 
 .GDBFrontend_layout_status_split {
