@@ -212,6 +212,7 @@
     color: #b3f1ff;
     width: 80px;
     line-height: 18px;
+    white-space: nowrap;
 }
 
 .ProcessManager_processes_items_item_cmd {
