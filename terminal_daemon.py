@@ -26,6 +26,7 @@ import fcntl
 import termios
 import signal
 import atexit
+import traceback
 
 import util
 
@@ -53,7 +54,7 @@ class TerminalDaemon:
             try:
                 os.setpgid(pty_proc.pid, self.pty_pid)
             except Exception as e:
-                print(e)
+                print(e, traceback.format_exc())
 
             pty_proc.wait()
             exit(0)
