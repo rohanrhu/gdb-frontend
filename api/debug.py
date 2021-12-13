@@ -534,7 +534,7 @@ def setBreakpointCondition(bp, condition):
         try:
             bp.condition = condition
         except gdb.error as e:
-            print(e)
+            print(e, traceback.format_exc())
 
 @threadSafe(no_interrupt=True)
 def setBreakpointEnabled(bp, is_enabled):
@@ -559,7 +559,7 @@ def setBreakpointEnabled(bp, is_enabled):
         try:
             bp.enabled = is_enabled
         except gdb.error as e:
-            print(e)
+            print(e, traceback.format_exc())
 
 @threadSafe(no_interrupt=True)
 def getFiles():
@@ -840,6 +840,57 @@ def serializableRepresentation(value):
 
     return serializable
 
+def getSerializableArrayItems(value, circular_expression=False):
+    members = []
+
+    if value.type.code != gdb.TYPE_CODE_ARRAY:
+        return members
+
+    try:
+        if str(value) == "0x0":
+            return None
+    except gdb.error as e:
+        print(e, traceback.format_exc())
+        return None
+
+    try:
+        target_type = value.type.target()
+    except Exception as e:
+        print(e, traceback.format_exc())
+        return None
+
+    try:
+        for i in range(int(value.type.sizeof / target_type.sizeof)):
+            if i > settings.MAX_SERIALIZED_ARRAY_ITEMS:
+                break
+            
+            memberValue = value[i]
+            
+            member = {}
+            member["value"] = str(memberValue)
+            member["array_index"] = i
+
+            if circular_expression:
+                member["expression"] = circular_expression + "[" + str(i) + "]"
+                member["name"] = member["expression"]
+            else:
+                member["expression"] = False
+                member["name"] = "*(" + str(memberValue.address) + " + " + str(i) + ")"
+            
+            member["is_pointer"] = target_type.code == gdb.TYPE_CODE_PTR
+            member["address"] = str(memberValue.address) if memberValue.address else "0x0"
+            member["type"] = serializableType(memberValue.type)
+            member["type"]["terminal"] = serializableType(resolveTerminalType(memberValue.type))
+            member["type_tree"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+            member["parent_type"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+
+            members.append(member)
+    except Exception as e:
+        print(e, traceback.format_exc())
+        return None
+    
+    return members
+
 @threadSafe(no_interrupt=True)
 def getSerializableStructMembers(value, ctype, parent_expression=False):
     members = []
@@ -941,16 +992,18 @@ def getVariableByExpression(expression, no_error=True):
             expression=expression
         )
     except gdb.error as e:
-        if config.VERBOSE:
+        if config.VERBOSE or not no_error:
             print(e, traceback.format_exc())
-        elif not no_error:
-            print(e)
 
         return None
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return None
+
     return variable
 
 @threadSafe(no_interrupt=True)
-def getVariable(name, no_error=False):
+def getVariable(name, no_error=True):
     return getVariableByExpression(name, no_error=no_error)
 
 @threadSafe(no_interrupt=True)
@@ -1117,10 +1170,10 @@ class Variable():
                 serializable["is_nts"] = False
                 serializable["value"] = str(value)
             except gdb.MemoryError as e:
-                util.verbose(e)
+                util.verbose(e, traceback.format_exc())
                 return None
             except gdb.error as e:
-                util.verbose(e)
+                util.verbose(e, traceback.format_exc())
         except UnicodeDecodeError as e:
             serializable["is_nts"] = False
             serializable["value"] = str(value)
@@ -1138,7 +1191,10 @@ class Variable():
             serializable["type"]["terminal"] = serializableType(terminalType)
             serializable["type_tree"] = serializableTypeTree(type_tree)
 
-            serializable["members"] = getSerializableStructMembers(value, terminalType, self.expression)
+            if value.type.code == gdb.TYPE_CODE_ARRAY:
+                serializable["members"] = getSerializableArrayItems(value, circular_expression=self.expression)
+            else:
+                serializable["members"] = getSerializableStructMembers(value, terminalType, parent_expression=self.expression)
         else:
             serializable["type"] = False
 

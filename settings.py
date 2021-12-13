@@ -41,6 +41,11 @@ Max bytes to fetch for NULL-terminated strings.
 """
 MAX_BYTES_TO_FETCH: int
 
+"""
+Max array items to serialize.
+"""
+MAX_SERIALIZED_ARRAY_ITEMS: int
+
 def init():
     global SET_CWD_TO_EXECUTABLE
     SET_CWD_TO_EXECUTABLE = True
@@ -59,3 +64,6 @@ def init():
     
     global MAX_BYTES_TO_FETCH
     MAX_BYTES_TO_FETCH = 1000
+    
+    global MAX_SERIALIZED_ARRAY_ITEMS
+    MAX_SERIALIZED_ARRAY_ITEMS = 100
