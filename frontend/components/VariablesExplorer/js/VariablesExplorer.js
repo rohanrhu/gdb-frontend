@@ -998,6 +998,24 @@
                         openInEvaluater: {
                             label: 'Open in Evaluater',
                             function: item.openInEvaluater
+                        },
+                        copyName: {
+                            label: 'Copy Name',
+                            function: function () {
+                                navigator.clipboard.writeText(item.variable.name);
+                            }
+                        },
+                        copyExpression: {
+                            label: 'Copy Expression',
+                            function: function () {
+                                navigator.clipboard.writeText(item.resolveExpression());
+                            }
+                        },
+                        copyValue: {
+                            label: 'Copy Value',
+                            function: function () {
+                                navigator.clipboard.writeText(item.variable.value);
+                            }
                         }
                     }
                 };
