@@ -198,8 +198,6 @@
                     data.$processManager_noProcess.show();
                     data.$processManager_processes.hide();
                 }
-
-                data.$processManager_processes_items.find('.ProcessManager_processes_items_item:not(.__proto)').remove();
                 
                 var ordered_pids = Object.keys(data.processes);
 
@@ -309,6 +307,11 @@
                         });
                     }
                 }
+
+                var scroll_top = data.$processManager_window_box_content.scrollTop();
+                var scroll_left = data.$processManager_window_box_content.scrollLeft();
+                
+                data.$processManager_processes_items.find('.ProcessManager_processes_items_item:not(.__proto)').remove();
 
                 ordered_pids.forEach(function (_pid, _pid_i) {
                     var process = data.processes[_pid];
@@ -437,6 +440,9 @@
                             }
                         }
                     });
+
+                    data.$processManager_window_box_content.scrollTop(scroll_top);
+                    data.$processManager_window_box_content.scrollLeft(scroll_left);
                 });
             };
             
