@@ -425,17 +425,17 @@
 .ContextMenuWindow_box {border: 1px solid rgb(84 255 247 / 50%);background: rgb(0 106 97);}
 
 .FileTabs_editors_items_item_breakpointDetails_box {
-    background: rgb(126 16 82 / 90%);
-    border: 1px solid rgb(255 84 147 / 50%);
+    border: 1px solid rgb(84 255 247 / 50%);
+    background: rgb(0 106 97);
 }
 
 .FileTabs_editors_items_item_breakpointDetails_box:before {
-    background: rgb(126 16 82 / 90%);
+    background: rgb(0 106 97);
 }
 
 .FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
-    background: rgb(126 16 82 / 90%);
-    border-color: rgb(255 84 147 / 50%);
+    border-color: rgb(84 255 247 / 50%);
+    background: rgb(0 106 97);
 }
 
 .BreakpointsEditor_items_item_cond {
