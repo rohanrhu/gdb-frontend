@@ -35,6 +35,7 @@ MMAP_PATH = False
 WORKDIR = False
 CREDENTIALS = None
 TERMINAL_ID = False
+MAX_ITERATIONS_TO_RET = 1000
 
 def init():
     global VERBOSE
@@ -47,6 +48,7 @@ def init():
     global WORKDIR
     global CREDENTIALS
     global TERMINAL_ID
+    global MAX_ITERATIONS_TO_RET
 
 def setJSON(config_json):
     new_config = json.loads(config_json)

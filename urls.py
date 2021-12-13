@@ -91,6 +91,11 @@ urls = api.url.URLS({
         "match": "^/api/runtime/terminate",
         "module": "url_modules.api.runtime.terminate"
     },
+    "api-runtime-attach": {
+        "url": "/api/runtime/attach",
+        "match": "^/api/runtime/attach$",
+        "module": "url_modules.api.runtime.attach"
+    },
     "api-runtime-run": {
         "url": "/api/runtime/run",
         "match": "^/api/runtime/run$",
@@ -175,6 +180,21 @@ urls = api.url.URLS({
         "url": "/api/collabration/enhanced-collabration-disable",
         "match": "^/api/collabration/enhanced-collabration-disable$",
         "module": "url_modules.api.collabration.enhanced_collabration_disable"
+    },
+    "api-process-all": {
+        "url": "/api/process/all",
+        "match": "^/api/process/all$",
+        "module": "url_modules.api.process.all"
+    },
+    "api-process-sigkill": {
+        "url": "/api/process/sigkill",
+        "match": "^/api/process/sigkill$",
+        "module": "url_modules.api.process.sigkill"
+    },
+    "api-process-sigterm": {
+        "url": "/api/process/sigterm",
+        "match": "^/api/process/sigterm$",
+        "module": "url_modules.api.process.sigterm"
     },
     "main-layout": {
         "url": "/{layout}/",

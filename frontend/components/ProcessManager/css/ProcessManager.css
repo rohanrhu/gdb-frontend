@@ -1,0 +1,267 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+*/
+
+.ProcessManager {
+    display: none;
+    user-select: none;
+}
+
+.ProcessManager_window {
+}
+
+.ProcessManager_window_box {
+    text-align: left;
+    background: #003f91;
+    transition: opacity 500ms;
+    border: 1px solid rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.ProcessManager_window_box_header {
+}
+
+.ProcessManager_window_box_header_line {
+    background: rgb(0,0,0,0.25);
+    position: relative;
+    height: 28px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* ---------------------- */
+
+.ProcessManager.ProcessManager__focused .ProcessManager_window_box {
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.25), 0px 0px 40px 0px rgba(0,0,0,0.15);
+    border: 1px solid rgba(47, 130, 255, 0.25);
+}
+
+/* ---------------------- */
+
+.ProcessManager_window_box_header_line_label {
+    padding-left: 10px;
+}
+
+/* ---------------------- */
+
+.ProcessManager_window_box_header_expression {
+    flex-grow: 1;
+    color: rgba(255,255,255,0.5);
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.ProcessManager_window_box_header_expression_input {
+    height: 100%;
+    width: 100%;
+}
+
+.ProcessManager_window_box_header_expression_input_rI {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    color: white;
+    font-family: 'SourceSansPro Regular';
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 0px 10px;
+}
+
+.ProcessManager_window_box_header_expression_input_rI:focus {
+    background: rgba(0,0,0,0.1);
+}
+
+/* ---------------------- */
+
+.ProcessManager.ProcessManager__passive .ProcessManager_window_box {
+    opacity: 0.4;
+}
+
+/* ---------------------- */
+
+.ProcessManager_window_box_closeBtn {
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    transition: color 100ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.ProcessManager_window_box_closeBtn:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+/* ---------------------- */
+
+.ProcessManager_window_box_header_btn {
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    transition: color 100ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.ProcessManager_window_box_header_btn:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: #38bfff;
+}
+
+/* ---------------------- */
+
+.ProcessManager_total {
+    padding: 10px;
+    background: rgba(0,0,0,0.1);
+}
+
+.ProcessManager_total_number {
+    display: inline;
+}
+
+/* ---------------------- */
+
+.ProcessManager_window_box_content {
+    min-width: 250px;
+    min-height: 28px;
+    width: 550px;
+    height: 320px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    resize: both;
+    flex-direction: column;
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+/* ---------------------- */
+
+.ProcessManager_noProcess {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+}
+
+.ProcessManager_noProcess_label {
+    display: inline-block;
+    color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 3px 5px;
+    margin: auto;
+}
+
+/* ---------------------- */
+
+.ProcessManager_processes {
+    display: none;
+    min-height: 28px;
+}
+
+.ProcessManager_processes_items {
+    display: table;
+}
+
+.ProcessManager_processes_items_item {
+    cursor: default;
+    display: table-row;
+}
+
+.ProcessManager_processes_items_item {
+    display: table-row;
+    height: 30px;
+    border-bottom: 1px solid rgb(0 0 0 / 20%);
+}
+
+.ProcessManager_processes_items_item_pid {
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+    padding: 0px 10px;
+    justify-content: center;
+    user-select: text;
+    color: #ffdcdc;
+    line-height: 18px;
+}
+
+.ProcessManager_processes_items_item_name {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0px 10px;
+    user-select: text;
+    color: #b3f1ff;
+    width: 80px;
+    line-height: 18px;
+}
+
+.ProcessManager_processes_items_item_cmd {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: visible;
+    color: rgb(255 255 255 / 90%);
+    line-height: 18px;
+    user-select: text;
+}
+
+.ProcessManager_processes_items_item:nth-child(odd) {
+    background: rgb(0 0 0 / 10%);
+}
+
+.ProcessManager_processes_items_item:nth-child(even) {
+    background: rgb(0 0 0 / 5%);
+}
+
+.ProcessManager_processes_items_item:hover {
+    background: rgb(0 0 0 / 20%);
+}
+
+.ProcessManager_processes_items_item.ProcessManager__highlighted {
+    background: rgb(255 0 0 / 25%);
+}
+
+.ProcessManager_processes_items_item:nth-child(odd).ProcessManager__highlighted {
+    background: rgb(255 0 0 / 20%);
+}
+
+.ProcessManager_processes_items_item.ProcessManager__highlighted .ProcessManager_processes_items_item_col {
+    border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+/* ---------------------- */
+
+.ProcessManager_window_mover {
+    height: 10px;
+    background-color: #002f6d;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIUlEQVQYV2NkQAL///83ZoTxwRxGxrNgARgHxGZE5oAEAOz3DzUR5jnxAAAAAElFTkSuQmCC');
+    cursor: move;
+}
+
+/* ---------------------- */
+
+.ProcessManager_highlighted {
+    background-color: rgb(255 255 255 / 20%);
+    border: 1px solid rgb(255 255 255 / 20%);
+}
+
+/* ---------------------- */

@@ -292,3 +292,16 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     background: rgb(76 76 76);
     border-color: rgb(0 0 0 / 25%);
 }
+
+.ProcessManager_window_box {
+    background: #656565;
+    color: white;
+}
+
+.ProcessManager_window_mover {
+    background-color: #656565;
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: #fff35f;
+}

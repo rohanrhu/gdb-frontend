@@ -65,7 +65,7 @@ def checkClientWindowResolutions():
     
     return True
 
-@api.debug.threadSafe
+@api.debug.threadSafe(no_interrupt=True)
 def enableEnhancedCollabration():
     """
     Enables enhanced collabration features
@@ -81,7 +81,7 @@ def enableEnhancedCollabration():
     
     return True
 
-@api.debug.threadSafe
+@api.debug.threadSafe(no_interrupt=True)
 def disableEnhancedCollabration():
     """
     Disables enhanced collabration features
@@ -191,7 +191,7 @@ def setState__draw_clear(client_id=0):
 
     sendState__draw_clear(from_client=client_id)
 
-@api.debug.threadSafe
+@api.debug.threadSafe(no_interrupt=True)
 def sendState(from_client=0):
     """
     Sends collabration state to all clients.

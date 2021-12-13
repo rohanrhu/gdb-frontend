@@ -10,8 +10,13 @@
 
 """
 GDBFrontend Debugging API
-All api.debug functions/methods are thread-safe.
+
+All gdbfrontend.api.debug functions/methods are thread-safe.
 They will be executed in GDB's main-thread and block caller thread.
+
+! Thread-Safety:
+If you are making a GDBFrontend plugin, you should use @threadSafe(no_interrupt=True) decorator
+if your function is interacting with functions from "gdb" module.
 """
 
 import os
@@ -33,7 +38,7 @@ api.globalvars.init()
 
 gdb = importlib.import_module("gdb")
 
-def threadSafe(callback):
+def threadSafe(no_interrupt=True):
     """
     Decorator for running something with thread-safety.
     If it is currently on main-thread, callback runs immediately,
@@ -41,51 +46,73 @@ def threadSafe(callback):
     and blocks caller thread until callback finish.
     
     Usage:\n
-    @api.debug.threadSafe\n
+    @api.debug.threadSafe()\n
     def threadSafeFunction():\n
         pass
+    \n
+    Parameters:\n
+    no_interrupt: Disables interrupting mechanism that temporarily interrupts the process
+    that is being debugged and execute given function between interrupt and continue.
     """
+    
+    def _decorator(callback):
+        nonlocal no_interrupt
 
-    def _threadSafe(*args, **kwargs):
-        nonlocal callback
+        def _threadSafe(*args, **kwargs):
+            nonlocal no_interrupt
 
-        is_mt = threading.current_thread() is threading.main_thread()
-        lockCounter = util.AtomicInteger()
+            is_mt = threading.current_thread() is threading.main_thread()
+            lockCounter = util.AtomicInteger()
 
-        output = None
+            output = None
 
-        def _exec__mT():
-            nonlocal callback
-            nonlocal lockCounter
-            nonlocal is_mt
-            nonlocal output
+            def _exec__mT():
+                nonlocal callback
+                nonlocal no_interrupt
+                nonlocal lockCounter
+                nonlocal is_mt
+                nonlocal output
 
-            try:
-                output = callback(*args, **kwargs)
-            except Exception as e:
-                print(traceback.format_exc())
+                try:
+                    output = callback(*args, **kwargs)
+                except Exception as e:
+                    util.verbose(e, traceback.format_exc())
 
-            if not is_mt: lockCounter.decr()
+                lockCounter.decr()
             
-        if not is_mt:
-            lockCounter.incr()
-            gdb.post_event(_exec__mT)
+            if not is_mt:
+                use_interrupt = not no_interrupt and settings.INTERRUPT_FOR_THREAD_SAFETY and api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_RUNNING)
 
-            is_warned = False
-            start_time = time.time()
-            
-            while lockCounter.get() > 0:
-                if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
-                    is_warned = True
-                    api.globalvars.httpServer.wsSendAll("{\"event\": \"mt_blocking\"}")
+                lockCounter.incr()
+                gdb.post_event(_exec__mT)
+
+                if use_interrupt:
+                    util.verbose("Interrupting for: THREAD_SAFETY.")
+                    
+                    api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_THREAD_SAFETY, _exec__mT)
+                    gdb.execute("interrupt")
+
+                is_warned = False
+                start_time = time.time()
                 
-                time.sleep(0.1)
-        else:
-            _exec__mT()
+                while lockCounter.get() > 0:
+                    if not is_warned and time.time() - start_time > settings.GDB_MT_WARNING_TIME:
+                        if not use_interrupt:
+                            is_warned = True
+                            api.globalvars.httpServer.wsSendAll("{\"event\": \"mt_blocking\"}")
+                        else:
+                            is_warned = True
+                            api.globalvars.httpServer.wsSendAll("{\"event\": \"mt_blocking_with_interrupting\"}")
+                    
+                    time.sleep(0.1)
+            else:
+                _exec__mT()
 
-        return output
-
-    return _threadSafe
+            return output
+    
+        return _threadSafe
+    
+    return _decorator
 
 def execCommand(command, buff_output=False):
     """
@@ -107,7 +134,7 @@ def execCommand(command, buff_output=False):
         try:
             output = gdb.execute(command, to_string=buff_output)
         except Exception as e:
-            print(traceback.format_exc())
+            util.verbose(e, traceback.format_exc())
 
         if not is_mt: lockCounter.decr()
         
@@ -129,7 +156,7 @@ def execCommand(command, buff_output=False):
 
     return output
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def load(file):
     """
     Loads objfile by given path.
@@ -148,7 +175,7 @@ def load(file):
         util.verbose("[Error]", str(e))
         return False
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def connect(host, port):
     """
     Connects to gdbserver.
@@ -162,7 +189,7 @@ def connect(host, port):
         util.verbose("[Error]", str(e))
         return False
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getState():
     """
     Returns all debugging information with JSON-serializability.
@@ -355,10 +382,10 @@ def getState():
                                 try:
                                     value = symbol.value(selected_frame)
                                 except Exception as e:
-                                    print("[Error]", e)
+                                    util.verbose("[Error]", e)
 
                                 try:
-                                    variable = getVariableByExpression(symbol.name, no_error=False).serializable()
+                                    variable = getVariableByExpression(symbol.name, no_error=True).serializable()
                                     variables.append(variable)
                                 except:
                                     pass
@@ -366,7 +393,7 @@ def getState():
 
                         block = block.superblock
                 except Exception as e:
-                    print(traceback.format_exc())
+                    util.verbose(e, traceback.format_exc())
 
                 state["selected_frame"] = {}
                 state["selected_frame"]["pc"] = selected_frame.pc()
@@ -390,7 +417,7 @@ def getState():
 
     return state
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getBreakpoints():
     """
     Returns JSON-serializable breakpoints list.
@@ -415,7 +442,7 @@ def getBreakpoints():
 
     return breakpoints
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def addBreakpoint(file=None, line=None, address=None):
     thread = gdb.selected_thread()
 
@@ -451,7 +478,7 @@ def addBreakpoint(file=None, line=None, address=None):
             address = address
         )
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getBreakpoint(num):
     """
     Returns gdb.Breakpoint() object by gdb.Breakpoint().num.
@@ -465,7 +492,7 @@ def getBreakpoint(num):
 
     return False
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def delBreakpoint(bp):
     """
     Deletes GDBFrontend.Breakpoint object.
@@ -484,7 +511,7 @@ def delBreakpoint(bp):
     else:
         bp.delete()
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def setBreakpointCondition(bp, condition):
     """
     Sets GDBFrontend.Breakpoint's condition.
@@ -507,9 +534,9 @@ def setBreakpointCondition(bp, condition):
         try:
             bp.condition = condition
         except gdb.error as e:
-            print(e)
+            print(e, traceback.format_exc())
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def setBreakpointEnabled(bp, is_enabled):
     """
     Sets GDBFrontend.Breakpoint's enabled/disabled.
@@ -532,9 +559,9 @@ def setBreakpointEnabled(bp, is_enabled):
         try:
             bp.enabled = is_enabled
         except gdb.error as e:
-            print(e)
+            print(e, traceback.format_exc())
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getFiles():
     """
     Returns GDB.objfile objects in a list.
@@ -549,7 +576,7 @@ def getFiles():
 
     return objfiles
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getSources():
     """
     Returns all source files as serializable from GDB.
@@ -571,7 +598,7 @@ def getSources():
         util.verbose("[Error] An error occured:", e)
         return []
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def run(args=""):
     is_running = True
 
@@ -596,32 +623,32 @@ def run(args=""):
         print("[Error] " + str(e))
         api.globalvars.dont_emit_until_stop_or_exit = False
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def pause():
     try: gdb.execute("interrupt")
     except gdb.error as e: print("[Error] " + str(e))
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def cont():
     try: gdb.execute("c")
     except gdb.error as e: print("[Error] " + str(e))
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def stepOver():
     try: gdb.execute("n")
     except gdb.error as e: print("[Error] " + str(e))
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def step():
     try: gdb.execute("s")
     except gdb.error as e: print("[Error] " + str(e))
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def stepInstruction():
     try: gdb.execute("si")
     except gdb.error as e: print("[Error] " + str(e))
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def switchThread(global_num):
     """
     Switches between threads by gdb.Thread().global_num.
@@ -637,7 +664,7 @@ def switchThread(global_num):
             _thread.switch()
             break
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def backTraceFrame(frame):
     """
     Returns stack frames upper from given frame in order of oldest to newest.
@@ -665,7 +692,7 @@ def backTraceFrame(frame):
 
     return trace
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def selectFrame(pc):
     """
     Select frame by given PC.
@@ -691,7 +718,7 @@ def selectFrame(pc):
 
     return is_switched
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def signal(posix_signal):
     """
     Sends given posix-signal to application.
@@ -702,37 +729,31 @@ def signal(posix_signal):
     except Exception as e:
         print("[Error]", e)
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def terminate():
     """
     Terminates the application.
     """
 
-    is_need_interrupt = False
+    util.verbose("api.debug.terminate()")
 
-    try:
-        gdb.execute("kill")
-    except Exception as e:
-        print("[Error]", e)
-        is_need_interrupt = True
+    is_running = api.globalvars.debugFlags.get(api.flags.AtomicDebugFlags.IS_RUNNING)
 
-    is_running = True
+    if is_running:
+        try:
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
+            gdb.execute("interrupt")
+        except Exception as e:
+            print("[Error]", e)
+            api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
+    else:
+        try:
+            gdb.execute("kill")
+        except Exception as e:
+            print("[Error]", e)
+            return
 
-    try:
-        is_running = gdb.selected_inferior().threads().__len__() > 0
-    except gdb.error:
-        gdb.execute("interrupt")
-        gdb.execute("kill")
-    finally:
-        if is_need_interrupt and is_running:
-            try:
-                api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, True)
-                gdb.execute("interrupt")
-            except Exception as e:
-                print("[Error]", e)
-                api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.IS_INTERRUPTED_FOR_TERMINATE, False)
-
-@threadSafe
+@threadSafe(no_interrupt=True)
 def resolveTerminalType(ctype):
     """
     Returns terminal C-type of given type.
@@ -746,7 +767,7 @@ def resolveTerminalType(ctype):
 
     return ctype
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def resolveTypeTree(ctype):
     """
     Returns C-type tree of given type.
@@ -764,7 +785,7 @@ def resolveTypeTree(ctype):
 
     return tree
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def resolveNonPointer(tree):
     """
     Returns first non-ptr C type on type tree.
@@ -774,7 +795,7 @@ def resolveNonPointer(tree):
         if ctype.code != gdb.TYPE_CODE_PTR:
             return ctype
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def serializableTypeTree(tree):
     """
     Returns C-type tree of given type.
@@ -782,7 +803,7 @@ def serializableTypeTree(tree):
 
     return [serializableType(ctype) for ctype in tree]
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def serializableType(ctype):
     """
     Returns serializable dict of C type.
@@ -799,7 +820,7 @@ def serializableType(ctype):
 
     return serializable
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def serializableRepresentation(value):
     """
     Returns serializable value to string representation dict from gdb.Value.
@@ -808,7 +829,7 @@ def serializableRepresentation(value):
     serializable = {}
 
     try:
-        serializable["value"] = value.string()
+        serializable["value"] = value.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
         serializable["is_nts"] = True
     except gdb.error as e:
         serializable["is_nts"] = False
@@ -819,7 +840,58 @@ def serializableRepresentation(value):
 
     return serializable
 
-@threadSafe
+def getSerializableArrayItems(value, circular_expression=False):
+    members = []
+
+    if value.type.code != gdb.TYPE_CODE_ARRAY:
+        return members
+
+    try:
+        if str(value) == "0x0":
+            return None
+    except gdb.error as e:
+        print(e, traceback.format_exc())
+        return None
+
+    try:
+        target_type = value.type.target()
+    except Exception as e:
+        print(e, traceback.format_exc())
+        return None
+
+    try:
+        for i in range(int(value.type.sizeof / target_type.sizeof)):
+            if i > settings.MAX_SERIALIZED_ARRAY_ITEMS:
+                break
+            
+            memberValue = value[i]
+            
+            member = {}
+            member["value"] = str(memberValue)
+            member["array_index"] = i
+
+            if circular_expression:
+                member["expression"] = circular_expression + "[" + str(i) + "]"
+                member["name"] = member["expression"]
+            else:
+                member["expression"] = False
+                member["name"] = "*(" + str(memberValue.address) + " + " + str(i) + ")"
+            
+            member["is_pointer"] = target_type.code == gdb.TYPE_CODE_PTR
+            member["address"] = str(memberValue.address) if memberValue.address else "0x0"
+            member["type"] = serializableType(memberValue.type)
+            member["type"]["terminal"] = serializableType(resolveTerminalType(memberValue.type))
+            member["type_tree"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+            member["parent_type"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+
+            members.append(member)
+    except Exception as e:
+        print(e, traceback.format_exc())
+        return None
+    
+    return members
+
+@threadSafe(no_interrupt=True)
 def getSerializableStructMembers(value, ctype, parent_expression=False):
     members = []
 
@@ -852,7 +924,7 @@ def getSerializableStructMembers(value, ctype, parent_expression=False):
             member["enumval"] = _field.enumval
 
         try:
-            member["value"] = memberValue.string()
+            member["value"] = memberValue.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
             member["is_nts"] = True
         except gdb.error as e:
             try:
@@ -884,7 +956,7 @@ def getSerializableStructMembers(value, ctype, parent_expression=False):
 
     return members
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getVariableInBlock(name):
     """
     Returns C structure/union variable with members
@@ -904,8 +976,8 @@ def getVariableInBlock(name):
 
     return False
 
-@threadSafe
-def getVariableByExpression(expression, no_error=False):
+@threadSafe(no_interrupt=True)
+def getVariableByExpression(expression, no_error=True):
     """
     Returns C member (api.debug.Variable) on current frame
     by given variable[->member](s) names expression or any expression.
@@ -920,19 +992,21 @@ def getVariableByExpression(expression, no_error=False):
             expression=expression
         )
     except gdb.error as e:
-        if config.VERBOSE:
-            print(traceback.format_exc())
-        elif not no_error:
-            print(e)
+        if config.VERBOSE or not no_error:
+            print(e, traceback.format_exc())
 
         return None
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return None
+
     return variable
 
-@threadSafe
-def getVariable(name, no_error=False):
+@threadSafe(no_interrupt=True)
+def getVariable(name, no_error=True):
     return getVariableByExpression(name, no_error=no_error)
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def disassemble(start, end):
     """
     Returns serializable instructions from start adress to end address.
@@ -940,7 +1014,7 @@ def disassemble(start, end):
 
     return gdb.selected_frame().architecture().disassemble(start, end)
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def iterateAsmToRet():
     """
     Returns instructions to return or max limit.
@@ -952,27 +1026,31 @@ def iterateAsmToRet():
     instructions = []
     length = 0
 
-    def _iterate(addr):
-        nonlocal instructions
-        nonlocal length
+    try:
+        addr = int(re.findall("(0x.+) <", gdb.parse_and_eval(frame.name()).__str__())[0], 16)
 
-        instruction = arch.disassemble(addr)[0]
+        while True:
+            instruction = arch.disassemble(addr)[0]
+            instruction["asm"] = str(instruction["asm"]).strip()
 
-        instructions.append(instruction)
-        length += 1
+            instructions.append(instruction)
+            length += 1
 
-        if length == 1000: return
-        if instruction['asm'][:3] == 'ret': return
-        
-        _iterate(addr + int(instruction['length']))
-
-
-    try: _iterate(int(re.findall("(0x.+) <", gdb.parse_and_eval(frame.name()).__str__())[0], 16))
-    except: return instructions
+            if length >= config.MAX_ITERATIONS_TO_RET: break
+            if instruction["asm"].startswith("ret"): break
+            if instruction["asm"].startswith("iret"): break
+            if instruction["asm"].startswith("retn"): break
+            if instruction["asm"].startswith("retf"): break
+            if instruction["asm"].startswith("iretx"): break
+            if instruction["asm"].startswith("sysret"): break
+            
+            addr += int(instruction["length"])
+    except:
+        return instructions
 
     return instructions
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def disassembleFrame():
     """
     Returns serializable instructions in selected frame.
@@ -982,19 +1060,42 @@ def disassembleFrame():
     
     try:
         block = frame.block()
-    except RuntimeError:
+    except:
         try:
             instructions = iterateAsmToRet()
         except:
-            print("[Error] Can not disassemble frame.")
+            util.verbose("[Error] Can not disassemble frame.")
             instructions = []
 
         return instructions
 
-    return disassemble(block.start, block.end-1)
+    pc = re.findall("\\s(0.+?)\\s+", gdb.execute("i register pc", to_string=True))
+
+    if pc and len(pc) > 0:
+        pc = int(pc[0], 16)
+        
+        start = block.start
+        end = block.end-1
+
+        size = end - start
+
+        if size > config.MAX_ITERATIONS_TO_RET:
+            start = pc - int(config.MAX_ITERATIONS_TO_RET/2)
+            
+            if start < block.start:
+                start = block.start
+            
+            end = pc + int(config.MAX_ITERATIONS_TO_RET/2)
+            
+            if end > block.end-1:
+                end = block.end-1
+
+        return disassemble(start, end)
+    else:
+        return disassemble(block.start, block.end-1)
 
 class Breakpoint(gdb.Breakpoint):
-    @threadSafe
+    @threadSafe(no_interrupt=True)
     def __init__(
         self,
         source = None,
@@ -1034,7 +1135,7 @@ class Variable():
         else:
             self.name = self.symbol.name
 
-    @threadSafe
+    @threadSafe(no_interrupt=True)
     def serializable(self):
         """
         Returns given lib.types.Variable object as JSON-serializable dict.
@@ -1050,7 +1151,7 @@ class Variable():
         try:
             block = frame.block()
         except RuntimeError as e:
-            print("[Error]", str(e))
+            util.verbose("[Error]", str(e))
             return False
 
         serializable = {}
@@ -1058,26 +1159,27 @@ class Variable():
         serializable["name"] = self.name
         serializable["expression"] = self.expression
         serializable["is_pointer"] = value.type.code == gdb.TYPE_CODE_PTR
-        serializable["address"] = str(value.address) if value.address else "0x0"
+        try: serializable["address"] = str(value.address) if value.address else "0x0"
+        except: serializable["address"] = "0x0"
 
         try:
-            serializable["value"] = value.string()
+            serializable["value"] = value.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
             serializable["is_nts"] = True
         except gdb.error as e:
             try:
                 serializable["is_nts"] = False
                 serializable["value"] = str(value)
             except gdb.MemoryError as e:
+                util.verbose(e, traceback.format_exc())
                 return None
             except gdb.error as e:
-                if config.VERBOSE:
-                    print(e)
+                util.verbose(e, traceback.format_exc())
         except UnicodeDecodeError as e:
             serializable["is_nts"] = False
             serializable["value"] = str(value)
         except Exception as e:
             if config.VERBOSE:
-                raise e
+                util.verbose(e, traceback.format_exc())
             
             return None
 
@@ -1089,14 +1191,22 @@ class Variable():
             serializable["type"]["terminal"] = serializableType(terminalType)
             serializable["type_tree"] = serializableTypeTree(type_tree)
 
-            serializable["members"] = getSerializableStructMembers(value, terminalType, self.expression)
+            if value.type.code == gdb.TYPE_CODE_ARRAY:
+                serializable["members"] = getSerializableArrayItems(value, circular_expression=self.expression)
+            else:
+                serializable["members"] = getSerializableStructMembers(value, terminalType, parent_expression=self.expression)
         else:
             serializable["type"] = False
 
         return serializable
 
-@threadSafe
+@threadSafe(no_interrupt=True)
 def getRegisters():
+    selected_thread = gdb.selected_thread()
+    
+    if (not selected_thread) or gdb.selected_thread().is_running():
+        return {}
+    
     result = {}
 
     try:
@@ -1127,3 +1237,13 @@ def getRegisters():
         api.globalvars.changed_registers[vals[0]] = vals[1]
 
     return result
+
+@threadSafe(no_interrupt=True)
+def attach(pid):
+    api.globalvars.dont_emit_until_stop_or_exit = True
+    
+    try:
+        gdb.execute("attach " + str(pid))
+    except gdb.error as e:
+        api.globalvars.dont_emit_until_stop_or_exit = True
+        print("Could not attach to process: %s (%s)" % (pid, str(e)))

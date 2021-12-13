@@ -81,6 +81,7 @@ def run(request, params):
     GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
     GDBFrontend.config.is_readonly = """+json.dumps(config.IS_READONLY)+""";
     GDBFrontend.config.workdir = """+json.dumps(config.WORKDIR)+""";
+    GDBFrontend.config.max_iterations_to_ret = """+json.dumps(config.MAX_ITERATIONS_TO_RET)+""";
     GDBFrontend.imports = {};
     GDBFrontend.load_plugins = JSON.parse('"""+json.dumps(load_plugins)+"""');
     """
@@ -129,6 +130,7 @@ def run(request, params):
     html_disassembly = util.readFile(util.webFSPath("/components/Disassembly/html/Disassembly.html"))
     html_evaluateExpression = util.readFile(util.webFSPath("/components/EvaluateExpression/html/EvaluateExpression.html"))
     html_linkedListVisualizer = util.readFile(util.webFSPath("/components/LinkedListVisualizer/html/LinkedListVisualizer.html"))
+    html_processManager = util.readFile(util.webFSPath("/components/ProcessManager/html/ProcessManager.html"))
 
     html_messageBox = html_messageBox.format(**vars())
     html_aboutDialog = html_aboutDialog.format(**vars())
@@ -146,6 +148,7 @@ def run(request, params):
     html_disassembly = html_disassembly.format(**vars())
     html_evaluateExpression = html_evaluateExpression.format(**vars())
     html_linkedListVisualizer = html_linkedListVisualizer.format(**vars())
+    html_processManager = html_processManager.format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

@@ -81,6 +81,7 @@
             data.file_i = 0;
 
             data.current = false;
+            data.switches = [];
 
             data.setAceTheme = function (theme) {
                 data.ace_theme = theme;
@@ -1019,6 +1020,18 @@
                                     }
                                 });
                             }
+                        },
+                        copyName: {
+                            label: "Copy Name",
+                            function () {
+                                navigator.clipboard.writeText(file.name);
+                            }
+                        },
+                        copyPath: {
+                            label: "Copy Path",
+                            function () {
+                                navigator.clipboard.writeText(file.path);
+                            }
                         }
                     }
                 });
@@ -1052,7 +1065,14 @@
 
                     data.current = false;
                 } else if (data.current.id == file.id) {
-                    data.switchFile({file: data.files[0]});
+                    data.switches.pop();
+                    var switch_to = data.switches.pop();
+                    
+                    if (switch_to) {
+                        data.switchFile({file: switch_to});
+                    } else {
+                        data.switchFile({file: data.files[0]});
+                    }
                 }
 
                 clearTimeout(file.tab_pathTooltip_hover_timeout);
@@ -1074,6 +1094,11 @@
                 file.ace && file.ace.resize();
                 
                 data.current = file;
+
+                data.switches.push(file);
+                if (data.switches.length > 100) {
+                    data.switches.shift();
+                }
                 
                 if (!parameters.is_initial) {
                     data.saveState();

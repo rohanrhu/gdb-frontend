@@ -11,11 +11,22 @@
 
 .GDBFrontend {
     color: white;
-    background-color: #620c4c;
-    background-image: url('../images/monika.png');
+    background: #0e4762;
     background-repeat: no-repeat;
     background-position: center;
     background-blend-mode: luminosity;
+    mix-blend-mode: color-burn;
+    z-index: 100;
+}
+
+.GDBFrontend_ThemeWaifu_bg {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    object-fit: cover;
 }
 
 .Checkbox_icon_img {
@@ -27,7 +38,7 @@
 }
 
 .button1:hover {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend_layout_top {
@@ -35,11 +46,11 @@
 }
 
 .GDBFrontend_runtimeControls_btn:hover {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
  
 .GDBFrontend_runtimeControls_btn_openable {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .Checkbox.Checkbox__checked .Checkbox_icon_img {
@@ -47,7 +58,7 @@
 }
 
 .GDBFrontend_load_connectBtn_openable {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
  
 .GDBFrontend_layout_middle_left {
@@ -96,7 +107,7 @@
 }
 
 .ThreadsEditor_items_item.ThreadsEditor__current {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend_stack_title {
@@ -112,7 +123,7 @@
 }
 
 .StackTrace_items_item.StackTrace__current {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend_variables_title {
@@ -138,12 +149,12 @@
 }
 
 .FileTabs_editors_items_item_variablePopup {
-    background: #7e1052;
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend_terminalCloseBtn,
 .GDBFrontend_terminalOpenBtn {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .SourceTree_items_item__dir .SourceTree_items_item_icon {
@@ -180,38 +191,36 @@
 
 .FileTabs_tabs_items_item_pathTooltip_box {
     color: white;
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
-    border-bottom: 10px solid rgb(211 0 107);
+    border-bottom: 10px solid rgb(0 106 97);
 }
 
-.FileBrowser_window_box {
-    background: #7e1052;
-}
+.FileBrowser_window_box {border: 1px solid rgb(84 255 247 / 50%);background: rgb(0 106 97);}
 
 .EvaluateExpression_window_box {
-    background: rgb(126 16 82 / 75%);
+    background: rgb(0 106 97 / 90%);
     color: white;
 }
 
 .EvaluateExpression_window_mover {
-    background-color: rgb(211 0 107);
+    background-color: rgb(0 106 97);
 }
 
 .EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
-    color: rgb(211 0 107);
+    color: rgb(0 106 97);
 }
 
 .GDBFrontend.GDBFrontend__evaluaterWindow .EvaluateExpression .EvaluateExpression_window_box {background: rgb(126 16 82);}
 
 .GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend_layout_top_menuBtn_openable {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
     color: white;
 }
 
@@ -220,7 +229,7 @@
 }
 
 .css_AboutDialog_box {
-    background: #7e1052;
+    background: rgb(0 106 97);
 }
 
 .FuzzyFinder_box {
@@ -228,7 +237,7 @@
 }
 
 .css_MessageBox_box {
-    background: #7e1052;
+    background: rgb(0 106 97);
 }
 
 .SourceTree_items_item_button:hover {
@@ -251,15 +260,15 @@
 }
 
 .ace-tomorrow-night-bright .ace_gutter-active-line {
-    background: rgb(185 0 77 / 48%);
+    background: rgb(0 185 134 / 48%);
 }
 
 .ace-tomorrow-night-bright .ace_marker-layer .ace_active-line {
-    background: rgb(255 0 106 / 48%);
+    background: rgb(0 185 134 / 48%);
 }
 
 .ace-tomorrow-night-bright .ace_marker-layer .ace_selection {
-    background: rgb(255 0 106 / 48%);
+    background: rgb(0 185 134 / 48%);
 }
 
 .FileTabs_tabs_items_item {
@@ -267,16 +276,16 @@
 }
 
 .Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
-    background: linear-gradient(90deg, rgb(211 0 107), rgba(255, 255, 255, 0));
+    background: linear-gradient(90deg, rgb(0 106 97), rgba(255, 255, 255, 0));
 }
 
 .VariablesExplorer_items_item_contextMenu {
     color: white;
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .VariablesExplorer_items_item_contextMenu:before {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .ace-tomorrow-night-bright .ace_print-margin {
@@ -289,12 +298,12 @@
 }
 
 .LinkedListVisualizer_settings_setting_input_rI {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
@@ -303,16 +312,16 @@
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
-    background: rgb(211 0 107);
+    background: rgb(0 106 97);
 }
 
 .LinkedListVisualizer_items_item .LinkedListVisualizer_map,
 .LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
-    background: rgb(159 0 73);
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend_layout_status {
@@ -321,12 +330,12 @@
 }
 
 .GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
-    background-color: rgb(211 0 107);
+    background-color: rgb(0 106 97);
     color: white;
 }
 
 .GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
-    border-bottom: 10px solid rgb(211 0 107);
+    border-bottom: 10px solid rgb(0 106 97);
 }
 
 .input1 {
@@ -354,8 +363,8 @@
 }
 
 .EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {
-    border: 1px solid rgb(255 84 147 / 50%);
-    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(84 255 247 / 50%);
+    background: rgb(0 106 97);
 }
 
 .VariablesExplorer_items_item_contextMenu_menu_item:hover {
@@ -410,7 +419,7 @@
 }
 
 .Registers_items_item.Registers__changed .Registers_items_item_name {
-    background: linear-gradient(90deg, rgb(211 0 107), rgba(255, 255, 255, 0));
+    background: linear-gradient(90deg, rgb(0 106 97), rgba(255, 255, 255, 0));
 }
 
 .ContextMenuWindow_box {
@@ -438,21 +447,21 @@
 }
 
 .ProcessManager_window_box {
-    background: rgb(126 16 82 / 75%);
+    background: rgb(0 106 97 / 90%);
     color: white;
 }
 
 .ProcessManager_window_mover {
-    background-color: rgb(211 0 107);
+    background-color: rgb(0 106 97);
 }
 
 .ProcessManager_window_box_header_btn.ProcessManager__checked {
-    color: rgb(211 0 107);
+    color: rgb(0 106 97);
 }
 
 .ProcessManager.ProcessManager__focused .ProcessManager_window_box {
-    border: 1px solid rgb(255 84 147 / 50%);
-    background: rgb(126 16 82 / 90%);
+    border: 1px solid rgb(84 255 247 / 50%);
+    background: rgb(0 106 97);
 }
 
 .GDBFrontend.GDBFrontend__processManagerWindow .ProcessManager.ProcessManager__focused .ProcessManager_window_box {background: rgb(126 16 82);}

@@ -293,3 +293,33 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     background: rgb(40 40 40);;
     border-color: rgb(86 86 86);
 }
+
+.EvaluateExpression_window_box {
+    background: #0e0e0e;
+    border: 1px solid rgb(255 255 255 / 20%);
+}
+
+.EvaluateExpression_window_mover {
+    background-color: rgb(255 255 255 / 10%);
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: #ff1818;
+}
+
+.ProcessManager_window_box {
+    background: #0e0e0e;
+    border: 1px solid rgb(255 255 255 / 20%);
+}
+
+.ProcessManager_window_mover {
+    background-color: rgb(255 255 255 / 10%);
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: #ff1818;
+}
+
+.ProcessManager_window_box_closeBtn:hover {
+    background: rgb(255 255 255 / 20%);
+}

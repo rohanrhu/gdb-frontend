@@ -396,6 +396,9 @@
                 } else if (item.variable.type.terminal.code == $.fn.VariablesExplorer.TYPE_CODE_UNION) {
                     item.$item_button_preType.html('union');
                     item.$item_button_isNotPointer.hide();
+                } else if (item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_ARRAY) {
+                    item.$item_button_preType.html('array');
+                    item.$item_button_isNotPointer.hide();
                 } else {
                     item.$item_button_preType.hide();
                 }
@@ -595,6 +598,8 @@
                         (item.variable.type.terminal.code != $.fn.VariablesExplorer.TYPE_CODE_STRUCT)
                         &&
                         (item.variable.type.terminal.code != $.fn.VariablesExplorer.TYPE_CODE_UNION)
+                        &&
+                        (item.variable.type.code != $.fn.VariablesExplorer.TYPE_CODE_ARRAY)
                     ) {
                         return;
                     }
@@ -867,19 +872,40 @@
                     var current = item;
                     
                     while (true) {
+                        tree.push(current);
+
                         if (!current.parent) {
-                            tree.push(current.variable.expression);
                             break;
-                        } else {
-                            tree.push(current.variable.name);
                         }
 
                         current = current.parent;
                     }
                     
                     tree.reverse();
+
+                    var expression = '';
+
+                    tree.forEach(function (_current, _current_i) {
+                        if (_current.variable.hasOwnProperty('array_index')) {
+                            if (_current.parent) {
+                                expression += '[' + _current.variable.array_index + ']';
+                            } else {
+                                expression += _current.variable.expression;
+                            }
+                        } else {
+                            if (_current_i != 0) {
+                                expression += '.';
+                            }
+                            
+                            if (_current.parent) {
+                                expression += _current.variable.name;
+                            } else {
+                                expression += _current.variable.expression;
+                            }
+                        }
+                    });
                     
-                    return tree.join(".");
+                    return expression;
                 };
 
                 item.openInEvaluater = function () {
@@ -999,6 +1025,8 @@
                     (item.variable.type.terminal.code == $.fn.VariablesExplorer.TYPE_CODE_STRUCT)
                     ||
                     (item.variable.type.terminal.code == $.fn.VariablesExplorer.TYPE_CODE_UNION)
+                    ||
+                    (item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_ARRAY)
                 ) {
                     var state = item.getState().state;
 
@@ -1135,9 +1163,31 @@
 
     $.fn.VariablesExplorer.id_i = 0;
     
-    $.fn.VariablesExplorer.TYPE_CODE_STRUCT = 3;
-    $.fn.VariablesExplorer.TYPE_CODE_UNION = 4;
-    $.fn.VariablesExplorer.TYPE_CODE_FUNC = 7;
-    $.fn.VariablesExplorer.TYPE_CODE_CHAR = 20;
-    $.fn.VariablesExplorer.TYPE_CODE_PTR = 1;
+    $.fn.VariablesExplorer.TYPE_CODE_PTR = 1               
+    $.fn.VariablesExplorer.TYPE_CODE_ARRAY = 2             
+    $.fn.VariablesExplorer.TYPE_CODE_STRUCT = 3            
+    $.fn.VariablesExplorer.TYPE_CODE_UNION = 4             
+    $.fn.VariablesExplorer.TYPE_CODE_ENUM = 5              
+    $.fn.VariablesExplorer.TYPE_CODE_FLAGS = 6             
+    $.fn.VariablesExplorer.TYPE_CODE_FUNC = 7              
+    $.fn.VariablesExplorer.TYPE_CODE_INT = 8               
+    $.fn.VariablesExplorer.TYPE_CODE_FLT = 9               
+    $.fn.VariablesExplorer.TYPE_CODE_VOID = 10             
+    $.fn.VariablesExplorer.TYPE_CODE_SET = 11              
+    $.fn.VariablesExplorer.TYPE_CODE_RANGE = 12            
+    $.fn.VariablesExplorer.TYPE_CODE_STRING = 13           
+    $.fn.VariablesExplorer.TYPE_CODE_BITSTRING = -1        
+    $.fn.VariablesExplorer.TYPE_CODE_ERROR = 14            
+    $.fn.VariablesExplorer.TYPE_CODE_METHOD = 15           
+    $.fn.VariablesExplorer.TYPE_CODE_METHODPTR = 16        
+    $.fn.VariablesExplorer.TYPE_CODE_MEMBERPTR = 17        
+    $.fn.VariablesExplorer.TYPE_CODE_REF = 18              
+    $.fn.VariablesExplorer.TYPE_CODE_RVALUE_REF = 19       
+    $.fn.VariablesExplorer.TYPE_CODE_CHAR = 20             
+    $.fn.VariablesExplorer.TYPE_CODE_BOOL = 21             
+    $.fn.VariablesExplorer.TYPE_CODE_COMPLEX = 22          
+    $.fn.VariablesExplorer.TYPE_CODE_TYPEDEF = 23          
+    $.fn.VariablesExplorer.TYPE_CODE_NAMESPACE = 24        
+    $.fn.VariablesExplorer.TYPE_CODE_DECFLOAT = 25         
+    $.fn.VariablesExplorer.TYPE_CODE_INTERNAL_FUNCTION = 27
 })(jQuery);

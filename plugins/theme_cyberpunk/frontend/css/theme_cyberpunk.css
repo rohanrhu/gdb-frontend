@@ -464,3 +464,30 @@
     background: rgb(126 16 82 / 90%);
     border-color: rgb(255 84 147 / 50%);
 }
+
+.ProcessManager_window_box {
+    background: rgb(126 16 82 / 75%);
+    color: white;
+}
+
+.ProcessManager_window_mover {
+    background-color: rgb(211 0 107);
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: rgb(211 0 107);
+}
+
+.ProcessManager.ProcessManager__focused .ProcessManager_window_box {
+    border: 1px solid rgb(255 84 147 / 50%);
+    background: rgb(126 16 82 / 90%);
+}
+
+.ProcessManager.ProcessManager__focused .ProcessManager_window_box {
+    box-shadow: 0px 0px 30px 0px rgb(255 0 223 / 40%);
+    border: 1px solid #ffb4e89e;
+}
+
+.GDBFrontend.GDBFrontend__processManagerWindow .ProcessManager .ProcessManager_window_box {
+    background: rgb(126 16 82);
+}

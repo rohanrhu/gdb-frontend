@@ -69,6 +69,9 @@
             data.$gdbFrontend_layout_status_collabration_clearDrawings = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_clearDrawings');
             data.$gdbFrontend_layout_status_collabration_toggleDrawing = $gdbFrontend.find('.GDBFrontend_layout_status_collabration_toggleDrawing');
 
+            data.$gdbFrontend_layout_status_openTerminal = $gdbFrontend.find('.GDBFrontend_layout_status_openTerminal');
+            data.$gdbFrontend_layout_status_closeTerminal = $gdbFrontend.find('.GDBFrontend_layout_status_closeTerminal');
+
             data.$gdbFrontend_layout_status_split = $gdbFrontend.find('.GDBFrontend_layout_status_split');
             data.$gdbFrontend_layout_status_split_button__horizontal = $gdbFrontend.find('.GDBFrontend_layout_status_split_button__horizontal');
             data.$gdbFrontend_layout_status_split_button__vertical = $gdbFrontend.find('.GDBFrontend_layout_status_split_button__vertical');
@@ -83,8 +86,6 @@
 
             data.$gdbFrontend_terminal = $gdbFrontend.find('.GDBFrontend_terminal');
             data.$gdbFrontend_terminal_terminal = data.$gdbFrontend_terminal.find('.GDBFrontend_terminal_terminal');
-            data.$gdbFrontend_terminalOpenBtn = $gdbFrontend.find('.GDBFrontend_terminalOpenBtn');
-            data.$gdbFrontend_terminalCloseBtn = $gdbFrontend.find('.GDBFrontend_terminalCloseBtn');
 
             data.$gdbFrontend_runtimeControls = $gdbFrontend.find('.GDBFrontend_runtimeControls');
             data.$gdbFrontend_runtimeControls_btn__run = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__run');
@@ -106,6 +107,10 @@
             data.$gdbFrontend_runtimeControls_btn__evaluate_btn = data.$gdbFrontend_runtimeControls_btn__evaluate.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluateInNativeWindow');
             data.$gdbFrontend_runtimeControls_btn__evaluateInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__evaluateInNatıveWindow.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__processManager = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__processManager');
+            data.$gdbFrontend_runtimeControls_btn__processManager_btn = data.$gdbFrontend_runtimeControls_btn__processManager.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__processManagerInNativeWindow');
+            data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow_btn = data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__enhancedCollabration');
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn = data.$gdbFrontend_runtimeControls_btn__enhancedCollabration.find('.GDBFrontend_runtimeControls_btn_btn');
 
@@ -122,10 +127,13 @@
             data.gdbFrontend_sourceTree = null;
             
             data.$gdbFrontend_disassembly_title_buttons_button__openTab = $gdbFrontend.find('.GDBFrontend_disassembly_title_buttons_button__openTab');
-
+            
             data.$gdbFrontend_layout_top_themeMenu = data.$gdbFrontend.find('.GDBFrontend_layout_top_themeMenu');
             data.$gdbFrontend_layout_top_themeMenu_items = data.$gdbFrontend_layout_top_themeMenu.find('.GDBFrontend_layout_top_themeMenu_items');
             data.$gdbFrontend_layout_top_themeMenu_items_item_s = data.$gdbFrontend_layout_top_themeMenu_items.find('.GDBFrontend_layout_top_themeMenu_items_item');
+            
+            data.$gdbFrontend_processManagers = $gdbFrontend.find('.GDBFrontend_processManagers');
+            data.$gdbFrontend_processManagers = $gdbFrontend.find('.GDBFrontend_processManagers');
 
             data.is_readonly = (t_init.parameters.is_readonly !== undefined) ? t_init.parameters.is_readonly: false;
             
@@ -246,6 +254,10 @@
             data.$gdbFrontend_evaluateExpressionComp = $gdbFrontend.find('.GDBFrontend_evaluateExpressionComp');
             data.$gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpressionComp.find('> .EvaluateExpression');
             data.gdbFrontend_evaluateExpression = null;
+            
+            data.$gdbFrontend_processManagerComp = $gdbFrontend.find('.GDBFrontend_processManagerComp');
+            data.$gdbFrontend_processManager = data.$gdbFrontend_processManagerComp.find('> .ProcessManager');
+            data.gdbFrontend_processManager = null;
 
             data.components = {};
 
@@ -265,8 +277,10 @@
             data.last_not_found_source = false;
             
             data.evaluaters = [];
+            data.processManagers = [];
 
             data.is_evaluater_window = false;
+            data.is_process_manager_window = false;
 
             data.collabration = {};
             data.collabration.state = {
@@ -287,6 +301,14 @@
 
             data.terminal = {};
             data.terminal.xterm = false;
+            
+            data.setIsProcessManagerWindow = function (is_process_manager_window) {
+                data.is_process_manager_window = is_process_manager_window;
+
+                if (window.GDBFrontend_is_process_manager_window) {
+                    $gdbFrontend.addClass('GDBFrontend__processManagerWindow');
+                }
+            };
             
             data.setIsEvaluaterWindow = function (is_evaluater_window) {
                 data.is_evaluater_window = is_evaluater_window;
@@ -337,6 +359,57 @@
                 }
 
                 return {evaluater: evaluater};
+            };
+            
+            data.createProcessManager = function (parameters) {
+                if (parameters === undefined) {
+                    parameters = {};
+                }
+
+                var processManager = {};
+
+                processManager.$processManager = data.$gdbFrontend_processManager.clone();
+                processManager.$processManager.appendTo(data.$gdbFrontend_processManagers);
+                processManager.$processManager.ProcessManager();
+                processManager.processManager = processManager.$processManager.data().ProcessManager;
+                processManager.processManager.open();
+                
+                data.processManagers.push(processManager);
+
+                processManager.$processManager.on('ProcessManager_closed.GDBFrontend', function (parameters) {
+                    processManager.$processManager.remove();
+                    
+                    data.processManagers.every(function (_manager, _manager_i) {
+                        if (_manager.$processManager.is(processManager.$processManager)) {
+                            data.processManagers.splice(_manager_i, 1);
+                            
+                            return false;
+                        }
+                        
+                        return true;
+                    });
+                });
+
+                return {processManager: processManager};
+            };
+
+            data.createProcessManagerOnNativeWindow = function (parameters) {
+                var nw = window.open(
+                    "/",
+                    "Process Manager - " + Math.random().toString(36).substr(2, 9),
+                    "menubar=no,location=no,resizable=yes,scrollbars=no,status=no,toolbar=no,width=400,height=400,top=500,left=500"
+                );
+
+                nw.GDBFrontend_is_process_manager_window = true;
+                
+                nw.onload = function () {
+                    nw.GDBFrontend.components.gdbFrontend.setIsProcessManagerWindow(true);
+
+                    var processManager = nw.GDBFrontend.components.gdbFrontend.createProcessManager(parameters).processManager;
+                    
+                    processManager.processManager.setOnNativewindow({is_on_native_window: true});
+                    processManager.processManager.setFullScreen({is_fullscreen: true});
+                };
             };
 
             data.createEvaluaterOnNativeWindow = function (parameters) {
@@ -824,6 +897,14 @@
             data.init = function () {
                 document.title = 'GDBFrontend - Tmux: ' + GDBFrontend.config.terminal_id + ' Port: ' + GDBFrontend.config.http_port;
 
+                if (GDBFrontend.gui_mode == GDBFrontend.GUI_MODE_WEB_TMUX) {
+                    data.$gdbFrontend_layout_status_openTerminal.hide(); 
+                    data.$gdbFrontend_layout_status_closeTerminal.show(); 
+                } else {
+                    data.$gdbFrontend_layout_status_openTerminal.hide(); 
+                    data.$gdbFrontend_layout_status_closeTerminal.hide(); 
+                }
+                
                 data.$gdbFrontend_layout_status_terminalId.html('Tmux: ' + GDBFrontend.config.terminal_id);
                 data.$gdbFrontend_layout_status_port.html('Port: ' + GDBFrontend.config.http_port);
 
@@ -1037,6 +1118,7 @@
                     data.is_terminal_opened = true;
                 } else {
                     data.$gdbFrontend_layout_bottom.hide();
+                    data.$gdbFrontend_layout_status_split.hide();
                     data.is_terminal_opened = false;
                 }
                 
@@ -1209,7 +1291,18 @@
             };
 
             $gdbFrontend.on('GDBFrontend_debug_mt_blocking.GDBFrontend', function (event, message) {
-                GDBFrontend.showMessageBox({text: 'GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)'});
+                GDBFrontend.showMessageBox({text: 
+                    'GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)<br><br>' +
+                    '<b>If it keeps blocking, do Ctrl + C on GDB shell.</b>'
+                });
+            });
+            
+            $gdbFrontend.on('GDBFrontend_debug_mt_blocking_with_interrupting.GDBFrontend', function (event, message) {
+                GDBFrontend.showMessageBox({text: 
+                    'GDB main thread is bloocking. (If you are running something (like shell) in GDB shell, you must temrinate it for GDBFrontend to continue work properly.)<br><br>' +
+                    'GDBFrontend probably will temporarily interrupt the process and continue to work it.<br><br>' +
+                    '<b>If it keeps blocking, do Ctrl + C on GDB shell.</b>'
+                });
             });
             
             $gdbFrontend.on('GDBFrontend_debug_terminal_data.GDBFrontend', function (event, message) {
@@ -2469,23 +2562,23 @@
                 data.createEvaluaterOnNativeWindow();
             });
             
+            data.$gdbFrontend_runtimeControls_btn__processManager_btn.on('click.GDBFrontend', function (event) {
+                data.createProcessManager();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__processManagerInNativeWindow_btn.on('click.GDBFrontend', function (event) {
+                data.createProcessManagerOnNativeWindow();
+            });
+            
             data.$gdbFrontend_runtimeControls_btn__enhancedCollabration_btn.on('click.GDBFrontend', function (event) {
                 data.collabration.toggleEnhancedCollabration();
             });
-
-            data.$gdbFrontend_layout_bottom.on('mouseover.GDBFrontend', function (event) {
-                data.$gdbFrontend_terminalCloseBtn.show();
-            });
             
-            data.$gdbFrontend_terminal.on('mouseout.GDBFrontend', function (event) {
-                data.$gdbFrontend_terminalCloseBtn.hide();
-            });
-            
-            data.$gdbFrontend_terminalOpenBtn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_layout_status_openTerminal.on('click.GDBFrontend', function (event) {
                 data.openTerminal();
             });
             
-            data.$gdbFrontend_terminalCloseBtn.on('click.GDBFrontend', function (event) {
+            data.$gdbFrontend_layout_status_closeTerminal.on('click.GDBFrontend', function (event) {
                 data.closeTerminal();
             });
 
@@ -2526,7 +2619,8 @@
             data.openTerminal = function (parameters) {
                 data.is_terminal_opened = true;
                 data.$gdbFrontend_layout_bottom.show();
-                data.$gdbFrontend_terminalOpenBtn.hide();
+                data.$gdbFrontend_layout_status_openTerminal.hide();
+                data.$gdbFrontend_layout_status_closeTerminal.show();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace && _file.ace.resize();
@@ -2547,7 +2641,8 @@
             data.closeTerminal = function (parameters) {
                 data.is_terminal_opened = false;
                 data.$gdbFrontend_layout_bottom.hide();
-                data.$gdbFrontend_terminalOpenBtn.show();
+                data.$gdbFrontend_layout_status_openTerminal.show();
+                data.$gdbFrontend_layout_status_closeTerminal.hide();
 
                 data.components.fileTabs.files.every(function (_file, _file_i) {
                     _file.ace && _file.ace.resize();
