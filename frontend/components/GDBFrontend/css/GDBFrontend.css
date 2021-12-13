@@ -20,15 +20,13 @@
 }
 
 .GDBFrontend_terminal {
-    position: relative;
+    position: absolute;
+    width: 100%;
     height: 100%;
     background: rgb(0 0 0 / 40%);
 }
 
-.GDBFrontend_terminal_terminal {
-    position: relative;
-    height: 100%;
-}
+.GDBFrontend_terminal_terminal {position: absolute;width: 100%;height: 100%;}
 
 .GDBFrontend_terminal_iframe {
     border: 0px;
