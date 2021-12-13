@@ -54,7 +54,7 @@ class TerminalDaemon:
             try:
                 os.setpgid(pty_proc.pid, self.pty_pid)
             except Exception as e:
-                print(e, traceback.format_exc())
+                util.verbose(e, traceback.format_exc())
 
             pty_proc.wait()
             exit(0)
