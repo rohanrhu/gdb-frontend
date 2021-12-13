@@ -120,10 +120,30 @@
                                     }
                                 } else if (result_json.error.not_permitted) {
                                     if (!parameters.ignoreNotFound) {
-                                        GDBFrontend.showMessageBox({text: 'Access denied.'});
+                                        GDBFrontend.showMessageBox({
+                                            text: 'Access denied.',
+                                            on_close: function () {
+                                                data.dont_close_on_esc = false;
+                                                $fileBrowser_window_box_header_path_input_rI.focus();
+                                            }
+                                        });
                                     }
+                                } else if (result_json.error.is_file) {
+                                    GDBFrontend.showMessageBox({
+                                        text: 'The path is not a directory.',
+                                        on_close: function () {
+                                            data.dont_close_on_esc = false;
+                                            $fileBrowser_window_box_header_path_input_rI.focus();
+                                        }
+                                    });
                                 } else {
-                                    GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                    GDBFrontend.showMessageBox({
+                                        text: 'An error occured.',
+                                        on_close: function () {
+                                            data.dont_close_on_esc = false;
+                                            $fileBrowser_window_box_header_path_input_rI.focus();
+                                        }
+                                    });
                                 }
 
                                 data.is_passive = false;

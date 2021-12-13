@@ -10,6 +10,7 @@
 
 import json
 import os
+import os.path
 import urllib
 
 def run(request, params):
@@ -55,7 +56,7 @@ def run(request, params):
         else:
             result_json["error"] = {
                 "not_exists": not is_exists,
-                "is_file": is_exists,
+                "is_file": not is_dir,
             }
 
     request.send_response(200)
