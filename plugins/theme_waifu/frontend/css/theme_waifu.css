@@ -422,10 +422,7 @@
     background: linear-gradient(90deg, rgb(0 106 97), rgba(255, 255, 255, 0));
 }
 
-.ContextMenuWindow_box {
-    background: rgb(126 16 82 / 90%);
-    border: 1px solid rgb(255 84 147 / 50%);
-}
+.ContextMenuWindow_box {border: 1px solid rgb(84 255 247 / 50%);background: rgb(0 106 97);}
 
 .FileTabs_editors_items_item_breakpointDetails_box {
     background: rgb(126 16 82 / 90%);
