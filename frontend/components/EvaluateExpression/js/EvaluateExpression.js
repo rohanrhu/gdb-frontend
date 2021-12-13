@@ -292,6 +292,8 @@
 
                 data.is_opened = true;
 
+                $evaluateExpression.css('z-index', GDBFrontend.z_index_i++);
+
                 data.focus();
                 $evaluateExpression.data().Movable.focus();
                 

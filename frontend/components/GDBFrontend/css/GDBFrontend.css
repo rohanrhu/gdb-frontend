@@ -842,13 +842,23 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 
 /* ---------------------- */
 
-.GDBFrontend_evaluaters {
+.GDBFrontend_movables {
     position: absolute;
-    top: 0px;;
+    top: 0px;
     left: 0px;
     width: 0px;
     height: 0px;
     z-index: 5000;
+}
+
+/* ---------------------- */
+
+.GDBFrontend_evaluaters {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0px;
+    height: 0px;
 }
 
 .GDBFrontend_collabration_drawLayer {
@@ -871,11 +881,10 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 
 .GDBFrontend_processManagers {
     position: absolute;
-    top: 0px;;
+    top: 0px;
     left: 0px;
     width: 0px;
     height: 0px;
-    z-index: 5000;
 }
 
 /* ---------------------- */

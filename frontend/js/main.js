@@ -99,6 +99,8 @@ GDBFrontend.gui.events.loaded = function () {
     GDBFrontend.gui.state.is_loaded = true;
 };
 
+GDBFrontend.z_index_i = 1;
+
 var $messageBox;
 var $aboutDialog;
 
@@ -134,6 +136,10 @@ GDBFrontend.copyToClipboard = function (text) {
     document.execCommand('copy');
 
     input.remove();
+};
+
+GDBFrontend.stdPathSep = function (path) {
+    return path.replace('\\', '/');
 };
 
 GDBFrontend.stdPathSep = function (path) {
