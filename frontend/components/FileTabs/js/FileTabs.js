@@ -687,6 +687,10 @@
 
                 file.$editor.on('contextmenu', function (event) {
                     var $target = $(event.target);
+                    if (!current_guttermousedown) {
+                        return;
+                    }
+
                     var line = current_guttermousedown.getDocumentPosition().row+1;
                     
                     if (!$target.hasClass('ace_gutter-cell')) {
