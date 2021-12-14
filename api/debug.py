@@ -1159,12 +1159,17 @@ class Variable():
         serializable["name"] = self.name
         serializable["expression"] = self.expression
         serializable["is_pointer"] = value.type.code == gdb.TYPE_CODE_PTR
+        serializable["is_optimized_out"] = value.is_optimized_out
         try: serializable["address"] = str(value.address) if value.address else "0x0"
         except: serializable["address"] = "0x0"
 
         try:
-            serializable["value"] = value.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
-            serializable["is_nts"] = True
+            if not value.is_optimized_out:
+                serializable["value"] = value.lazy_string(length=settings.MAX_BYTES_TO_FETCH).value().string()
+                serializable["is_nts"] = True
+            else:
+                serializable["value"] = '<optimized out>'
+                serializable["is_nts"] = False
         except gdb.error as e:
             try:
                 serializable["is_nts"] = False

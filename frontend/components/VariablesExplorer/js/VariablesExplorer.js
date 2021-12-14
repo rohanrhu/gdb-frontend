@@ -386,7 +386,7 @@
                 }
 
                 item.$item_button_name.html(item.variable.name);
-                item.$item_button_value.html(item.variable.value);
+                item.$item_button_value.html(item.variable.value.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'));
 
                 if (item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_FUNC) {
                     item.$item_button_preType.html('function');
