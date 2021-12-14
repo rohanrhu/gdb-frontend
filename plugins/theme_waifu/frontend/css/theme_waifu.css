@@ -213,7 +213,9 @@
     color: rgb(0 106 97);
 }
 
-.GDBFrontend.GDBFrontend__evaluaterWindow .EvaluateExpression .EvaluateExpression_window_box {background: rgb(126 16 82);}
+.GDBFrontend.GDBFrontend__evaluaterWindow .EvaluateExpression .EvaluateExpression_window_box {
+    background: rgb(0 106 97 / 90%);
+}
 
 .GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
     background: rgb(0 106 97);
@@ -461,4 +463,6 @@
     background: rgb(0 106 97);
 }
 
-.GDBFrontend.GDBFrontend__processManagerWindow .ProcessManager.ProcessManager__focused .ProcessManager_window_box {background: rgb(126 16 82);}
+.GDBFrontend.GDBFrontend__processManagerWindow .ProcessManager.ProcessManager__focused .ProcessManager_window_box {
+    background: rgb(0 106 97 / 90%);
+}
