@@ -305,7 +305,7 @@ def exiting():
     print("Stopped GDBFrontend.")
 
 try:
-    proc = subprocess.run([gdb_executable, "--configuration"], capture_output=True)
+    proc = subprocess.run([gdb_executable, "--configuration"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     if "--with-python" not in repr(proc.stdout):
         print("[Error] Your GDB ("+gdb_executable+") doesn't have embedded Python. Please install a GDB version with embedded Python or you can build it yourself.")
