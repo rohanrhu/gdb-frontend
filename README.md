@@ -126,6 +126,18 @@ Right click to a breakpoint for setting its condition.
 
 ![](media/conditional-breakpoint-2.png)
 
+### Connected Expressions
+
+Expressions of all variables, members and items are connected in GDBFrontend's VariablesExplorer.
+
+![](media/connected-expressions.png)
+
+### Process Manager
+
+You can watch, filter or manage processes with Process Manager.
+
+![](media/process-manager.png)
+
 ### Enhanced Collabration
 
 GDBFrontend has a set of some features for collabration named as "Enhanced Collabration".
@@ -143,7 +155,6 @@ Collabration draw is available when you enable Enhanced Collabration. Click to D
 With Enhanced Collabration all debugger clients are synchronized on source viewing.
 
 ### Expression hover popup variable explorer
-
 
 ![](media/expression-popup.png)
 
