@@ -175,18 +175,12 @@
 
                 parameters.item.setLoading(true);
 
-                var tree = [];
-
-                parameters.item.tree.forEach(function (_member, _member_i) {
-                    tree.push(_member.variable.expression ? _member.variable.expression: _member.variable.name);
-                });
-
                 var qs = {
                     variable: parameters.item.variable.expression
                 };
 
-                if (!qs.variable && (tree.length > 1)) {
-                    qs['expression'] = tree.join('.');
+                if (!qs.variable) {
+                    qs.expression = parameters.item.resolveTree();
                 }
 
                 if (
@@ -197,7 +191,7 @@
                         ||
                         (parameters.item.variable.type.code == $.fn.VariablesExplorer.TYPE_CODE_UNION))
                 ) {
-                    qs.expression = '('+parameters.item.variable.type.name+')'+qs.expression;
+                    qs.expression = '('+parameters.item.variable.type.name+')' + (qs.expression ? qs.expression: qs.variable);
                 }
 
                 $.ajax({

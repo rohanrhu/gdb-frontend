@@ -26,9 +26,12 @@ def run(request, params):
         result_json["ok"] = False
 
     if result_json["ok"]:
+        variable = False
+        
         if "expression" in qs_params.keys():
             variable = api.debug.getVariableByExpression(qs_params["expression"][0], no_error=True)
-        else:
+        
+        if not variable:
             variable = api.debug.getVariableByExpression(qs_params["variable"][0], no_error=True)
 
         if variable:
