@@ -35,6 +35,7 @@ import api.flags
 import api.globalvars
 
 api.globalvars.init()
+settings.init()
 
 gdb = importlib.import_module("gdb")
 

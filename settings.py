@@ -11,59 +11,47 @@
 """
 If enabled, it sets your CWD to executable's directory when you load an executable.
 """
-SET_CWD_TO_EXECUTABLE: bool
+SET_CWD_TO_EXECUTABLE = True
 
 """
 Most of GDBFrontend functions are thread-safe and work on GDB's main-thread.
 So, if you run something that is blocking on the GDB shell, GDBFrontend functions have to wait it until finish.
 This setting is seconds to wait for print warning.
 """
-GDB_MT_WARNING_TIME: int
+GDB_MT_WARNING_TIME = 3
 
 """
 Maximum recursion number of recursive functions that are used in somewhere like backtracing.
 """
-MAX_RECURSIONS: int
+MAX_RECURSIONS = 100
 
 """
 Height and width synchronizing tresholds in enhanced collabration mode. (In pixels.)
 """
-ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD: int
+ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD = 10
 
 """
 If enabled, interrupts the process and call the function that is given to @threadSafe(no_interrupt=True)
 @threadSafe(no_interrupt=True) skips this setting if no_interrupt is True.
 """
-INTERRUPT_FOR_THREAD_SAFETY: bool
+INTERRUPT_FOR_THREAD_SAFETY = True
 
 """
 Max bytes to fetch for NULL-terminated strings.
 """
-MAX_BYTES_TO_FETCH: int
+MAX_BYTES_TO_FETCH = 1000
 
 """
 Max array items to serialize.
 """
-MAX_SERIALIZED_ARRAY_ITEMS: int
+MAX_SERIALIZED_ARRAY_ITEMS = 100
 
 def init():
     global SET_CWD_TO_EXECUTABLE
-    SET_CWD_TO_EXECUTABLE = True
-
     global GDB_MT_WARNING_TIME
-    GDB_MT_WARNING_TIME = 3
-
     global MAX_RECURSIONS
-    MAX_RECURSIONS = 100
-    
     global ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD
-    ENHANCED_COLLABRATION_RESOLUTION_TRESHOLD = 10
-    
     global INTERRUPT_FOR_THREAD_SAFETY
-    INTERRUPT_FOR_THREAD_SAFETY = True
-    
     global MAX_BYTES_TO_FETCH
-    MAX_BYTES_TO_FETCH = 1000
-    
     global MAX_SERIALIZED_ARRAY_ITEMS
-    MAX_SERIALIZED_ARRAY_ITEMS = 100
+    

@@ -26,6 +26,7 @@ import api.globalvars
 gdb = importlib.import_module("gdb")
 
 api.globalvars.init()
+settings.init()
 
 state = api.globalvars.collabration_state
 
