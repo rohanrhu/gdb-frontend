@@ -298,9 +298,22 @@
                     var type = false;
                     var tree_length = 0;
 
+                    var prev_named_non_ptr = false;
+                    
                     item.variable.type_tree.every(function (_type, _type_i) {
                         if (!_type.is_pointer) {
                             type = _type;
+
+                            if (!type.name && prev_named_non_ptr) {
+                                type = prev_named_non_ptr;
+                            }
+
+                            if (!_type.name) {
+                                prev_named_non_ptr = type;
+                                tree_length++;
+                                return true;
+                            }
+                            
                             return false;
                         }
 
