@@ -299,6 +299,7 @@
                     var tree_length = 0;
 
                     var prev_named_non_ptr = false;
+                    var prev_named_non_ptr_len = false;
                     
                     item.variable.type_tree.every(function (_type, _type_i) {
                         if (!_type.is_pointer) {
@@ -306,11 +307,12 @@
 
                             if (!type.name && prev_named_non_ptr) {
                                 type = prev_named_non_ptr;
+                                tree_length = prev_named_non_ptr_len;
                             }
 
                             if (!_type.name) {
                                 prev_named_non_ptr = type;
-                                tree_length++;
+                                prev_named_non_ptr_len = tree_length;
                                 return true;
                             }
                             
