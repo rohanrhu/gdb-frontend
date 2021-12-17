@@ -804,12 +804,16 @@
                         file.closeVariablePopup();
                     }, 500);
                     
+                    if (!token) {
+                        return;
+                    }
+
                     if (file.ace.session.$modeId == 'ace/mode/rust') {
-                        if (!token || (token.type != 'text')) {
+                        if (token.type != 'text') {
                             return;
                         }
                     } else {
-                        if (!token || (token.type != 'identifier')) {
+                        if (token.type != 'identifier') {
                             return;
                         }
                     }
