@@ -1112,6 +1112,10 @@
                         
                         data.debug.socket.send(JSON.stringify(message));
                     });
+                    
+                    data.terminal.xterm.onBell(function () {
+                        GDBFrontend.sounds.bell.play();
+                    });
 
                     data.terminal.xterm.open(data.$gdbFrontend_terminal_terminal.get(0));
 
