@@ -11,7 +11,7 @@
 """
 If enabled, it sets your CWD to executable's directory when you load an executable.
 """
-SET_CWD_TO_EXECUTABLE = True
+SET_CWD_TO_EXECUTABLE = False
 
 """
 Most of GDBFrontend functions are thread-safe and work on GDB's main-thread.
