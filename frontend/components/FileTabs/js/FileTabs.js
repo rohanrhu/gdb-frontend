@@ -822,6 +822,9 @@
                     var col;
                     var c;
 
+                    var hsc = 0;
+                    var hec = 0;
+
                     var expression = [];
 
                     if (position.column > 1) {
@@ -849,6 +852,8 @@
                             
                             expression.unshift(c);
                         }
+
+                        hsc = col + 1;
                     }
                     
                     for (col=position.column-1; col < line.length; col++) {
@@ -860,9 +865,13 @@
                         expression.push(c);
                     }
 
+                    hec = col;
+
                     expression = expression.join("");
                     
                     file.currentHoveredToken = token;
+
+                    file.ace_hover_evaluater_marker_range = new ace.Range(position.row, hsc, position.row, hec);
                     
                     file.tokenMouseoverTimeout = setTimeout(function () {
                         $.ajax({
@@ -922,11 +931,23 @@
                     if (bottom_y > editor_bottom_y) {
                         file.$variablePopup.css('top', file.$variablePopup.position().top - file.$variablePopup.outerHeight() - 24);
                     }
+                    
+                    if (file.ace_hover_evaluater_marker_range) {
+                        file.ace_hover_evaluater_marker = file.ace.session.addMarker(
+                            file.ace_hover_evaluater_marker_range,
+                            'ace_highlightedWord',
+                            'text'
+                        );
+                    }
                 };
 
                 file.closeVariablePopup = function () {
                     file.currentHoveredToken = null;
                     file.$variablePopup.hide();
+
+                    if (file.ace_hover_evaluater_marker) {
+                        file.ace.session.removeMarker(file.ace_hover_evaluater_marker);
+                    }
                 };
 
                 file.getBreakpoint = function (parameters) {

@@ -365,3 +365,12 @@
 .FileTabs_editors_items_item_breakpointDetails_box_buttons_button:hover {
     border-color: rgb(255 255 255 / 50%);
 }
+
+.ace_highlightedWord {
+    position: absolute;
+    background: rgb(32 94 131 / 90%);
+    mix-blend-mode: darken;
+    padding: 2px;
+    margin-left: -2px;
+    margin-top: -2px;
+}
