@@ -817,6 +817,50 @@
                             return;
                         }
                     }
+
+                    var line = file.ace.session.getLine(position.row);
+                    var col;
+                    var c;
+
+                    var expression = [];
+
+                    if (position.column > 1) {
+                        var arrow_state = false;
+                        
+                        for (col=position.column-2; col > 0; col--) {
+                            c = line[col];
+
+                            if (arrow_state) {
+                                arrow_state = false;
+
+                                if (c == '-') {
+                                    expression.unshift(c);
+                                    continue;
+                                } else {
+                                    expression = expression.slice(1);
+                                    break;
+                                }
+                            } else if (c == '>') {
+                                arrow_state = true;
+                            } else {
+                                if (c == ' ') break;
+                                if (!c.match(/^[\p{L}\p{N}]*$|_|\./u)) break;
+                            }
+                            
+                            expression.unshift(c);
+                        }
+                    }
+                    
+                    for (col=position.column-1; col < line.length; col++) {
+                        c = line[col];
+                        
+                        if (c == ' ') break;
+                        if (!c.match(/^[\p{L}\p{N}]*$|_/u)) break;
+
+                        expression.push(c);
+                    }
+
+                    expression = expression.join("");
                     
                     file.currentHoveredToken = token;
                     
@@ -826,7 +870,7 @@
                             cache: false,
                             method: 'get',
                             data: {
-                                expression: token.value
+                                expression: expression
                             },
                             success: function (result_json) {
                                 if (!result_json.ok) {
