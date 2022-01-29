@@ -171,10 +171,10 @@ BUILD_DIR_NAME="${DIR_NAME}_build"
 SOURCE_DIR="${DIR_NAME}_sources"
 
 # Get sources from the GNU website
-if [ ! -d SOURCE_DIR ]; then
-	mkdir SOURCE_DIR
+if [ ! -d $SOURCE_DIR ]; then
+	mkdir $SOURCE_DIR
 fi
-cd SOURCE_DIR
+cd $SOURCE_DIR
 
 if [ ! -f ./${TAR_NAME} ]; then
 	printGreenStars
@@ -274,7 +274,7 @@ printGreenStars
 echo
 
 # Copy compiled gdb files into the /etc folder
-cp -r ${BASE_DIR}/SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}
+cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}
 printGreenStars
 echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}${RESET}"
 printGreenStars
@@ -283,7 +283,7 @@ printGreenStars
 echo -e "${GREEN}Cleaning up the sources...${RESET}"
 printGreenStars
 cd $BASE_DIR
-rm -rf --interactive=never ./SOURCE_DIR
+rm -rf --interactive=never ./$SOURCE_DIR
 
 if [[ -f /usr/bin/gdbfrontend-${DIR_NAME} ]]; then
 	rm -rf /usr/bin/gdbfrontend-${DIR_NAME}
