@@ -163,7 +163,7 @@ case $OS in
 		;;
 esac
 
-
+TARGET=$(echo $1 | sed 's/.*=//')
 BASE_DIR=$(pwd)
 DIR_NAME="gdb-11.2"
 TAR_NAME="${DIR_NAME}.tar.xz" 
@@ -274,9 +274,9 @@ printGreenStars
 echo
 
 # Copy compiled gdb files into the /etc folder
-cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}
+cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}_${TARGET}
 printGreenStars
-echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}${RESET}"
+echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}_${TARGET}${RESET}"
 printGreenStars
 
 printGreenStars
@@ -289,9 +289,9 @@ if [[ -f /usr/bin/gdbfrontend-${DIR_NAME} ]]; then
 	rm -rf /usr/bin/gdbfrontend-${DIR_NAME}
 fi
 
-echo "#\!/bin/bash" >> /usr/bin/gdbfrontend-${DIR_NAME}
-echo "gdbfrontend -g /etc/${DIR_NAME}/gdb -G --data-directory=/etc/${DIR_NAME}/data-directory/" >> /usr/bin/gdbfrontend-${DIR_NAME}
-chmod +x /usr/bin/gdbfrontend-${DIR_NAME}
+echo "#\!/bin/bash" >> /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
+echo "gdbfrontend -g /etc/${DIR_NAME}_${TARGET} -G --data-directory=/etc/${DIR_NAME}_${TARGET}/data-directory/" >> /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
+chmod +x /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
 
 
 printGreenStars
