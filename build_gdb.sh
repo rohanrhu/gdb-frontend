@@ -61,14 +61,11 @@ fi
 if [ -f /etc/os-release ]; then	# Decide OS using /etc/os-release
 	. /etc/os-release
 	OS=$NAME
-
 elif [ -f /etc/lsb-release ]; then	# Decide OS using /etc/lsb-release
 	. /etc/lsb-release
  	OS=$DISTRIB_DESCRIPTION
-
 else	# If couldn't find OS by reading the above two files, install for unknown OS
 	OS="Unknown"
-
 fi
 
 # Check for internet connection
@@ -163,18 +160,18 @@ case $OS in
 		;;
 esac
 
-
-BASE_DIR=$(pwd)
-DIR_NAME="gdb-11.2"
-TAR_NAME="${DIR_NAME}.tar.xz" 
-BUILD_DIR_NAME="${DIR_NAME}_build"
-SOURCE_DIR="${DIR_NAME}_sources"
+TARGET=$(echo $1 | sed 's/.*=//')
+STARTING_DIR=$(pwd)
+BASE_NAME="gdb-11.2"
+TAR_NAME="${BASE_NAME}.tar.xz" 
+BUILD_DIR="${BASE_NAME}_build"
+SOURCE_DIR="${BASE_NAME}_sources"
 
 # Get sources from the GNU website
-if [ ! -d $SOURCE_DIR ]; then
-	mkdir $SOURCE_DIR
+if [ ! -d ${SOURCE_DIR} ]; then
+	mkdir ${SOURCE_DIR}
 fi
-cd $SOURCE_DIR
+cd ${SOURCE_DIR}
 
 if [ ! -f ./${TAR_NAME} ]; then
 	printGreenStars
@@ -191,27 +188,27 @@ if [ $? -ne 0 ]; then
 	printRedStars
 	echo
 	cd ..
-	rm -rf $DIR_NAME_sources
-	if [ -f $TAR_NAME ]; then
-		rm $TAR_NAME
+	rm -rf ${SOURCE_DIR}
+	if [ -f ${TAR_NAME} ]; then
+		rm ${TAR_NAME}
 	fi
 	abortScript
 fi
 
 printGreenStars
-echo -e "${GREEN}Sources (${BLUE}${TAR_NAME}${GREEN}) downloaded successfully."
+echo -e "${GREEN}Sources (${BLUE}${TAR_NAME}${GREEN}) are fetched from web."
 echo -e "Extracting the contents of the tar file...${RESET}"
 printGreenStars
 echo
 sleep 1
 
-if [ -d $DIR_NAME ]; then
-	cd $DIR_NAME
-	if [ -d $BUILD_DIR_NAME ]; then
-		rm -rf $BUILD_DIR_NAME
+if [ -d ${BASE_NAME} ]; then
+	cd ${BASE_NAME}
+	if [ -d ${BUILD_DIR} ]; then
+		rm -rf ${BUILD_DIR}
 	else
-		mkdir ${BUILD_DIR_NAME}
-		cd ${BUILD_DIR_NAME}
+		mkdir ${BUILD_DIR}
+		cd ${BUILD_DIR}
 	fi
 else
 	tar -xvf $TAR_NAME
@@ -221,14 +218,14 @@ else
 		printRedStars
 		abortScript
 	fi
-	cd $DIR_NAME
+	cd $BASE_NAME
 fi
 
-if [[ ! -d ${BUILD_DIR_NAME} ]]; then
-	mkdir ${BUILD_DIR_NAME}
-	cd ${BUILD_DIR_NAME}
+if [[ ! -d ${BUILD_DIR} ]]; then
+	mkdir ${BUILD_DIR}
+	cd ${BUILD_DIR}
 else
-	cd ${BUILD_DIR_NAME}
+	cd ${BUILD_DIR}
 fi
 
 
@@ -245,7 +242,8 @@ sleep 1
 if [[ $? -ne 0 ]]; then
 	printRedStars
 	echo -e "${RED}Makefile configuration failed."
-	echo "Possible --target error${RESET}"
+	echo -e "${YELLOW}Possible --target error!"
+	echo -e "If you didn't pass --target argument, ignore the above comment.${RESET}"
 	printRedStars
 	abortScript
 fi
@@ -274,29 +272,51 @@ printGreenStars
 echo
 
 # Copy compiled gdb files into the /etc folder
-cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}
+if [[ $TARGET ]]; then
+	cp -r ${STARTING_DIR}/${SOURCE_DIR}/${BASE_NAME}/${BUILD_DIR}/gdb /etc/${BASE_NAME}_${TARGET}
+else
+	cp -r ${STARTING_DIR}/${SOURCE_DIR}/${BASE_NAME}/${BUILD_DIR}/gdb /etc/${BASE_NAME}
+fi
+
+
 printGreenStars
-echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}${RESET}"
+if [[ $TARGET ]]; then
+	echo -e "${GREEN}${BASE_NAME} is installed to the /etc/${BASE_NAME}_${TARGET}${RESET}"
+else
+	echo -e "${GREEN}${BASE_NAME} is installed to the /etc/${BASE_NAME}${RESET}"
+fi
 printGreenStars
 
 printGreenStars
 echo -e "${GREEN}Cleaning up the sources...${RESET}"
 printGreenStars
-cd $BASE_DIR
+cd $STARTING_DIR
 rm -rf --interactive=never ./$SOURCE_DIR
 
-if [[ -f /usr/bin/gdbfrontend-${DIR_NAME} ]]; then
-	rm -rf /usr/bin/gdbfrontend-${DIR_NAME}
+if [[ -f /usr/bin/gdbfrontend-${BASE_NAME} ]]; then
+	rm -rf /usr/bin/gdbfrontend-${BASE_NAME}
 fi
 
-echo "#\!/bin/bash" >> /usr/bin/gdbfrontend-${DIR_NAME}
-echo "gdbfrontend -g /etc/${DIR_NAME}/gdb -G --data-directory=/etc/${DIR_NAME}/data-directory/" >> /usr/bin/gdbfrontend-${DIR_NAME}
-chmod +x /usr/bin/gdbfrontend-${DIR_NAME}
+if [[ $TARGET ]]; then
+	
+	printf "#! /bin/bash\n" >> /usr/bin/gdbfrontend-${BASE_NAME}-${TARGET}
+	printf "gdbfrontend -g /etc/${BASE_NAME}_${TARGET}/gdb -G --data-directory=/etc/${BASE_NAME}_${TARGET}/data-directory/" >> /usr/bin/gdbfrontend-${BASE_NAME}-${TARGET}
+	chmod +x /usr/bin/gdbfrontend-${BASE_NAME}-${TARGET}
+else
+	printf "# !/bin/bash\n" >> /usr/bin/gdbfrontend-${BASE_NAME}
+	printf "gdbfrontend -g /etc/${BASE_NAME}/gdb -G --data-directory=/etc/${BASE_NAME}/data-directory/" >> /usr/bin/gdbfrontend-${BASE_NAME}
+	chmod +x /usr/bin/gdbfrontend-${BASE_NAME}
+fi
 
 
 printGreenStars
-echo -e "${GREEN}Created gdbfrontend-${DIR_NAME} script at /usr/bin..."
-echo -e "You can run gdbfrontend by calling gdbfrontend-${DIR_NAME} from terminal...${RESET}"
+if [[ $TARGET ]]; then
+	echo -e "${GREEN}Created gdbfrontend-${BASE_NAME}-${TARGET} script at /usr/bin..."
+	echo -e "You can run gdbfrontend by calling gdbfrontend-${BASE_NAME}-${TARGET} from terminal...${RESET}"
+else
+	echo -e "${GREEN}Created gdbfrontend-${BASE_NAME} script at /usr/bin..."
+	echo -e "You can run gdbfrontend by calling gdbfrontend-${BASE_NAME} from terminal...${RESET}"
+fi
 printGreenStars
 
 
