@@ -186,6 +186,7 @@ Options:
   --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
   --workdir, -w:                                Specifies working directory.
   --plugin-dir, -P:                             Specifies plugins directory.
+  --dontopenuionstartup, -D:                    Avoids opening UI just after startup.
   --verbose, -V:                                Enables verbose output.
 ```
 
@@ -242,6 +243,10 @@ Specifies working directory.
 #### `--plugin-dir, -P`
 
 Specifies plugins directory.
+
+#### `--dontopenuionstartup`, `-D`
+
+Avoids opening UI just after startup.
 
 #### `--verbose`, `-V`
 
