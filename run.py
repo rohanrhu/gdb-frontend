@@ -47,6 +47,8 @@ arg_config["TERMINAL_ID"] = terminal_id
 
 terminate_sub_procs = True
 
+dontopenuionstartup = False
+
 def argHandler_gdbArgs(args):
     global gdb_args
 
@@ -131,6 +133,10 @@ def argHandler_verbose():
     config.VERBOSE = True
     arg_config["VERBOSE"] = True
 
+def argHandler_dontopenuionstartup():
+    global dontopenuionstartup
+    dontopenuionstartup = True
+
 def argHandler_help():
     global gdb_executable
 
@@ -149,6 +155,7 @@ def argHandler_help():
     print("  --readonly, -r:\t\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
     print("  --workdir, -w:\t\t\t\tSpecifies working directory.")
     print("  --plugin-dir, -P:\t\t\t\tSpecifies plugins directory.")
+    print("  --dontopenuionstartup, -D:\t\t\tAvoids opening UI just after startup.")
     print("  --verbose, -V:\t\t\t\tEnables verbose output.")
     print("")
 
@@ -207,6 +214,7 @@ args = [
     ["--workdir", "-w", argHandler_workdir, True],
     ["--plugins-dir", "-P", argHandler_pluginsDir, True],
     ["--help", "-h", argHandler_help, False],
+    ["--dontopenuionstartup", "-D", argHandler_dontopenuionstartup, False],
     ["--version", "-v", argHandler_version, False]
 ]
 
@@ -344,31 +352,32 @@ try:
 
         gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
-        if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
-            os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
-        else:
-            if os.geteuid() != 0 and shutil.which("chrome"):
-                subprocess.Popen(
-                    "chrome --app=" + gf_url,
-                    stdin=subprocess.DEVNULL,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    close_fds=True,
-                    shell=True,
-                    executable='/bin/bash'
-                )
-            elif os.geteuid() != 0 and shutil.which("chromium"):
-                subprocess.Popen(
-                    "chromium --app=" + gf_url,
-                    stdin=subprocess.DEVNULL,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    close_fds=True,
-                    shell=True,
-                    executable='/bin/bash'
-                )
+        if not dontopenuionstartup:
+            if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
+                os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
             else:
-                webbrowser.open(gf_url)
+                if os.geteuid() != 0 and shutil.which("chrome"):
+                    subprocess.Popen(
+                        "chrome --app=" + gf_url,
+                        stdin=subprocess.DEVNULL,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        close_fds=True,
+                        shell=True,
+                        executable='/bin/bash'
+                    )
+                elif os.geteuid() != 0 and shutil.which("chromium"):
+                    subprocess.Popen(
+                        "chromium --app=" + gf_url,
+                        stdin=subprocess.DEVNULL,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        close_fds=True,
+                        shell=True,
+                        executable='/bin/bash'
+                    )
+                else:
+                    webbrowser.open(gf_url)
 
         while True: time.sleep(0.1)
     else:
@@ -399,31 +408,32 @@ try:
 
         gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
-        if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
-            os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
-        else:
-            if os.geteuid() != 0 and shutil.which("chrome"):
-                subprocess.Popen(
-                    "chrome --app=" + gf_url,
-                    stdin=subprocess.DEVNULL,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    close_fds=True,
-                    shell=True,
-                    executable='/bin/bash'
-                )
-            elif os.geteuid() != 0 and shutil.which("chromium"):
-                subprocess.Popen(
-                    "chromium --app=" + gf_url,
-                    stdin=subprocess.DEVNULL,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    close_fds=True,
-                    shell=True,
-                    executable='/bin/bash'
-                )
+        if not dontopenuionstartup:
+            if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
+                os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
             else:
-                webbrowser.open(gf_url)
+                if os.geteuid() != 0 and shutil.which("chrome"):
+                    subprocess.Popen(
+                        "chrome --app=" + gf_url,
+                        stdin=subprocess.DEVNULL,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        close_fds=True,
+                        shell=True,
+                        executable='/bin/bash'
+                    )
+                elif os.geteuid() != 0 and shutil.which("chromium"):
+                    subprocess.Popen(
+                        "chromium --app=" + gf_url,
+                        stdin=subprocess.DEVNULL,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        close_fds=True,
+                        shell=True,
+                        executable='/bin/bash'
+                    )
+                else:
+                    webbrowser.open(gf_url)
 
         while True: time.sleep(0.1)
 except KeyboardInterrupt as e:
