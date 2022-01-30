@@ -274,9 +274,19 @@ printGreenStars
 echo
 
 # Copy compiled gdb files into the /etc folder
-cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}_${TARGET}
+if [[ $TARGET ]]; then
+	cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}_${TARGET}
+else
+	cp -r ${BASE_DIR}/$SOURCE_DIR/${DIR_NAME}/${DIR_NAME}_build/gdb /etc/${DIR_NAME}
+fi
+
+
 printGreenStars
-echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}_${TARGET}${RESET}"
+if [[ $TARGET ]]; then
+	echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}_${TARGET}${RESET}"
+else
+	echo -e "${GREEN}${DIR_NAME} is installed to the /etc/${DIR_NAME}${RESET}"
+fi
 printGreenStars
 
 printGreenStars
@@ -289,14 +299,26 @@ if [[ -f /usr/bin/gdbfrontend-${DIR_NAME} ]]; then
 	rm -rf /usr/bin/gdbfrontend-${DIR_NAME}
 fi
 
-echo "#\!/bin/bash" >> /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
-echo "gdbfrontend -g /etc/${DIR_NAME}_${TARGET} -G --data-directory=/etc/${DIR_NAME}_${TARGET}/data-directory/" >> /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
-chmod +x /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
+if [[ $TARGET ]]; then
+	
+	printf "#! /bin/bash\n" >> /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
+	printf "gdbfrontend -g /etc/${DIR_NAME}_${TARGET}/gdb -G --data-directory=/etc/${DIR_NAME}_${TARGET}/data-directory/" >> /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
+	chmod +x /usr/bin/gdbfrontend-${DIR_NAME}-${TARGET}
+else
+	printf "# !/bin/bash\n" >> /usr/bin/gdbfrontend-${DIR_NAME}
+	printf "gdbfrontend -g /etc/${DIR_NAME}/gdb -G --data-directory=/etc/${DIR_NAME}/data-directory/" >> /usr/bin/gdbfrontend-${DIR_NAME}
+	chmod +x /usr/bin/gdbfrontend-${DIR_NAME}
+fi
 
 
 printGreenStars
-echo -e "${GREEN}Created gdbfrontend-${DIR_NAME} script at /usr/bin..."
-echo -e "You can run gdbfrontend by calling gdbfrontend-${DIR_NAME} from terminal...${RESET}"
+if [[ $TARGET ]]; then
+	echo -e "${GREEN}Created gdbfrontend-${DIR_NAME}-${TARGET} script at /usr/bin..."
+	echo -e "You can run gdbfrontend by calling gdbfrontend-${DIR_NAME}-${TARGET} from terminal...${RESET}"
+else
+	echo -e "${GREEN}Created gdbfrontend-${DIR_NAME} script at /usr/bin..."
+	echo -e "You can run gdbfrontend by calling gdbfrontend-${DIR_NAME} from terminal...${RESET}"
+fi
 printGreenStars
 
 
