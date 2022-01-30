@@ -188,7 +188,7 @@ if [ $? -ne 0 ]; then
 	printRedStars
 	echo
 	cd ..
-	rm -rf ${BASE_NAME}_sources
+	rm -rf ${SOURCE_DIR}
 	if [ -f ${TAR_NAME} ]; then
 		rm ${TAR_NAME}
 	fi
