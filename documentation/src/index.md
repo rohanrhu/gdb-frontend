@@ -1,6 +1,6 @@
 # GDBFrontend README
 
-[![GDBFrontend](../../media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
+[![GDBFrontend](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&color=informational)](https://github.com/rohanrhu/gdb-frontend/releases)
 [![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
@@ -12,7 +12,7 @@
 
 GDBFrontend is an easy, flexible and extensionable gui debugger.
 
-![gdb-frontend](../../media/gdbfrontend-screenshots.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
+![gdb-frontend](media/gdbfrontend-screenshots.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
 ## Installing
 
@@ -110,47 +110,47 @@ Follow [this quick tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/How-t
 
 GDBFrontend has an expression evaluater that you can use multiple in sametime.
 
-![](../../media/expression-evaluater.png)
+![](media/expression-evaluater.png)
 
 ### Pointer Visualisation
 
-![](../../media/pointer-visualisation.png)
+![](media/pointer-visualisation.png)
 
 ### Linked-List Visualization
 
-![](../../media/linked-list-visualisation.png)
+![](media/linked-list-visualisation.png)
 
 ### Conditional Breakpoints
 
 Right click to a breakpoint for setting its condition.
 
-![](../../media/conditional-breakpoint.png)
+![](media/conditional-breakpoint.png)
 
-![](../../media/conditional-breakpoint-2.png)
+![](media/conditional-breakpoint-2.png)
 
 ### Connected Expressions
 
 Expressions of all variables, members and items are connected in GDBFrontend's VariablesExplorer.
 
-![](../../media/connected-expressions.png)
+![](media/connected-expressions.png)
 
 ### Process Manager
 
 You can watch, filter or manage processes with Process Manager.
 
-![](../../media/process-manager.png)
+![](media/process-manager.png)
 
 ### Enhanced Collabration
 
 GDBFrontend has a set of some features for collabration named as "Enhanced Collabration".
 
-![](../../media/enhanced-collabration.png)
+![](media/enhanced-collabration.png)
 
 #### Collabration Draw
 
 Collabration draw is available when you enable Enhanced Collabration. Click to Draw or use **Ctrl + Shift + X** shortcut to draw and **Ctrl + Shift + C** to clear all drawings.
 
-![](../../media/enhanced-collabration-draw.png)
+![](media/enhanced-collabration-draw.png)
 
 #### Synced Source Viewing
 
@@ -158,15 +158,15 @@ With Enhanced Collabration all debugger clients are synchronized on source viewi
 
 ### Expression hover popup variable explorer
 
-![](../../media/expression-popup.png)
+![](media/expression-popup.png)
 
 ### Extensibility
 
 GDBFrontend is very extensible and has powerful APIs. Some examples of GDBFrontend's extensibility.
 
-![](../../media/extensibility-1.png)
+![](media/extensibility-1.png)
 
-![](../../media/extensibility-2.png)
+![](media/extensibility-2.png)
 
 ## `./gdbfrontend`
 
@@ -369,7 +369,7 @@ You will get this warning when a thread-safe GDBFrontend function needs to work 
 $ ...
 ```
 
-![](../../media/main-thread-blocking-warning.png)
+![](media/main-thread-blocking-warning.png)
 
 When you exit shell, blocking GDBFrontend functions will continue working.
 
@@ -388,7 +388,7 @@ pkill -f gdb
 
 If you are using **ExpressionEvaluater** with very long depth expanded variables/members, your scroll and evaluater window move performance may be affected bad for pointer visualization. In this situation, you can turn off **signal** and **slot** pointings for that evaluater window.
 
-![Evaluater Pointer Visualization Buttons](../../media/evaluater-pointing-buttons.png)
+![Evaluater Pointer Visualization Buttons](media/evaluater-pointing-buttons.png)
 
 ## GDB-Related Issues and Tips
 
@@ -463,7 +463,7 @@ You can donate to support the project.
 
 | QR Code                                                        | Bitcoin address for donations                |
 | -------------------------------------------------------------- | -------------------------------------------- |
-| ![Bitcoin address QR code for donate](../../media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
+| ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
 
 ## License
 
