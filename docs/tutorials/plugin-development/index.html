@@ -707,15 +707,15 @@
 <p>GDBFrontend supports plugins. Plugin development includes a few simple steps. You can develop plugins easily with following the instructions.</p>
 <h2 id="example-plugin">Example Plugin</h2>
 <p>There is an example plugin (<code>hello</code>) in <code>plugins/hello</code>.</p>
-<p>Enable it before start the tutorial: Go to <code>config.py</code> and comment the line <code>"hello"</code>:</p>
-<pre><code class="language-python">disabled_plugins = [
-    &quot;hello&quot;
-]
-</code></pre>
+<p>Enable it before start the tutorial: Go to <code>config.py</code> and comment the line <code>"hello"</code>:
+<div class="highlight"><pre><span></span><code><span class="n">disabled_plugins</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;hello&quot;</span>
+<span class="p">]</span>
+</code></pre></div></p>
 <h2 id="plugin-fs-structure">Plugin FS Structure</h2>
 <p>GDBFrontend plugins are stored in <code>plugins/</code> directory in the GDBFrontend root.</p>
-<p>A typical plugin files look like this:</p>
-<pre><code>plugins/
+<p>A typical plugin files look like this:
+<div class="highlight"><pre><span></span><code>plugins/
    hello/
        frontend/
            html/
@@ -729,8 +729,8 @@
        config.py
        urls.py
        hello.py
-</code></pre>
-<p>Plugins those are inside plugins directory will be loaded automatically.</p>
+</code></pre></div>
+Plugins those are inside plugins directory will be loaded automatically.</p>
 <h3 id="plugin-name-format">Plugin Name Format</h3>
 <ul>
 <li>On File System: <code>hello</code> (<code>hello/</code> directory, <code>hello.py</code>)</li>
@@ -743,68 +743,68 @@
 <h2 id="plugin-files">Plugin Files</h2>
 <h3 id="configpy">config.py</h3>
 <p>Includes basic information about your plugin.</p>
-<pre><code class="language-python">DESCRIPTION = &quot;Example GDBFrontend plugin.&quot;
-AUTHOR = &quot;Oğuzhan Eroğlu &lt;rohanrhu2@gmail.com&gt; (https://oguzhaneroglu.com/)&quot;
-HOMEPAGE = &quot;https://github.com/rohanrhu/gdb-frontend&quot;
-VERSION = [0, 0, 1]
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;Example GDBFrontend plugin.&quot;</span>
+<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s2">&quot;Oğuzhan Eroğlu &lt;rohanrhu2@gmail.com&gt; (https://oguzhaneroglu.com/)&quot;</span>
+<span class="n">HOMEPAGE</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/rohanrhu/gdb-frontend&quot;</span>
+<span class="n">VERSION</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
 <h3 id="hellopy">hello.py</h3>
 <p>Plugin backend file must be named as <code>[plugin name].py</code> and plugin class must be named as <code>[plugin name]Plugin</code> and intherits <code>plugin.GDBFrontendPlugin</code>.</p>
-<pre><code class="language-python">import importlib
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">importlib</span>
 
-import plugin
+<span class="kn">import</span> <span class="nn">plugin</span>
 
-gdb = importlib.import_module(&quot;gdb&quot;)
+<span class="n">gdb</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;gdb&quot;</span><span class="p">)</span>
 
-class HelloPlugin(plugin.GDBFrontendPlugin):
-    def __init__(self):
-        plugin.GDBFrontendPlugin.__init__(self)
+<span class="k">class</span> <span class="nc">HelloPlugin</span><span class="p">(</span><span class="n">plugin</span><span class="o">.</span><span class="n">GDBFrontendPlugin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">plugin</span><span class="o">.</span><span class="n">GDBFrontendPlugin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    def loaded(self):
-        gdb.events.new_objfile.connect(self.gdb_on_new_objfile)
+    <span class="k">def</span> <span class="nf">loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">gdb</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">new_objfile</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gdb_on_new_objfile</span><span class="p">)</span>
 
-    def unloaded(self):
-        gdb.events.new_objfile.disconnect(self.gdb_on_new_objfile)
+    <span class="k">def</span> <span class="nf">unloaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">gdb</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">new_objfile</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gdb_on_new_objfile</span><span class="p">)</span>
 
-    def gdb_on_new_objfile(self, event):
-        print(&quot;[HELLO] Event: new_objfile:&quot;, event)
-</code></pre>
+    <span class="k">def</span> <span class="nf">gdb_on_new_objfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[HELLO] Event: new_objfile:&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+</code></pre></div>
 <h3 id="urlspy">urls.py</h3>
 <p>Includes URL definitions for GDBFrontend REST API. Plugins can define URLs and use them for communicating with each other.</p>
-<p>URLs must be defined in a python dict named as <code>urls</code> in the following format:</p>
-<pre><code class="language-python">urls = {
-    &quot;example-api&quot;: {
-        &quot;url&quot;: &quot;/hello/api&quot;,
-        &quot;match&quot;: &quot;^/hello/api&quot;,
-        &quot;module&quot;: &quot;plugins.hello.url_modules.api&quot;
-    }
-}
-</code></pre>
+<p>URLs must be defined in a python dict named as <code>urls</code> in the following format:
+<div class="highlight"><pre><span></span><code><span class="n">urls</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;example-api&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;/hello/api&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;match&quot;</span><span class="p">:</span> <span class="s2">&quot;^/hello/api&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;plugins.hello.url_modules.api&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
 <h3 id="rest-api-modules">Rest API Modules</h3>
 <p>Rest API Module URLs must be defined in <code>plugin.urls</code>. Module files are stored in <code>url_modules/</code> directory.</p>
 <p>Plugin URL modules can be accessed with the path like <code>plugins.hello.url_modules.[module name]</code> and you must use it for <code>plugin.urls["[plugin name]"]["module"]</code>.</p>
-<p>A URL module file includes a function named as <code>run(request, params)</code> and GDBFrontend calls that on HTTP request. A typical URL module like this:</p>
-<pre><code class="language-python">import json
-import urllib
+<p>A URL module file includes a function named as <code>run(request, params)</code> and GDBFrontend calls that on HTTP request. A typical URL module like this:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
 
-import api.debug
+<span class="kn">import</span> <span class="nn">api.debug</span>
 
-def run(request, params):
-    if params is None: params = {}
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
 
-    url_path = urllib.parse.urlparse(request.path)
-    qs_params = urllib.parse.parse_qs(url_path.query)
+    <span class="n">url_path</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">qs_params</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">parse_qs</span><span class="p">(</span><span class="n">url_path</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
 
-    result_json = {}
-    result_json[&quot;ok&quot;] = True
+    <span class="n">result_json</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result_json</span><span class="p">[</span><span class="s2">&quot;ok&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
-    result_json[&quot;sources&quot;] = api.debug.getSources()
+    <span class="n">result_json</span><span class="p">[</span><span class="s2">&quot;sources&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">getSources</span><span class="p">()</span>
 
-    request.send_response(200)
-    request.send_header(&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;)
-    request.end_headers()
-    request.wfile.write(json.dumps(result_json).encode())
-</code></pre>
+    <span class="n">request</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;application/json; charset=utf-8&quot;</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result_json</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</code></pre></div></p>
 <h2 id="plugin-objects">Plugin Objects</h2>
 <p>Plugin objects are exists in <code>plugin.plugins</code> dict as <code>plugin.plugins["[plugin name]"] = plugin</code> and <code>plugin</code> is an instance of your plugin class that inherits <code>GDBFrontendPlugin</code>.</p>
 <h3 id="plugin-object-attributes">Plugin Object Attributes</h3>
@@ -817,16 +817,16 @@ def run(request, params):
 <li><code>plugin.urls</code></li>
 </ul>
 <h2 id="frontend">Frontend</h2>
-<p>Frontend files are stored in the <code>plugins/[plugin name]/frontend/</code> directory. There are three basic directory:</p>
-<pre><code>frontend/
+<p>Frontend files are stored in the <code>plugins/[plugin name]/frontend/</code> directory. There are three basic directory:
+<div class="highlight"><pre><span></span><code>frontend/
     css/
         [plugin name].css
     html/
         [plugin name].html
     js/
         [plugin name].js
-</code></pre>
-<p>Those three files will be included as default:
+</code></pre></div>
+Those three files will be included as default:
 * <code>html/[plugin_name].html</code> will be included to DOM as default.
 * <code>css/[plugin_name].css</code> will be included as default.
 * <code>js/[plugin_name].js</code> will be included as default.</p>
@@ -843,18 +843,18 @@ def run(request, params):
 <h4 id="component-gdbfrontend">Component: <code>gdbFrontend</code></h4>
 <p><code>GDBFrontend</code> is the main component at root and it uses another components as sub component. It is accesable with <code>GDBFrontend.components.gdbFrontend</code>.</p>
 <p>Sub components of <code>gdbFrontend</code> are accessable via <code>GDBFrontend.components.gdbFrontend.components</code>.</p>
-<p>For an example you can get open file tabs like this:</p>
-<pre><code class="language-javascript">&gt; GDBFrontend.components.gdbFrontend.components.fileTabs.files
-&lt; (3) [{…}, {…}, {…}]
-</code></pre>
-<p>or getting breakpoints from <code>BreakpointsEditor</code> component instance from <code>GDBFrontend</code> component instance.</p>
-<pre><code class="language-javascript">&gt; GDBFrontend.components.gdbFrontend.components.breakpointsEditor.breakpoints
-&lt; [{…}, {…}]
-</code></pre>
-<p>Let's switch to first file tab:</p>
-<pre><code class="language-javascript">var switchTo = GDBFrontend.components.gdbFrontend.components.fileTabs.files[0];
-GDBFrontend.components.gdbFrontend.components.fileTabs.switchFile({file: switchTo});
-</code></pre>
+<p>For an example you can get open file tabs like this:
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="nx">GDBFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">gdbFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">fileTabs</span><span class="p">.</span><span class="nx">files</span>
+<span class="o">&lt;</span> <span class="p">(</span><span class="mf">3</span><span class="p">)</span> <span class="p">[{</span><span class="err">…</span><span class="p">},</span> <span class="p">{</span><span class="err">…</span><span class="p">},</span> <span class="p">{</span><span class="err">…</span><span class="p">}]</span>
+</code></pre></div></p>
+<p>or getting breakpoints from <code>BreakpointsEditor</code> component instance from <code>GDBFrontend</code> component instance.
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="nx">GDBFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">gdbFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">breakpointsEditor</span><span class="p">.</span><span class="nx">breakpoints</span>
+<span class="o">&lt;</span> <span class="p">[{</span><span class="err">…</span><span class="p">},</span> <span class="p">{</span><span class="err">…</span><span class="p">}]</span>
+</code></pre></div></p>
+<p>Let's switch to first file tab:
+<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">switchTo</span> <span class="o">=</span> <span class="nx">GDBFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">gdbFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">fileTabs</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+<span class="nx">GDBFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">gdbFrontend</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="nx">fileTabs</span><span class="p">.</span><span class="nx">switchFile</span><span class="p">({</span><span class="nx">file</span><span class="o">:</span> <span class="nx">switchTo</span><span class="p">});</span>
+</code></pre></div></p>
 
               
             </article>

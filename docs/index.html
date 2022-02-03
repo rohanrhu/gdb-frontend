@@ -1481,40 +1481,40 @@
 </ul>
 <h3 id="pip-package-python-wheel-recommended">PIP Package (Python Wheel) [Recommended]</h3>
 <p>You can install GDBFrontend with <code>pip</code>.</p>
-<pre><code class="language-bash">sudo python3 -m pip install gdbfrontend
-</code></pre>
+<div class="highlight"><pre><span></span><code>sudo python3 -m pip install gdbfrontend
+</code></pre></div>
 <p>if it is already installed and you are upgrading</p>
-<pre><code class="language-bash">sudo python3 -m pip install --upgrade gdbfrontend
-</code></pre>
+<div class="highlight"><pre><span></span><code>sudo python3 -m pip install --upgrade gdbfrontend
+</code></pre></div>
 <p>or if you want to install specific GIT snapshot:</p>
-<pre><code class="language-bash">sudo python3 setup.py install
-</code></pre>
+<div class="highlight"><pre><span></span><code>sudo python3 setup.py install
+</code></pre></div>
 <p>and you can run</p>
-<pre><code class="language-bash">gdbfrontend
-</code></pre>
+<div class="highlight"><pre><span></span><code>gdbfrontend
+</code></pre></div>
 <h3 id="running-from-git">Running From GIT</h3>
 <p>You can download latest source and run it.</p>
 <p>You can run gdb-frontend with following commands:</p>
-<pre><code class="language-bash">git clone https://github.com/rohanrhu/gdb-frontend.git gdb-frontend
-cd gdb-frontend
+<div class="highlight"><pre><span></span><code>git clone https://github.com/rohanrhu/gdb-frontend.git gdb-frontend
+<span class="nb">cd</span> gdb-frontend
 ./gdbfrontend
-</code></pre>
+</code></pre></div>
 <p>and you can open it with:</p>
-<pre><code>http://127.0.0.1:5550/terminal/
-</code></pre>
+<div class="highlight"><pre><span></span><code>http://127.0.0.1:5550/terminal/
+</code></pre></div>
 <p>or without terminal:</p>
-<pre><code>http://127.0.0.1:5550/
-</code></pre>
+<div class="highlight"><pre><span></span><code>http://127.0.0.1:5550/
+</code></pre></div>
 <p>You can open GDB shell with the command:</p>
-<pre><code class="language-bash">tmux a -t gdb-frontend
-</code></pre>
+<div class="highlight"><pre><span></span><code>tmux a -t gdb-frontend
+</code></pre></div>
 <h3 id="arch-linux-aur">Arch Linux (AUR)</h3>
 <p>You can install Arch Linux package for Arch-based distributions. (<a href="https://aur.archlinux.org/packages/gdb-frontend-bin/">AUR Package</a>)</p>
-<pre><code class="language-bash">yay -S gdb-frontend-bin
-</code></pre>
+<div class="highlight"><pre><span></span><code>yay -S gdb-frontend-bin
+</code></pre></div>
 <p>and you can run it:</p>
-<pre><code class="language-bash">gdbfrontend
-</code></pre>
+<div class="highlight"><pre><span></span><code>gdbfrontend
+</code></pre></div>
 <h3 id="flatpak">Flatpak</h3>
 <p>Flatpak package is a TODO.</p>
 <h2 id="embedded-debugging-with-gdbfrontend"><a href="https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging">Embedded Debugging with GDBFrontend</a></h2>
@@ -1554,26 +1554,26 @@ cd gdb-frontend
 <p><img alt="" src="media/extensibility-1.png" /></p>
 <p><img alt="" src="media/extensibility-2.png" /></p>
 <h2 id="gdbfrontend"><code>./gdbfrontend</code></h2>
-<pre><code class="language-bash">$ gdbfrontend --help
+<div class="highlight"><pre><span></span><code>$ gdbfrontend --help
 GDBFrontend is a easy, flexible and extensionable gui debugger.
 
 Options:
-  --help, -h:                                   Shows this help message.
+  --help, -h:                                   Shows this <span class="nb">help</span> message.
   --version, -v:                                Shows version.
-  --gdb-args=&quot;ARGS&quot;, -G &quot;ARGS&quot;:                 Specifies GDB command line arguments. (Optional)
-  --gdb-executable=PATH, -g PATH:               Specifies GDB executable path (Default is &quot;gdb&quot; command on PATH environment variable.)
-  --tmux-executable=PATH, -tmux PATH:           Specifies Tmux executable path (Default is &quot;tmux&quot; command on PATH environment variable.)
-  --terminal-id=NAME, -t NAME:                  Specifies tmux terminal identifier name (Default is &quot;gdb-frontend&quot;.)
-  --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger.
-  --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
-  --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
-  --port=PORT, -p PORT:                         Specifies HTTP port. (0 for random port.)
-  --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
+  --gdb-args<span class="o">=</span><span class="s2">&quot;ARGS&quot;</span>, -G <span class="s2">&quot;ARGS&quot;</span>:                 Specifies GDB <span class="nb">command</span> line arguments. <span class="o">(</span>Optional<span class="o">)</span>
+  --gdb-executable<span class="o">=</span>PATH, -g PATH:               Specifies GDB executable path <span class="o">(</span>Default is <span class="s2">&quot;gdb&quot;</span> <span class="nb">command</span> on PATH environment variable.<span class="o">)</span>
+  --tmux-executable<span class="o">=</span>PATH, -tmux PATH:           Specifies Tmux executable path <span class="o">(</span>Default is <span class="s2">&quot;tmux&quot;</span> <span class="nb">command</span> on PATH environment variable.<span class="o">)</span>
+  --terminal-id<span class="o">=</span>NAME, -t NAME:                  Specifies tmux terminal identifier name <span class="o">(</span>Default is <span class="s2">&quot;gdb-frontend&quot;</span>.<span class="o">)</span>
+  --credentials<span class="o">=</span>USER:PASS, -c USER:PASS:        Specifies username and password <span class="k">for</span> accessing to debugger.
+  --host<span class="o">=</span>IP, -H IP:                             Specifies current host address that you can access via <span class="k">for</span> HTTP and WS servers.
+  --listen<span class="o">=</span>IP, -l IP:                           Specifies listen address <span class="k">for</span> HTTP and WS servers.
+  --port<span class="o">=</span>PORT, -p PORT:                         Specifies HTTP port. <span class="o">(</span><span class="m">0</span> <span class="k">for</span> random port.<span class="o">)</span>
+  --readonly, -r:                               Makes code editor readonly. <span class="o">(</span>Notice: This option is not related to security.<span class="o">)</span>
   --workdir, -w:                                Specifies working directory.
   --plugin-dir, -P:                             Specifies plugins directory.
   --dontopenuionstartup, -D:                    Avoids opening UI just after startup.
   --verbose, -V:                                Enables verbose output.
-</code></pre>
+</code></pre></div>
 <h3 id="options">Options</h3>
 <h4 id="-help-h"><code>--help</code>, <code>-h</code></h4>
 <p>Shows help text.</p>
@@ -1698,32 +1698,32 @@ Options:
 <h2 id="themes">Themes</h2>
 <p>GDBFrontend has built-in themes.</p>
 <p>For switching between themes use <code>gf-theme [THEME]</code> command on GDB shell.</p>
-<pre><code>(gdb) gf-theme doki
+<div class="highlight"><pre><span></span><code>(gdb) gf-theme doki
 (gdb) gf-theme sky
 (gdb) gf-theme cyberpunk
 (gdb) gf-theme dark
 (gdb) gf-theme green
 (gdb) gf-theme light
 (gdb) gf-theme red
-</code></pre>
+</code></pre></div>
 <p>For switching back to the default theme.</p>
-<pre><code>(gdb) gf-theme
-</code></pre>
+<div class="highlight"><pre><span></span><code>(gdb) gf-theme
+</code></pre></div>
 <p>Also you may want to look to <a href="https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial">Plugin Development Tutorial</a>.</p>
 <h2 id="gdbfrontend-python-api">GDBFrontend Python API</h2>
 <p>You can access GDBFrontend's Python API via <code>gdbfrontend</code> module.</p>
-<pre><code>(gdb) python-interactive
-</code></pre>
-<pre><code class="language-python">&gt;&gt;&gt; dir(gdbfrontend)
-</code></pre>
+<div class="highlight"><pre><span></span><code>(gdb) python-interactive
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">gdbfrontend</span><span class="p">)</span>
+</code></pre></div>
 <p>For example, you can get all client sockets like this:</p>
-<pre><code class="language-python">&gt;&gt;&gt; gdbfrontend.api.globalvars.httpServer.ws_clients
-{1: &lt;server.GDBFrontendSocket object at 0x...&gt;}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">gdbfrontend</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">globalvars</span><span class="o">.</span><span class="n">httpServer</span><span class="o">.</span><span class="n">ws_clients</span>
+<span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">server</span><span class="o">.</span><span class="n">GDBFrontendSocket</span> <span class="nb">object</span> <span class="n">at</span> <span class="mi">0</span><span class="n">x</span><span class="o">...&gt;</span><span class="p">}</span>
+</code></pre></div>
 <p>or you can get all plugins:</p>
-<pre><code class="language-python">&gt;&gt;&gt; gdbfrontend.plugin.getAll()
-['hello', 'theme_light', 'theme_red']
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">gdbfrontend</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;theme_light&#39;</span><span class="p">,</span> <span class="s1">&#39;theme_red&#39;</span><span class="p">]</span>
+</code></pre></div>
 <h2 id="security-with-sharing-sessions">Security with Sharing Sessions</h2>
 <p>You can use <code>--credentials=USER:PASS</code> option for adding HTTP authentication to your debugger session.</p>
 <h2 id="browser-compatibility">Browser Compatibility</h2>
@@ -1732,17 +1732,17 @@ Options:
 <h3 id="blocking-gdb-shellmain-thread">Blocking GDB shell/main-thread</h3>
 <p>Most of GDBFrontend functions are thread-safe and work on GDB's main-thread. So, if you run something that is blocking on the GDB shell, GDBFrontend functions have to wait it until finish.</p>
 <p>You will get this warning when a thread-safe GDBFrontend function needs to work and you are blocking GDB's main thread.</p>
-<pre><code class="language-bash">(gdb) shell
+<div class="highlight"><pre><span></span><code><span class="o">(</span>gdb<span class="o">)</span> shell
 $ ...
-</code></pre>
+</code></pre></div>
 <p><img alt="" src="media/main-thread-blocking-warning.png" /></p>
 <p>When you exit shell, blocking GDBFrontend functions will continue working.</p>
 <p><strong>Note:</strong> Sometimes you may get this warning without running anything in GDB shell, it means something (in GDB's event-loop) is taking a long time; in this case just ignore this warning.</p>
 <h3 id="zombie-processes">Zombie Processes</h3>
 <p>GDBFrontend sends SIGTERM to its sub-processes, your application and its sub-processes.
 If your application is forking new processes and setting their PGIDs, GDBFrontend may not close them. In this case you should send SIGKILL to your processes.</p>
-<pre><code class="language-bash">pkill -f gdb
-</code></pre>
+<div class="highlight"><pre><span></span><code>pkill -f gdb
+</code></pre></div>
 <h3 id="expression-evaluater-performance-tips">Expression Evaluater Performance Tips</h3>
 <p>If you are using <strong>ExpressionEvaluater</strong> with very long depth expanded variables/members, your scroll and evaluater window move performance may be affected bad for pointer visualization. In this situation, you can turn off <strong>signal</strong> and <strong>slot</strong> pointings for that evaluater window.</p>
 <p><img alt="Evaluater Pointer Visualization Buttons" src="media/evaluater-pointing-buttons.png" /></p>

@@ -450,11 +450,11 @@
 <h1 id="embedded-debugging-with-gdbfrontend">Embedded Debugging with GDBFrontend</h1>
 <h2 id="using-build_gdbsh-to-build-latest-gdb-for-arm-target-with-embedded-python3">Using <code>build_gdb.sh</code> to build latest GDB for ARM target with embedded-Python3</h2>
 <p>You can use <code>build_gdb.sh</code> to build your own GDB w/ Python3 support for ARM target. The script will also create a special command for using GDBFrontend on your own GDB build. (Like <code>gdbfrontend-gdb-11.2</code>.)</p>
-<pre><code class="language-bash">./build_gdb.sh --target=arm-none-eabi
-</code></pre>
+<div class="highlight"><pre><span></span><code>./build_gdb.sh --target<span class="o">=</span>arm-none-eabi
+</code></pre></div>
 <p>Now you can use <code>gdbfrontend-gdb-{version}</code> command. Just like:</p>
-<pre><code class="language-bash">gdbfrontend-gdb-11.2
-</code></pre>
+<div class="highlight"><pre><span></span><code>gdbfrontend-gdb-11.2
+</code></pre></div>
 <h2 id="or-how-to-build-gdb-for-arm-with-embedded-python3">or How to build GDB for ARM with embedded-Python3</h2>
 <p><strong>GDBFrontend needs GDB-embedded Python3.</strong> Sometimes, you could not find a GDB build for ARM target (<code>arm-none-eabi</code>) with Python3 support on GDB. In this situation you can quickly build your own GDB with Python3 support and <code>arm-none-eabi</code> target.</p>
 <h3 id="you-may-need-some-build-time-dependencies">You may need some build-time dependencies</h3>
@@ -462,19 +462,19 @@
 <p>If you have some missing build dependencies, <code>configure</code> script will say the missing library, just find it in your package management system and install.</p>
 <p><strong>Please edit and update this article if you have an issue about build dependencies and you know how to install them.</strong></p>
 <h3 id="follow-these-steps">Follow these steps</h3>
-<pre><code class="language-bash">cd ~
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ~
 wget https://ftp.gnu.org/gnu/gdb/gdb-11.1.tar.xz
 tar zxvf gdb-11.1.tar.gz
 mkdir gdb-11.1-build
-cd gdb-11.1-build
-../gdb-11.1/configure --with-python=/usr/bin/python3 --target=arm-none-eabi --enable-interwork --enable-multilib
+<span class="nb">cd</span> gdb-11.1-build
+../gdb-11.1/configure --with-python<span class="o">=</span>/usr/bin/python3 --target<span class="o">=</span>arm-none-eabi --enable-interwork --enable-multilib
 make
-</code></pre>
+</code></pre></div>
 <p>As you see, you should pass your Python3 executable to configure script's <code>--with-python</code> paramter just like <code>--with-python=/usr/bin/python3</code>.</p>
 <h3 id="starting-gdbfrontend-with-your-gdb-build">Starting GDBFrontend with your GDB build</h3>
 <p>After build is successful, you should be able to run GDBFrontend like this:</p>
-<pre><code class="language-bash">gdbfrontend -g $(realpath ~/gdb-11.1-build/gdb/gdb) -G --data-directory=$(realpath ~/gdb-11.1-build/gdb/data-directory/)
-</code></pre>
+<div class="highlight"><pre><span></span><code>gdbfrontend -g <span class="k">$(</span>realpath ~/gdb-11.1-build/gdb/gdb<span class="k">)</span> -G --data-directory<span class="o">=</span><span class="k">$(</span>realpath ~/gdb-11.1-build/gdb/data-directory/<span class="k">)</span>
+</code></pre></div>
 <p>It looks like this:</p>
 <p><img alt="image" src="https://user-images.githubusercontent.com/1125150/143163183-5a328373-9407-4d5c-9a27-b9f2127e1c23.png" />
 <img alt="image" src="https://user-images.githubusercontent.com/1125150/143163331-325eff33-16de-4a35-8ef1-3a4fad60892c.png" /></p>

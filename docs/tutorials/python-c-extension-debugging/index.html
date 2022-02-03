@@ -339,38 +339,38 @@
 <h1 id="installing-python3-debug-symbols">Installing Python3 debug symbols</h1>
 <p>To debug Python3, you need debug symbols for it.</p>
 <p>On Debian:</p>
-<pre><code class="language-bash">sudo apt install python3-dbg
-</code></pre>
+<div class="highlight"><pre><span></span><code>sudo apt install python3-dbg
+</code></pre></div>
 <p>I have no idea about other distros. Just search about <strong>"Python debug symbols on DISTRO"</strong></p>
 <h1 id="build-your-extension-with-debug-symbols">Build your extension with debug symbols</h1>
 <p>Just set <code>CFLAGS</code> environment variables:</p>
-<pre><code class="language-bash">CFLAGS=&quot;-O0 -g&quot; python3 setup.py build
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g&quot;</span> python3 setup.py build
+</code></pre></div>
 <p><img alt="" src="https://i.imgur.com/oUVbxtH.png" /></p>
 <h1 id="lets-debug">Let's debug!</h1>
 <p>First thing, we are going to start GDBFrontend:</p>
-<pre><code class="language-bash">gdbfrontend
-</code></pre>
+<div class="highlight"><pre><span></span><code>gdbfrontend
+</code></pre></div>
 <p><img alt="" src="https://i.imgur.com/eMmvGG7.png" /></p>
 <p>GDBFrontend will open a browser tab as a default behavior but if it doesn't happen, you can open the app URL:</p>
-<pre><code>http://127.0.0.1:5550/terminal/
-</code></pre>
+<div class="highlight"><pre><span></span><code>http://127.0.0.1:5550/terminal/
+</code></pre></div>
 <p><strong>Optionally</strong> you can run it as a Chrome/Chromium app:</p>
-<pre><code class="language-bash">chrome --app=http://127.0.0.1:5550/terminal/
-</code></pre>
+<div class="highlight"><pre><span></span><code>chrome --app<span class="o">=</span>http://127.0.0.1:5550/terminal/
+</code></pre></div>
 <p><img alt="" src="https://i.imgur.com/4m8bvlt.png" /></p>
 <p><strong>Optionally</strong> choose the Doki Theme xD</p>
 <p><img alt="" src="https://i.imgur.com/Uvx2pWh.png" /></p>
 <p>We just need to add split the terminal and start a Python3 interpeter on the right side.</p>
 <p><img alt="" src="https://i.imgur.com/8Tk9Mau.png" /></p>
 <p>To attach GDB to our Python3 process, we need PID of our Python PID.</p>
-<pre><code class="language-python">&gt;&gt;&gt; import os
-&gt;&gt;&gt; os.getpid()
-25524
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+<span class="mi">25524</span>
+</code></pre></div>
 <p>And on GDB shell:</p>
-<pre><code>(gdb) attach 25524
-</code></pre>
+<div class="highlight"><pre><span></span><code>(gdb) attach 25524
+</code></pre></div>
 <p>At this point, GDB will immediately stop the process. Just click to continue button (the second button on top) or press <strong>F6</strong>.</p>
 <p>Import your module on Python prompt and <strong>unfocus from terminal</strong>, now just press <strong>Ctrl + P</strong> shortcut and type a source name from your Python extension.</p>
 <p><img alt="" src="https://i.imgur.com/o8zjiev.png" /></p>

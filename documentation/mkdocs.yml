@@ -11,6 +11,7 @@ edit_uri: edit/master/documentation/src
 theme:
     name: material
     highlightjs: true
-    hljs_languages:
-        - yaml
-        - rust
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
