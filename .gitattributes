@@ -3,3 +3,5 @@ python-libs linguist-vendored
 frontend/thirdparty linguist-vendored
 *.html linguist-vendored
 *.css linguist-vendored
+documentation linguist-vendored
+docs linguist-vendored
