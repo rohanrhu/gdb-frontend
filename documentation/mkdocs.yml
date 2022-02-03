@@ -1,0 +1,16 @@
+site_name: GDBFrontend Documentation
+site_description: Documentation for the GDBFrontend debugger
+
+repo_url: https://github.com/rohanrhu/gdb-frontend
+repo_name: Github
+
+docs_dir: src
+site_dir: ../docs
+edit_uri: edit/master/documentation/src
+
+theme:
+    name: material
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - rust

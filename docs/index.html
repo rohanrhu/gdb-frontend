@@ -1,0 +1,1870 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the GDBFrontend debugger">
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
+    
+    
+      
+        <title>GDBFrontend Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.2b4465f4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gdbfrontend-readme" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="GDBFrontend Documentation" class="md-header__button md-logo" aria-label="GDBFrontend Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GDBFrontend Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GDBFrontend README
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rohanrhu/gdb-frontend/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="GDBFrontend Documentation" class="md-nav__button md-logo" aria-label="GDBFrontend Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    GDBFrontend Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rohanrhu/gdb-frontend/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          GDBFrontend README
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        GDBFrontend README
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing" class="md-nav__link">
+    Installing
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pip-package-python-wheel-recommended" class="md-nav__link">
+    PIP Package (Python Wheel) [Recommended]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-from-git" class="md-nav__link">
+    Running From GIT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arch-linux-aur" class="md-nav__link">
+    Arch Linux (AUR)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flatpak" class="md-nav__link">
+    Flatpak
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedded-debugging-with-gdbfrontend" class="md-nav__link">
+    Embedded Debugging with GDBFrontend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-c-extension-debugging-with-gdbfrontend" class="md-nav__link">
+    Python C Extension Debugging with GDBFrontend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+    <nav class="md-nav" aria-label="Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluter" class="md-nav__link">
+    Expression Evaluter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pointer-visualisation" class="md-nav__link">
+    Pointer Visualisation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linked-list-visualization" class="md-nav__link">
+    Linked-List Visualization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-breakpoints" class="md-nav__link">
+    Conditional Breakpoints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connected-expressions" class="md-nav__link">
+    Connected Expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-manager" class="md-nav__link">
+    Process Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-collabration" class="md-nav__link">
+    Enhanced Collabration
+  </a>
+  
+    <nav class="md-nav" aria-label="Enhanced Collabration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collabration-draw" class="md-nav__link">
+    Collabration Draw
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synced-source-viewing" class="md-nav__link">
+    Synced Source Viewing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-hover-popup-variable-explorer" class="md-nav__link">
+    Expression hover popup variable explorer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensibility" class="md-nav__link">
+    Extensibility
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbfrontend" class="md-nav__link">
+    ./gdbfrontend
+  </a>
+  
+    <nav class="md-nav" aria-label="./gdbfrontend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-help-h" class="md-nav__link">
+    --help, -h
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-version-v" class="md-nav__link">
+    --version, -v
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-gdb-argsargs-g-args" class="md-nav__link">
+    --gdb-args="ARGS", -G "ARGS"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-gdb-executablepath-g-path" class="md-nav__link">
+    --gdb-executable=PATH, -g PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-tmux-executablepath-tmux-path" class="md-nav__link">
+    --tmux-executable=PATH, -tmux PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-terminal-idpath-t-path" class="md-nav__link">
+    --terminal-id=PATH, -t PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-credentialsuserpass-c-userpass" class="md-nav__link">
+    --credentials=USER:PASS, -c USER:PASS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-hostip-h-ip" class="md-nav__link">
+    --host=IP, -H IP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-listenip-l-ip" class="md-nav__link">
+    --listen=IP, -l IP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-portport-p-port" class="md-nav__link">
+    --port=PORT, -p PORT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-readonly-r" class="md-nav__link">
+    --readonly, -r
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-workdir-w" class="md-nav__link">
+    --workdir, -w
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-plugin-dir-p" class="md-nav__link">
+    --plugin-dir, -P
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-dontopenuionstartup-d" class="md-nav__link">
+    --dontopenuionstartup, -D
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-verbose-v" class="md-nav__link">
+    --verbose, -V
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdb-commands" class="md-nav__link">
+    GDB Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="GDB Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gf-refresh" class="md-nav__link">
+    gf-refresh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-theme-theme-name" class="md-nav__link">
+    gf-theme [theme-name]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-list-plugins" class="md-nav__link">
+    gf-list-plugins
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-load-plugin-plugin-name" class="md-nav__link">
+    gf-load-plugin [plugin-name]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-unload-plugin-plugin-name" class="md-nav__link">
+    gf-unload-plugin [plugin-name]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shortcuts-hotkeys" class="md-nav__link">
+    Shortcuts / Hotkeys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#themes" class="md-nav__link">
+    Themes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbfrontend-python-api" class="md-nav__link">
+    GDBFrontend Python API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-with-sharing-sessions" class="md-nav__link">
+    Security with Sharing Sessions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#browser-compatibility" class="md-nav__link">
+    Browser Compatibility
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blocking-gdb-shellmain-thread" class="md-nav__link">
+    Blocking GDB shell/main-thread
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zombie-processes" class="md-nav__link">
+    Zombie Processes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluater-performance-tips" class="md-nav__link">
+    Expression Evaluater Performance Tips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb-related-issues-and-tips" class="md-nav__link">
+    GDB-Related Issues and Tips
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windows
+  </a>
+  
+    <nav class="md-nav" aria-label="Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues-about-windows-gdb" class="md-nav__link">
+    Issues about Windows-GDB
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl" class="md-nav__link">
+    WSL
+  </a>
+  
+    <nav class="md-nav" aria-label="WSL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues-about-wsl" class="md-nav__link">
+    Issues about WSL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versioning" class="md-nav__link">
+    Versioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Versioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-versions" class="md-nav__link">
+    Reading Versions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-documentation" class="md-nav__link">
+    API Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-development" class="md-nav__link">
+    Plugin Development
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme-development" class="md-nav__link">
+    Theme Development
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discord" class="md-nav__link">
+    Discord
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    🎊 Contributing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#donate" class="md-nav__link">
+    ❤️ Donate
+  </a>
+  
+    <nav class="md-nav" aria-label="❤️ Donate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patreon" class="md-nav__link">
+    Patreon
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bitcoin" class="md-nav__link">
+    Bitcoin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials/embedded-debugging/" class="md-nav__link">
+        Embedded Debugging with GDBFrontend
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials/plugin-development/" class="md-nav__link">
+        How to develop GDBFrontend plugins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials/python-c-extension-debugging/" class="md-nav__link">
+        How to debug a Python C extension with GDBFrontend
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing" class="md-nav__link">
+    Installing
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pip-package-python-wheel-recommended" class="md-nav__link">
+    PIP Package (Python Wheel) [Recommended]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-from-git" class="md-nav__link">
+    Running From GIT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arch-linux-aur" class="md-nav__link">
+    Arch Linux (AUR)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flatpak" class="md-nav__link">
+    Flatpak
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedded-debugging-with-gdbfrontend" class="md-nav__link">
+    Embedded Debugging with GDBFrontend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-c-extension-debugging-with-gdbfrontend" class="md-nav__link">
+    Python C Extension Debugging with GDBFrontend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+    <nav class="md-nav" aria-label="Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluter" class="md-nav__link">
+    Expression Evaluter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pointer-visualisation" class="md-nav__link">
+    Pointer Visualisation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linked-list-visualization" class="md-nav__link">
+    Linked-List Visualization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-breakpoints" class="md-nav__link">
+    Conditional Breakpoints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connected-expressions" class="md-nav__link">
+    Connected Expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-manager" class="md-nav__link">
+    Process Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-collabration" class="md-nav__link">
+    Enhanced Collabration
+  </a>
+  
+    <nav class="md-nav" aria-label="Enhanced Collabration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collabration-draw" class="md-nav__link">
+    Collabration Draw
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synced-source-viewing" class="md-nav__link">
+    Synced Source Viewing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-hover-popup-variable-explorer" class="md-nav__link">
+    Expression hover popup variable explorer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensibility" class="md-nav__link">
+    Extensibility
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbfrontend" class="md-nav__link">
+    ./gdbfrontend
+  </a>
+  
+    <nav class="md-nav" aria-label="./gdbfrontend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-help-h" class="md-nav__link">
+    --help, -h
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-version-v" class="md-nav__link">
+    --version, -v
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-gdb-argsargs-g-args" class="md-nav__link">
+    --gdb-args="ARGS", -G "ARGS"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-gdb-executablepath-g-path" class="md-nav__link">
+    --gdb-executable=PATH, -g PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-tmux-executablepath-tmux-path" class="md-nav__link">
+    --tmux-executable=PATH, -tmux PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-terminal-idpath-t-path" class="md-nav__link">
+    --terminal-id=PATH, -t PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-credentialsuserpass-c-userpass" class="md-nav__link">
+    --credentials=USER:PASS, -c USER:PASS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-hostip-h-ip" class="md-nav__link">
+    --host=IP, -H IP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-listenip-l-ip" class="md-nav__link">
+    --listen=IP, -l IP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-portport-p-port" class="md-nav__link">
+    --port=PORT, -p PORT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-readonly-r" class="md-nav__link">
+    --readonly, -r
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-workdir-w" class="md-nav__link">
+    --workdir, -w
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-plugin-dir-p" class="md-nav__link">
+    --plugin-dir, -P
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-dontopenuionstartup-d" class="md-nav__link">
+    --dontopenuionstartup, -D
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-verbose-v" class="md-nav__link">
+    --verbose, -V
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdb-commands" class="md-nav__link">
+    GDB Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="GDB Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gf-refresh" class="md-nav__link">
+    gf-refresh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-theme-theme-name" class="md-nav__link">
+    gf-theme [theme-name]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-list-plugins" class="md-nav__link">
+    gf-list-plugins
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-load-plugin-plugin-name" class="md-nav__link">
+    gf-load-plugin [plugin-name]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gf-unload-plugin-plugin-name" class="md-nav__link">
+    gf-unload-plugin [plugin-name]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shortcuts-hotkeys" class="md-nav__link">
+    Shortcuts / Hotkeys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#themes" class="md-nav__link">
+    Themes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbfrontend-python-api" class="md-nav__link">
+    GDBFrontend Python API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-with-sharing-sessions" class="md-nav__link">
+    Security with Sharing Sessions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#browser-compatibility" class="md-nav__link">
+    Browser Compatibility
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blocking-gdb-shellmain-thread" class="md-nav__link">
+    Blocking GDB shell/main-thread
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zombie-processes" class="md-nav__link">
+    Zombie Processes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluater-performance-tips" class="md-nav__link">
+    Expression Evaluater Performance Tips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb-related-issues-and-tips" class="md-nav__link">
+    GDB-Related Issues and Tips
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windows
+  </a>
+  
+    <nav class="md-nav" aria-label="Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues-about-windows-gdb" class="md-nav__link">
+    Issues about Windows-GDB
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl" class="md-nav__link">
+    WSL
+  </a>
+  
+    <nav class="md-nav" aria-label="WSL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues-about-wsl" class="md-nav__link">
+    Issues about WSL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versioning" class="md-nav__link">
+    Versioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Versioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-versions" class="md-nav__link">
+    Reading Versions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-documentation" class="md-nav__link">
+    API Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-development" class="md-nav__link">
+    Plugin Development
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme-development" class="md-nav__link">
+    Theme Development
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discord" class="md-nav__link">
+    Discord
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    🎊 Contributing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#donate" class="md-nav__link">
+    ❤️ Donate
+  </a>
+  
+    <nav class="md-nav" aria-label="❤️ Donate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patreon" class="md-nav__link">
+    Patreon
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bitcoin" class="md-nav__link">
+    Bitcoin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/rohanrhu/gdb-frontend/edit/master/documentation/src/index.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="gdbfrontend-readme">GDBFrontend README</h1>
+<p><a href="https://oguzhaneroglu.com/projects/gdb-frontend/"><img alt="GDBFrontend" src="../../media/gdbfrontend.png" /></a></p>
+<p><a href="https://github.com/rohanrhu/gdb-frontend/releases"><img alt="GitHub release" src="https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&amp;color=informational" /></a>
+<a href="https://github.com/rohanrhu/gdb-frontend/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&amp;color=red" /></a>
+<a href="https://github.com/rohanrhu/gdb-frontend/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/rohanrhu/gdb-frontend?style=flat-square" /></a>
+<a href="https://github.com/rohanrhu/gdb-frontend/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square" /></a>
+<a href="https://discord.gg/RyVY9MtB4S"><img alt="GDBFrontend Discord" src="https://img.shields.io/discord/780821881783713813.svg?color=7289da&amp;label=Discord&amp;logo=discord&amp;style=flat-square" /></a>
+<a href="https://patreon.com/EvrenselKisilik"><img alt="Support me on Patreon" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&amp;style=flat-square" /></a>
+<a href="#%EF%B8%8F-donate"><img alt="Donate with BTC" src="https://shields.io/badge/donate-3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL-yellow?logo=bitcoin&amp;style=flat-square" /></a></p>
+<p>GDBFrontend is an easy, flexible and extensionable gui debugger.</p>
+<p><img alt="gdb-frontend" src="../../media/gdbfrontend-screenshots.png" title="GDBFrontend is an easy, flexible and extensionable gui debugger." /></p>
+<h2 id="installing">Installing</h2>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>GDB =&gt; 8.2 (with python3)</li>
+<li>python3 =&gt; 3.2</li>
+<li>tmux</li>
+</ul>
+<h3 id="pip-package-python-wheel-recommended">PIP Package (Python Wheel) [Recommended]</h3>
+<p>You can install GDBFrontend with <code>pip</code>.</p>
+<pre><code class="language-bash">sudo python3 -m pip install gdbfrontend
+</code></pre>
+<p>if it is already installed and you are upgrading</p>
+<pre><code class="language-bash">sudo python3 -m pip install --upgrade gdbfrontend
+</code></pre>
+<p>or if you want to install specific GIT snapshot:</p>
+<pre><code class="language-bash">sudo python3 setup.py install
+</code></pre>
+<p>and you can run</p>
+<pre><code class="language-bash">gdbfrontend
+</code></pre>
+<h3 id="running-from-git">Running From GIT</h3>
+<p>You can download latest source and run it.</p>
+<p>You can run gdb-frontend with following commands:</p>
+<pre><code class="language-bash">git clone https://github.com/rohanrhu/gdb-frontend.git gdb-frontend
+cd gdb-frontend
+./gdbfrontend
+</code></pre>
+<p>and you can open it with:</p>
+<pre><code>http://127.0.0.1:5550/terminal/
+</code></pre>
+<p>or without terminal:</p>
+<pre><code>http://127.0.0.1:5550/
+</code></pre>
+<p>You can open GDB shell with the command:</p>
+<pre><code class="language-bash">tmux a -t gdb-frontend
+</code></pre>
+<h3 id="arch-linux-aur">Arch Linux (AUR)</h3>
+<p>You can install Arch Linux package for Arch-based distributions. (<a href="https://aur.archlinux.org/packages/gdb-frontend-bin/">AUR Package</a>)</p>
+<pre><code class="language-bash">yay -S gdb-frontend-bin
+</code></pre>
+<p>and you can run it:</p>
+<pre><code class="language-bash">gdbfrontend
+</code></pre>
+<h3 id="flatpak">Flatpak</h3>
+<p>Flatpak package is a TODO.</p>
+<h2 id="embedded-debugging-with-gdbfrontend"><a href="https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging">Embedded Debugging with GDBFrontend</a></h2>
+<p>Follow <a href="https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging">this quick tutorial</a> for debugging embedded devices with GDBFrontend.</p>
+<h2 id="python-c-extension-debugging-with-gdbfrontend"><a href="https://github.com/rohanrhu/gdb-frontend/wiki/How-to-debug-a-Python-C-extension-with-GDBFrontend">Python C Extension Debugging with GDBFrontend</a></h2>
+<p>Follow <a href="https://github.com/rohanrhu/gdb-frontend/wiki/How-to-debug-a-Python-C-extension-with-GDBFrontend">this quick tutorial</a> for debugging native C Python extensions with GDBFrontend.</p>
+<h2 id="features">Features</h2>
+<h3 id="expression-evaluter">Expression Evaluter</h3>
+<p>GDBFrontend has an expression evaluater that you can use multiple in sametime.</p>
+<p><img alt="" src="../../media/expression-evaluater.png" /></p>
+<h3 id="pointer-visualisation">Pointer Visualisation</h3>
+<p><img alt="" src="../../media/pointer-visualisation.png" /></p>
+<h3 id="linked-list-visualization">Linked-List Visualization</h3>
+<p><img alt="" src="../../media/linked-list-visualisation.png" /></p>
+<h3 id="conditional-breakpoints">Conditional Breakpoints</h3>
+<p>Right click to a breakpoint for setting its condition.</p>
+<p><img alt="" src="../../media/conditional-breakpoint.png" /></p>
+<p><img alt="" src="../../media/conditional-breakpoint-2.png" /></p>
+<h3 id="connected-expressions">Connected Expressions</h3>
+<p>Expressions of all variables, members and items are connected in GDBFrontend's VariablesExplorer.</p>
+<p><img alt="" src="../../media/connected-expressions.png" /></p>
+<h3 id="process-manager">Process Manager</h3>
+<p>You can watch, filter or manage processes with Process Manager.</p>
+<p><img alt="" src="../../media/process-manager.png" /></p>
+<h3 id="enhanced-collabration">Enhanced Collabration</h3>
+<p>GDBFrontend has a set of some features for collabration named as "Enhanced Collabration".</p>
+<p><img alt="" src="../../media/enhanced-collabration.png" /></p>
+<h4 id="collabration-draw">Collabration Draw</h4>
+<p>Collabration draw is available when you enable Enhanced Collabration. Click to Draw or use <strong>Ctrl + Shift + X</strong> shortcut to draw and <strong>Ctrl + Shift + C</strong> to clear all drawings.</p>
+<p><img alt="" src="../../media/enhanced-collabration-draw.png" /></p>
+<h4 id="synced-source-viewing">Synced Source Viewing</h4>
+<p>With Enhanced Collabration all debugger clients are synchronized on source viewing.</p>
+<h3 id="expression-hover-popup-variable-explorer">Expression hover popup variable explorer</h3>
+<p><img alt="" src="../../media/expression-popup.png" /></p>
+<h3 id="extensibility">Extensibility</h3>
+<p>GDBFrontend is very extensible and has powerful APIs. Some examples of GDBFrontend's extensibility.</p>
+<p><img alt="" src="../../media/extensibility-1.png" /></p>
+<p><img alt="" src="../../media/extensibility-2.png" /></p>
+<h2 id="gdbfrontend"><code>./gdbfrontend</code></h2>
+<pre><code class="language-bash">$ gdbfrontend --help
+GDBFrontend is a easy, flexible and extensionable gui debugger.
+
+Options:
+  --help, -h:                                   Shows this help message.
+  --version, -v:                                Shows version.
+  --gdb-args=&quot;ARGS&quot;, -G &quot;ARGS&quot;:                 Specifies GDB command line arguments. (Optional)
+  --gdb-executable=PATH, -g PATH:               Specifies GDB executable path (Default is &quot;gdb&quot; command on PATH environment variable.)
+  --tmux-executable=PATH, -tmux PATH:           Specifies Tmux executable path (Default is &quot;tmux&quot; command on PATH environment variable.)
+  --terminal-id=NAME, -t NAME:                  Specifies tmux terminal identifier name (Default is &quot;gdb-frontend&quot;.)
+  --credentials=USER:PASS, -c USER:PASS:        Specifies username and password for accessing to debugger.
+  --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
+  --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
+  --port=PORT, -p PORT:                         Specifies HTTP port. (0 for random port.)
+  --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
+  --workdir, -w:                                Specifies working directory.
+  --plugin-dir, -P:                             Specifies plugins directory.
+  --dontopenuionstartup, -D:                    Avoids opening UI just after startup.
+  --verbose, -V:                                Enables verbose output.
+</code></pre>
+<h3 id="options">Options</h3>
+<h4 id="-help-h"><code>--help</code>, <code>-h</code></h4>
+<p>Shows help text.</p>
+<h4 id="-version-v"><code>--version</code>, <code>-v</code></h4>
+<p>Shows version.</p>
+<h4 id="-gdb-argsargs-g-args"><code>--gdb-args="ARGS", -G "ARGS"</code></h4>
+<p>Specifies GDB command line arguments. (Optional)</p>
+<h4 id="-gdb-executablepath-g-path"><code>--gdb-executable=PATH</code>, <code>-g PATH</code></h4>
+<p>You can specify GDB executable path like <code>gdbfrontend --gdb-executable=/path/to/gdb</code>. (Optional)</p>
+<h4 id="-tmux-executablepath-tmux-path"><code>--tmux-executable=PATH</code>, <code>-tmux PATH</code></h4>
+<p>You can specify Tmux executable path like <code>gdbfrontend --tmux-executable=/path/to/tmux</code>. (Optional)</p>
+<h4 id="-terminal-idpath-t-path"><code>--terminal-id=PATH</code>, <code>-t PATH</code></h4>
+<p>You can specify Tmux terminal id like <code>gdbfrontend --terminal-id=terminal-name</code>. (Default: <code>gdb-frontend</code>)</p>
+<h4 id="-credentialsuserpass-c-userpass"><code>--credentials=USER:PASS</code>, <code>-c USER:PASS</code></h4>
+<p>Specifies username and password for accessing to debugger.</p>
+<h4 id="-hostip-h-ip"><code>--host=IP</code>, <code>-H IP</code></h4>
+<p>Specifies current host address that you can access via for HTTP and WS servers.</p>
+<h4 id="-listenip-l-ip"><code>--listen=IP</code>, <code>-l IP</code></h4>
+<p>Specifies listen address for HTTP and WS servers.</p>
+<h4 id="-portport-p-port"><code>--port=PORT</code>, <code>-p PORT</code></h4>
+<p>Specifies HTTP port. (0 for random port.)</p>
+<h4 id="-readonly-r"><code>--readonly, -r</code></h4>
+<p>Makes code editor readonly. (Notice: This option is not related to security.)</p>
+<h4 id="-workdir-w"><code>--workdir, -w</code></h4>
+<p>Specifies working directory.</p>
+<h4 id="-plugin-dir-p"><code>--plugin-dir, -P</code></h4>
+<p>Specifies plugins directory.</p>
+<h4 id="-dontopenuionstartup-d"><code>--dontopenuionstartup</code>, <code>-D</code></h4>
+<p>Avoids opening UI just after startup.</p>
+<h4 id="-verbose-v"><code>--verbose</code>, <code>-V</code></h4>
+<p>Enables verbose output.</p>
+<h3 id="gdb-commands">GDB Commands</h3>
+<p>GDBFrontend's GDB commands starts with <code>gf-</code>.</p>
+<h4 id="gf-refresh"><code>gf-refresh</code></h4>
+<p>Refreshes all browser clients.</p>
+<h4 id="gf-theme-theme-name"><code>gf-theme [theme-name]</code></h4>
+<p>Switch to desired theme. For example: <code>gf-theme light</code>, <code>gf-theme red</code> or <code>gf-theme default</code> for default theme.</p>
+<h4 id="gf-list-plugins"><code>gf-list-plugins</code></h4>
+<p>Lists all GDBFrontend plugins in the plugin directory.</p>
+<h4 id="gf-load-plugin-plugin-name"><code>gf-load-plugin [plugin-name]</code></h4>
+<p>Loads GDBFrontend plugin.</p>
+<h4 id="gf-unload-plugin-plugin-name"><code>gf-unload-plugin [plugin-name]</code></h4>
+<p>Unloads GDBFrontend plugin.</p>
+<h2 id="shortcuts-hotkeys">Shortcuts / Hotkeys</h2>
+<p>Current hotkeys are listed below.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Hotkey</th>
+<th>Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>General:</em> Open a source file</td>
+<td><strong>Ctrl + O</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>General:</em> New ExpressionEvaluater</td>
+<td><strong>Ctrl + R</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>General:</em> New ExpressionEvaluter on native window</td>
+<td><strong>Ctrl + Shift + R</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>General:</em> Fuzzy source finder</td>
+<td><strong>Ctrl + P</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Run</td>
+<td><strong>F5</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Continue</td>
+<td><strong>F6</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Pause/Interrupt</td>
+<td><strong>F7</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Step Over</td>
+<td><strong>F8</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Step Into</td>
+<td><strong>F9</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Step Instruction</td>
+<td><strong>F10</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Runtime:</em> Stop</td>
+<td><strong>F11</strong></td>
+<td>GDBFrontend</td>
+</tr>
+<tr>
+<td><em>Enhanced Collabration:</em> Toggle drawing mode</td>
+<td><strong>Ctrl + Shift + X</strong></td>
+<td>GDBFrontend / Enhanced Collabration: Enabled</td>
+</tr>
+<tr>
+<td><em>Enhanced Collabration:</em> Clear all drawings</td>
+<td><strong>Ctrl + Shift + C</strong></td>
+<td>GDBFrontend / Enhanced Collabration: Enabled</td>
+</tr>
+</tbody>
+</table>
+<h2 id="themes">Themes</h2>
+<p>GDBFrontend has built-in themes.</p>
+<p>For switching between themes use <code>gf-theme [THEME]</code> command on GDB shell.</p>
+<pre><code>(gdb) gf-theme doki
+(gdb) gf-theme sky
+(gdb) gf-theme cyberpunk
+(gdb) gf-theme dark
+(gdb) gf-theme green
+(gdb) gf-theme light
+(gdb) gf-theme red
+</code></pre>
+<p>For switching back to the default theme.</p>
+<pre><code>(gdb) gf-theme
+</code></pre>
+<p>Also you may want to look to <a href="https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial">Plugin Development Tutorial</a>.</p>
+<h2 id="gdbfrontend-python-api">GDBFrontend Python API</h2>
+<p>You can access GDBFrontend's Python API via <code>gdbfrontend</code> module.</p>
+<pre><code>(gdb) python-interactive
+</code></pre>
+<pre><code class="language-python">&gt;&gt;&gt; dir(gdbfrontend)
+</code></pre>
+<p>For example, you can get all client sockets like this:</p>
+<pre><code class="language-python">&gt;&gt;&gt; gdbfrontend.api.globalvars.httpServer.ws_clients
+{1: &lt;server.GDBFrontendSocket object at 0x...&gt;}
+</code></pre>
+<p>or you can get all plugins:</p>
+<pre><code class="language-python">&gt;&gt;&gt; gdbfrontend.plugin.getAll()
+['hello', 'theme_light', 'theme_red']
+</code></pre>
+<h2 id="security-with-sharing-sessions">Security with Sharing Sessions</h2>
+<p>You can use <code>--credentials=USER:PASS</code> option for adding HTTP authentication to your debugger session.</p>
+<h2 id="browser-compatibility">Browser Compatibility</h2>
+<p>GDBFrontend is mainly developing with testing on Chromium-based browsers. It will work properly with other browsers especially with Firefox but if you face some problems on other browsers, you can <a href="https://github.com/rohanrhu/gdb-frontend/issues/new">send a bug-report</a>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="blocking-gdb-shellmain-thread">Blocking GDB shell/main-thread</h3>
+<p>Most of GDBFrontend functions are thread-safe and work on GDB's main-thread. So, if you run something that is blocking on the GDB shell, GDBFrontend functions have to wait it until finish.</p>
+<p>You will get this warning when a thread-safe GDBFrontend function needs to work and you are blocking GDB's main thread.</p>
+<pre><code class="language-bash">(gdb) shell
+$ ...
+</code></pre>
+<p><img alt="" src="../../media/main-thread-blocking-warning.png" /></p>
+<p>When you exit shell, blocking GDBFrontend functions will continue working.</p>
+<p><strong>Note:</strong> Sometimes you may get this warning without running anything in GDB shell, it means something (in GDB's event-loop) is taking a long time; in this case just ignore this warning.</p>
+<h3 id="zombie-processes">Zombie Processes</h3>
+<p>GDBFrontend sends SIGTERM to its sub-processes, your application and its sub-processes.
+If your application is forking new processes and setting their PGIDs, GDBFrontend may not close them. In this case you should send SIGKILL to your processes.</p>
+<pre><code class="language-bash">pkill -f gdb
+</code></pre>
+<h3 id="expression-evaluater-performance-tips">Expression Evaluater Performance Tips</h3>
+<p>If you are using <strong>ExpressionEvaluater</strong> with very long depth expanded variables/members, your scroll and evaluater window move performance may be affected bad for pointer visualization. In this situation, you can turn off <strong>signal</strong> and <strong>slot</strong> pointings for that evaluater window.</p>
+<p><img alt="Evaluater Pointer Visualization Buttons" src="../../media/evaluater-pointing-buttons.png" /></p>
+<h2 id="gdb-related-issues-and-tips">GDB-Related Issues and Tips</h2>
+<ul>
+<li>GDB may not give sources of dynamic linked object <strong>until stepping a line that calls a function from the dynamic linked object once</strong>.
+  You can add break point a line and step it once, then you will see sources from dynamic linked object hereafter during the session.</li>
+</ul>
+<h2 id="windows">Windows</h2>
+<p>In fact, gdb-frontend is able to run on Windows but there are some serious issues in the GDB's Windows version those avoid using gdb-frontend on Windows. Of course you can use gdb-frontend on WSL if you are using Windows 10.</p>
+<h3 id="issues-about-windows-gdb">Issues about Windows-GDB</h3>
+<ul>
+<li>GDB's main-thread is being blocked during running process. (gdb-frontend has an interrupting mechanism to fixing this but it is not enough yet.)</li>
+<li>Windows-GDB's prompt is being blocked during running process and there are some issues about interrupting the application.</li>
+</ul>
+<h2 id="wsl">WSL</h2>
+<p>You can use gdb-frontend on WSL (Windows Subsystem for Linux).</p>
+<h3 id="issues-about-wsl">Issues about WSL</h3>
+<ul>
+<li>On WSL 1, Random port option is not usable on WSL becasue<code>/proc/net/tcp</code> interface is not working on WSL. (WSL 2 does not has this problem.)</li>
+</ul>
+<h2 id="versioning">Versioning</h2>
+<p>Since v0.2.0-beta, GDBFrontend switched to a new versioning strategy.</p>
+<h3 id="reading-versions">Reading Versions</h3>
+<p>In <code>vX.Y.Z-STABILITY</code>:</p>
+<ul>
+<li><code>X</code> is<strong>major</strong> versions, changes long term with major features and enhancements.</li>
+<li><code>Y</code> is<strong>main</strong> versions that include new features and enhancements.</li>
+<li><code>Z</code> is<strong>bugfix</strong> releases of main versions.</li>
+<li><code>STABILITY</code> is stability level of the release. (<code>alpha</code>,<code>beta</code>,<code>rcN</code>,<code>stable</code>)</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>Documentation is TODO yet.</p>
+<h2 id="api-documentation">API Documentation</h2>
+<p>API Documentation is TODO yet.</p>
+<h2 id="plugin-development">Plugin Development</h2>
+<p>You can read the <a href="https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial">Plugin Development Tutorial</a>.</p>
+<h2 id="theme-development">Theme Development</h2>
+<p>Themes are developed as plugins.</p>
+<h2 id="discord">Discord</h2>
+<p>Join to Discord community.</p>
+<p><a href="https://discord.gg/RyVY9MtB4S"><img alt="GDBFrontend Discord" src="https://img.shields.io/discord/780821881783713813.svg?color=7289da&amp;label=Discord&amp;logo=discord&amp;style=for-the-badge" /></a></p>
+<h2 id="contributing">🎊 Contributing</h2>
+<p>You can contribute with commiting to project or developing a plugin. All commits are welcome.</p>
+<h2 id="donate">❤️ Donate</h2>
+<h3 id="patreon">Patreon</h3>
+<p><a href="https://patreon.com/EvrenselKisilik"><img alt="Support me on Patreon" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&amp;style=for-the-badge" /></a></p>
+<h3 id="bitcoin">Bitcoin</h3>
+<p>You can donate to support the project.</p>
+<table>
+<thead>
+<tr>
+<th>QR Code</th>
+<th>Bitcoin address for donations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="Bitcoin address QR code for donate" src="../../media/btc-donation-qr.png" /></td>
+<td><strong>3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="license">License</h2>
+<p>Copyright (C) 2019, Oğuzhan Eroğlu <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#104;&#97;&#110;&#114;&#104;&#117;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#114;&#111;&#104;&#97;&#110;&#114;&#104;&#117;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a> (https://oguzhaneroglu.com/)</p>
+<p>GNU General Public License v3 (GPL-3)</p>
+<p>You may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build &amp; install instructions.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        
+        <a href="tutorials/embedded-debugging/" class="md-footer__link md-footer__link--next" aria-label="Next: Embedded Debugging with GDBFrontend" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Embedded Debugging with GDBFrontend
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    
+    
+      <script src="assets/javascripts/bundle.960e086b.min.js"></script>
+      
+    
+  </body>
+</html>

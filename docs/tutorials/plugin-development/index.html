@@ -1,0 +1,930 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the GDBFrontend debugger">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
+    
+    
+      
+        <title>How to develop GDBFrontend plugins - GDBFrontend Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2b4465f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-develop-gdbfrontend-plugins" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="GDBFrontend Documentation" class="md-header__button md-logo" aria-label="GDBFrontend Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GDBFrontend Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to develop GDBFrontend plugins
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rohanrhu/gdb-frontend/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="GDBFrontend Documentation" class="md-nav__button md-logo" aria-label="GDBFrontend Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    GDBFrontend Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rohanrhu/gdb-frontend/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        GDBFrontend README
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../embedded-debugging/" class="md-nav__link">
+        Embedded Debugging with GDBFrontend
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          How to develop GDBFrontend plugins
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        How to develop GDBFrontend plugins
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-plugin" class="md-nav__link">
+    Example Plugin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-fs-structure" class="md-nav__link">
+    Plugin FS Structure
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin FS Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plugin-name-format" class="md-nav__link">
+    Plugin Name Format
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enablingdisabling-a-plugin" class="md-nav__link">
+    Enabling/Disabling a Plugin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-load-order" class="md-nav__link">
+    Plugin Load Order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-files" class="md-nav__link">
+    Plugin Files
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configpy" class="md-nav__link">
+    config.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hellopy" class="md-nav__link">
+    hello.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urlspy" class="md-nav__link">
+    urls.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-api-modules" class="md-nav__link">
+    Rest API Modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-objects" class="md-nav__link">
+    Plugin Objects
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plugin-object-attributes" class="md-nav__link">
+    Plugin Object Attributes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+    Frontend
+  </a>
+  
+    <nav class="md-nav" aria-label="Frontend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gdbfrontend-namespace" class="md-nav__link">
+    GDBFrontend Namespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-configuration" class="md-nav__link">
+    Backend Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend-components" class="md-nav__link">
+    Frontend Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Frontend Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root-components" class="md-nav__link">
+    Root Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sub-components" class="md-nav__link">
+    Sub Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Sub Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-gdbfrontend" class="md-nav__link">
+    Component: gdbFrontend
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python-c-extension-debugging/" class="md-nav__link">
+        How to debug a Python C extension with GDBFrontend
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-plugin" class="md-nav__link">
+    Example Plugin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-fs-structure" class="md-nav__link">
+    Plugin FS Structure
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin FS Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plugin-name-format" class="md-nav__link">
+    Plugin Name Format
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enablingdisabling-a-plugin" class="md-nav__link">
+    Enabling/Disabling a Plugin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-load-order" class="md-nav__link">
+    Plugin Load Order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-files" class="md-nav__link">
+    Plugin Files
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configpy" class="md-nav__link">
+    config.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hellopy" class="md-nav__link">
+    hello.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urlspy" class="md-nav__link">
+    urls.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-api-modules" class="md-nav__link">
+    Rest API Modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-objects" class="md-nav__link">
+    Plugin Objects
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plugin-object-attributes" class="md-nav__link">
+    Plugin Object Attributes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+    Frontend
+  </a>
+  
+    <nav class="md-nav" aria-label="Frontend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gdbfrontend-namespace" class="md-nav__link">
+    GDBFrontend Namespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-configuration" class="md-nav__link">
+    Backend Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend-components" class="md-nav__link">
+    Frontend Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Frontend Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root-components" class="md-nav__link">
+    Root Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sub-components" class="md-nav__link">
+    Sub Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Sub Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-gdbfrontend" class="md-nav__link">
+    Component: gdbFrontend
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/rohanrhu/gdb-frontend/edit/master/documentation/src/tutorials/plugin-development.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="how-to-develop-gdbfrontend-plugins">How to develop GDBFrontend plugins</h1>
+<p>GDBFrontend supports plugins. Plugin development includes a few simple steps. You can develop plugins easily with following the instructions.</p>
+<h2 id="example-plugin">Example Plugin</h2>
+<p>There is an example plugin (<code>hello</code>) in <code>plugins/hello</code>.</p>
+<p>Enable it before start the tutorial: Go to <code>config.py</code> and comment the line <code>"hello"</code>:</p>
+<pre><code class="language-python">disabled_plugins = [
+    &quot;hello&quot;
+]
+</code></pre>
+<h2 id="plugin-fs-structure">Plugin FS Structure</h2>
+<p>GDBFrontend plugins are stored in <code>plugins/</code> directory in the GDBFrontend root.</p>
+<p>A typical plugin files look like this:</p>
+<pre><code>plugins/
+   hello/
+       frontend/
+           html/
+               hello.html
+           js/
+               hello.js
+           css/
+               hello.css
+       url_modules/
+           api.py
+       config.py
+       urls.py
+       hello.py
+</code></pre>
+<p>Plugins those are inside plugins directory will be loaded automatically.</p>
+<h3 id="plugin-name-format">Plugin Name Format</h3>
+<ul>
+<li>On File System: <code>hello</code> (<code>hello/</code> directory, <code>hello.py</code>)</li>
+<li>Plugin Backend Class: <code>HelloPlugin</code></li>
+</ul>
+<h2 id="enablingdisabling-a-plugin">Enabling/Disabling a Plugin</h2>
+<p>You can disable a plugin with adding plugin name to <code>config.disabled_plugins</code>.</p>
+<h2 id="plugin-load-order">Plugin Load Order</h2>
+<p>You can specify plugin load order with <code>config.plugin_order</code>. Plugins from <code>config.plugin_order</code> will be loaded in order, after that the rest will be loaded.</p>
+<h2 id="plugin-files">Plugin Files</h2>
+<h3 id="configpy">config.py</h3>
+<p>Includes basic information about your plugin.</p>
+<pre><code class="language-python">DESCRIPTION = &quot;Example GDBFrontend plugin.&quot;
+AUTHOR = &quot;Oğuzhan Eroğlu &lt;rohanrhu2@gmail.com&gt; (https://oguzhaneroglu.com/)&quot;
+HOMEPAGE = &quot;https://github.com/rohanrhu/gdb-frontend&quot;
+VERSION = [0, 0, 1]
+</code></pre>
+<h3 id="hellopy">hello.py</h3>
+<p>Plugin backend file must be named as <code>[plugin name].py</code> and plugin class must be named as <code>[plugin name]Plugin</code> and intherits <code>plugin.GDBFrontendPlugin</code>.</p>
+<pre><code class="language-python">import importlib
+
+import plugin
+
+gdb = importlib.import_module(&quot;gdb&quot;)
+
+class HelloPlugin(plugin.GDBFrontendPlugin):
+    def __init__(self):
+        plugin.GDBFrontendPlugin.__init__(self)
+
+    def loaded(self):
+        gdb.events.new_objfile.connect(self.gdb_on_new_objfile)
+
+    def unloaded(self):
+        gdb.events.new_objfile.disconnect(self.gdb_on_new_objfile)
+
+    def gdb_on_new_objfile(self, event):
+        print(&quot;[HELLO] Event: new_objfile:&quot;, event)
+</code></pre>
+<h3 id="urlspy">urls.py</h3>
+<p>Includes URL definitions for GDBFrontend REST API. Plugins can define URLs and use them for communicating with each other.</p>
+<p>URLs must be defined in a python dict named as <code>urls</code> in the following format:</p>
+<pre><code class="language-python">urls = {
+    &quot;example-api&quot;: {
+        &quot;url&quot;: &quot;/hello/api&quot;,
+        &quot;match&quot;: &quot;^/hello/api&quot;,
+        &quot;module&quot;: &quot;plugins.hello.url_modules.api&quot;
+    }
+}
+</code></pre>
+<h3 id="rest-api-modules">Rest API Modules</h3>
+<p>Rest API Module URLs must be defined in <code>plugin.urls</code>. Module files are stored in <code>url_modules/</code> directory.</p>
+<p>Plugin URL modules can be accessed with the path like <code>plugins.hello.url_modules.[module name]</code> and you must use it for <code>plugin.urls["[plugin name]"]["module"]</code>.</p>
+<p>A URL module file includes a function named as <code>run(request, params)</code> and GDBFrontend calls that on HTTP request. A typical URL module like this:</p>
+<pre><code class="language-python">import json
+import urllib
+
+import api.debug
+
+def run(request, params):
+    if params is None: params = {}
+
+    url_path = urllib.parse.urlparse(request.path)
+    qs_params = urllib.parse.parse_qs(url_path.query)
+
+    result_json = {}
+    result_json[&quot;ok&quot;] = True
+
+    result_json[&quot;sources&quot;] = api.debug.getSources()
+
+    request.send_response(200)
+    request.send_header(&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;)
+    request.end_headers()
+    request.wfile.write(json.dumps(result_json).encode())
+</code></pre>
+<h2 id="plugin-objects">Plugin Objects</h2>
+<p>Plugin objects are exists in <code>plugin.plugins</code> dict as <code>plugin.plugins["[plugin name]"] = plugin</code> and <code>plugin</code> is an instance of your plugin class that inherits <code>GDBFrontendPlugin</code>.</p>
+<h3 id="plugin-object-attributes">Plugin Object Attributes</h3>
+<ul>
+<li><code>plugin.module</code></li>
+<li><code>plugin.name</code></li>
+<li><code>plugin.is_loaded</code></li>
+<li><code>plugin.location</code></li>
+<li><code>plugin.config</code></li>
+<li><code>plugin.urls</code></li>
+</ul>
+<h2 id="frontend">Frontend</h2>
+<p>Frontend files are stored in the <code>plugins/[plugin name]/frontend/</code> directory. There are three basic directory:</p>
+<pre><code>frontend/
+    css/
+        [plugin name].css
+    html/
+        [plugin name].html
+    js/
+        [plugin name].js
+</code></pre>
+<p>Those three files will be included as default:
+* <code>html/[plugin_name].html</code> will be included to DOM as default.
+* <code>css/[plugin_name].css</code> will be included as default.
+* <code>js/[plugin_name].js</code> will be included as default.</p>
+<p>Plugin's <code>frontend/</code> directory is also served over <strong>HTTP</strong> and its content will be accessable with a URL like <code>/plugins/[plugin_name]/html/foo.html</code> or <code>/plugins/[plugin_name]/js/bar.js</code>.</p>
+<h3 id="gdbfrontend-namespace">GDBFrontend Namespace</h3>
+<p>All GDBFrontend stuff are exists in <code>GDBFrontend</code> object in Javascript. An example, you can access version like <code>GDBFrontend.version</code>.</p>
+<h3 id="backend-configuration">Backend Configuration</h3>
+<p>You can access backend configuration via <code>GDBFrontend.config</code>.</p>
+<h2 id="frontend-components">Frontend Components</h2>
+<h3 id="root-components">Root Components</h3>
+<p>All root components are stored in <code>GDBFrontend.components</code>.</p>
+<h3 id="sub-components">Sub Components</h3>
+<p>Sub components are stored in <code>component.components</code>.</p>
+<h4 id="component-gdbfrontend">Component: <code>gdbFrontend</code></h4>
+<p><code>GDBFrontend</code> is the main component at root and it uses another components as sub component. It is accesable with <code>GDBFrontend.components.gdbFrontend</code>.</p>
+<p>Sub components of <code>gdbFrontend</code> are accessable via <code>GDBFrontend.components.gdbFrontend.components</code>.</p>
+<p>For an example you can get open file tabs like this:</p>
+<pre><code class="language-javascript">&gt; GDBFrontend.components.gdbFrontend.components.fileTabs.files
+&lt; (3) [{…}, {…}, {…}]
+</code></pre>
+<p>or getting breakpoints from <code>BreakpointsEditor</code> component instance from <code>GDBFrontend</code> component instance.</p>
+<pre><code class="language-javascript">&gt; GDBFrontend.components.gdbFrontend.components.breakpointsEditor.breakpoints
+&lt; [{…}, {…}]
+</code></pre>
+<p>Let's switch to first file tab:</p>
+<pre><code class="language-javascript">var switchTo = GDBFrontend.components.gdbFrontend.components.fileTabs.files[0];
+GDBFrontend.components.gdbFrontend.components.fileTabs.switchFile({file: switchTo});
+</code></pre>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../embedded-debugging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Embedded Debugging with GDBFrontend" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Embedded Debugging with GDBFrontend
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../python-c-extension-debugging/" class="md-footer__link md-footer__link--next" aria-label="Next: How to debug a Python C extension with GDBFrontend" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to debug a Python C extension with GDBFrontend
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.960e086b.min.js"></script>
+      
+    
+  </body>
+</html>
