@@ -94,13 +94,17 @@ gdbfrontend
 
 Flatpak package is a TODO.
 
-## [Embedded Debugging with GDBFrontend](https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging)
+## [Embedded Debugging with GDBFrontend](https://rohanrhu.github.io/gdb-frontend/tutorials/embedded-debugging/)
 
-Follow [this quick tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Embedded-Debugging) for debugging embedded devices with GDBFrontend.
+Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/embedded-debugging/) for debugging embedded devices with GDBFrontend.
 
-## [Python C Extension Debugging with GDBFrontend](https://github.com/rohanrhu/gdb-frontend/wiki/How-to-debug-a-Python-C-extension-with-GDBFrontend)
+## [Python C Extension Debugging with GDBFrontend](https://rohanrhu.github.io/gdb-frontend/tutorials/python-c-extension-debugging/)
 
-Follow [this quick tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/How-to-debug-a-Python-C-extension-with-GDBFrontend) for debugging native C Python extensions with GDBFrontend.
+Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/python-c-extension-debugging/) for debugging native C Python extensions with GDBFrontend.
+
+## [How to develop GDBFrontend plugins?](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/)
+
+GDBFrontend has powerful and extensible APIs. Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/) to learn developing GDBFrontend plugins.
 
 ## Features
 

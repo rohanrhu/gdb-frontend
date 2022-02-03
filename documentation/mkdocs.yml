@@ -14,6 +14,12 @@ theme:
     palette:
       scheme: slate
 
+    logo: ../media/gdbfrontend-logo.png
+    favicon: ../media/gdbfrontend-icon.png
+
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
+
+extra:
+  homepage: https://github.com/rohanrhu/gdb-frontend
