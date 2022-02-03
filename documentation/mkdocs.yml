@@ -11,6 +11,8 @@ edit_uri: edit/master/documentation/src
 theme:
     name: material
     highlightjs: true
+    palette:
+      scheme: slate
 
 markdown_extensions:
   - pymdownx.highlight
