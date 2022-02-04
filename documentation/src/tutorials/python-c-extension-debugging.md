@@ -1,11 +1,9 @@
 # How to debug a Python C extension with GDBFrontend
-
 Hi, in this tutorial, I'm going to show you how to debug a native C Python extension.
 
 ![Python C extension debugging with GDBFrontend](https://i.imgur.com/19ysWyY.png)
 
 # Installing Python3 debug symbols
-
 To debug Python3, you need debug symbols for it.
 
 On Debian:
@@ -17,7 +15,6 @@ sudo apt install python3-dbg
 I have no idea about other distros. Just search about **"Python debug symbols on DISTRO"**
 
 # Build your extension with debug symbols
-
 Just set `CFLAGS` environment variables:
 
 ```bash
@@ -27,7 +24,6 @@ CFLAGS="-O0 -g" python3 setup.py build
 ![](https://i.imgur.com/oUVbxtH.png)
 
 # Let's debug!
-
 First thing, we are going to start GDBFrontend:
 
 ```bash
