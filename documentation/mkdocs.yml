@@ -11,8 +11,18 @@ edit_uri: edit/master/documentation/src
 theme:
     name: material
     highlightjs: true
-    palette:
+    palette: 
+    - media: "(prefers-color-scheme: dark)" 
       scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: light)" 
+      scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
+      schene: slate
 
     logo: ../media/gdbfrontend-logo.png
     favicon: ../media/gdbfrontend-icon.png
@@ -23,3 +33,36 @@ markdown_extensions:
 
 extra:
   homepage: https://github.com/rohanrhu/gdb-frontend
+  social:
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/RyVY9MtB4S
+      name: GDBFrontend Discord Community
+    - icon: fontawesome/brands/github
+      link: https://github.com/rohanrhu/gdb-frontend
+      name: GDBFrontend Github Repository
+  analytics:
+    provider: google
+    property: G-03F7PQRZ76
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: >- 
+            Thanks for your feedback! Help us improve this page by
+            using our <a href="..." target=_blank>feedback form</a>.
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+
+copyright: Copyright &copy; 2019, Oğuzhan Eroğlu
