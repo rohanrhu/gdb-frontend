@@ -15,7 +15,7 @@
     
     
       
-        <title>Embedded Debugging with GDBFrontend - GDBFrontend Documentation</title>
+        <title>How to integrate GDBFrontend with your Makefile? - GDBFrontend Documentation</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#embedded-debugging-with-gdbfrontend" class="md-skip">
+        <a href="#how-to-integrate-gdbfrontend-with-your-makefile" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Embedded Debugging with GDBFrontend
+              How to integrate GDBFrontend with your Makefile?
             
           </span>
         </div>
@@ -278,6 +278,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../embedded-debugging/" class="md-nav__link">
+        Embedded Debugging with GDBFrontend
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -290,12 +304,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Embedded Debugging with GDBFrontend
+          How to integrate GDBFrontend with your Makefile?
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Embedded Debugging with GDBFrontend
+        How to integrate GDBFrontend with your Makefile?
       </a>
       
         
@@ -314,37 +328,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-build_gdbsh-to-build-latest-gdb-for-arm-target-with-embedded-python3" class="md-nav__link">
-    Using build_gdb.sh to build latest GDB for ARM target with embedded-Python3
+  <a href="#load-the-executable-to-debugger" class="md-nav__link">
+    Load the executable to debugger
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#or-how-to-build-gdb-for-arm-with-embedded-python3" class="md-nav__link">
-    or How to build GDB for ARM with embedded-Python3
+  <a href="#lets-add-a-debug-recipe-to-call-gdbfrontend-http-api" class="md-nav__link">
+    Let's add a debug recipe to call GDBFrontend HTTP API
   </a>
   
-    <nav class="md-nav" aria-label="or How to build GDB for ARM with embedded-Python3">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-use-our-debug-recipe" class="md-nav__link">
+    Let's use our debug recipe
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-a-variable-for-a-specific-testing" class="md-nav__link">
+    Getting a variable for a specific testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-now" class="md-nav__link">
+    What's now?
+  </a>
+  
+    <nav class="md-nav" aria-label="What's now?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#you-may-need-some-build-time-dependencies" class="md-nav__link">
-    You may need some build-time dependencies
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#follow-these-steps" class="md-nav__link">
-    Follow these steps
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#starting-gdbfrontend-with-your-gdb-build" class="md-nav__link">
-    Starting GDBFrontend with your GDB build
+  <a href="#some-ideas-for-integrations" class="md-nav__link">
+    Some ideas for integrations
   </a>
   
 </li>
@@ -358,20 +379,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../makefile-integration/" class="md-nav__link">
-        How to integrate GDBFrontend with your Makefile?
-      </a>
     </li>
   
 
@@ -438,37 +445,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-build_gdbsh-to-build-latest-gdb-for-arm-target-with-embedded-python3" class="md-nav__link">
-    Using build_gdb.sh to build latest GDB for ARM target with embedded-Python3
+  <a href="#load-the-executable-to-debugger" class="md-nav__link">
+    Load the executable to debugger
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#or-how-to-build-gdb-for-arm-with-embedded-python3" class="md-nav__link">
-    or How to build GDB for ARM with embedded-Python3
+  <a href="#lets-add-a-debug-recipe-to-call-gdbfrontend-http-api" class="md-nav__link">
+    Let's add a debug recipe to call GDBFrontend HTTP API
   </a>
   
-    <nav class="md-nav" aria-label="or How to build GDB for ARM with embedded-Python3">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-use-our-debug-recipe" class="md-nav__link">
+    Let's use our debug recipe
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-a-variable-for-a-specific-testing" class="md-nav__link">
+    Getting a variable for a specific testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-now" class="md-nav__link">
+    What's now?
+  </a>
+  
+    <nav class="md-nav" aria-label="What's now?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#you-may-need-some-build-time-dependencies" class="md-nav__link">
-    You may need some build-time dependencies
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#follow-these-steps" class="md-nav__link">
-    Follow these steps
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#starting-gdbfrontend-with-your-gdb-build" class="md-nav__link">
-    Starting GDBFrontend with your GDB build
+  <a href="#some-ideas-for-integrations" class="md-nav__link">
+    Some ideas for integrations
   </a>
   
 </li>
@@ -490,42 +504,134 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/rohanrhu/gdb-frontend/edit/master/documentation/src/tutorials/embedded-debugging.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/rohanrhu/gdb-frontend/edit/master/documentation/src/tutorials/makefile-integration.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="embedded-debugging-with-gdbfrontend">Embedded Debugging with GDBFrontend</h1>
-<h2 id="using-build_gdbsh-to-build-latest-gdb-for-arm-target-with-embedded-python3">Using <code>build_gdb.sh</code> to build latest GDB for ARM target with embedded-Python3</h2>
-<p>You can use <code>build_gdb.sh</code> to build your own GDB w/ Python3 support for ARM target. The script will also create a special command for using GDBFrontend on your own GDB build. (Like <code>gdbfrontend-gdb-11.2</code>.)</p>
-<div class="highlight"><pre><span></span><code>./build_gdb.sh --target<span class="o">=</span>arm-none-eabi
+<h1 id="how-to-integrate-gdbfrontend-with-your-makefile">How to integrate GDBFrontend with your Makefile?</h1>
+<p>GDBFrontend has very powerful APIs on different protocols that allow you to extend and integrate your debugger into very large scale of possibilities.</p>
+<p>First think you start your debugger:</p>
+<div class="highlight"><pre><span></span><code>gdbfrontend
 </code></pre></div>
-<p>Now you can use <code>gdbfrontend-gdb-{version}</code> command. Just like:</p>
-<div class="highlight"><pre><span></span><code>gdbfrontend-gdb-11.2
+<p>If you are not specifying a port, the default port is <code>5550</code>.</p>
+<p>You can specify the port with <code>-p PORT</code> parameter.</p>
+<mark class="critic block">
+<p>If you want to start multiple GDBFrontend sessions, you should specify different ports and terminal IDs for each debugger.</p>
+<p>Just like:</p>
+<div class="highlight"><pre><span></span><code>gdbfrontend <span class="c1"># debugger one, default port: 5550 and default terminal ID: gdb-frontend</span>
+gdbfrontend -p <span class="m">5551</span> -t gdb-frontend-2 <span class="c1"># second debugger</span>
 </code></pre></div>
-<h2 id="or-how-to-build-gdb-for-arm-with-embedded-python3">or How to build GDB for ARM with embedded-Python3</h2>
-<p><strong>GDBFrontend needs GDB-embedded Python3.</strong> Sometimes, you could not find a GDB build for ARM target (<code>arm-none-eabi</code>) with Python3 support on GDB. In this situation you can quickly build your own GDB with Python3 support and <code>arm-none-eabi</code> target.</p>
-<h3 id="you-may-need-some-build-time-dependencies">You may need some build-time dependencies</h3>
-<p>You must install GDB's build dependencies that are listed here: https://sourceware.org/gdb/onlinedocs/gdb/Requirements.html</p>
-<p>If you have some missing build dependencies, <code>configure</code> script will say the missing library, just find it in your package management system and install.</p>
-<p><strong>Please edit and update this article if you have an issue about build dependencies and you know how to install them.</strong></p>
-<h3 id="follow-these-steps">Follow these steps</h3>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ~
-wget https://ftp.gnu.org/gnu/gdb/gdb-11.1.tar.xz
-tar zxvf gdb-11.1.tar.gz
-mkdir gdb-11.1-build
-<span class="nb">cd</span> gdb-11.1-build
-../gdb-11.1/configure --with-python<span class="o">=</span>/usr/bin/python3 --target<span class="o">=</span>arm-none-eabi --enable-interwork --enable-multilib
-make
+</mark>
+<h2 id="load-the-executable-to-debugger">Load the executable to debugger</h2>
+<p>When we load the executable, it will reload it when you re-build it.</p>
+<p>Just click to <code>Load Executable</code> button on top left side.</p>
+<p><img alt="Load executable into GDBFrontend" src="https://i.imgur.com/BxcWVVv.png" /></p>
+<h2 id="lets-add-a-debug-recipe-to-call-gdbfrontend-http-api">Let's add a debug recipe to call GDBFrontend HTTP API</h2>
+<p>We are going to use GDBFrontend's HTTP API in our <code>Makefile</code>. </p>
+<p>We should send a request to this:</p>
+<div class="highlight"><pre><span></span><code>curl http://127.0.0.1:5550/api/runtime/run
 </code></pre></div>
-<p>As you see, you should pass your Python3 executable to configure script's <code>--with-python</code> paramter just like <code>--with-python=/usr/bin/python3</code>.</p>
-<h3 id="starting-gdbfrontend-with-your-gdb-build">Starting GDBFrontend with your GDB build</h3>
-<p>After build is successful, you should be able to run GDBFrontend like this:</p>
-<div class="highlight"><pre><span></span><code>gdbfrontend -g <span class="k">$(</span>realpath ~/gdb-11.1-build/gdb/gdb<span class="k">)</span> -G --data-directory<span class="o">=</span><span class="k">$(</span>realpath ~/gdb-11.1-build/gdb/data-directory/<span class="k">)</span>
+<p>Before integration, the <code>Makefile</code> looks like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> -std<span class="o">=</span>c99 -I../../ -O3 -g
+<span class="nv">JSONIC_SOURCES</span> <span class="o">=</span> <span class="k">$(</span>filter-out <span class="k">$(</span>shell find ../../ -path <span class="s2">&quot;*/examples/*&quot;</span><span class="k">)</span>, <span class="k">$(</span>shell find ../../ -name <span class="s2">&quot;*.c&quot;</span><span class="k">))</span>
+<span class="nv">JSONIC_HEADERS</span> <span class="o">=</span> <span class="k">$(</span>filter-out <span class="k">$(</span>shell find ../../ -path <span class="s2">&quot;*/examples/*&quot;</span><span class="k">)</span>, <span class="k">$(</span>shell find ../../ -name <span class="s2">&quot;*.h&quot;</span><span class="k">))</span>
+<span class="nv">JSONIC_OBJ</span> <span class="o">=</span> <span class="k">$(</span>JSONIC_SOURCES:.c<span class="o">=</span>.o<span class="k">)</span>
+<span class="nv">SOURCE</span> <span class="o">=</span> heroes.c
+<span class="nv">EXECUTABLE</span> <span class="o">=</span> <span class="k">$(</span>SOURCE:.c<span class="o">=</span>.exe<span class="k">)</span>
+
+<span class="cp">ifeq ($(OS), Windows_NT)</span>
+    <span class="nv">RM</span> <span class="o">=</span> rm -rf
+<span class="cp">else</span>
+    <span class="nv">RM</span> <span class="o">=</span> rm -rf
+<span class="cp">endif</span>
+
+<span class="nf">$(EXECUTABLE)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">JSONIC_OBJ</span><span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -o <span class="nv">$@</span> <span class="k">$(</span>SOURCE<span class="k">)</span> $&lt; <span class="k">$(</span>CFLAGS<span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+    <span class="k">$(</span>RM<span class="k">)</span> <span class="k">$(</span>EXECUTABLE<span class="k">)</span>
 </code></pre></div>
-<p>It looks like this:</p>
-<p><img alt="image" src="https://user-images.githubusercontent.com/1125150/143163183-5a328373-9407-4d5c-9a27-b9f2127e1c23.png" />
-<img alt="image" src="https://user-images.githubusercontent.com/1125150/143163331-325eff33-16de-4a35-8ef1-3a4fad60892c.png" /></p>
+<p>We are going to add a <code>debug</code> recipe to our <code>Makefile</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">debug</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EXECUTABLE</span><span class="k">)</span>
+    @curl http://127.0.0.1:5550/api/runtime/run
+</code></pre></div>
+<p>Finally the <code>Makefile</code> will look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> -std<span class="o">=</span>c99 -I../../ -O3 -g
+<span class="nv">JSONIC_SOURCES</span> <span class="o">=</span> <span class="k">$(</span>filter-out <span class="k">$(</span>shell find ../../ -path <span class="s2">&quot;*/examples/*&quot;</span><span class="k">)</span>, <span class="k">$(</span>shell find ../../ -name <span class="s2">&quot;*.c&quot;</span><span class="k">))</span>
+<span class="nv">JSONIC_HEADERS</span> <span class="o">=</span> <span class="k">$(</span>filter-out <span class="k">$(</span>shell find ../../ -path <span class="s2">&quot;*/examples/*&quot;</span><span class="k">)</span>, <span class="k">$(</span>shell find ../../ -name <span class="s2">&quot;*.h&quot;</span><span class="k">))</span>
+<span class="nv">JSONIC_OBJ</span> <span class="o">=</span> <span class="k">$(</span>JSONIC_SOURCES:.c<span class="o">=</span>.o<span class="k">)</span>
+<span class="nv">SOURCE</span> <span class="o">=</span> heroes.c
+<span class="nv">EXECUTABLE</span> <span class="o">=</span> <span class="k">$(</span>SOURCE:.c<span class="o">=</span>.exe<span class="k">)</span>
+
+<span class="cp">ifeq ($(OS), Windows_NT)</span>
+    <span class="nv">RM</span> <span class="o">=</span> rm -rf
+<span class="cp">else</span>
+    <span class="nv">RM</span> <span class="o">=</span> rm -rf
+<span class="cp">endif</span>
+
+<span class="nf">$(EXECUTABLE)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">JSONIC_OBJ</span><span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -o <span class="nv">$@</span> <span class="k">$(</span>SOURCE<span class="k">)</span> $&lt; <span class="k">$(</span>CFLAGS<span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+    <span class="k">$(</span>RM<span class="k">)</span> <span class="k">$(</span>EXECUTABLE<span class="k">)</span>
+
+<span class="nf">debug</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EXECUTABLE</span><span class="k">)</span>
+    @curl http://127.0.0.1:5550/api/runtime/run
+</code></pre></div>
+<h2 id="lets-use-our-debug-recipe">Let's use our debug recipe</h2>
+<p>We added a debug recipe into the <code>Makefile</code>. Now we can use it like this:</p>
+<div class="highlight"><pre><span></span><code>make clean<span class="p">;</span> make debug
+</code></pre></div>
+<p>This will build your application and start your application on GDBFrontend.</p>
+<p><img alt="" src="https://i.imgur.com/n8tRD3A.png" /></p>
+<h2 id="getting-a-variable-for-a-specific-testing">Getting a variable for a specific testing</h2>
+<p>For an example to special debugger integration requirements, let's see this example.</p>
+<mark class="critic block">
+<p>Don't forget to apply URL encoding:</p>
+<p>For example sending a parameter:</p>
+<div class="highlight"><pre><span></span><code>http://127.0.0.1:5550/api/frame/variable?expression=&quot;jsonic_object_get(json_string, root, &quot;squadName&quot;)-&gt;val&quot;
+</code></pre></div>
+<p>Should be like this:</p>
+<div class="highlight"><pre><span></span><code>http://127.0.0.1:5550/api/frame/variable?expression=&quot;jsonic_object_get(json_string%2C%20root%2C%20%22squadName%22)-%3Eval&quot;
+</code></pre></div>
+</mark>
+<p>Just add this to the <code>Makefile</code> recipe:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">debug</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EXECUTABLE</span><span class="k">)</span>
+    @curl http://127.0.0.1:5550/api/runtime/run
+    <span class="k">$(</span>info Waiting debugger to interrupt...<span class="k">)</span>
+    @sleep <span class="m">5</span>
+    <span class="k">$(</span>info Value <span class="k">for</span> expression: <span class="s2">&quot;jsonic_object_get(json_string, root, &quot;</span>squadName<span class="s2">&quot;)-&gt;val&quot;</span><span class="k">)</span>
+    @eval <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$$</span><span class="s2">(curl http://127.0.0.1:5550/api/frame/variable?expression=&quot;</span>jsonic_object_get<span class="o">(</span>json_string%2C%20root%2C%20%22squadName%22<span class="o">)</span>-%3Eval<span class="s2">&quot;)&quot;</span>
+</code></pre></div>
+<p>You will an output like this:</p>
+<div class="highlight"><pre><span></span><code>root@milkyway:/mnt/c/proje/jsonic/examples/heroes# make debug
+Waiting debugger to interrupt...
+Value <span class="k">for</span> expression: <span class="s2">&quot;jsonic_object_get(json_string, root, &quot;</span>squadName<span class="s2">&quot;)-&gt;val&quot;</span>
+<span class="o">{</span><span class="s2">&quot;ok&quot;</span>: true<span class="o">}{</span>ok: true, variable: <span class="o">{</span>is_global: false, name: val, expression: jsonic_object_get<span class="o">(</span>json_string, root, <span class="s2">&quot;squadName&quot;</span><span class="o">)</span>-&gt;val, is_pointer: true, is_optimized_out: false, address: 0x55555555ac78, value: Super <span class="s2">&quot;hero&quot;</span> squad, is_nts: true, type: <span class="o">{</span>alignof: <span class="m">8</span>, code: <span class="m">1</span>, name: null, sizeof: <span class="m">8</span>, tag: null, is_pointer: true, terminal: <span class="o">{</span>alignof: <span class="m">1</span>, code: <span class="m">8</span>, name: char, sizeof: <span class="m">1</span>, tag: null, is_pointer: false<span class="o">}}</span>, type_tree: <span class="o">[{</span>alignof: <span class="m">8</span>, code: <span class="m">1</span>, name: null, sizeof: <span class="m">8</span>, tag: null, is_pointer: true<span class="o">}</span>, <span class="o">{</span>alignof: <span class="m">1</span>, code: <span class="m">8</span>, name: char, sizeof: <span class="m">1</span>, tag: null, is_pointer: false<span class="o">}]</span>, members: <span class="o">[]}}</span>
+root@milkyway:/mnt/c/proje/jsonic/examples/heroes# 
+</code></pre></div>
+<mark class="critic block">
+<p>You may be noticed that we've added <code>sleep 5</code> to wait the debugger to start and interrupt application. This is a bad approach of course, you can write your own script and use GDBFrontend's WebSocket API to listen events like <code>stop</code> event and do your jobs on events.</p>
+</mark>
+<h2 id="whats-now">What's now?</h2>
+<p>Possibilities are infinite. You can follow <a href="../plugin-development/">Plugin Development Tutorial</a> to make your own complex integrations.</p>
+<p>By writing your own GDBFrontend plugin, you can make your own Python, HTTP and WebSocket APIs and you can communicate to them from other platforms.</p>
+<h3 id="some-ideas-for-integrations">Some ideas for integrations</h3>
+<p>For special development and debuggin requirements you can do something like these with your own plugin:</p>
+<ul>
+<li>Restarting debugging</li>
+<li>Adding breakpoints</li>
+<li>Writing your own GDBFrontendd plugin to use it for special debugging requirements and integrations</li>
+<li>Writing your own WebSocket client to listen debugging events</li>
+<li>Spawning an evaluater window</li>
+<li>Make your own custom data visualizer and trigger them from your integrations</li>
+<li>Using terminal API for special requirements</li>
+</ul>
+<hr />
+<p>Happy debugging! ❤️</p>
 
               
             </article>
@@ -539,7 +645,7 @@ make
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: GDBFrontend README" rel="prev">
+        <a href="../embedded-debugging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Embedded Debugging with GDBFrontend" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -548,20 +654,20 @@ make
               <span class="md-footer__direction">
                 Previous
               </span>
-              GDBFrontend README
+              Embedded Debugging with GDBFrontend
             </div>
           </div>
         </a>
       
       
         
-        <a href="../makefile-integration/" class="md-footer__link md-footer__link--next" aria-label="Next: How to integrate GDBFrontend with your Makefile?" rel="next">
+        <a href="../plugin-development/" class="md-footer__link md-footer__link--next" aria-label="Next: How to develop GDBFrontend plugins" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              How to integrate GDBFrontend with your Makefile?
+              How to develop GDBFrontend plugins
             </div>
           </div>
           <div class="md-footer__button md-icon">
