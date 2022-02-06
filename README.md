@@ -106,6 +106,10 @@ Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/p
 
 GDBFrontend has powerful and extensible APIs. Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/) to learn developing GDBFrontend plugins.
 
+## [How to integrate GDBFrontend with your Makefile?](https://rohanrhu.github.io/gdb-frontend/tutorials/makefile-integration/)
+
+Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/makefile-integration/) for integration ideas for special development/debugging requirements.
+
 ## Features
 
 ### Expression Evaluter
