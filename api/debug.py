@@ -589,8 +589,13 @@ def getSources():
         lines = gdb.execute("i sources", to_string=True).splitlines()
         
         for line in lines:
-            if line.startswith("/"):
-                sources += line.split(", ")
+            files = line.split(",")
+
+            for file in files:
+                file = file.strip()
+
+                if file.startswith("/"):
+                    sources.append(file)
         
         return sources
     except gdb.error as e:
