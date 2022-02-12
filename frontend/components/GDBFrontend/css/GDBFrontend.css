@@ -590,6 +590,13 @@
     justify-content: center;
 }
 
+.GDBFrontend_layout_top_menuBtn_label_img {
+    display: block;
+    margin: auto;
+    max-height: 17px;
+    transform: translateY(2px);
+}
+
 .GDBFrontend_layout_top_menuBtn_openable {
     position: absolute;
     top: 50px;
