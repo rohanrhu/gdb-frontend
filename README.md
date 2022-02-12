@@ -313,6 +313,7 @@ For switching between themes use `gf-theme [THEME]` command on GDB shell.
 ```
 (gdb) gf-theme doki
 (gdb) gf-theme sky
+(gdb) gf-theme waifu
 (gdb) gf-theme cyberpunk
 (gdb) gf-theme dark
 (gdb) gf-theme green
@@ -326,7 +327,7 @@ For switching back to the default theme.
 (gdb) gf-theme
 ```
 
-Also you may want to look to [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
+Also you may want to look to [Plugin Development Tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/).
 
 ## GDBFrontend Python API
 
@@ -441,7 +442,7 @@ API Documentation is TODO yet.
 
 ## Plugin Development
 
-You can read the [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
+You can read the [Plugin Development Tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/).
 
 ## Theme Development
 
