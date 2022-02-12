@@ -355,7 +355,7 @@ try:
         if not dontopenuionstartup:
             if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
                 os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
-            else:
+            elif os.environ.get('DISPLAY'):
                 if os.geteuid() != 0 and shutil.which("chrome"):
                     subprocess.Popen(
                         "chrome --app=" + gf_url,
@@ -411,7 +411,7 @@ try:
         if not dontopenuionstartup:
             if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
                 os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
-            else:
+            elif os.environ.get('DISPLAY'):
                 if os.geteuid() != 0 and shutil.which("chrome"):
                     subprocess.Popen(
                         "chrome --app=" + gf_url,
