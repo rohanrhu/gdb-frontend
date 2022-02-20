@@ -114,7 +114,7 @@ case $OS in
 		apt install -q -y gcc g++ make libgmp10 libgmp-dev\
 			expat libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev\
 			lzma lzma-dev libmpfr-dev python3 zlib1g-dev zlib1g\
-			libpython3-dev ubuntu-make texi2html texinfo
+			libpython3-dev texi2html texinfo
 		echo
 		
 		if [[ $? -ne 0 ]]; then
