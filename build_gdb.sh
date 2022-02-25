@@ -93,7 +93,6 @@ case $OS in
 		pacman -Sy
 		pacman -q -S --needed --noconfirm zlib python mpfr xz guile expat\
 			gcc make automake gmp wget
-		echo
 		
 		if [[ $? -ne 0 ]]; then
 			dependencyInstallationFailed
@@ -114,8 +113,7 @@ case $OS in
 		apt install -q -y gcc g++ make libgmp10 libgmp-dev\
 			expat libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev\
 			lzma lzma-dev libmpfr-dev python3 zlib1g-dev zlib1g\
-			libpython3-dev ubuntu-make texi2html texinfo
-		echo
+			libpython3-dev texi2html texinfo
 		
 		if [[ $? -ne 0 ]]; then
 			dependencyInstallationFailed
@@ -137,7 +135,6 @@ case $OS in
 			libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev guile-3.0-libs\
 			texinfo lzma-dev liblzma5 libmpfr-dev libmpfr6 libmpfrc++-dev\
 			python3 python3-distutils python3-dev zlib1g zlib1g-dev
-		echo
 
 		if [[ $? -ne 0 ]]; then
 			dependencyInstallationFailed
