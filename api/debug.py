@@ -856,14 +856,14 @@ def getSerializableArrayItems(value, circular_expression=False):
         if str(value) == "0x0":
             return None
     except gdb.error as e:
-        print(e, traceback.format_exc())
-        return None
+        util.verbose(e, traceback.format_exc())
+        return []
 
     try:
         target_type = value.type.target()
     except Exception as e:
-        print(e, traceback.format_exc())
-        return None
+        util.verbose(e, traceback.format_exc())
+        return []
 
     try:
         for i in range(int(value.type.sizeof / target_type.sizeof)):
@@ -892,8 +892,57 @@ def getSerializableArrayItems(value, circular_expression=False):
 
             members.append(member)
     except Exception as e:
-        print(e, traceback.format_exc())
-        return None
+        util.verbose(e, traceback.format_exc())
+        return []
+    
+    return members
+
+
+def getSerializableVectorItems(value, circular_expression=False):
+    members = []
+
+    try:
+        if str(value) == "0x0":
+            return None
+    except gdb.error as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+
+    try:
+        _M_start = value['_M_impl']['_M_start']
+        
+        i = 0
+
+        while _M_start != value['_M_impl']['_M_finish']:
+            if i > settings.MAX_SERIALIZED_ARRAY_ITEMS:
+                break
+            
+            memberValue = _M_start
+            
+            member = {}
+            member["value"] = str(memberValue.dereference())
+            member["array_index"] = i
+
+            if circular_expression:
+                member["expression"] = circular_expression + "[" + str(i) + "]"
+                member["name"] = member["expression"]
+            else:
+                member["expression"] = False
+                member["name"] = "*(" + str(memberValue.address) + " + " + str(i) + ")"
+            
+            member["is_pointer"] = False
+            member["address"] = hex(int(_M_start))
+            member["type"] = serializableType(memberValue.type)
+            member["type"]["terminal"] = serializableType(resolveTerminalType(memberValue.type))
+            member["type_tree"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+            member["parent_type"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+
+            members.append(member)
+            i += 1
+            _M_start += 1
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return []
     
     return members
 
@@ -1205,7 +1254,18 @@ class Variable():
             if value.type.code == gdb.TYPE_CODE_ARRAY:
                 serializable["members"] = getSerializableArrayItems(value, circular_expression=self.expression)
             else:
-                serializable["members"] = getSerializableStructMembers(value, terminalType, parent_expression=self.expression)
+                is_vector = True
+
+                try:
+                    _M_impl = value["_M_impl"]
+                    _M_start = _M_impl['_M_start']
+                except:
+                    is_vector = False
+
+                if is_vector:
+                    serializable["members"] = getSerializableVectorItems(value, circular_expression=self.expression)
+                else:
+                    serializable["members"] = getSerializableStructMembers(value, terminalType, parent_expression=self.expression)
         else:
             serializable["type"] = False
 
