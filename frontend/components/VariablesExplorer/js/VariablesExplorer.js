@@ -419,9 +419,9 @@
                 }
 
                 if (item.variable.type.name) {
-                    item.$item_button_type.html(item.variable.type.name);
+                    item.$item_button_type.text(item.variable.type.name);
                 } else if (item.variable.is_pointer && (item.variable.type_tree.length > 1)) {
-                    item.$item_button_type.html(
+                    item.$item_button_type.text(
                         item.non_ptr.type.name
                         +
                         '*'.repeat(item.non_ptr.tree_length)
