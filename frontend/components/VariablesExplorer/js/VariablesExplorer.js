@@ -615,6 +615,8 @@
                         (item.variable.type.terminal.code != $.fn.VariablesExplorer.TYPE_CODE_UNION)
                         &&
                         (item.variable.type.code != $.fn.VariablesExplorer.TYPE_CODE_ARRAY)
+                        &&
+                        item.variable.name.startsWith("tyArray__")
                     ) {
                         return;
                     }

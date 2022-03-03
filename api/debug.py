@@ -897,7 +897,6 @@ def getSerializableArrayItems(value, circular_expression=False):
     
     return members
 
-
 def getSerializableVectorItems(value, circular_expression=False):
     members = []
 
@@ -940,6 +939,102 @@ def getSerializableVectorItems(value, circular_expression=False):
             members.append(member)
             i += 1
             _M_start += 1
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+    
+    return members
+
+def Nim__getSerializableArrayItems(value, circular_expression=False):
+    members = []
+
+    try:
+        if str(value) == "0x0":
+            return None
+    except gdb.error as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+
+    try:
+        target_type = resolveTerminalType(value.type)
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+
+    try:
+        for i in range(int(value.type.sizeof / target_type.sizeof)):
+            if i > settings.MAX_SERIALIZED_ARRAY_ITEMS:
+                break
+            
+            memberValue = value[i]
+            
+            member = {}
+            member["value"] = str(memberValue)
+            member["array_index"] = i
+
+            if circular_expression:
+                member["expression"] = circular_expression + "[" + str(i) + "]"
+                member["name"] = member["expression"]
+            else:
+                member["expression"] = False
+                member["name"] = "*(" + str(memberValue.address) + " + " + str(i) + ")"
+            
+            member["is_pointer"] = target_type.code == gdb.TYPE_CODE_PTR
+            member["address"] = str(memberValue.address) if memberValue.address else "0x0"
+            member["type"] = serializableType(memberValue.type)
+            member["type"]["terminal"] = serializableType(resolveTerminalType(memberValue.type))
+            member["type_tree"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+            member["parent_type"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+
+            members.append(member)
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+    
+    return members
+
+def Nim__getSerializableSequenceItems(value, circular_expression=False):
+    members = []
+
+    try:
+        if str(value) == "0x0":
+            return None
+    except gdb.error as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+
+    try:
+        target_type = resolveTerminalType(value.type)
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return []
+
+    try:
+        for i in range(int(value["Sup"]["len"])):
+            if i > settings.MAX_SERIALIZED_ARRAY_ITEMS:
+                break
+            
+            memberValue = value["data"][i]
+            
+            member = {}
+            member["value"] = str(memberValue)
+            member["array_index"] = i
+
+            if circular_expression:
+                member["expression"] = circular_expression + "[" + str(i) + "]"
+                member["name"] = member["expression"]
+            else:
+                member["expression"] = False
+                member["name"] = "*(" + str(memberValue.address) + " + " + str(i) + ")"
+            
+            member["is_pointer"] = target_type.code == gdb.TYPE_CODE_PTR
+            member["address"] = str(memberValue.address) if memberValue.address else "0x0"
+            member["type"] = serializableType(memberValue.type)
+            member["type"]["terminal"] = serializableType(resolveTerminalType(memberValue.type))
+            member["type_tree"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+            member["parent_type"] = serializableTypeTree(resolveTypeTree(memberValue.type))
+
+            members.append(member)
     except Exception as e:
         util.verbose(e, traceback.format_exc())
         return []
@@ -1264,6 +1359,10 @@ class Variable():
 
                 if is_vector:
                     serializable["members"] = getSerializableVectorItems(value, circular_expression=self.expression)
+                elif isinstance(value.type.name, str) and value.type.name.startswith("tyArray__"):
+                    serializable["members"] = Nim__getSerializableArrayItems(value, circular_expression=self.expression)
+                elif isinstance(terminalType.name, str) and terminalType.name.startswith("tySequence__"):
+                    serializable["members"] = Nim__getSerializableSequenceItems(value, circular_expression=self.expression)
                 else:
                     serializable["members"] = getSerializableStructMembers(value, terminalType, parent_expression=self.expression)
         else:
