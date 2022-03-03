@@ -121,7 +121,8 @@
             
             data.$gdbFrontend_sources = $gdbFrontend.find('.GDBFrontend_sources');
             data.$gdbFrontend_sources_title = data.$gdbFrontend_sources.find('.GDBFrontend_sources_title');
-            data.$gdbFrontend_sources_title_buttons_button__openSource = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button');
+            data.$gdbFrontend_sources_title_buttons_button__sort = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button__sort');
+            data.$gdbFrontend_sources_title_buttons_button__openSource = data.$gdbFrontend_sources_title.find('.GDBFrontend_sources_title_buttons_button__openSource');
             data.$gdbFrontend_sourceTreeComp = data.$gdbFrontend_sources.find('.GDBFrontend_sourceTreeComp');
             data.$gdbFrontend_sourceTree = data.$gdbFrontend_sourceTreeComp.find('> .SourceTree');
             data.gdbFrontend_sourceTree = null;
@@ -159,6 +160,11 @@
 
             data.$gdbFrontend_sources_title_buttons_button__openSource.on('click.GDBFrontend', function (event) {
                 data.openSourceOpener();
+            });
+            
+            data.$gdbFrontend_sources_title_buttons_button__sort.on('click.GDBFrontend', function (event) {
+                data.components.sourceTree.toggleSorting();
+                data.$gdbFrontend_sources_title_buttons_button__sort[data.components.sourceTree.is_sorting ? 'addClass': 'removeClass']('GDBFrontend__enabled');
             });
             
             data.$gdbFrontend_disassembly_title_buttons_button__openTab.on('click.GDBFrontend', function (event) {

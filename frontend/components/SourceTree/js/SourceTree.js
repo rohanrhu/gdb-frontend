@@ -78,10 +78,29 @@
             data.is_passive = false;
             data.files = [];
 
+            data.is_sorting = false;
+
+            data.enableSorting = function () {
+                data.is_sorting = true;
+                data.render();
+            };
+            
+            data.disableSorting = function () {
+                data.is_sorting = false;
+                data.render();
+            };
+            
+            data.toggleSorting = function () {
+                data.is_sorting = !data.is_sorting;
+                data.render();
+            };
+
             data.load = function (parameters) {
                 data.files = [];
 
                 var parent_tree_item = data.files;
+                
+                var original_index_i = 0;
 
                 parameters.files.forEach(function (_file, _file_i) {
                     if (!_file.length) {
@@ -120,9 +139,10 @@
                         tree_item[$.fn.SourceTree.TREE_ITEM_LEVEL] = level++;
                         tree_item[$.fn.SourceTree.TREE_ITEM_PATH] = (_file[0] == '/' ? '/': '')+file_tree.slice(0, _tree_file_i+1).join('/');
                         tree_item[$.fn.SourceTree.TREE_ITEM_TYPE] = (level == file_tree.length)
-                                                                    ? $.fn.SourceTree.TREE_ITEM_TYPE__FILE
-                                                                    : $.fn.SourceTree.TREE_ITEM_TYPE__DIR;
+                        ? $.fn.SourceTree.TREE_ITEM_TYPE__FILE
+                        : $.fn.SourceTree.TREE_ITEM_TYPE__DIR;
                         tree_item[$.fn.SourceTree.TREE_ITEM_ITEM] = null;
+                        tree_item[$.fn.SourceTree.TREE_ITEM_ORIGINAL_INDEX] = original_index_i++;
 
                         parent_tree_item.push(tree_item);
                         parent_tree_item = tree_item[$.fn.SourceTree.TREE_ITEM_ITEMS];
@@ -142,6 +162,16 @@
                 $sourceTree_items.find('.SourceTree_items_item:not(.__proto)').remove();
 
                 var _put = function (files, $items, level) {
+                    if (data.is_sorting) {
+                        files.sort(function (a, b) {
+                            return a[$.fn.SourceTree.TREE_ITEM_NAME].localeCompare(b[$.fn.SourceTree.TREE_ITEM_NAME]);
+                        });
+                    } else {
+                        files.sort(function (a, b) {
+                            return a[$.fn.SourceTree.TREE_ITEM_ORIGINAL_INDEX] - b[$.fn.SourceTree.TREE_ITEM_ORIGINAL_INDEX];
+                        });
+                    }
+                    
                     files.forEach(function (_file, _file_i) {
                         if (_file[$.fn.SourceTree.TREE_ITEM_NAME] == '<built-in>') {
                             return true;
@@ -416,6 +446,7 @@
     $.fn.SourceTree.TREE_ITEM_PATH = 3;
     $.fn.SourceTree.TREE_ITEM_TYPE = 4;
     $.fn.SourceTree.TREE_ITEM_ITEM = 5;
+    $.fn.SourceTree.TREE_ITEM_ORIGINAL_INDEX = 6;
 
     $.fn.SourceTree.TREE_ITEM_TYPE__DIR = 1;
     $.fn.SourceTree.TREE_ITEM_TYPE__FILE = 2;

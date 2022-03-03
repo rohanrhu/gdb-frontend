@@ -691,6 +691,10 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
     display: block;
 }
 
+.GDBFrontend_sources_title_buttons_button.GDBFrontend__enabled {
+    background: rgb(255 255 255 / 10%);
+}
+
 .GDBFrontend_sourceTreeComp {
     height: 100%;
 }
