@@ -397,7 +397,13 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
         if event == "start_terminal":
             util.verbose("Starting terminal daemon for client#%d" % self.client_id)
             
-            self.terminalDaemon = terminal_daemon.TerminalDaemon(ws=self, terminal_command=["tmux", "a", "-t", config.TERMINAL_ID])
+            tmux_cmd = ["tmux", "a", "-t", config.TERMINAL_ID]
+
+            if config.WORKDIR:
+                tmux_cmd.append("-c")
+                tmux_cmd.append(config.WORKDIR)
+            
+            self.terminalDaemon = terminal_daemon.TerminalDaemon(ws=self, terminal_command=tmux_cmd)
             self.terminalDaemon.start()
         elif event == "get_state":
             self.emit(message["return_event"], {
