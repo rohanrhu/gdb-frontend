@@ -1000,7 +1000,10 @@
                 data.gdbFrontend_evaluateExpression = data.$gdbFrontend_evaluateExpression.data('EvaluateExpression');
                 data.components.evaluateExpression = data.gdbFrontend_evaluateExpression;
 
-                data.debug.socket = new WebSocket('ws://'+GDBFrontend.config.host_address+':'+GDBFrontend.config.http_port+"/debug-server");
+                var host_address = (GDBFrontend.config.host_address != '127.0.0.1') ? GDBFrontend.config.host_address: window.location.hostname;
+                var ws_protocol = (window.location.protocol == 'https:') ? 'wss:': 'ws:';
+                
+                data.debug.socket = new WebSocket(ws_protocol+'//'+host_address+':'+window.location.port+"/debug-server");
 
                 data.debug.socket.addEventListener('open', function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');
@@ -1087,6 +1090,10 @@
                     var terminal_resize_timeout = 0;
 
                     data.terminal.resizeObserver = new ResizeObserver(function (elements) {
+                        if (data.debug.socket.readyState != WebSocket.OPEN) {
+                            return;
+                        }
+                        
                         clearTimeout(terminal_resize_timeout);
                         
                         terminal_resize_timeout = setTimeout(function () {
