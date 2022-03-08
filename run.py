@@ -40,10 +40,12 @@ terminal_id = "gdb-frontend"
 api.globalvars.terminal_id = terminal_id
 credentials = False
 is_random_port = False
-workdir = False
 
 arg_config = {}
 arg_config["TERMINAL_ID"] = terminal_id
+
+config.WORKDIR = os.getcwd()
+arg_config["WORKDIR"] = config.WORKDIR
 
 terminate_sub_procs = True
 
