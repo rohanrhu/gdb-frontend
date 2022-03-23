@@ -172,7 +172,21 @@
                                 return;
                             }
     
-                            data.processes = result_json.processes;
+                            Object.entries(result_json.processes).map(([pid, process]) => {
+                                if (data.processes[pid]) {
+                                    return;
+                                }
+
+                                data.processes[pid] = process;
+                            });
+                            
+                            Object.entries(data.processes).map(([pid, process]) => {
+                                if (result_json.processes[pid]) {
+                                    return;
+                                }
+
+                                data.processes[pid].will_delete = true;
+                            });
 
                             resolve();
                         },
@@ -186,6 +200,8 @@
                 });
             };
 
+            var prev_render_filter_expr = '';
+            
             data.render = function (parameters) {
                 var filter_expr = data.$processManager_window_box_header_expression_input_rI.val();
 
@@ -205,9 +221,9 @@
                     x = data.processes[x];
                     y = data.processes[y];
 
-                    if (parseInt(x.start_time) < parseInt(y.start_time)) {
+                    if (x.start_time < y.start_time) {
                         return -1;
-                    } else if (parseInt(x.start_time) > parseInt(y.start_time)) {
+                    } else if (x.start_time > y.start_time) {
                         return 1;
                     }
 
@@ -308,26 +324,61 @@
                     }
                 }
 
-                var scroll_top = data.$processManager_window_box_content.scrollTop();
-                var scroll_left = data.$processManager_window_box_content.scrollLeft();
-                
-                data.$processManager_processes_items.find('.ProcessManager_processes_items_item:not(.__proto)').remove();
-
                 ordered_pids.forEach(function (_pid, _pid_i) {
                     var process = data.processes[_pid];
 
+                    if (process.$item) {
+                        if (process.will_delete) {
+                            process.$item.remove();
+                            delete data.processes[_pid];
+
+                            return;
+                        }
+
+                        process.$item.insertAfter(data.$processManager_processes_items_item__proto);
+
+                        if (process.is_highlighted) {
+                            process.is_highlighted = false;
+                            process.$item.addClass('ProcessManager__highlighted');
+                        } else {
+                            process.$item.removeClass('ProcessManager__highlighted');
+                        }
+    
+                        var $item_cmd = process.$item.find('.ProcessManager_processes_items_item_cmd');
+    
+                        if (!filter_expr.length) {
+                            $item_cmd.html(process.cmdline);
+                        } else {
+                            var highlighted = process.cmdline.split(filter_expr);
+                            var cmdline = process.cmdline;
+    
+                            if (highlighted.length > 1) {
+                                cmdline = cmdline.replace(new RegExp(filter_expr, 'gi'), '<span class="ProcessManager_highlighted">'+filter_expr+'</span>');
+                            }
+                            
+                            $item_cmd.html(cmdline);
+                        }
+
+                        return;
+                    }
+
                     var $item = data.$processManager_processes_items_item__proto.clone();
+                    process.$item = $item;
                     $item.insertAfter(data.$processManager_processes_items_item__proto);
                     $item.removeClass('__proto');
 
+                    process.index = $item.index();
+
                     if (process.is_highlighted) {
                         process.is_highlighted = false;
-                        $item.addClass('ProcessManager__highlighted');
+                        process.$item.addClass('ProcessManager__highlighted');
+                    } else {
+                        process.$item.removeClass('ProcessManager__highlighted');
                     }
 
-                    var $item_pid = $item.find('.ProcessManager_processes_items_item_pid');
-                    var $item_name = $item.find('.ProcessManager_processes_items_item_name');
-                    var $item_cmd = $item.find('.ProcessManager_processes_items_item_cmd');
+                    var $item_pid = process.$item.find('.ProcessManager_processes_items_item_pid');
+                    var $item_name = process.$item.find('.ProcessManager_processes_items_item_name');
+                    var $item_cmd = process.$item.find('.ProcessManager_processes_items_item_cmd');
 
                     $item_pid.html(_pid);
                     $item_name.html(process.status.Name);
@@ -336,7 +387,6 @@
                         $item_cmd.html(process.cmdline);
                     } else {
                         var highlighted = process.cmdline.split(filter_expr);
-                        
                         var cmdline = process.cmdline;
 
                         if (highlighted.length > 1) {
@@ -440,10 +490,9 @@
                             }
                         }
                     });
-
-                    data.$processManager_window_box_content.scrollTop(scroll_top);
-                    data.$processManager_window_box_content.scrollLeft(scroll_left);
                 });
+
+                prev_render_filter_expr = filter_expr;
             };
             
             data.refresh = async function (params) {
