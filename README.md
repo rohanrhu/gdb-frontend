@@ -458,6 +458,8 @@ Join to Discord community.
 
 You can contribute with commiting to project or developing a plugin. All commits are welcome.
 
+### [Contribution Guide](CONTRIBUTING.md)
+
 ## ❤️ Donate
 
 ### Patreon
