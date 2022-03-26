@@ -30,7 +30,7 @@ or any overhead. It is same to writing pure JavaScript.
 Our argument behind that not using any framework is very strong and conscious.
 
 * It is not that "you can never know that the framework will be deprecated or not".
-* it is not that "frameworks are good but not necessary".
+* It is not that "frameworks are good but not necessary".
 
 The short explaination is:
 
