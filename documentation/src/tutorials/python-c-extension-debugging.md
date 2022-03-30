@@ -35,13 +35,13 @@ gdbfrontend
 GDBFrontend will open a browser tab as a default behavior but if it doesn't happen, you can open the app URL:
 
 ```
-http://127.0.0.1:5550/terminal/
+http://127.0.0.1:5550/
 ```
 
 **Optionally** you can run it as a Chrome/Chromium app:
 
 ```bash
-chrome --app=http://127.0.0.1:5550/terminal/
+chrome --app=http://127.0.0.1:5550/
 ```
 
 ![](https://i.imgur.com/4m8bvlt.png)

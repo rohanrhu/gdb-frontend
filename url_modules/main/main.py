@@ -102,7 +102,7 @@ def run(request, params):
             plugin_htmls += "\n" + _plugin_html
 
     if "layout" not in params.keys():
-        gui_mode = statics.GUI_MODE_WEB
+        gui_mode = statics.GUI_MODE_WEB_TMUX
         gui_scripts = ""
     elif params["layout"] == "terminal":
         gui_mode = statics.GUI_MODE_WEB_TMUX

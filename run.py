@@ -356,9 +356,9 @@ try:
 
     if not is_random_port:
         print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
-        print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
+        print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
 
-        gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
+        gf_url = "http://%s:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
         if not dontopenuionstartup:
             if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
@@ -412,9 +412,9 @@ try:
         config.HTTP_PORT = http_port.value
 
         print("Listening on %s: http://%s:%d/" % (config.BIND_ADDRESS, config.HOST_ADDRESS, config.HTTP_PORT))
-        print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/terminal/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
+        print(("Open this address in web browser: \033[0;32;40mhttp://%s:%d/\033[0m" % (config.HOST_ADDRESS, config.HTTP_PORT)))
 
-        gf_url = "http://%s:%d/terminal/" % (config.HOST_ADDRESS, config.HTTP_PORT)
+        gf_url = "http://%s:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
         if not dontopenuionstartup:
             if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:

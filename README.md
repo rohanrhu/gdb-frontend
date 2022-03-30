@@ -61,12 +61,6 @@ cd gdb-frontend
 and you can open it with:
 
 ```
-http://127.0.0.1:5550/terminal/
-```
-
-or without terminal:
-
-```
 http://127.0.0.1:5550/
 ```
 
