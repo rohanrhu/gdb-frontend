@@ -139,6 +139,10 @@ def argHandler_dontopenuionstartup():
     global dontopenuionstartup
     dontopenuionstartup = True
 
+def argHandler_urlBase(path):
+    arg_config["URL_BASE"] = path
+    config.URL_BASE = path
+
 def argHandler_help():
     global gdb_executable
 
@@ -154,6 +158,7 @@ def argHandler_help():
     print("  --host=IP, -H IP:\t\t\t\tSpecifies current host address that you can access via for HTTP and WS servers.")
     print("  --listen=IP, -l IP:\t\t\t\tSpecifies listen address for HTTP and WS servers.")
     print("  --port=PORT, -p PORT:\t\t\t\tSpecifies HTTP port. (0 for random port.)")
+    print("  --url-base=PATH, -u PATH:\t\t\tSpecifies URL base path. (Default: /)")
     print("  --readonly, -r:\t\t\t\tMakes code editor readonly. (Notice: This option is not related to security.)")
     print("  --workdir, -w:\t\t\t\tSpecifies working directory.")
     print("  --plugin-dir, -P:\t\t\t\tSpecifies plugins directory.")
@@ -217,6 +222,7 @@ args = [
     ["--plugins-dir", "-P", argHandler_pluginsDir, True],
     ["--help", "-h", argHandler_help, False],
     ["--dontopenuionstartup", "-D", argHandler_dontopenuionstartup, False],
+    ["--url-base", "-u", argHandler_urlBase, True],
     ["--version", "-v", argHandler_version, False]
 ]
 

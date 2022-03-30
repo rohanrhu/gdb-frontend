@@ -36,6 +36,7 @@ WORKDIR = False
 CREDENTIALS = None
 TERMINAL_ID = False
 MAX_ITERATIONS_TO_RET = 1000
+URL_BASE = "/"
 
 def init():
     global VERBOSE
@@ -49,6 +50,7 @@ def init():
     global CREDENTIALS
     global TERMINAL_ID
     global MAX_ITERATIONS_TO_RET
+    global URL_BASE
 
 def setJSON(config_json):
     new_config = json.loads(config_json)

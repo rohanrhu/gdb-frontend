@@ -50,6 +50,8 @@ def run(request, params):
 
     is_wsl = False
 
+    url_base = config.URL_BASE
+
     if os.name == 'posix':
         config_uname = {
             "sysname": uname.sysname,
@@ -73,15 +75,16 @@ def run(request, params):
 
     GDBFrontend.config = {};
     GDBFrontend.config.terminal_id = """+json.dumps(config.TERMINAL_ID)+""";
-    GDBFrontend.config.host_address = '"""+str(config.HOST_ADDRESS)+"""';
-    GDBFrontend.config.bind_address = '"""+str(config.BIND_ADDRESS)+"""';
-    GDBFrontend.config.http_port = """+str(config.HTTP_PORT)+""";
-    GDBFrontend.config.app_path = '"""+str(config.app_path)+"""';
-    GDBFrontend.config.plugins_dir = '"""+str(config.PLUGINS_DIR)+"""';
-    GDBFrontend.config.gdb_path = '"""+str(config.gdb_path)+"""';
+    GDBFrontend.config.host_address = """+json.dumps(config.HOST_ADDRESS)+""";
+    GDBFrontend.config.bind_address = """+json.dumps(config.BIND_ADDRESS)+""";
+    GDBFrontend.config.http_port = """+json.dumps(config.HTTP_PORT)+""";
+    GDBFrontend.config.app_path = """+json.dumps(config.app_path)+""";
+    GDBFrontend.config.plugins_dir = """+json.dumps(config.PLUGINS_DIR)+""";
+    GDBFrontend.config.gdb_path = """+json.dumps(config.gdb_path)+""";
     GDBFrontend.config.is_readonly = """+json.dumps(config.IS_READONLY)+""";
     GDBFrontend.config.workdir = """+json.dumps(config.WORKDIR)+""";
     GDBFrontend.config.max_iterations_to_ret = """+json.dumps(config.MAX_ITERATIONS_TO_RET)+""";
+    GDBFrontend.config.url_base = """+json.dumps(url_base)+""";
     GDBFrontend.imports = {};
     GDBFrontend.load_plugins = JSON.parse('"""+json.dumps(load_plugins)+"""');
     """
