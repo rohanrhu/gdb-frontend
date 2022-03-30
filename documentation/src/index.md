@@ -1,6 +1,4 @@
-# GDBFrontend README
-
-[![GDBFrontend](media/gdbfrontend-logo.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
+# [![GDBFrontend](media/gdbfrontend.png)](https://oguzhaneroglu.com/projects/gdb-frontend/)
 
 [![GitHub release](https://img.shields.io/github/release/rohanrhu/gdb-frontend.svg?style=flat-square&color=informational)](https://github.com/rohanrhu/gdb-frontend/releases)
 [![GitHub issues](https://img.shields.io/github/issues/rohanrhu/gdb-frontend?style=flat-square&color=red)](https://github.com/rohanrhu/gdb-frontend/issues)
@@ -10,7 +8,7 @@
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&style=flat-square)](https://patreon.com/EvrenselKisilik)
 [![Donate with BTC](https://shields.io/badge/donate-3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL-yellow?logo=bitcoin&style=flat-square)](#%EF%B8%8F-donate)
 
-GDBFrontend is an easy, flexible and extensionable gui debugger.
+GDBFrontend is an easy, flexible and extensionable gui debugger. [Try it online!](https://debugme.online)
 
 ![gdb-frontend](media/gdbfrontend-screenshots.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
@@ -108,6 +106,10 @@ Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/p
 
 GDBFrontend has powerful and extensible APIs. Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/) to learn developing GDBFrontend plugins.
 
+## [How to integrate GDBFrontend with your Makefile?](https://rohanrhu.github.io/gdb-frontend/tutorials/makefile-integration/)
+
+Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/makefile-integration/) for integration ideas for special development/debugging requirements.
+
 ## Features
 
 ### Expression Evaluter
@@ -143,6 +145,10 @@ Expressions of all variables, members and items are connected in GDBFrontend's V
 You can watch, filter or manage processes with Process Manager.
 
 ![](media/process-manager.png)
+
+### Array-Graph Visualization
+
+![](media/array-graph-visualisation.png)
 
 ### Enhanced Collabration
 
@@ -311,6 +317,8 @@ For switching between themes use `gf-theme [THEME]` command on GDB shell.
 ```
 (gdb) gf-theme doki
 (gdb) gf-theme sky
+(gdb) gf-theme sakura
+(gdb) gf-theme waifu
 (gdb) gf-theme cyberpunk
 (gdb) gf-theme dark
 (gdb) gf-theme green
@@ -324,7 +332,7 @@ For switching back to the default theme.
 (gdb) gf-theme
 ```
 
-Also you may want to look to [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
+Also you may want to look to [Plugin Development Tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/).
 
 ## GDBFrontend Python API
 
@@ -349,7 +357,7 @@ or you can get all plugins:
 
 ```python
 >>> gdbfrontend.plugin.getAll()
-['hello', 'theme_light', 'theme_red']
+['hello', 'theme_cyberpunk', 'theme_dark', 'theme_doki', 'theme_green', 'theme_light', 'theme_red', 'theme_sakura', 'theme_sky', 'theme_waifu']
 ```
 
 ## Security with Sharing Sessions
@@ -439,7 +447,7 @@ API Documentation is TODO yet.
 
 ## Plugin Development
 
-You can read the [Plugin Development Tutorial](https://github.com/rohanrhu/gdb-frontend/wiki/Plugin-Development-Tutorial).
+You can read the [Plugin Development Tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/plugin-development/).
 
 ## Theme Development
 
@@ -454,6 +462,8 @@ Join to Discord community.
 ## 🎊 Contributing
 
 You can contribute with commiting to project or developing a plugin. All commits are welcome.
+
+### [Contribution Guide](CONTRIBUTING.md)
 
 ## ❤️ Donate
 

@@ -146,6 +146,10 @@ You can watch, filter or manage processes with Process Manager.
 
 ![](media/process-manager.png)
 
+### Array-Graph Visualization
+
+![](media/array-graph-visualisation.png)
+
 ### Enhanced Collabration
 
 GDBFrontend has a set of some features for collabration named as "Enhanced Collabration".
