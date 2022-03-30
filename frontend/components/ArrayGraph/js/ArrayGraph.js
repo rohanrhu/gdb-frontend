@@ -207,8 +207,8 @@
                     ctx.lineWidth = 2;
 
                     ctx.beginPath();
-                    ctx.font = '24px Arial';
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+                    ctx.font = '22px Arial';
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
                     ctx.fillText(item.value, tx, ty);
                     
                     ctx.font = '16px Arial';
