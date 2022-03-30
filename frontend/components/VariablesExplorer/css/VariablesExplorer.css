@@ -79,6 +79,7 @@
     height: 28px;
     white-space: nowrap;
     position: relative;
+    flex-grow: 1;
 }
 
 .VariablesExplorer_items_item_button:nth-child(odd) {
@@ -308,8 +309,58 @@
 
 /* ---------------------- */
 
+.VariablesExplorer_items_item_sides {
+    display: flex;
+    flex-direction: row;
+}
+
+.VariablesExplorer_items_item_sides_left {
+    flex-grow: 1;
+}
+
+.VariablesExplorer_items_item_sides_left.VariablesExplorer__arrayGraphOpened {
+    flex-grow: 0;
+    width: 30%;
+    max-width: 300px;
+    overflow-x: hidden;
+}
+
+/* ---------------------- */
+
 .VariablesExplorer_items_item_llVis {
     display: none;
+}
+
+.VariablesExplorer_items_item_arrGrp {
+    display: none;
+    width: 70%;
+    overflow-x: auto;
+    flex-grow: 1;
+    position: relative;
+}
+
+.VariablesExplorer_items_item_arrGrp_arrayGraphComp {
+    height: 500px;
+}
+
+.VariablesExplorer_items_item_arrGrp_closeBtn {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    color: white;
+    user-select: none;
+    transition: background 250ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.VariablesExplorer_items_item_arrGrp_closeBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
 }
 
 /* ---------------------- */

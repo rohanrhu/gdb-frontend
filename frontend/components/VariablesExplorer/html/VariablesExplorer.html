@@ -2,57 +2,77 @@
     <div class="VariablesExplorer_content">
         <div class="VariablesExplorer_items">
             <div class="VariablesExplorer_items_item __proto">
-                <div class="VariablesExplorer_items_item_button">
-                    <div class="VariablesExplorer_items_item_button_menuBtn">
-                        <i class="icofont-settings-alt"></i>
-                    </div>
-                    <div class="VariablesExplorer_items_item_button_openBtn">
-                        <span class="VariablesExplorer_items_item_button_openBtn_icon VariablesExplorer_items_item_button_openBtn_icon__open">[+]</span>
-                        <span class="VariablesExplorer_items_item_button_openBtn_icon VariablesExplorer_items_item_button_openBtn_icon__close">[-]</span>
-                        <span class="VariablesExplorer_items_item_button_openBtn_icon VariablesExplorer_items_item_button_openBtn_icon__notOpenable"></span>
-                    </div>
-                    <div class="VariablesExplorer_items_item_button_isPointer">
-                        ptr
-                    </div>
-                    <div class="VariablesExplorer_items_item_button_isNotPointer">
-                    </div>
-                    <div class="VariablesExplorer_items_item_button_preType">
-                    </div>
-                    <div class="VariablesExplorer_items_item_button_type"></div>
-                    <div class="VariablesExplorer_items_item_button_name"></div>
-                    <div class="VariablesExplorer_items_item_button_value"></div>
-                    <div class="VariablesExplorer_items_item_contextMenu">
-                        <div class="VariablesExplorer_items_item_contextMenu_menu">
-                            <div class="VariablesExplorer_items_item_contextMenu_menu_item VariablesExplorer_items_item_contextMenu_menu_item__oE">
-                                <div class="VariablesExplorer_items_item_contextMenu_menu_item_icon">
-                                    <img class="VariablesExplorer_items_item_contextMenu_menu_item_icon_img" src="/images/debug/fx.png" alt="" draggable="false">
-                                </div>
-                                <div class="VariablesExplorer_items_item_contextMenu_menu_item_label">
-                                    Open in Evaluater
+                <div class="VariablesExplorer_items_item_sides">
+                    <div class="VariablesExplorer_items_item_sides_left">
+                        <div class="VariablesExplorer_items_item_button">
+                            <div class="VariablesExplorer_items_item_button_menuBtn">
+                                <i class="icofont-settings-alt"></i>
+                            </div>
+                            <div class="VariablesExplorer_items_item_button_openBtn">
+                                <span class="VariablesExplorer_items_item_button_openBtn_icon VariablesExplorer_items_item_button_openBtn_icon__open">[+]</span>
+                                <span class="VariablesExplorer_items_item_button_openBtn_icon VariablesExplorer_items_item_button_openBtn_icon__close">[-]</span>
+                                <span class="VariablesExplorer_items_item_button_openBtn_icon VariablesExplorer_items_item_button_openBtn_icon__notOpenable"></span>
+                            </div>
+                            <div class="VariablesExplorer_items_item_button_isPointer">
+                                ptr
+                            </div>
+                            <div class="VariablesExplorer_items_item_button_isNotPointer">
+                            </div>
+                            <div class="VariablesExplorer_items_item_button_preType">
+                            </div>
+                            <div class="VariablesExplorer_items_item_button_type"></div>
+                            <div class="VariablesExplorer_items_item_button_name"></div>
+                            <div class="VariablesExplorer_items_item_button_value"></div>
+                            <div class="VariablesExplorer_items_item_contextMenu">
+                                <div class="VariablesExplorer_items_item_contextMenu_menu">
+                                    <div class="VariablesExplorer_items_item_contextMenu_menu_item VariablesExplorer_items_item_contextMenu_menu_item__oE">
+                                        <div class="VariablesExplorer_items_item_contextMenu_menu_item_icon">
+                                            <img class="VariablesExplorer_items_item_contextMenu_menu_item_icon_img" src="/images/debug/fx.png" alt="" draggable="false">
+                                        </div>
+                                        <div class="VariablesExplorer_items_item_contextMenu_menu_item_label">
+                                            Open in Evaluater
+                                        </div>
+                                    </div>
+                                    <div class="VariablesExplorer_items_item_contextMenu_menu_item VariablesExplorer_items_item_contextMenu_menu_item__vLL">
+                                        <div class="VariablesExplorer_items_item_contextMenu_menu_item_icon">
+                                            <i class="icofont-infinite"></i>
+                                        </div>
+                                        <div class="VariablesExplorer_items_item_contextMenu_menu_item_label">
+                                            Visualize Linked-List
+                                        </div>
+                                    </div>
+                                    <div class="VariablesExplorer_items_item_contextMenu_menu_item VariablesExplorer_items_item_contextMenu_menu_item__vA">
+                                        <div class="VariablesExplorer_items_item_contextMenu_menu_item_icon">
+                                            <i class="icofont-chart-bar-graph"></i>
+                                        </div>
+                                        <div class="VariablesExplorer_items_item_contextMenu_menu_item_label">
+                                            Visualize Array
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="VariablesExplorer_items_item_contextMenu_menu_item VariablesExplorer_items_item_contextMenu_menu_item__vLL">
-                                <div class="VariablesExplorer_items_item_contextMenu_menu_item_icon">
-                                    <i class="icofont-infinite"></i>
-                                </div>
-                                <div class="VariablesExplorer_items_item_contextMenu_menu_item_label">
-                                    Visualize Linked-List
+                        </div>
+                        <div class="VariablesExplorer_items_item_llVis">
+                            <div class="VariablesExplorer_items_item_llVis_linkedListVisualizerComp">
+                                {html_linkedListVisualizer}
+                            </div>
+                        </div>
+                        <div class="VariablesExplorer_items_item_openable">
+                            <div class="VariablesExplorer_items_item_openable_loading">
+                                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                            </div>
+                            <div class="VariablesExplorer_items_item_openable_content">
+                                <div class="VariablesExplorer_items_item_openable_items">
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="VariablesExplorer_items_item_llVis">
-                    <div class="VariablesExplorer_items_item_llVis_linkedListVisualizerComp">
-                        {html_linkedListVisualizer}
-                    </div>
-                </div>
-                <div class="VariablesExplorer_items_item_openable">
-                    <div class="VariablesExplorer_items_item_openable_loading">
-                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                    </div>
-                    <div class="VariablesExplorer_items_item_openable_content">
-                        <div class="VariablesExplorer_items_item_openable_items">
+                    <div class="VariablesExplorer_items_item_arrGrp">
+                        <div class="VariablesExplorer_items_item_arrGrp_arrayGraphComp">
+                            {html_arrayGraph}
+                        </div>
+                        <div class="VariablesExplorer_items_item_arrGrp_closeBtn">
+                            <i class="icofont-close"></i>
                         </div>
                     </div>
                 </div>

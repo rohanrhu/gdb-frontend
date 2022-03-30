@@ -131,6 +131,7 @@ def run(request, params):
     html_evaluateExpression = util.readFile(util.webFSPath("/components/EvaluateExpression/html/EvaluateExpression.html"))
     html_linkedListVisualizer = util.readFile(util.webFSPath("/components/LinkedListVisualizer/html/LinkedListVisualizer.html"))
     html_processManager = util.readFile(util.webFSPath("/components/ProcessManager/html/ProcessManager.html"))
+    html_arrayGraph = util.readFile(util.webFSPath("/components/ArrayGraph/html/ArrayGraph.html"))
 
     html_messageBox = html_messageBox.format(**vars())
     html_aboutDialog = html_aboutDialog.format(**vars())
@@ -149,6 +150,7 @@ def run(request, params):
     html_evaluateExpression = html_evaluateExpression.format(**vars())
     html_linkedListVisualizer = html_linkedListVisualizer.format(**vars())
     html_processManager = html_processManager.format(**vars())
+    html_arrayGraph = html_arrayGraph.format(**vars())
 
     html = util.readFile(util.webFSPath("/templates/modules/main/main.html")).format(**vars())
 

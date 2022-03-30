@@ -74,6 +74,7 @@
             data.is_slot_pointings = false;
             data.is_linked_list_visualizer
             data.is_linked_list_visualizer_enabled = true;
+            data.is_array_graph_enabled = true;
 
             data.open_in_evaluater_on_native_window = false;
 
@@ -87,6 +88,10 @@
 
             data.setLinkedListVisualizerEnabled = function (is_enabled) {
                 data.is_linked_list_visualizer_enabled = is_enabled;
+            };
+            
+            data.setArrayGraphEnabled = function (is_enabled) {
+                data.is_array_graph_enabled = is_enabled;
             };
             
             data.setSignalBounds = function (parameters) {
@@ -293,6 +298,7 @@
                 item.is_loading = false;
 
                 item.is_linked_list_visualizer_opened = false;
+                item.is_array_graph_opened = false;
 
                 item.resolveNonPointer = function () {
                     var type = false;
@@ -337,6 +343,8 @@
                 }
 
                 item.$item = $item;
+                item.$item_sides = $item.find('.VariablesExplorer_items_item_sides');
+                item.$item_sides_left = $item.find('.VariablesExplorer_items_item_sides_left');
                 item.$item_button = $item.find('.VariablesExplorer_items_item_button');
                 item.$item_openable = $item.find('.VariablesExplorer_items_item_openable');
                 item.$item_openable_loading = $item.find('.VariablesExplorer_items_item_openable_loading');
@@ -357,15 +365,25 @@
                 item.$item_llVis_linkedListVisualizerComp = item.$item_llVis.find('.VariablesExplorer_items_item_llVis_linkedListVisualizerComp');
                 item.$item_llVis_linkedListVisualizer = item.$item_llVis_linkedListVisualizerComp.find('> .LinkedListVisualizer');
                 item.item_llVis_linkedListVisualizer = null;
+                
+                item.$item_arrGrp = item.$item.find('.VariablesExplorer_items_item_arrGrp');
+                item.$item_arrGrp_arrayGraphComp = item.$item_arrGrp.find('.VariablesExplorer_items_item_arrGrp_arrayGraphComp');
+                item.$item_arrGrp_arrayGraph = item.$item_arrGrp_arrayGraphComp.find('> .ArrayGraph');
+                item.item_arrGrp_arrayGraph = null;
+                item.$item_arrGrp_closeBtn = item.$item_arrGrp.find('.VariablesExplorer_items_item_arrGrp_closeBtn');
 
                 item.$item_contextMenu = item.$item.find('.VariablesExplorer_items_item_contextMenu');
                 item.$item_contextMenu_menu = item.$item_contextMenu.find('.VariablesExplorer_items_item_contextMenu_menu');
                 
                 item.$item_contextMenu_menu_item__vLL = item.$item_contextMenu_menu.find('.VariablesExplorer_items_item_contextMenu_menu_item__vLL');
-                item.$item_contextMenu_menu_item__vLL = item.$item_contextMenu_menu.find('.VariablesExplorer_items_item_contextMenu_menu_item__vLL');
+                item.$item_contextMenu_menu_item__vA = item.$item_contextMenu_menu.find('.VariablesExplorer_items_item_contextMenu_menu_item__vA');
 
                 if (!data.is_linked_list_visualizer_enabled) {
                     item.$item_contextMenu_menu_item__vLL.hide();
+                }
+                
+                if (!data.is_array_graph_enabled) {
+                    item.$item_contextMenu_menu_item__vA.hide();
                 }
 
                 item.$item_llVis_linkedListVisualizer.on('LinkedListVisualizer_close.VariablesExplorer-' + data.id, function (event) {
@@ -933,6 +951,42 @@
                     }
                 };
                 
+                item.$item_arrGrp_closeBtn.on('click.VariablesExplorer', function (event) {
+                    item.closeArrayGraph();
+                });
+                
+                item.openArrayGraph = function () {
+                    item.is_array_graph_opened = true;
+
+                    item.$item_sides_left.addClass('VariablesExplorer__arrayGraphOpened');
+                    item.$item_arrGrp.show();
+                    
+                    if (!item.$item_arrGrp_arrayGraph.data('ArrayGraph')) {
+                        item.$item_arrGrp_arrayGraph.ArrayGraph();
+                        item.item_arrGrp_arrayGraph = item.$item_arrGrp_arrayGraph.data().ArrayGraph;
+                        item.item_arrGrp_arrayGraph.open_in_evaluater_on_native_window = data.open_in_evaluater_on_native_window;
+                    }
+
+                    item.item_arrGrp_arrayGraph.load({
+                        variable: item.variable
+                    });
+                    item.item_arrGrp_arrayGraph.render();
+                };
+                
+                item.closeArrayGraph = function () {
+                    item.is_array_graph_opened = false;
+                    item.$item_sides_left.removeClass('VariablesExplorer__arrayGraphOpened');
+                    item.$item_arrGrp.hide();
+                };
+                
+                item.toggleArrayGraph = function () {
+                    if (item.is_array_graph_opened) {
+                        item.closeArrayGraph();
+                    } else {
+                        item.openArrayGraph();
+                    }
+                };
+                
                 item.openLinkedListVisualizer = function () {
                     item.is_linked_list_visualizer_opened = true;
 
@@ -981,6 +1035,11 @@
                 item.$item_contextMenu_menu_item__vLL.on('click.VariablesExplorer.'+data.id, function (event) {
                     item.closeContextMenu();
                     item.toggleLinkedListVisualizer();
+                });
+                
+                item.$item_contextMenu_menu_item__vA.on('click.VariablesExplorer.'+data.id, function (event) {
+                    item.closeContextMenu();
+                    item.toggleArrayGraph();
                 });
                 
                 item.$item_contextMenu_menu_item__oE.on('click.VariablesExplorer.'+data.id, function (event) {
@@ -1040,7 +1099,14 @@
                 if (data.is_linked_list_visualizer_enabled) {
                     context_menu_args.actions.visualizeLinkedlist = {
                         label: 'Visualize Linked-List',
-                        function: item.openLinkedListVisualizer
+                        function: item.toggleLinkedListVisualizer
+                    };
+                }
+                
+                if (data.is_array_graph_enabled) {
+                    context_menu_args.actions.visualizeArray = {
+                        label: 'Visualize Array',
+                        function: item.toggleArrayGraph
                     };
                 }
 
