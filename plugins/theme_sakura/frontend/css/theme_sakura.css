@@ -402,7 +402,7 @@
 .EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {
     border: 1px solid rgb(84 255 247 / 50%);
     background: rgb(42 143 174);
-    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 25%), 0px 0px 40px 20px rgb(255 0 234 / 25%);
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 25%), 0px 0px 40px 20px rgb(0 163 255 / 25%);
 }
 
 .VariablesExplorer_items_item_contextMenu_menu_item:hover {
