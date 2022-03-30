@@ -1,0 +1,574 @@
+/*
+ * gdb-frontend is a easy, flexible and extensionable gui debugger
+ *
+ * https://github.com/rohanrhu/gdb-frontend
+ * https://oguzhaneroglu.com/projects/gdb-frontend/
+ *
+ * Licensed under GNU/GPLv3
+ * Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
+ *
+ */
+
+.GDBFrontend {
+    color: white;
+    background: #923978;
+    mix-blend-mode: screen;
+    z-index: 100;
+}
+
+.GDBFrontend_ThemeSakura_bg {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    object-fit: cover;
+}
+
+.Checkbox_icon_img {
+    filter: contrast(10) invert(1);
+}
+
+.button1 {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.button1:hover {
+    background: rgb(42 143 174);
+}
+
+.GDBFrontend_layout_top {
+    background: rgb(0 0 0 / 60%);
+    box-shadow: 0px 0px 10px 0px rgb(88 0 62 / 60%), 0px 0px 20px 0px rgb(255 0 180 / 90%);
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgb(42 143 174);
+}
+ 
+.GDBFrontend_runtimeControls_btn_openable {
+    background: rgb(42 143 174);
+}
+
+.Checkbox.Checkbox__checked .Checkbox_icon_img {
+    filter: hue-rotate(65deg) contrast(1);
+}
+
+.GDBFrontend_load_connectBtn_openable {
+    background: rgb(42 143 174);
+}
+ 
+.GDBFrontend_layout_middle_left {
+}
+
+.GDBFrontend_sources_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_sources_title_buttons_button_iconImg {
+}
+
+.GDBFrontend_disassembly_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {
+}
+
+.GDBFrontend_watches_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.GDBFrontend_breakpoints_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.BreakpointsEditor_items_item_remove {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.BreakpointsEditor_items_item_remove:hover {
+    background: #db199c;
+}
+
+.GDBFrontend_threads_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ThreadsEditor_items_item_num {
+    color: white;
+}
+
+.ThreadsEditor_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.ThreadsEditor_items_item.ThreadsEditor__current {
+    background: rgb(42 143 174);
+}
+
+.GDBFrontend_stack_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.StackTrace_items_item_num {
+    color: white;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0,0,0,0.05);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgb(42 143 174);
+}
+
+.GDBFrontend_variables_title {
+    background: rgb(0 0 0 / 25%);
+}
+
+.FileTabs_editors_content {
+    background: rgb(0 0 0 / 10%);
+}
+
+.FileTabs_editors_noItem {
+    background: rgb(0 0 0 / 30%);
+    color: white;
+}
+
+.FileTabs_tabs_items_item_closeBtn {
+    color: white;
+}
+
+.FileTabs_tabs_items_item_closeBtn:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.FileTabs_editors_items_item_variablePopup {
+    background: hsl(197deg 100% 68% / 90%);
+    box-shadow: 0px 0px 5px 0px rgb(65 0 44 / 75%), 0px 0px 50px 0px rgb(0 174 255 / 40%);
+    text-shadow: 1px 1px 2px rgb(65 0 44 / 75%), 0px 0px 10px rgb(116 8 81 / 90%);
+}
+.FileTabs_editors_items_item_variablePopup {
+    background: hsl(197deg 100% 68% / 90%);
+    box-shadow: 0px 0px 5px 0px rgb(65 0 44 / 75%), 0px 0px 50px 0px rgb(0 174 255 / 40%);
+    text-shadow: 1px 1px 2px rgb(65 0 44 / 75%), 0px 0px 10px rgb(116 8 81 / 90%);
+}
+
+.GDBFrontend_terminalCloseBtn,
+.GDBFrontend_terminalOpenBtn {
+    background: rgb(42 143 174);
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon {
+    color: #fff35f;
+}
+
+.Resizable_resizer_draggable {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.Watches_items_item_expression_input_rI {
+    color: white;
+}
+
+.Watches_items_item_value_input_rI {
+    color: white;
+}
+
+.Disassembly_items_item_addr {
+    color: #d9edff;
+}
+
+.VariablesExplorer_items_item_button_type {
+    color: white;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0,0,0,0.075);
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed > .VariablesExplorer_items_item_sides .VariablesExplorer_items_item_button {
+    background: rgb(220 31 160) !important;
+}
+
+.FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
+    background: rgb(0, 0, 0, 0.25);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box {
+    color: white;
+    background: rgb(42 143 174);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
+    border-bottom: 10px solid rgb(42 143 174);
+}
+
+.FileBrowser_window_box {
+    border: 1px solid rgb(84 255 247 / 50%);
+    background-color: rgb(42 143 174);
+    background-image: url('../images/sakura-1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: soft-light;
+    mix-blend-mode: hard-light;
+}
+
+.FileBrowser_cr {
+    background: rgb(7 73 98 / 54%);
+}
+
+.EvaluateExpression_window_box {
+    background: rgb(42 143 174 / 90%);
+    color: white;
+}
+
+.EvaluateExpression_window_mover {
+    background-color: rgb(42 143 174);
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: rgb(255 156 234);
+}
+
+.GDBFrontend.GDBFrontend__evaluaterWindow .EvaluateExpression .EvaluateExpression_window_box {
+    background: rgb(42 143 174);
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgb(42 143 174);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    background: rgb(42 143 174);
+    color: white;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item, a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    color: white;
+}
+
+.css_AboutDialog_box {
+    background: rgb(42 143 174);
+}
+
+.FuzzyFinder_box {
+    background: hsl(197deg 100% 68% / 80%);
+    color: white;
+    text-shadow: 1px 1px 2px rgb(65 0 44 / 75%), 0px 0px 10px rgb(116 8 81 / 90%);
+    box-shadow: 0px 0px 5px 0px rgb(65 0 44 / 75%), 0px 0px 50px 0px rgb(0 174 255 / 40%);
+}
+
+.FuzzyFinder_box_input_rI {
+    text-shadow: 1px 1px 2px rgb(65 0 44 / 75%), 0px 0px 10px rgb(116 8 81 / 90%);
+}
+
+.FuzzyFinder_box_items_item:hover.FuzzyFinder_box_items_item__current,
+.FuzzyFinder_box_items_item__current {
+    background: rgb(219 25 156 / 50%);
+}
+
+.css_MessageBox_box {
+    background: rgb(42 143 174);
+}
+
+.SourceTree_items_item_button:hover {
+    background: rgb(95, 22, 22, 0.5);
+}
+
+.FileTabs_tabs {
+    background: rgb(0 0 0 / 25%);
+    box-shadow: 0px 0px 10px 0px rgb(88 0 62 / 60%), 0px 0px 20px 0px rgb(124 0 88 / 90%);
+}
+
+.ace-tomorrow-night-bright {
+    background: rgb(0 0 0 / 20%);
+}
+
+.ace-tomorrow-night-bright .ace_gutter {
+    background: rgb(26 1 126 / 10%);
+}
+
+.GDBFrontend_layout_middle_right {
+}
+
+.ace-tomorrow-night-bright .ace_gutter-active-line {
+    background: rgb(42 143 174 / 40%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_active-line {
+    background: rgb(42 143 174 / 40%);
+}
+
+.ace-tomorrow-night-bright .ace_marker-layer .ace_selection {
+    background: rgb(42 143 174 / 40%);
+}
+
+.FileTabs_tabs_items_item {
+    border-right: 1px solid rgb(255, 255, 255, 0.1);
+}
+
+.Disassembly_items_item.Disassembly__current .Disassembly_items_item_bp {
+    background: linear-gradient(90deg, rgb(42 143 174), rgba(255, 255, 255, 0));
+}
+
+.VariablesExplorer_items_item_contextMenu {
+    color: white;
+    background: rgb(42 143 174);
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(42 143 174);
+}
+
+.ace-tomorrow-night-bright .ace_print-margin {
+    width: 1px;
+    background: rgb(255, 255, 255, 0.2);
+}
+
+.LinkedListVisualizer_items_item_box {
+    background: rgb(124 26 26);
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(42 143 174);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(42 143 174);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: #b35aa5;
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(42 143 174);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(42 143 174);
+}
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(73 166 194);
+}
+
+.GDBFrontend_layout_status {
+    color: white;
+    background: rgb(242 10 165 / 75%);
+    box-shadow: 0px 0px 10px 0px #58003e, 0px 0px 10px 0px #ff00b4;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: rgb(42 143 174);
+    color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid rgb(42 143 174);
+}
+
+.input1 {
+    background: rgb(0 0 0 / 75%);
+}
+
+.GDBFrontend_layout_status_collabration_resolutionsNotEqual_label {
+    color: #ff88aa;
+}
+
+.Disassembly_content {
+    background: rgb(0 0 0 / 30%);
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed > .VariablesExplorer_items_item_button {
+    background: rgb(116 0 59) !important;
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item_icon {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.EvaluateExpression.EvaluateExpression__focused .EvaluateExpression_window_box {
+    border: 1px solid rgb(84 255 247 / 50%);
+    background: rgb(42 143 174);
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 25%), 0px 0px 40px 20px rgb(255 0 234 / 25%);
+}
+
+.VariablesExplorer_items_item_contextMenu_menu_item:hover {
+    background: rgb(0 0 0 / 25%);
+}
+
+.ace-tomorrow-night-bright .ace_heading, .ace-tomorrow-night-bright .ace_markup.ace_heading, .ace-tomorrow-night-bright .ace_string {
+    color: #ff95cb;
+}
+
+.ace-tomorrow-night-bright .ace_constant.ace_character, .ace-tomorrow-night-bright .ace_constant.ace_language, .ace-tomorrow-night-bright .ace_constant.ace_numeric, .ace-tomorrow-night-bright .ace_keyword.ace_other.ace_unit, .ace-tomorrow-night-bright .ace_support.ace_constant, .ace-tomorrow-night-bright .ace_variable.ace_parameter {
+    color: #56f5df;
+}
+
+.ace_identifier {
+    color: white;
+}
+
+.ace_storage.ace_type {
+    color: #d98fff;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_keyword.ace_operator {
+    color: #ff6e89;
+}
+
+.ace-tomorrow-night-bright .ace_entity.ace_name.ace_function, .ace-tomorrow-night-bright .ace_support.ace_function, .ace-tomorrow-night-bright .ace_variable {
+    color: #5bd2ff;
+}
+
+.ace_paren {
+    color: #fffca8;
+}
+
+.ace_keyword.ace_control {
+    color: #c67bff;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_keyword, .ace-tomorrow-night-bright .ace_meta, .ace-tomorrow-night-bright .ace_storage, .ace-tomorrow-night-bright .ace_storage.ace_type, .ace-tomorrow-night-bright .ace_support.ace_type {
+    color: #00fff3;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ace-tomorrow-night-bright .ace_comment {
+    color: #bf83a9;
+}
+
+.GDBFrontend_layout_status_stepTime_value {
+    color: #89e3ff;
+}
+
+.Registers_items_item.Registers__changed .Registers_items_item_name {
+    background: linear-gradient(90deg, rgb(42 143 174), rgba(255, 255, 255, 0));
+}
+
+.ContextMenuWindow_box {border: 1px solid rgb(84 255 247 / 50%);background: rgb(42 143 174);}
+
+.FileTabs_editors_items_item_breakpointDetails_box {
+    border: 1px solid rgb(84 255 247 / 50%);
+    background: rgb(42 143 174);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    background: rgb(42 143 174);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    border-color: rgb(84 255 247 / 50%);
+    background: rgb(42 143 174);
+}
+
+.BreakpointsEditor_items_item_cond {
+    color: #00fff3;
+    text-shadow: 0px 0px 10px white;
+}
+
+.ProcessManager_window_box {
+    background: rgb(42 143 174 / 90%);
+    color: white;
+}
+
+.ProcessManager_window_mover {
+    background-color: rgb(42 143 174);
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: rgb(255 156 234);
+}
+
+.ProcessManager.ProcessManager__focused .ProcessManager_window_box {
+    border: 1px solid rgb(84 255 247 / 50%);
+    background: rgb(42 143 174);
+}
+
+.GDBFrontend.GDBFrontend__processManagerWindow .ProcessManager.ProcessManager__focused .ProcessManager_window_box {
+    background: rgb(42 143 174);
+}
+
+.FileBrowser_items_item_name {
+    display: inline-block;
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 85%), 0px 1px 6px rgb(80 8 59 / 85%);
+}
+
+.FileBrowser_window_box_header_line_label {
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 85%), 0px 1px 6px rgb(80 8 59 / 85%);
+}
+
+.FileBrowser_window_box_header_path_input_rI {
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 85%), 0px 1px 6px rgb(80 8 59 / 85%);
+}
+
+.FileBrowser_total {
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 85%), 0px 1px 6px rgb(80 8 59 / 85%);
+}
+
+.ProcessManager_processes_items_item_name {
+    color: rgb(255 224 249);
+    text-shadow: 0px 0px 1px #721d6f, 0px 0px 5px rgb(107 16 104 / 81%);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__conditionalBreakpoint::after {   
+    background: #5bd2ff;
+}
+
+.Disassembly_items_item_asm_mnemonic {
+    color: #dcff00;
+}
+
+.SourceTree_items_item.SourceTree_items_item__file .SourceTree_items_item_button_label_icon__file {
+    color: #ff97e1;
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_button_label_icon {
+    color: #58d1ff;
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__breakpoint::after {
+    background: #ff97e1;
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__breakpoint.FileTabs__stopped::after {
+    background: #ff00b5;
+}
+
+.GDBFrontend_layout_status_runTime_value {
+    color: #89e3ff;
+}
+
+.GDBFrontend_layout_status_inferior_value {
+    color: #89e3ff;
+}
+
+.Watches_items_item_remove:hover {
+    background: #db199c;
+}
+
+.GDBFrontend_ThemeSakura_leafs {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 110;
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
