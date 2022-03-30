@@ -313,6 +313,7 @@ For switching between themes use `gf-theme [THEME]` command on GDB shell.
 ```
 (gdb) gf-theme doki
 (gdb) gf-theme sky
+(gdb) gf-theme sakura
 (gdb) gf-theme waifu
 (gdb) gf-theme cyberpunk
 (gdb) gf-theme dark
@@ -352,7 +353,7 @@ or you can get all plugins:
 
 ```python
 >>> gdbfrontend.plugin.getAll()
-['hello', 'theme_light', 'theme_red']
+['hello', 'theme_cyberpunk', 'theme_dark', 'theme_doki', 'theme_green', 'theme_light', 'theme_red', 'theme_sakura', 'theme_sky', 'theme_waifu']
 ```
 
 ## Security with Sharing Sessions
