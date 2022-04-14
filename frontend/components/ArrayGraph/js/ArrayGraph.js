@@ -9,15 +9,6 @@
  *
  */
 
-/*
- * GDBFrontend Linked-List Visualizer
- * This componant accepts state.variables format.
- *
- * Example:
- * ArrayGraph.load(state.variables);
- * ArrayGraph.render();
- */
-
 (function($) {
     var methods = {};
 
