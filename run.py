@@ -328,13 +328,12 @@ try:
         terminate_sub_procs = False
         exit(1)
     
-    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     subprocess.Popen([tmux_executable, "kill-session", "-t", terminal_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
     
     if not is_random_port:
         os.system(
             tmux_executable +
-            " -f tmux.conf new-session -s " + terminal_id +
+            " -f \"" + path + "/tmux.conf\" new-session -s " + terminal_id +
             " -d '" + gdb_executable +
             " " + gdb_args +
             " -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); " +
@@ -343,13 +342,13 @@ try:
     else:
         os.system(
             tmux_executable +
-            " -f tmux.conf new-session -d -s " + terminal_id
+            " -f \"" + path + "/tmux.conf\" new-session -d -s " + terminal_id
         )
 
     if config.WORKDIR:
         os.system(
             tmux_executable +
-            " -f tmux.conf send-keys -t " + terminal_id +
+            " -f \"" + path + "/tmux.conf\" send-keys -t " + terminal_id +
             " \"cd " + config.WORKDIR + "\"" +
             " ENTER"
         )
@@ -391,7 +390,7 @@ try:
     else:
         os.system(
             tmux_executable +
-            " -f tmux.conf send-keys -t " + terminal_id +
+            " -f \"" + path + "/tmux.conf\" send-keys -t " + terminal_id +
             " \"" +
             gdb_executable +
             " " + gdb_args +
@@ -401,7 +400,7 @@ try:
         )
         os.system(
             tmux_executable +
-            " -f tmux.conf send-keys -t " + terminal_id +
+            " -f \"" + path + "/tmux.conf\" send-keys -t " + terminal_id +
             " ENTER"
         )
 
