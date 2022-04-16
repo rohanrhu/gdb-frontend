@@ -169,7 +169,7 @@ def load(file):
         gdb.execute("file \"%s\"" % file)
 
         if settings.SET_CWD_TO_EXECUTABLE:
-            gdb.execute("set cwd %s" % os.path.dirname(file))
+            gdb.execute("cd %s" % os.path.dirname(file))
         
         return True
     except Exception as e:
@@ -1372,7 +1372,11 @@ class Variable():
 
 @threadSafe(no_interrupt=True)
 def getRegisters():
-    selected_thread = gdb.selected_thread()
+    try:
+        selected_thread = gdb.selected_thread()
+    except Exception as e:
+        util.verbose(e, traceback.format_exc())
+        return {}
     
     if (not selected_thread) or gdb.selected_thread().is_running():
         return {}
