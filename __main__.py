@@ -14,7 +14,6 @@ import sys
 
 path = os.path.dirname(__file__)
 
-os.chdir(path)
 sys.path.insert(0, path)
 
 spec = importlib.util.spec_from_file_location("run", os.path.join(os.path.dirname(__file__), "run.py"))
