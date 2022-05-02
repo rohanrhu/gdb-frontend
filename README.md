@@ -104,6 +104,10 @@ GDBFrontend has powerful and extensible APIs. Follow [this quick tutorial](https
 
 Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/makefile-integration/) for integration ideas for special development/debugging requirements.
 
+## [STM32 Debugging using OpenOCD, GDB & GDBFrontend on Linux](https://elrobotista.com/en/posts/stm32-debug-linux/)
+
+Follow [this tutorial](https://elrobotista.com/en/posts/stm32-debug-linux/) for debugging STM32 with OpenOCD and GDBFrontend.
+
 ## Features
 
 ### Expression Evaluter
