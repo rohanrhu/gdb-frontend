@@ -112,7 +112,7 @@ Follow [this tutorial](https://elrobotista.com/en/posts/stm32-debug-linux/) for 
 
 ### Expression Evaluter
 
-GDBFrontend has an expression evaluater that you can use multiple in sametime.
+GDBFrontend has an expression evaluator that you can use multiple in sametime.
 
 ![](media/expression-evaluater.png)
 
@@ -293,7 +293,7 @@ Current hotkeys are listed below.
 | Action                                               | Hotkey                     | Context                                      |
 | ---------------------------------------------------- | -------------------------- | -------------------------------------------- |
 | *General:* Open a source file                        | **Ctrl + O**               | GDBFrontend                                  |
-| *General:* New ExpressionEvaluater                   | **Ctrl + R**               | GDBFrontend                                  |
+| *General:* New ExpressionEvaluator                   | **Ctrl + R**               | GDBFrontend                                  |
 | *General:* New ExpressionEvaluter on native window   | **Ctrl + Shift + R**       | GDBFrontend                                  |
 | *General:* Fuzzy source finder                       | **Ctrl + P**               | GDBFrontend                                  |
 | *Runtime:* Run                                       | **F5**                     | GDBFrontend                                  |
@@ -394,11 +394,11 @@ If your application is forking new processes and setting their PGIDs, GDBFronten
 pkill -f gdb
 ```
 
-### Expression Evaluater Performance Tips
+### Expression Evaluator Performance Tips
 
-If you are using **ExpressionEvaluater** with very long depth expanded variables/members, your scroll and evaluater window move performance may be affected bad for pointer visualization. In this situation, you can turn off **signal** and **slot** pointings for that evaluater window.
+If you are using **ExpressionEvaluator** with very long depth expanded variables/members, your scroll and evaluator window move performance may be affected bad for pointer visualization. In this situation, you can turn off **signal** and **slot** pointings for that evaluator window.
 
-![Evaluater Pointer Visualization Buttons](media/evaluater-pointing-buttons.png)
+![Evaluator Pointer Visualization Buttons](media/evaluator-pointing-buttons.png)
 
 ## GDB-Related Issues and Tips
 
