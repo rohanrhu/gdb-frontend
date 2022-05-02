@@ -110,7 +110,7 @@ Follow [this tutorial](https://elrobotista.com/en/posts/stm32-debug-linux/) for 
 
 ## Features
 
-### Expression Evaluter
+### Expression Evaluator
 
 GDBFrontend has an expression evaluator that you can use multiple in sametime.
 
@@ -294,7 +294,7 @@ Current hotkeys are listed below.
 | ---------------------------------------------------- | -------------------------- | -------------------------------------------- |
 | *General:* Open a source file                        | **Ctrl + O**               | GDBFrontend                                  |
 | *General:* New ExpressionEvaluator                   | **Ctrl + R**               | GDBFrontend                                  |
-| *General:* New ExpressionEvaluter on native window   | **Ctrl + Shift + R**       | GDBFrontend                                  |
+| *General:* New ExpressionEvaluator on native window   | **Ctrl + Shift + R**       | GDBFrontend                                  |
 | *General:* Fuzzy source finder                       | **Ctrl + P**               | GDBFrontend                                  |
 | *Runtime:* Run                                       | **F5**                     | GDBFrontend                                  |
 | *Runtime:* Continue                                  | **F6**                     | GDBFrontend                                  |
