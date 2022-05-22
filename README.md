@@ -403,7 +403,7 @@ pkill -f gdb
 
 If you are using **ExpressionEvaluator** with very long depth expanded variables/members, your scroll and evaluator window move performance may be affected bad for pointer visualization. In this situation, you can turn off **signal** and **slot** pointings for that evaluator window.
 
-![Evaluator Pointer Visualization Buttons](media/evaluator-pointing-buttons.png)
+![Evaluator Pointer Visualization Buttons](media/evaluater-pointing-buttons.png)
 
 ## GDB-Related Issues and Tips
 
