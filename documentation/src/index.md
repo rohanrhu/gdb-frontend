@@ -189,6 +189,7 @@ Options:
   --host=IP, -H IP:                             Specifies current host address that you can access via for HTTP and WS servers.
   --listen=IP, -l IP:                           Specifies listen address for HTTP and WS servers.
   --port=PORT, -p PORT:                         Specifies HTTP port. (0 for random port.)
+  --url-base=PATH, -u PATH:                     Specifies URL base path. (Default: /)
   --readonly, -r:                               Makes code editor readonly. (Notice: This option is not related to security.)
   --workdir, -w:                                Specifies working directory.
   --plugin-dir, -P:                             Specifies plugins directory.
@@ -237,6 +238,10 @@ Specifies listen address for HTTP and WS servers.
 #### `--port=PORT`, `-p PORT`
 
 Specifies HTTP port. (0 for random port.)
+
+#### `--url-base=PATH`, `-u PATH`
+
+Specifies URL base path. (Default: /)
 
 #### `--readonly, -r`
 
