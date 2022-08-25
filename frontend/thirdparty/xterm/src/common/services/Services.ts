@@ -3,10 +3,11 @@
  * @license MIT
  */
 
-import { IEvent } from 'common/EventEmitter';
+import { IEvent, IEventEmitter } from 'common/EventEmitter';
 import { IBuffer, IBufferSet } from 'common/buffer/Types';
-import { IDecPrivateModes, ICoreMouseEvent, CoreMouseEncoding, ICoreMouseProtocol, CoreMouseEventType, ICharset, IWindowOptions, IModes, IAttributeData, ScrollSource } from 'common/Types';
+import { IDecPrivateModes, ICoreMouseEvent, CoreMouseEncoding, ICoreMouseProtocol, CoreMouseEventType, ICharset, IWindowOptions, IModes, IAttributeData, ScrollSource, IDisposable, IColorRGB, IColor } from 'common/Types';
 import { createDecorator } from 'common/services/ServiceRegistry';
+import { IDecorationOptions, IDecoration } from 'xterm';
 
 export const IBufferService = createDecorator<IBufferService>('BufferService');
 export interface IBufferService {
@@ -164,6 +165,14 @@ export interface IInstantiationService {
   createInstance<Ctor extends new (...args: any[]) => any, R extends InstanceType<Ctor>>(t: Ctor, ...args: GetLeadingNonServiceArgs<ConstructorParameters<Ctor>>): R;
 }
 
+export enum LogLevelEnum {
+  DEBUG = 0,
+  INFO = 1,
+  WARN = 2,
+  ERROR = 3,
+  OFF = 4
+}
+
 export const ILogService = createDecorator<ILogService>('LogService');
 export interface ILogService {
   serviceBrand: undefined;
@@ -180,6 +189,12 @@ export const IOptionsService = createDecorator<IOptionsService>('OptionsService'
 export interface IOptionsService {
   serviceBrand: undefined;
 
+  /**
+   * Read only access to the raw options object, this is an internal-only fast path for accessing
+   * single options without any validation as we trust TypeScript to enforce correct usage
+   * internally.
+   */
+  readonly rawOptions: Readonly<ITerminalOptions>;
   readonly options: ITerminalOptions;
 
   readonly onOptionChange: IEvent<string>;
@@ -190,49 +205,8 @@ export interface IOptionsService {
 
 export type FontWeight = 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | number;
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'off';
-export enum LogLevelEnum {
-  DEBUG = 0,
-  INFO = 1,
-  WARN = 2,
-  ERROR = 3,
-  OFF = 4
-}
-export type RendererType = 'dom' | 'canvas';
 
-export interface IPartialTerminalOptions {
-  altClickMovesCursor?: boolean;
-  allowTransparency?: boolean;
-  bellSound?: string;
-  bellStyle?: 'none' | 'sound' /* | 'visual' | 'both' */;
-  cols?: number;
-  cursorBlink?: boolean;
-  cursorStyle?: 'block' | 'underline' | 'bar';
-  cursorWidth?: number;
-  disableStdin?: boolean;
-  drawBoldTextInBrightColors?: boolean;
-  fastScrollModifier?: 'alt' | 'ctrl' | 'shift';
-  fastScrollSensitivity?: number;
-  fontSize?: number;
-  fontFamily?: string;
-  fontWeight?: FontWeight;
-  fontWeightBold?: FontWeight;
-  letterSpacing?: number;
-  lineHeight?: number;
-  logLevel?: LogLevel;
-  macOptionIsMeta?: boolean;
-  macOptionClickForcesSelection?: boolean;
-  rendererType?: RendererType;
-  rightClickSelectsWord?: boolean;
-  rows?: number;
-  screenReaderMode?: boolean;
-  scrollback?: number;
-  scrollSensitivity?: number;
-  tabStopWidth?: number;
-  theme?: ITheme;
-  windowsMode?: boolean;
-  wordSeparator?: string;
-  windowOptions?: IWindowOptions;
-}
+export type RendererType = 'dom' | 'canvas';
 
 export interface ITerminalOptions {
   allowProposedApi: boolean;
@@ -241,6 +215,7 @@ export interface ITerminalOptions {
   bellSound: string;
   bellStyle: 'none' | 'sound' /* | 'visual' | 'both' */;
   cols: number;
+  convertEol: boolean;
   cursorBlink: boolean;
   cursorStyle: 'block' | 'underline' | 'bar';
   cursorWidth: number;
@@ -271,10 +246,10 @@ export interface ITerminalOptions {
   windowsMode: boolean;
   windowOptions: IWindowOptions;
   wordSeparator: string;
+  overviewRulerWidth?: number;
 
   [key: string]: any;
   cancelEvents: boolean;
-  convertEol: boolean;
   termName: string;
 }
 
@@ -284,6 +259,7 @@ export interface ITheme {
   cursor?: string;
   cursorAccent?: string;
   selection?: string;
+  selectionForeground?: string;
   black?: string;
   red?: string;
   green?: string;
@@ -324,4 +300,24 @@ export interface IUnicodeService {
 export interface IUnicodeVersionProvider {
   readonly version: string;
   wcwidth(ucs: number): 0 | 1 | 2;
+}
+
+export const IDecorationService = createDecorator<IDecorationService>('DecorationService');
+export interface IDecorationService extends IDisposable {
+  serviceBrand: undefined;
+  readonly decorations: IterableIterator<IInternalDecoration>;
+  readonly onDecorationRegistered: IEvent<IInternalDecoration>;
+  readonly onDecorationRemoved: IEvent<IInternalDecoration>;
+  registerDecoration(decorationOptions: IDecorationOptions): IDecoration | undefined;
+  reset(): void;
+  /** Iterates over the decorations at a line (in no particular order). */
+  getDecorationsAtLine(line: number): IterableIterator<IInternalDecoration>;
+  /** Iterates over the decorations at a cell (in no particular order). */
+  getDecorationsAtCell(x: number, line: number, layer?: 'bottom' | 'top'): IterableIterator<IInternalDecoration>;
+}
+export interface IInternalDecoration extends IDecoration {
+  readonly options: IDecorationOptions;
+  readonly backgroundColorRGB: IColor | undefined;
+  readonly foregroundColorRGB: IColor | undefined;
+  readonly onRenderEmitter: IEventEmitter<HTMLElement>;
 }

@@ -26,7 +26,6 @@ export class Viewport extends Disposable implements IViewport {
   private _lastRecordedBufferHeight: number = 0;
   private _lastTouchY: number = 0;
   private _lastScrollTop: number = 0;
-  private _lastHadScrollBar: boolean = false;
   private _activeBuffer: IBuffer;
   private _renderDimensions: IRenderDimensions;
 
@@ -42,6 +41,7 @@ export class Viewport extends Disposable implements IViewport {
     private readonly _scrollLines: (amount: number) => void,
     private readonly _viewportElement: HTMLElement,
     private readonly _scrollArea: HTMLElement,
+    private readonly _element: HTMLElement,
     @IBufferService private readonly _bufferService: IBufferService,
     @IOptionsService private readonly _optionsService: IOptionsService,
     @ICharSizeService private readonly _charSizeService: ICharSizeService,
@@ -53,7 +53,6 @@ export class Viewport extends Disposable implements IViewport {
     // Unfortunately the overlay scrollbar would be hidden underneath the screen element in that case,
     // therefore we account for a standard amount to make it visible
     this.scrollBarWidth = (this._viewportElement.offsetWidth - this._scrollArea.offsetWidth) || FALLBACK_SCROLL_BAR_WIDTH;
-    this._lastHadScrollBar = true;
     this.register(addDisposableDomListener(this._viewportElement, 'scroll', this._onScroll.bind(this)));
 
     // Track properties used in performance critical code manually to avoid using slow getters
@@ -108,15 +107,6 @@ export class Viewport extends Disposable implements IViewport {
       this._viewportElement.scrollTop = scrollTop;
     }
 
-    // Update scroll bar width
-    if (this._optionsService.options.scrollback === 0) {
-      this.scrollBarWidth = 0;
-    } else {
-      this.scrollBarWidth = (this._viewportElement.offsetWidth - this._scrollArea.offsetWidth) || FALLBACK_SCROLL_BAR_WIDTH;
-    }
-    this._lastHadScrollBar = this.scrollBarWidth > 0;
-
-    this._viewportElement.style.width = (this._renderService.dimensions.actualCellWidth * (this._bufferService.cols) + this.scrollBarWidth).toString() + 'px';
     this._refreshAnimationFrame = null;
   }
 
@@ -147,11 +137,6 @@ export class Viewport extends Disposable implements IViewport {
     if (this._renderDimensions.scaledCellHeight !== this._currentScaledCellHeight) {
       this._refresh(immediate);
       return;
-    }
-
-    // If the scroll bar visibility changed
-    if (this._lastHadScrollBar !== (this._optionsService.options.scrollback > 0)) {
-      this._refresh(immediate);
     }
   }
 
@@ -217,7 +202,7 @@ export class Viewport extends Disposable implements IViewport {
 
   private _getPixelsScrolled(ev: WheelEvent): number {
     // Do nothing if it's not a vertical scroll event
-    if (ev.deltaY === 0) {
+    if (ev.deltaY === 0 || ev.shiftKey) {
       return 0;
     }
 
@@ -238,7 +223,7 @@ export class Viewport extends Disposable implements IViewport {
    */
   public getLinesScrolled(ev: WheelEvent): number {
     // Do nothing if it's not a vertical scroll event
-    if (ev.deltaY === 0) {
+    if (ev.deltaY === 0 || ev.shiftKey) {
       return 0;
     }
 
@@ -256,15 +241,15 @@ export class Viewport extends Disposable implements IViewport {
   }
 
   private _applyScrollModifier(amount: number, ev: WheelEvent): number {
-    const modifier = this._optionsService.options.fastScrollModifier;
+    const modifier = this._optionsService.rawOptions.fastScrollModifier;
     // Multiply the scroll speed when the modifier is down
     if ((modifier === 'alt' && ev.altKey) ||
       (modifier === 'ctrl' && ev.ctrlKey) ||
       (modifier === 'shift' && ev.shiftKey)) {
-      return amount * this._optionsService.options.fastScrollSensitivity * this._optionsService.options.scrollSensitivity;
+      return amount * this._optionsService.rawOptions.fastScrollSensitivity * this._optionsService.rawOptions.scrollSensitivity;
     }
 
-    return amount * this._optionsService.options.scrollSensitivity;
+    return amount * this._optionsService.rawOptions.scrollSensitivity;
   }
 
   /**

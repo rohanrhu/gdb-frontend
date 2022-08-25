@@ -22,12 +22,12 @@
  */
 
 import { Disposable } from 'common/Lifecycle';
-import { IInstantiationService, IOptionsService, IBufferService, ILogService, ICharsetService, ICoreService, ICoreMouseService, IUnicodeService, IDirtyRowService, LogLevelEnum } from 'common/services/Services';
+import { IInstantiationService, IOptionsService, IBufferService, ILogService, ICharsetService, ICoreService, ICoreMouseService, IUnicodeService, IDirtyRowService, LogLevelEnum, ITerminalOptions } from 'common/services/Services';
 import { InstantiationService } from 'common/services/InstantiationService';
 import { LogService } from 'common/services/LogService';
 import { BufferService, MINIMUM_COLS, MINIMUM_ROWS } from 'common/services/BufferService';
 import { OptionsService } from 'common/services/OptionsService';
-import { ITerminalOptions, IDisposable, IBufferLine, IAttributeData, ICoreTerminal, IKeyboardEvent, IScrollEvent, ScrollSource } from 'common/Types';
+import { IDisposable, IBufferLine, IAttributeData, ICoreTerminal, IKeyboardEvent, IScrollEvent, ScrollSource, ITerminalOptions as IPublicTerminalOptions } from 'common/Types';
 import { CoreService } from 'common/services/CoreService';
 import { EventEmitter, IEvent, forwardEvent } from 'common/EventEmitter';
 import { CoreMouseService } from 'common/services/CoreMouseService';
@@ -68,6 +68,8 @@ export abstract class CoreTerminal extends Disposable implements ICoreTerminal {
   private _onResize = new EventEmitter<{ cols: number, rows: number }>();
   public get onResize(): IEvent<{ cols: number, rows: number }> { return this._onResize.event; }
   protected _onScroll = new EventEmitter<IScrollEvent, void>();
+  public get onWriteParsed(): IEvent<void> { return this._onWriteParsed.event; }
+  protected _onWriteParsed = new EventEmitter<void>();
   /**
    * Internally we track the source of the scroll but this is meaningless outside the library so
    * it's filtered out.
@@ -86,9 +88,15 @@ export abstract class CoreTerminal extends Disposable implements ICoreTerminal {
   public get cols(): number { return this._bufferService.cols; }
   public get rows(): number { return this._bufferService.rows; }
   public get buffers(): IBufferSet { return this._bufferService.buffers; }
+  public get options(): ITerminalOptions { return this.optionsService.options; }
+  public set options(options: ITerminalOptions) {
+    for (const key in options) {
+      this.optionsService.options[key] = options[key];
+    }
+  }
 
   constructor(
-    options: ITerminalOptions
+    options: Partial<ITerminalOptions>
   ) {
     super();
 
@@ -132,6 +140,7 @@ export abstract class CoreTerminal extends Disposable implements ICoreTerminal {
 
     // Setup WriteBuffer
     this._writeBuffer = new WriteBuffer((data, promiseResult) => this._inputHandler.parse(data, promiseResult));
+    this.register(forwardEvent(this._writeBuffer.onWriteParsed, this._onWriteParsed));
   }
 
   public dispose(): void {
@@ -241,7 +250,7 @@ export abstract class CoreTerminal extends Disposable implements ICoreTerminal {
   }
 
   protected _setup(): void {
-    if (this.optionsService.options.windowsMode) {
+    if (this.optionsService.rawOptions.windowsMode) {
       this._enableWindowsMode();
     }
   }
@@ -261,7 +270,7 @@ export abstract class CoreTerminal extends Disposable implements ICoreTerminal {
         this.buffers.resize(this.cols, this.rows);
         break;
       case 'windowsMode':
-        if (this.optionsService.options.windowsMode) {
+        if (this.optionsService.rawOptions.windowsMode) {
           this._enableWindowsMode();
         } else {
           this._windowsMode?.dispose();

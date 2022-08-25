@@ -3,11 +3,11 @@
  * @license MIT
  */
 
-import { IDisposable, IMarker, ISelectionPosition } from 'xterm';
+import { IDecorationOptions, IDecoration, IDisposable, IMarker, ISelectionPosition } from 'xterm';
 import { IEvent } from 'common/EventEmitter';
-import { ICoreTerminal, CharData, ITerminalOptions } from 'common/Types';
+import { ICoreTerminal, CharData, ITerminalOptions, IColor } from 'common/Types';
 import { IMouseService, IRenderService } from './services/Services';
-import { IBuffer, IBufferSet } from 'common/buffer/Types';
+import { IBuffer } from 'common/buffer/Types';
 import { IFunctionIdentifier, IParams } from 'common/parser/Types';
 
 export interface ITerminal extends IPublicTerminal, ICoreTerminal {
@@ -16,7 +16,6 @@ export interface ITerminal extends IPublicTerminal, ICoreTerminal {
   browser: IBrowser;
   buffer: IBuffer;
   viewport: IViewport | undefined;
-  // TODO: We should remove options once components adopt optionsService
   options: ITerminalOptions;
   linkifier: ILinkifier;
   linkifier2: ILinkifier2;
@@ -45,6 +44,7 @@ export interface IPublicTerminal extends IDisposable {
   onSelectionChange: IEvent<void>;
   onRender: IEvent<{ start: number, end: number }>;
   onResize: IEvent<{ cols: number, rows: number }>;
+  onWriteParsed: IEvent<void>;
   onTitleChange: IEvent<string>;
   onBell: IEvent<void>;
   blur(): void;
@@ -62,6 +62,7 @@ export interface IPublicTerminal extends IDisposable {
   registerCharacterJoiner(handler: (text: string) => [number, number][]): number;
   deregisterCharacterJoiner(joinerId: number): void;
   addMarker(cursorYOffset: number): IMarker | undefined;
+  registerDecoration(decorationOptions: IDecorationOptions): IDecoration | undefined;
   hasSelection(): boolean;
   getSelection(): string;
   getSelectionPosition(): ISelectionPosition | undefined;
@@ -79,6 +80,7 @@ export interface IPublicTerminal extends IDisposable {
   write(data: string | Uint8Array, callback?: () => void): void;
   paste(data: string): void;
   refresh(start: number, end: number): void;
+  clearTextureAtlas(): void;
   reset(): void;
 }
 
@@ -111,11 +113,6 @@ export interface IColorManager {
   onOptionsChange(key: string): void;
 }
 
-export interface IColor {
-  css: string;
-  rgba: number; // 32-bit int with rgba in each byte
-}
-
 export interface IColorSet {
   foreground: IColor;
   background: IColor;
@@ -124,6 +121,7 @@ export interface IColorSet {
   selectionTransparent: IColor;
   /** The selection blended on top of background. */
   selectionOpaque: IColor;
+  selectionForeground: IColor | undefined;
   ansi: IColor[];
   contrastCache: IColorContrastCache;
 }
@@ -312,4 +310,8 @@ export interface ICharacterJoiner {
 
 export interface IRenderDebouncer extends IDisposable {
   refresh(rowStart: number | undefined, rowEnd: number | undefined, rowCount: number): void;
+}
+
+export interface IRenderDebouncerWithCallback extends IRenderDebouncer {
+  addRefreshCallback(callback: FrameRequestCallback): number;
 }

@@ -79,6 +79,10 @@ export class SelectionModel {
     if (!this.selectionEnd || this.areSelectionValuesReversed()) {
       const startPlusLength = this.selectionStart[0] + this.selectionStartLength;
       if (startPlusLength > this._bufferService.cols) {
+        // Ensure the trailing EOL isn't included when the selection ends on the right edge
+        if (startPlusLength % this._bufferService.cols === 0) {
+          return [this._bufferService.cols, this.selectionStart[1] + Math.floor(startPlusLength / this._bufferService.cols) - 1];
+        }
         return [startPlusLength % this._bufferService.cols, this.selectionStart[1] + Math.floor(startPlusLength / this._bufferService.cols)];
       }
       return [startPlusLength, this.selectionStart[1]];
@@ -88,7 +92,12 @@ export class SelectionModel {
     if (this.selectionStartLength) {
       // Select the larger of the two when start and end are on the same line
       if (this.selectionEnd[1] === this.selectionStart[1]) {
-        return [Math.max(this.selectionStart[0] + this.selectionStartLength, this.selectionEnd[0]), this.selectionEnd[1]];
+        // Keep the whole wrapped word/line selected if the content wraps multiple lines
+        const startPlusLength = this.selectionStart[0] + this.selectionStartLength;
+        if (startPlusLength > this._bufferService.cols) {
+          return [startPlusLength % this._bufferService.cols, this.selectionStart[1] + Math.floor(startPlusLength / this._bufferService.cols)];
+        }
+        return [Math.max(startPlusLength, this.selectionEnd[0]), this.selectionEnd[1]];
       }
     }
     return this.selectionEnd;

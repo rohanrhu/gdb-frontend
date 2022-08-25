@@ -266,6 +266,12 @@ declare module 'xterm' {
      * All features are disabled by default for security reasons.
      */
     windowOptions?: IWindowOptions;
+
+    /**
+     * The width, in pixels, of the canvas for the overview ruler. The overview
+     * ruler will be hidden when not set.
+     */
+    overviewRulerWidth?: number;
   }
 
   /**
@@ -282,6 +288,8 @@ declare module 'xterm' {
     cursorAccent?: string;
     /** The selection background color (can be transparent) */
     selection?: string;
+    /** The selection foreground color */
+    selectionForeground?: string;
     /** ANSI black (eg. `\x1b[30m`) */
     black?: string;
     /** ANSI red (eg. `\x1b[31m`) */
@@ -380,29 +388,138 @@ declare module 'xterm' {
    * is trimmed and lines are added or removed. This is a single line that may
    * be part of a larger wrapped line.
    */
-  export interface IMarker extends IDisposable {
+  export interface IMarker extends IDisposableWithEvent {
     /**
      * A unique identifier for this marker.
      */
     readonly id: number;
 
     /**
-     * Whether this marker is disposed.
-     */
-    readonly isDisposed: boolean;
-
-    /**
      * The actual line index in the buffer at this point in time. This is set to
      * -1 if the marker has been disposed.
      */
     readonly line: number;
+  }
 
+  /**
+   * Represents a disposable that tracks is disposed state.
+   * @param onDispose event listener and
+   * @param isDisposed property.
+   */
+  export interface IDisposableWithEvent extends IDisposable {
     /**
-     * Event listener to get notified when the marker gets disposed. Automatic disposal
-     * might happen for a marker, that got invalidated by scrolling out or removal of
-     * a line from the buffer.
+     * Event listener to get notified when this gets disposed.
      */
     onDispose: IEvent<void>;
+
+    /**
+     * Whether this is disposed.
+     */
+    readonly isDisposed: boolean;
+  }
+
+  /**
+   * Represents a decoration in the terminal that is associated with a particular marker and DOM element.
+   */
+  export interface IDecoration extends IDisposableWithEvent {
+    /*
+     * The marker for the decoration in the terminal.
+     */
+    readonly marker: IMarker;
+
+    /**
+     * An event fired when the decoration
+     * is rendered, returns the dom element
+     * associated with the decoration.
+     */
+    readonly onRender: IEvent<HTMLElement>;
+
+    /**
+     * The element that the decoration is rendered to. This will be undefined
+     * until it is rendered for the first time by {@link IDecoration.onRender}.
+     * that.
+     */
+    element: HTMLElement | undefined;
+
+    /**
+     * The options for the overview ruler that can be updated.
+     * This will only take effect when {@link IDecorationOptions.overviewRulerOptions}
+     * were provided initially.
+     */
+    options: Pick<IDecorationOptions, 'overviewRulerOptions'>;
+  }
+
+
+  /**
+   * Overview ruler decoration options
+   */
+  interface IDecorationOverviewRulerOptions {
+    color: string;
+    position?: 'left' | 'center' | 'right' | 'full';
+  }
+
+  /*
+   * Options that define the presentation of the decoration.
+   */
+  export interface IDecorationOptions {
+    /**
+     * The line in the terminal where
+     * the decoration will be displayed
+     */
+    readonly marker: IMarker;
+
+    /*
+     * Where the decoration will be anchored -
+     * defaults to the left edge
+     */
+    readonly anchor?: 'right' | 'left';
+
+    /**
+     * The x position offset relative to the anchor
+     */
+    readonly x?: number;
+
+
+    /**
+     * The width of the decoration in cells, defaults to 1.
+     */
+    readonly width?: number;
+
+    /**
+     * The height of the decoration in cells, defaults to 1.
+     */
+    readonly height?: number;
+
+    /**
+     * The background color of the cell(s). When 2 decorations both set the foreground color the
+     * last registered decoration will be used. Only the `#RRGGBB` format is supported.
+     */
+    readonly backgroundColor?: string;
+
+    /**
+     * The foreground color of the cell(s). When 2 decorations both set the foreground color the
+     * last registered decoration will be used. Only the `#RRGGBB` format is supported.
+     */
+    readonly foregroundColor?: string;
+
+    /**
+     * What layer to render the decoration at when {@link backgroundColor} or
+     * {@link foregroundColor} are used. `'bottom'` will render under the selection, `'top`' will
+     * render above the selection\*.
+     *
+     * *\* The selection will render on top regardless of layer on the canvas renderer due to how
+     * it renders selection separately.*
+     */
+    readonly layer?: 'bottom' | 'top';
+
+    /**
+     * When defined, renders the decoration in the overview ruler to the right
+     * of the terminal. {@link ITerminalOptions.overviewRulerWidth} must be set
+     * in order to see the overview ruler.
+     * @param color The color of the decoration.
+     * @param position The position of the decoration.
+     */
+    overviewRulerOptions?: IDecorationOverviewRulerOptions
   }
 
   /**
@@ -636,6 +753,29 @@ declare module 'xterm' {
     readonly modes: IModes;
 
     /**
+     * Gets or sets the terminal options. This supports setting multiple options.
+     *
+     * @example Get a single option
+     * ```typescript
+     * console.log(terminal.options.fontSize);
+     * ```
+     *
+     * @example Set a single option
+     * ```typescript
+     * terminal.options.fontSize = 12;
+     * ```
+     *
+     * @example Set multiple options
+     * ```typescript
+     * terminal.options = {
+     *   fontSize: 12,
+     *   fontFamily: 'Arial',
+     * };
+     * ```
+     */
+    options: ITerminalOptions;
+
+    /**
      * Natural language strings that can be localized.
      */
     static strings: ILocalizableStrings;
@@ -700,6 +840,17 @@ declare module 'xterm' {
      * @returns an `IDisposable` to stop listening.
      */
     onRender: IEvent<{ start: number, end: number }>;
+
+    /**
+     * Adds an event listener for when data has been parsed by the terminal,
+     * after {@link write} is called. This event is useful to listen for any
+     * changes in the buffer.
+     * 
+     * This fires at most once per frame, after data parsing completes. Note
+     * that this can fire when there are still writes pending if there is a lot
+     * of data.
+     */
+    onWriteParsed: IEvent<void>;
 
     /**
      * Adds an event listener for when the terminal is resized. The event value
@@ -789,9 +940,9 @@ declare module 'xterm' {
     deregisterLinkMatcher(matcherId: number): void;
 
     /**
-     * (EXPERIMENTAL) Registers a link provider, allowing a custom parser to
-     * be used to match and handle links. Multiple link providers can be used,
-     * they will be asked in the order in which they are registered.
+     * Registers a link provider, allowing a custom parser to be used to match
+     * and handle links. Multiple link providers can be used, they will be asked
+     * in the order in which they are registered.
      * @param linkProvider The link provider to use to detect links.
      */
     registerLinkProvider(linkProvider: ILinkProvider): IDisposable;
@@ -840,12 +991,21 @@ declare module 'xterm' {
      * @param cursorYOffset The y position offset of the marker from the cursor.
      * @returns The new marker or undefined.
      */
-    registerMarker(cursorYOffset: number): IMarker | undefined;
+    registerMarker(cursorYOffset?: number): IMarker | undefined;
 
     /**
      * @deprecated use `registerMarker` instead.
      */
     addMarker(cursorYOffset: number): IMarker | undefined;
+
+    /**
+     * (EXPERIMENTAL) Adds a decoration to the terminal using
+     *  @param decorationOptions, which takes a marker and an optional anchor,
+     *  width, height, and x offset from the anchor. Returns the decoration or
+     *  undefined if the alt buffer is active or the marker has already been disposed of.
+     *  @throws when options include a negative x offset.
+     */
+    registerDecoration(decorationOptions: IDecorationOptions): IDecoration | undefined;
 
     /**
      * Gets whether the terminal has an active selection.
@@ -964,26 +1124,31 @@ declare module 'xterm' {
     /**
      * Retrieves an option's value from the terminal.
      * @param key The option key.
+     * @deprecated Use `options` instead.
      */
     getOption(key: 'bellSound' | 'bellStyle' | 'cursorStyle' | 'fontFamily' | 'logLevel' | 'rendererType' | 'termName' | 'wordSeparator'): string;
     /**
      * Retrieves an option's value from the terminal.
      * @param key The option key.
+     * @deprecated Use `options` instead.
      */
     getOption(key: 'allowTransparency' | 'cancelEvents' | 'convertEol' | 'cursorBlink' | 'disableStdin' | 'macOptionIsMeta' | 'rightClickSelectsWord' | 'popOnBell' | 'visualBell' | 'windowsMode'): boolean;
     /**
      * Retrieves an option's value from the terminal.
      * @param key The option key.
+     * @deprecated Use `options` instead.
      */
     getOption(key: 'cols' | 'fontSize' | 'letterSpacing' | 'lineHeight' | 'rows' | 'tabStopWidth' | 'scrollback'): number;
     /**
      * Retrieves an option's value from the terminal.
      * @param key The option key.
+     * @deprecated Use `options` instead.
      */
     getOption(key: 'fontWeight' | 'fontWeightBold'): FontWeight;
     /**
      * Retrieves an option's value from the terminal.
      * @param key The option key.
+     * @deprecated Use `options` instead.
      */
     getOption(key: string): any;
 
@@ -991,60 +1156,70 @@ declare module 'xterm' {
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'fontFamily' | 'termName' | 'bellSound' | 'wordSeparator', value: string): void;
     /**
-    * Sets an option on the terminal.
-    * @param key The option key.
-    * @param value The option value.
-    */
+     * Sets an option on the terminal.
+     * @param key The option key.
+     * @param value The option value.
+     * @deprecated Use `options` instead.
+     */
     setOption(key: 'fontWeight' | 'fontWeightBold', value: null | 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | number): void;
     /**
-    * Sets an option on the terminal.
-    * @param key The option key.
-    * @param value The option value.
-    */
+     * Sets an option on the terminal.
+     * @param key The option key.
+     * @param value The option value.
+     * @deprecated Use `options` instead.
+     */
     setOption(key: 'logLevel', value: LogLevel): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'bellStyle', value: null | 'none' | 'visual' | 'sound' | 'both'): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'cursorStyle', value: null | 'block' | 'underline' | 'bar'): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'allowTransparency' | 'cancelEvents' | 'convertEol' | 'cursorBlink' | 'disableStdin' | 'macOptionIsMeta' | 'popOnBell' | 'rightClickSelectsWord' | 'visualBell' | 'windowsMode', value: boolean): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'fontSize' | 'letterSpacing' | 'lineHeight' | 'tabStopWidth' | 'scrollback', value: number): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'theme', value: ITheme): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: 'cols' | 'rows', value: number): void;
     /**
      * Sets an option on the terminal.
      * @param key The option key.
      * @param value The option value.
+     * @deprecated Use `options` instead.
      */
     setOption(key: string, value: any): void;
 
@@ -1055,6 +1230,14 @@ declare module 'xterm' {
      * @param end The row to end at (between start and this.rows - 1).
      */
     refresh(start: number, end: number): void;
+
+    /**
+     * Clears the texture atlas of the canvas renderer if it's active. Doing this will force a
+     * redraw of all glyphs which can workaround issues causing the texture to become corrupt, for
+     * example Chromium/Nvidia has an issue where the texture gets messed up when resuming the OS
+     * from sleep.
+     */
+    clearTextureAtlas(): void;
 
     /**
      * Perform a full reset (RIS, aka '\x1bc').
@@ -1237,12 +1420,12 @@ declare module 'xterm' {
    */
   interface IBufferCellPosition {
     /**
-     * The x position within the buffer.
+     * The x position within the buffer (1-based).
      */
     x: number;
 
     /**
-     * The y position within the buffer.
+     * The y position within the buffer (1-based).
      */
     y: number;
   }
@@ -1343,7 +1526,9 @@ declare module 'xterm' {
 
     /**
      * The length of the line, all call to getCell beyond the length will result
-     * in `undefined`.
+     * in `undefined`. Note that this may exceed columns as the line array may
+     * not be trimmed after a resize, compare against {@link Terminal.cols} to
+     * get the actual maximum length of a line.
      */
     readonly length: number;
 
@@ -1444,18 +1629,20 @@ declare module 'xterm' {
 
     /** Whether the cell has the bold attribute (CSI 1 m). */
     isBold(): number;
-    /** Whether the cell has the inverse attribute (CSI 3 m). */
+    /** Whether the cell has the italic attribute (CSI 3 m). */
     isItalic(): number;
-    /** Whether the cell has the inverse attribute (CSI 2 m). */
+    /** Whether the cell has the dim attribute (CSI 2 m). */
     isDim(): number;
     /** Whether the cell has the underline attribute (CSI 4 m). */
     isUnderline(): number;
-    /** Whether the cell has the inverse attribute (CSI 5 m). */
+    /** Whether the cell has the blink attribute (CSI 5 m). */
     isBlink(): number;
     /** Whether the cell has the inverse attribute (CSI 7 m). */
     isInverse(): number;
-    /** Whether the cell has the inverse attribute (CSI 8 m). */
+    /** Whether the cell has the invisible attribute (CSI 8 m). */
     isInvisible(): number;
+    /** Whether the cell has the strikethrough attribute (CSI 9 m). */
+    isStrikethrough(): number;
 
     /** Whether the cell is using the RGB foreground color mode. */
     isFgRGB(): boolean;
