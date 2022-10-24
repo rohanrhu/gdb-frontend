@@ -8,6 +8,7 @@
 # Licensed under GNU/GPLv3
 # Copyright (C) 2019, Oğuzhan Eroğlu (https://oguzhaneroglu.com/) <rohanrhu2@gmail.com>
 
+import sys
 import threading
 import multiprocessing
 
@@ -21,7 +22,8 @@ httpServer: http_server.GDBFrontendHTTPServer = None
 inferior_run_times = {}
 step_time = False
 is_enhanced_collabration = False
-changed_registers = multiprocessing.Manager().dict()
+if sys.platform != "darwin" or __name__ == "__main__":
+    changed_registers = multiprocessing.Manager().dict()
 dont_emit_until_stop_or_exit = False
 
 collabration_state = {
