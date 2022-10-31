@@ -95,7 +95,7 @@ def run(request, params):
         _html_path = _plugin.webFSPath(os.path.join("html", _plugin_name+".html"))
 
         if os.path.exists(_html_path):
-            fd = open(_html_path, 'r')
+            fd = open(_html_path, "r", encoding="utf-8")
             _plugin_html = fd.read()
             fd.close()
 
