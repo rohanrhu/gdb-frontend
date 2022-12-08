@@ -1771,6 +1771,10 @@
 
                 data.debug.breakpoints = [];
                 parameters.state.breakpoints.forEach(function (_gdb_bp, _gdb_bp_i) {
+                    if (!_gdb_bp.location) {
+                        return true;
+                    }
+                    
                     var loc = _gdb_bp.location.match(/-source (.+?) -line (\d+)/i);
 
                     if (!loc) {
