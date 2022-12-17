@@ -487,8 +487,10 @@ Other currencies:
 | Currency | Address                                    |
 | -------- | ------------------------------------------ |
 | BTC      | 3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL         |
+| ETH      | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
 | USDT     | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
 | USDC     | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
+| XMR      | 88qvS4sfUnLZ7nehFrz3PG1pWovvEgprcUhkmVLaiL8PVAFgfHjspjKPLhWLj3DUcm92rwNQENbJ1ZbvESdukWvh3epBUty |
 
 
 ## License
