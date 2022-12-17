@@ -18,7 +18,8 @@ import api.flags
 lock = False
 terminal_id = None
 debugFlags = None
-httpServer: http_server.GDBFrontendHTTPServer = None
+debugHandler = None
+httpServer = None
 inferior_run_times = {}
 step_time = False
 is_enhanced_collabration = False
@@ -46,6 +47,7 @@ def init():
     debugFlags = api.flags.AtomicDebugFlags()
 
     global terminal_id
+    global debugHandler
     global httpServer
     global inferior_run_times
     global step_time
@@ -58,6 +60,7 @@ def access(function):
     global lock
     global terminal_id
     global debugFlags
+    global debugHandler
     global httpServer
     global inferior_run_times
     global step_time

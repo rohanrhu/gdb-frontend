@@ -29,6 +29,7 @@ import util
 import urls
 import api.url
 import commands
+import debug_events
 
 gdb = importlib.import_module("gdb")
 
@@ -46,6 +47,8 @@ api.globalvars.init()
 settings.init()
 plugin.init()
 plugin.loadAll()
+
+api.globalvars.debugHandler = debug_events.GDBFrontendDebugEventsHandler()
 
 all_urls = urls.urls
 
