@@ -476,11 +476,20 @@ You can contribute with commiting to project or developing a plugin. All commits
 
 ### Bitcoin
 
-You can donate to support the project.
+You can donate for supporting me :)
 
 | QR Code                                                        | Bitcoin address for donations                |
 | -------------------------------------------------------------- | -------------------------------------------- |
 | ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
+
+Other currencies:
+
+| Currency | Address                                    |
+| -------- | ------------------------------------------ |
+| BTC      | 3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL         |
+| USDT     | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
+| USDC     | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
+
 
 ## License
 
