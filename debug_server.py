@@ -323,7 +323,8 @@ class GDBFrontendSocket(websocket.WebSocketHandler):
     def gdb_on_exited__mT(self, event):
         response = {}
 
-        del api.globalvars.inferior_run_times[event.inferior.num]
+        try: del api.globalvars.inferior_run_times[event.inferior.num]
+        except: pass
 
         api.globalvars.debugFlags.set(api.flags.AtomicDebugFlags.SELECTED_FRAMES, {})
         
