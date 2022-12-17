@@ -1143,7 +1143,11 @@
                     var switch_to = data.switches.pop();
                     
                     if (switch_to) {
-                        data.switchFile({file: switch_to});
+                        if (switch_to == file) {
+                            data.switchFile({file: data.files[data.files.length-1]});
+                        } else {
+                            data.switchFile({file: switch_to});
+                        }
                     } else {
                         data.switchFile({file: data.files[0]});
                     }
