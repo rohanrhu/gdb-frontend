@@ -482,6 +482,31 @@
                     });
                 };
 
+                file.save = async function () {
+                    data.current.setChanged(false);
+                    
+                    await $.ajax({
+                        url: '/api/fs/write',
+                        cache: false,
+                        method: 'post',
+                        data: {
+                            path: file.path,
+                            content: file.ace.getValue()
+                        },
+                        success: function (result_json) {
+                            if (!result_json.ok) {
+                                GDBFrontend.showMessageBox({text: 'An error occured.'});
+                                console.trace('An error occured.');
+                                return;
+                            }
+                        },
+                        error: function () {
+                            GDBFrontend.showMessageBox({text: 'An error occured.'});
+                            console.trace('An error occured.');
+                        }
+                    });
+                };
+
                 file.breakpointDetails.$breakpointDetails.on('click.FileTabs', function (event) {
                     if (event.target !=  this) {
                         return;
@@ -1255,6 +1280,26 @@
                 return file;
             };
 
+            data.saveAll = async function () {
+                for (const element of data.files) {
+                    var _file = element;
+
+                    if (
+                        !_file.path
+                        ||
+                        (
+                            (_file.disassembly !== undefined)
+                            &&
+                            (parameters.disassembly !== undefined)
+                        )
+                    ) {
+                        continue;
+                    }
+
+                    await _file.save();
+                }
+            };
+            
             data.kvKey = function (key) {
                 return 'FileTabs:'+data.id+':'+key;
             };
