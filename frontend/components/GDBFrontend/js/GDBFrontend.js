@@ -1002,8 +1002,13 @@
 
                 var host_address = (GDBFrontend.config.host_address != '127.0.0.1') ? GDBFrontend.config.host_address: window.location.hostname;
                 var ws_protocol = (window.location.protocol == 'https:') ? 'wss:': 'ws:';
+
+                var ws_path = window.location.pathname;
+                if (ws_path[ws_path.length-1] == '/') {
+                    ws_path = ws_path.substring(0, ws_path.length-1);
+                }
                 
-                data.debug.socket = new WebSocket(ws_protocol+'//'+host_address+':'+window.location.port+"/debug-server");
+                data.debug.socket = new WebSocket(ws_protocol+'//'+host_address+':'+window.location.port+ws_path+"/debug-server");
 
                 data.debug.socket.addEventListener('open', function (event) {
                     GDBFrontend.verbose('Connected to debugging server.');
