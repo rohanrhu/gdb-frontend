@@ -59,7 +59,7 @@ GDBFrontend.Plugin.prototype.path = function GDBFrontendPlugin(parameters) {
         path = parameters.path;
     }
 
-    return '/plugins/'+this.name+'/'+path;
+    return 'plugins/'+this.name+'/'+path;
 };
 
 /*
@@ -77,8 +77,8 @@ GDBFrontend.registerPlugin = function (parameters) {
     var $link = $('<link rel="stylesheet" type="text/css" />');
     var $script = $('<script type="text/javascript"></script>');
 
-    $link.attr('href', '/plugins/'+plugin.name+'/css/'+plugin.name+'.css');
-    $script.attr('src', '/plugins/'+plugin.name+'/js/'+plugin.name+'.js');
+    $link.attr('href', 'plugins/'+plugin.name+'/css/'+plugin.name+'.css');
+    $script.attr('src', 'plugins/'+plugin.name+'/js/'+plugin.name+'.js');
 
     $link.appendTo($('body'));
     $script.appendTo($('body'));
