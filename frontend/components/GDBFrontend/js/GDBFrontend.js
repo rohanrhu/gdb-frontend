@@ -467,7 +467,7 @@
             
             data.collabration.enableEnhancedCollabration = function (parameters) {
                 $.ajax({
-                    url: '/api/collabration/enhanced-collabration-enable',
+                    url: 'api/collabration/enhanced-collabration-enable',
                     cache: false,
                     method: 'get',
                     data: {
@@ -490,7 +490,7 @@
             
             data.collabration.disableEnhancedCollabration = function (parameters) {
                 $.ajax({
-                    url: '/api/collabration/enhanced-collabration-disable',
+                    url: 'api/collabration/enhanced-collabration-disable',
                     cache: false,
                     method: 'get',
                     data: {
@@ -634,7 +634,7 @@
                     }
                     
                     $.ajax({
-                        url: '/api/breakpoint/add',
+                        url: 'api/breakpoint/add',
                         cache: false,
                         method: 'get',
                         data: api_params,
@@ -654,7 +654,7 @@
 
             data.debug.delBreakpoint = function (parameters) {
                 $.ajax({
-                    url: '/api/breakpoint/del',
+                    url: 'api/breakpoint/del',
                     cache: false,
                     method: 'get',
                     data: {
@@ -742,7 +742,7 @@
                     }
 
                     $.ajax({
-                        url: '/api/fs/read',
+                        url: 'api/fs/read',
                         cache: false,
                         method: 'get',
                         data: {
@@ -845,7 +845,7 @@
                     path: last_fileBrowser_path,
                     onFileSelected: function (parameters) {
                         $.ajax({
-                            url: '/api/load',
+                            url: 'api/load',
                             cache: false,
                             method: 'get',
                             data: {
@@ -877,7 +877,7 @@
                 }
 
                 $.ajax({
-                    url: '/api/connect',
+                    url: 'api/connect',
                     cache: false,
                     method: 'get',
                     data: {
@@ -1214,7 +1214,7 @@
                         }
 
                         $.ajax({
-                            url: '/api/frame/variable',
+                            url: 'api/frame/variable',
                             cache: false,
                             method: 'get',
                             data: {
@@ -1257,7 +1257,7 @@
                         }
                         
                         $.ajax({
-                            url: '/api/fs/read',
+                            url: 'api/fs/read',
                             cache: false,
                             method: 'get',
                             data: {
@@ -1537,7 +1537,7 @@
 
             data.$gdbFrontend_sourceTree.on('SourceTree_item_selected.GDBFrontend', function (event, parameters) {
                 $.ajax({
-                    url: '/api/fs/read',
+                    url: 'api/fs/read',
                     cache: false,
                     method: 'get',
                     data: {
@@ -1595,7 +1595,7 @@
 
             data.openSource = function (parameters) {
                 $.ajax({
-                    url: '/api/fs/read',
+                    url: 'api/fs/read',
                     cache: false,
                     method: 'get',
                     data: {
@@ -1652,7 +1652,7 @@
                 }
 
                 $.ajax({
-                    url: '/api/state',
+                    url: 'api/state',
                     cache: false,
                     method: 'get',
                     data: {
@@ -1858,7 +1858,7 @@
                         data.debug.placeDisassemblyBreakpoints();
                     } else if (!editor_file) {
                         $.ajax({
-                            url: '/api/fs/read',
+                            url: 'api/fs/read',
                             cache: false,
                             method: 'get',
                             data: {
@@ -2156,7 +2156,7 @@
 
             data.$gdbFrontend_breakpointsEditor.on('BreakpointsEditor_breakpoint_enabled_changed.GDBFrontend', function (event, parameters) {
                 $.ajax({
-                    url: '/api/breakpoint/set_enabled',
+                    url: 'api/breakpoint/set_enabled',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2174,7 +2174,7 @@
 
             data.$gdbFrontend_breakpointsEditor.on('BreakpointsEditor_breakpoint_removed.GDBFrontend', function (event, parameters) {
                 $.ajax({
-                    url: '/api/breakpoint/del',
+                    url: 'api/breakpoint/del',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2206,7 +2206,7 @@
 
                 if (!editor_file) {
                     $.ajax({
-                        url: '/api/fs/read',
+                        url: 'api/fs/read',
                         cache: false,
                         method: 'get',
                         data: {
@@ -2261,7 +2261,7 @@
 
             data.$gdbFrontend_threadsEditor.on('ThreadsEditor_thread_selected.GDBFrontend', function (event, parameters) {
                 $.ajax({
-                    url: '/api/thread/switch',
+                    url: 'api/thread/switch',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2279,7 +2279,7 @@
 
             data.$gdbFrontend_stackTrace.on('StackTrace_frame_selected.GDBFrontend', function (event, parameters) {
                 $.ajax({
-                    url: '/api/stack/switch',
+                    url: 'api/stack/switch',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2307,7 +2307,7 @@
 
                             if (!editor_file && parameters.frame.file) {
                                 $.ajax({
-                                    url: '/api/fs/read',
+                                    url: 'api/fs/read',
                                     cache: false,
                                     method: 'get',
                                     data: {
@@ -2400,7 +2400,7 @@
                 }
 
                 $.ajax({
-                    url: '/api/frame/variable',
+                    url: 'api/frame/variable',
                     cache: false,
                     method: 'get',
                     data: qs,
@@ -2435,7 +2435,7 @@
 
             data.debug.run = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/run',
+                    url: 'api/runtime/run',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2452,7 +2452,7 @@
 
             data.debug.pause = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/pause',
+                    url: 'api/runtime/pause',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2468,7 +2468,7 @@
             
             data.debug.continue = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/continue',
+                    url: 'api/runtime/continue',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2484,7 +2484,7 @@
             
             data.debug.stepOver = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/next',
+                    url: 'api/runtime/next',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2500,7 +2500,7 @@
             
             data.debug.stepInto = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/step',
+                    url: 'api/runtime/step',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2516,7 +2516,7 @@
             
             data.debug.stepInstruction = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/stepi',
+                    url: 'api/runtime/stepi',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2532,7 +2532,7 @@
             
             data.debug.terminate = function (parameters) {
                 $.ajax({
-                    url: '/api/runtime/terminate',
+                    url: 'api/runtime/terminate',
                     cache: false,
                     method: 'get',
                     data: {
@@ -2607,7 +2607,7 @@
                 var theme_name = $item.attr('GDBFrontend_theme');
                 
                 $.ajax({
-                    url: '/api/switch-theme',
+                    url: 'api/switch-theme',
                     cache: false,
                     method: 'get',
                     data: {

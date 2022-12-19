@@ -396,7 +396,7 @@
                     qs.variable = qs.variable + "." + data.next_member;
                     
                     $.ajax({
-                        url: '/api/frame/variable',
+                        url: 'api/frame/variable',
                         cache: false,
                         method: 'get',
                         data: qs,

@@ -156,7 +156,7 @@
                     }
                     
                     $.ajax({
-                        url: '/api/process/all',
+                        url: 'api/process/all',
                         cache: false,
                         method: 'get',
                         data: {
@@ -402,7 +402,7 @@
                                 label: 'Attach to Process',
                                 function: function () {
                                     $.ajax({
-                                        url: '/api/runtime/attach',
+                                        url: 'api/runtime/attach',
                                         cache: false,
                                         method: 'get',
                                         data: {
@@ -444,7 +444,7 @@
                                 label: "Terminate (SIGTERM)",
                                 function () {
                                     $.ajax({
-                                        url: '/api/process/sigterm',
+                                        url: 'api/process/sigterm',
                                         cache: false,
                                         method: 'get',
                                         data: {
@@ -468,7 +468,7 @@
                                 label: "Terminate (SIGKILL)",
                                 function () {
                                     $.ajax({
-                                        url: '/api/process/sigkill',
+                                        url: 'api/process/sigkill',
                                         cache: false,
                                         method: 'get',
                                         data: {

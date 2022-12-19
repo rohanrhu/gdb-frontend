@@ -447,7 +447,7 @@
                                   : '';
                     
                     $.ajax({
-                        url: '/api/breakpoint/set_condition',
+                        url: 'api/breakpoint/set_condition',
                         cache: false,
                         method: 'get',
                         data: {
@@ -486,7 +486,7 @@
                     data.current.setChanged(false);
                     
                     await $.ajax({
-                        url: '/api/fs/write',
+                        url: 'api/fs/write',
                         cache: false,
                         method: 'post',
                         data: {
@@ -584,7 +584,7 @@
                     }
     
                     $.ajax({
-                        url: '/api/frame/variable',
+                        url: 'api/frame/variable',
                         cache: false,
                         method: 'get',
                         data: qs,
@@ -654,7 +654,7 @@
                         data.current.setChanged(false);
                         
                         $.ajax({
-                            url: '/api/fs/write',
+                            url: 'api/fs/write',
                             cache: false,
                             method: 'post',
                             data: {
@@ -901,7 +901,7 @@
                     
                     file.tokenMouseoverTimeout = setTimeout(function () {
                         $.ajax({
-                            url: '/api/frame/variable',
+                            url: 'api/frame/variable',
                             cache: false,
                             method: 'get',
                             data: {
@@ -1083,7 +1083,7 @@
                                 var path = file.path.split('/').slice(0, -1).join('/');
                                 
                                 $.ajax({
-                                    url: '/api/shell',
+                                    url: 'api/shell',
                                     cache: false,
                                     method: 'get',
                                     data: {

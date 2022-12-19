@@ -296,7 +296,7 @@
                                         }
                                         
                                         $.ajax({
-                                            url: '/api/shell',
+                                            url: 'api/shell',
                                             cache: false,
                                             method: 'get',
                                             data: {

@@ -98,7 +98,7 @@
                     data.is_passive = true;
 
                     $.ajax({
-                        url: '/api/fs/list',
+                        url: 'api/fs/list',
                         cache: false,
                         method: 'get',
                         data: {

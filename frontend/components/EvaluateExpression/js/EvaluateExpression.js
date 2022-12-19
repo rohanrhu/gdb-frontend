@@ -195,7 +195,7 @@
                 }
 
                 $.ajax({
-                    url: '/api/frame/variable',
+                    url: 'api/frame/variable',
                     cache: false,
                     method: 'get',
                     data: qs,
@@ -244,7 +244,7 @@
                 }
                 
                 $.ajax({
-                    url: '/api/frame/variable',
+                    url: 'api/frame/variable',
                     cache: false,
                     method: 'get',
                     data: {
