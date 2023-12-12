@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/rohanrhu/gdb-frontend?style=flat-square)](https://github.com/rohanrhu/gdb-frontend/stargazers)
 [![GDBFrontend Discord](https://img.shields.io/discord/780821881783713813.svg?color=7289da&label=Discord&logo=discord&style=flat-square)](https://discord.gg/RyVY9MtB4S)
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&style=flat-square)](https://patreon.com/EvrenselKisilik)
-[![Donate with BTC](https://shields.io/badge/donate-3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL-yellow?logo=bitcoin&style=flat-square)](#%EF%B8%8F-donate)
+[![Donate with BTC](https://shields.io/badge/donate-bc1qhvlc762kwuzeawedl9a8z0duhs8449nwwc35e2-yellow?logo=bitcoin&style=flat-square)](#%EF%B8%8F-donate)
 
 GDBFrontend is an easy, flexible and extensionable gui debugger. [Try it online!](https://debugme.dev)
 
@@ -480,18 +480,17 @@ You can donate for supporting me :)
 
 | QR Code                                                        | Bitcoin address for donations                |
 | -------------------------------------------------------------- | -------------------------------------------- |
-| ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL** |
+| ![Bitcoin address QR code for donate](media/btc-donation-qr.png) | **bc1qhvlc762kwuzeawedl9a8z0duhs8449nwwc35e2** |
 
 Other currencies:
 
 | Currency | Address                                    |
 | -------- | ------------------------------------------ |
-| BTC      | 3KBtYfaAT42uVFd6D2XFRDTAoErLz73vpL         |
-| ETH      | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
-| USDT     | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
-| USDC     | 0xCa422B014A6F588606864ef2d0C40ec2E5d83DFE |
+| BTC      | bc1qhvlc762kwuzeawedl9a8z0duhs8449nwwc35e2 |
+| ETH      | 0x1D99B2a2D85C34d478dD8519792e82B18f861974 |
+| USDT     | 0x1D99B2a2D85C34d478dD8519792e82B18f861974 |
+| USDC     | 0x1D99B2a2D85C34d478dD8519792e82B18f861974 |
 | XMR      | 88qvS4sfUnLZ7nehFrz3PG1pWovvEgprcUhkmVLaiL8PVAFgfHjspjKPLhWLj3DUcm92rwNQENbJ1ZbvESdukWvh3epBUty |
-
 
 ## License
 
