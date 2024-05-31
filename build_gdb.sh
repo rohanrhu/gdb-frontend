@@ -91,8 +91,9 @@ case $OS in
 		echo
 		sleep 1
 		pacman -Sy
-		pacman -q -S --needed --noconfirm zlib python mpfr xz guile expat\
-			gcc make automake gmp wget
+		pacman -q -S --needed --noconfirm \
+  			zlib python mpfr xz guile expat \
+			gcc make automake gmp wget boost
 		
 		if [[ $? -ne 0 ]]; then
 			dependencyInstallationFailed
@@ -110,10 +111,11 @@ case $OS in
 		echo
 		sleep 1
 		apt update
-		apt install -q -y gcc g++ make libgmp10 libgmp-dev\
-			expat libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev\
-			lzma lzma-dev libmpfr-dev python3 zlib1g-dev zlib1g\
-			libpython3-dev texi2html texinfo
+		apt install -q -y \
+  			gcc g++ make libgmp10 libgmp-dev \
+			expat libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev \
+			lzma lzma-dev libmpfr-dev python3 zlib1g-dev zlib1g \
+			libpython3-dev texi2html texinfo libboost-all-dev
 		
 		if [[ $? -ne 0 ]]; then
 			dependencyInstallationFailed
@@ -131,10 +133,11 @@ case $OS in
 		echo
 		sleep 1
 		apt update
-		apt install -q -y wget tar xz-utils gcc g++ make libgmp-dev\
-			libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev guile-3.0-libs\
-			texinfo lzma-dev liblzma5 libmpfr-dev libmpfr6 libmpfrc++-dev\
-			python3 python3-distutils python3-dev zlib1g zlib1g-dev
+		apt install -q -y \
+  			wget tar xz-utils gcc g++ make libgmp-dev \
+			libexpat1 libexpat1-dev guile-3.0 guile-3.0-dev guile-3.0-libs \
+			texinfo lzma-dev liblzma5 libmpfr-dev libmpfr6 libmpfrc++-dev \
+			python3 python3-distutils python3-dev zlib1g zlib1g-dev libboost-all-dev
 
 		if [[ $? -ne 0 ]]; then
 			dependencyInstallationFailed
