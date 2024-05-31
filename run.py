@@ -360,7 +360,7 @@ try:
         gf_url = "http://%s:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
         if not dontopenuionstartup:
-            if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
+            if ("Microsoft" in platform.uname().release or "microsoft" in platform.uname().release) and "WSL" not in platform.uname().release:
                 os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
             elif os.environ.get('DISPLAY'):
                 if os.geteuid() != 0 and shutil.which("chrome"):
@@ -416,7 +416,7 @@ try:
         gf_url = "http://%s:%d/" % (config.HOST_ADDRESS, config.HTTP_PORT)
 
         if not dontopenuionstartup:
-            if 'Microsoft' in platform.uname().release or 'microsoft' in platform.uname().release:
+            if ("Microsoft" in platform.uname().release or "microsoft" in platform.uname().release) and "WSL" not in platform.uname().release:
                 os.system("/mnt/c/windows/system32/rundll32.exe url.dll,FileProtocolHandler %s" % gf_url)
             elif os.environ.get('DISPLAY'):
                 if os.geteuid() != 0 and shutil.which("chrome"):
