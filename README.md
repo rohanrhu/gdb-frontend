@@ -88,6 +88,10 @@ gdbfrontend
 
 Flatpak package is a TODO.
 
+## [Debugging Dockerized C/C++ apps with GDBFrontend](https://meowingcat.io/blog/posts/how-to-debug-dockerized-c-cpp-apps-with-gdbfrontend)
+
+Follow [this tutorial](https://meowingcat.io/blog/posts/how-to-debug-dockerized-c-cpp-apps-with-gdbfrontend) to learn how to debug Dockerized C/C++ apps with GDBFrontend.
+
 ## [Embedded Debugging with GDBFrontend](https://rohanrhu.github.io/gdb-frontend/tutorials/embedded-debugging/)
 
 Follow [this quick tutorial](https://rohanrhu.github.io/gdb-frontend/tutorials/embedded-debugging/) for debugging embedded devices with GDBFrontend.
