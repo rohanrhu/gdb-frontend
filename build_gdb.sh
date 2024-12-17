@@ -69,15 +69,16 @@ else	# If couldn't find OS by reading the above two files, install for unknown O
 fi
 
 # Check for internet connection
-which ping > /dev/null
+which curl > /dev/null
 
 # Check for internet connection
 if [ $? -eq 0 ]; then
-	ping -c 2 "www.google.com" > /dev/null
+	curl -I --fail --connect-timeout 30 "www.google.com" > /dev/null 2>&1
 	if [ $? -ne 0 ]; then
 		printRedStars
 		echo -e "${RED}You may not be connected to the internet."
-		echo -e "${YELLOW}Please check your internet connection${RESET}"
+		echo -e "${YELLOW}Please check your internet connection"
+		echo -e "Note: use \"sudo -E\" to pass proxy settings if you are using http(s) proxy${RESET}"
 		printRedStars
 		abortScript
 	fi
