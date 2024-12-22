@@ -7,7 +7,7 @@
 [![GDBFrontend Discord](https://img.shields.io/discord/780821881783713813.svg?color=7289da&label=Discord&logo=discord&style=flat-square)](https://discord.gg/RyVY9MtB4S)
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DEvrenselKisilik%26type%3Dpatrons&style=flat-square)](https://patreon.com/EvrenselKisilik)
 
-GDBFrontend is an easy, flexible and extensionable gui debugger. [Try it online!](https://debugme.dev)
+GDBFrontend is an easy, flexible and extensionable gui debugger.
 
 ![gdb-frontend](media/gdbfrontend-screenshots.png "GDBFrontend is an easy, flexible and extensionable gui debugger.")
 
