@@ -1,7 +1,7 @@
 
 .GDBFrontend {
     background: #2a2a2a;
-    color: #888888;
+    color: #dddddd;
 }
 
 .input1:focus {
@@ -85,7 +85,7 @@
 }
 
 .ThreadsEditor_items_item.ThreadsEditor__current {
-    background: rgb(255, 243, 95, 0.2);
+        background: #37a500;
 }
 
 .GDBFrontend_stack_title {
@@ -101,7 +101,7 @@
 }
 
 .StackTrace_items_item.StackTrace__current {
-    background: rgb(255, 243, 95, 0.2);
+    background: #37a500;
 }
 
 .GDBFrontend_variables_title {
@@ -158,8 +158,12 @@
     background: rgba(0, 0, 0, 0.075);
 }
 
+.FileTabs_tabs_items_item {
+    background: #2a2a2a;
+}
+
 .FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
-    background: rgb(0, 0, 0, 0.1);
+    background: #565656;
 }
 
 .FileTabs_tabs_items_item_pathTooltip_box {
@@ -302,20 +306,21 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 
 .ace-ambiance .ace_keyword {
     
-    color: #62aeee;
+    color: #37a500;
 }
 .ace-ambiance .ace_operator {
-    color: #e4fad9;
+    color: #37a500;
 }
 .ace-ambiance .ace_keyword.ace_operator {
-    color: #e4fad9;
+    color: #ffffff;
 }
 
 .ace-ambiance .ace_punctuation.ace_operator {
-        color: #aedaff;
+    color: #ffffff;
 }
 .ace-ambiance .ace_paren {
-    color: #aedaff;
+    color: #e4fad9;
+    font-weight: bold;
 }
 
 .ace-ambiance .ace_constant {
@@ -323,6 +328,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 }
 .ace-ambiance .ace_storage {
     color: #e4fad9;
+    font-weight: bold;
 }
 .ace-ambiance .ace_string {
     color: #a7f4aa;
@@ -344,7 +350,7 @@ a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
 }
 
 .xterm-dom-renderer-owner-1 .xterm-fg-2 {
-    color: #a7f4aa;
+    color: #37a500;
 }
 
 .xterm-dom-renderer-owner-1 .xterm-fg-4 {
