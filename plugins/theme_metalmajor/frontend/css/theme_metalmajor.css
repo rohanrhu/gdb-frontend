@@ -1,0 +1,376 @@
+
+.GDBFrontend {
+    background: #2a2a2a;
+    color: #888888;
+}
+
+.input1:focus {
+    border-color: rgba(255, 255, 255, 0.75);
+}
+
+.Checkbox_icon_img {
+    filter: hue-rotate(95deg);
+}
+
+.button1:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.GDBFrontend_layout_top {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.GDBFrontend_runtimeControls_btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.GDBFrontend_runtimeControls_btn_img {
+    filter: drop-shadow(1px 1px 1px #e4fad9)
+}
+
+.GDBFrontend_runtimeControls_btn_openable {
+    background: #999999;
+}
+
+.GDBFrontend_load_connectBtn_openable {
+    background: #999999;
+}
+
+.GDBFrontend_layout_middle_left {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.GDBFrontend_layout_middle_center {
+    border-color: #dbdbdb;
+}
+
+.GDBFrontend_sources_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_sources_title_buttons_button_iconImg {
+    filter: invert(1);
+}
+
+.GDBFrontend_disassembly_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_disassembly_title_buttons_button_iconImg {
+    filter: invert(1);
+}
+
+.GDBFrontend_watches_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_breakpoints_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.BreakpointsEditor_items_item_remove {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_threads_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ThreadsEditor_items_item_num {
+    color: black;
+}
+
+.ThreadsEditor_items_item:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.ThreadsEditor_items_item.ThreadsEditor__current {
+    background: rgb(255, 243, 95, 0.2);
+}
+
+.GDBFrontend_stack_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.StackTrace_items_item_num {
+    color: black;
+}
+
+.StackTrace_items_item:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.StackTrace_items_item.StackTrace__current {
+    background: rgb(255, 243, 95, 0.2);
+}
+
+.GDBFrontend_variables_title {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.FileTabs_editors_content {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.FileTabs_editors_noItem {
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+.FileTabs_tabs_items_item_closeBtn {
+    color: #888888;
+}
+
+.FileTabs_editors_items_item_variablePopup {
+    background: #656565;
+}
+
+.GDBFrontend_terminalCloseBtn,
+.GDBFrontend_terminalOpenBtn {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.SourceTree_items_item__dir .SourceTree_items_item_icon {
+    color: #fff35f;
+}
+
+.Resizable_resizer_draggable {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.Watches_items_item_expression_input_rI {
+    color: #cacaca;
+}
+
+.Watches_items_item_value_input_rI {
+    color: #cacaca;
+}
+
+.Disassembly_items_item_addr {
+    color: #d9edff;
+}
+
+.VariablesExplorer_items_item_button_type {
+    color: white;
+}
+
+.VariablesExplorer_items_item_button:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.075);
+}
+
+.FileTabs_tabs_items_item.FileTabs_tabs_items_item__current {
+    background: rgb(0, 0, 0, 0.1);
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box {
+    color: black;
+    background: #a0a0a0;
+}
+
+.FileTabs_tabs_items_item_pathTooltip_box_arrow:after {
+    border-bottom: 10px solid #a0a0a0;
+}
+
+.FileBrowser_window_box {
+    background: #656565;
+}
+
+.EvaluateExpression_window_box {
+    background: #656565;
+    color: #888888;
+}
+
+.EvaluateExpression_window_mover {
+    background-color: #656565;
+}
+
+.EvaluateExpression_window_box_header_btn.EvaluateExpression__checked {
+    color: #fff35f;
+}
+
+.GDBFrontend_layout_top_menuBtn:hover .GDBFrontend_layout_top_menuBtn_label {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.GDBFrontend_layout_top_menuBtn_openable {
+    background: #999999;
+    color: black;
+}
+
+.GDBFrontend_layout_top_menuBtn_openable_items_item,
+a.GDBFrontend_layout_top_menuBtn_openable_items_item,
+a.GDBFrontend_layout_top_menuBtn_openable_items_item:visited {
+    color: black;
+}
+
+.css_AboutDialog_box {
+    background: #656565;
+}
+
+.FuzzyFinder_box {
+    background: #656565;
+}
+
+.css_MessageBox_box {
+    background: #656565;
+}
+
+.VariablesExplorer_items_item_contextMenu {
+    color: white;
+    background: #656565;
+}
+
+.VariablesExplorer_items_item_contextMenu:before {
+    background: #656565;
+}
+
+.LinkedListVisualizer_settings_setting_input_rI {
+    background: rgb(76, 76, 76);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd),
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even) {
+    background: rgb(76, 76, 76);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(odd):hover,
+.LinkedListVisualizer .VariablesExplorer_items_item_button:nth-child(even):hover {
+    background: rgb(50, 50, 50);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu {
+    background: rgb(35, 35, 35);
+}
+
+.LinkedListVisualizer .VariablesExplorer_items_item_contextMenu:before {
+    background: rgb(35, 35, 35);
+}
+
+.LinkedListVisualizer_items_item .LinkedListVisualizer_map,
+.LinkedListVisualizer_items_item .LinkedListVisualizer_settings {
+    background: rgb(62, 62, 62);
+}
+
+.GDBFrontend_layout_status {
+    color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box {
+    background-color: #5e5e5e;
+    color: white;
+}
+
+.GDBFrontend_runtimeControls_btn__enhancedCollabration_infoBox_box:after {
+    border-bottom: 10px solid #5e5e5e;
+}
+
+.ContextMenuWindow_box {
+    background: rgb(76 76 76);
+    border: 1px solid rgb(0 0 0 / 25%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box {
+    background: rgb(76 76 76);
+    border: 1px solid rgb(0 0 0 / 25%);
+}
+
+.FileTabs_editors_items_item_breakpointDetails_box:before {
+    background: rgb(76 76 76);
+}
+
+.FileTabs_editors_items_item_ace .ace_gutter-cell.FileTabs__detailsOpened {
+    background: rgb(76 76 76);
+    border-color: rgb(0 0 0 / 25%);
+}
+
+.ProcessManager_window_box {
+    background: #656565;
+    color: white;
+}
+
+.ProcessManager_window_mover {
+    background-color: #656565;
+}
+
+.ProcessManager_window_box_header_btn.ProcessManager__checked {
+    color: #fff35f;
+}
+
+.ace-ambiance {
+    color: #cacaca;
+}
+
+.ace-ambiance .ace_keyword {
+    
+    color: #62aeee;
+}
+.ace-ambiance .ace_operator {
+    color: #e4fad9;
+}
+.ace-ambiance .ace_keyword.ace_operator {
+    color: #e4fad9;
+}
+
+.ace-ambiance .ace_punctuation.ace_operator {
+        color: #aedaff;
+}
+.ace-ambiance .ace_paren {
+    color: #aedaff;
+}
+
+.ace-ambiance .ace_constant {
+    color: #a7f4aa;
+}
+.ace-ambiance .ace_storage {
+    color: #e4fad9;
+}
+.ace-ambiance .ace_string {
+    color: #a7f4aa;
+}
+
+.ace-ambiance .ace_string.ace_regexp {
+    color: #a7f4aa;
+}
+.ace-ambiance .ace_gutter {
+    color: #949494;
+}
+
+.SourceTree_items_item_button_label_icon  {
+    filter: grayscale(1);
+}
+
+.xterm-dom-renderer-owner-1 .xterm-fg-13 {
+    color: #e4fad9;
+}
+
+.xterm-dom-renderer-owner-1 .xterm-fg-2 {
+    color: #a7f4aa;
+}
+
+.xterm-dom-renderer-owner-1 .xterm-fg-4 {
+    color: #aedaff;
+}
+
+.xterm-dom-renderer-owner-1 .xterm-rows {
+    color: #cacaca;
+}
+
+.VariablesExplorer_items_item.VariablesExplorer__changed > .VariablesExplorer_items_item_sides .VariablesExplorer_items_item_button {
+    background: #3e5736 !important;
+}
+
+.ThreadsEditor_items_item_function {
+    color: #e4fad9;
+}
+
+.StackTrace_items_item_function {
+    color: #e4fad9;
+}
+
+.VariablesExplorer_items_item_button_name {
+    color: #e4fad9;
+}
+
+.Registers_items_item_name {
+    color: #e4fad9;
+}
