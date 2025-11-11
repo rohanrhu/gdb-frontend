@@ -45,7 +45,7 @@
 }
 
 .GDBFrontend_sources_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #23301d;
 }
 
 .GDBFrontend_sources_title_buttons_button_iconImg {
@@ -53,7 +53,14 @@
 }
 
 .GDBFrontend_disassembly_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
 }
 
 .GDBFrontend_disassembly_title_buttons_button_iconImg {
@@ -61,11 +68,25 @@
 }
 
 .GDBFrontend_watches_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
 }
 
 .GDBFrontend_breakpoints_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
 }
 
 .BreakpointsEditor_items_item_remove {
@@ -73,7 +94,14 @@
 }
 
 .GDBFrontend_threads_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
 }
 
 .ThreadsEditor_items_item_num {
@@ -85,11 +113,18 @@
 }
 
 .ThreadsEditor_items_item.ThreadsEditor__current {
-        background: #37a500;
+        background: #3e5736;
 }
 
 .GDBFrontend_stack_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
 }
 
 .StackTrace_items_item_num {
@@ -101,11 +136,30 @@
 }
 
 .StackTrace_items_item.StackTrace__current {
-    background: #37a500;
+    background: #3e5736;
 }
 
 .GDBFrontend_variables_title {
-    background: rgba(0, 0, 0, 0.1);
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
+}
+
+.GDBFrontend_registers_title {
+    background: #37a500;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 0.5em;
+    padding-left: 1.5em;
+    color: #cacaca;
+    height: 1.75em;
+    line-height: 1.75em;
+
 }
 
 .FileTabs_editors_content {
@@ -113,7 +167,7 @@
 }
 
 .FileTabs_editors_noItem {
-    background: rgba(0, 0, 0, 0.1);
+    background: #23301d;
     color: black;
 }
 
