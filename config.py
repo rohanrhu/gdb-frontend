@@ -37,6 +37,7 @@ CREDENTIALS = None
 TERMINAL_ID = False
 MAX_ITERATIONS_TO_RET = 1000
 URL_BASE = "/"
+STARTUP_THEME = ""
 
 def init():
     global VERBOSE
@@ -51,6 +52,7 @@ def init():
     global TERMINAL_ID
     global MAX_ITERATIONS_TO_RET
     global URL_BASE
+    global STARTUP_THEME
 
 def setJSON(config_json):
     new_config = json.loads(config_json)

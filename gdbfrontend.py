@@ -79,3 +79,7 @@ if config.MMAP_PATH:
     http_port = ctypes.c_uint16.from_buffer(mmapBuff, 0)
     
     http_port.value = api.globalvars.httpServer.server_port
+
+if config.STARTUP_THEME and config.STARTUP_THEME != "default":
+    if not plugin.load("theme_" + config.STARTUP_THEME):
+        print("Startup Theme Plugin not found:", config.STARTUP_THEME)
