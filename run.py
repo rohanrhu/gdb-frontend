@@ -86,6 +86,9 @@ def argHandler_terminalId(name):
     api.globalvars.terminal_id = terminal_id
     arg_config["TERMINAL_ID"] = terminal_id
 
+def argHandler_startupTheme(name):
+    arg_config["STARTUP_THEME"] = name
+
 def argHandler_credentials(_credentials):
     global credentials
 
@@ -163,6 +166,7 @@ def argHandler_help():
     print("  --workdir, -w:\t\t\t\tSpecifies working directory.")
     print("  --plugin-dir, -P:\t\t\t\tSpecifies plugins directory.")
     print("  --dontopenuionstartup, -D:\t\t\tAvoids opening UI just after startup.")
+    print("  --startup-theme=NAME, -theme NAME:\t\t\tSpecifies theme name to load on startup. (Default: empty)")
     print("  --verbose, -V:\t\t\t\tEnables verbose output.")
     print("")
 
@@ -222,6 +226,7 @@ args = [
     ["--plugins-dir", "-P", argHandler_pluginsDir, True],
     ["--help", "-h", argHandler_help, False],
     ["--dontopenuionstartup", "-D", argHandler_dontopenuionstartup, False],
+    ["--startup-theme", "-theme", argHandler_startupTheme, True],
     ["--url-base", "-u", argHandler_urlBase, True],
     ["--version", "-v", argHandler_version, False]
 ]
