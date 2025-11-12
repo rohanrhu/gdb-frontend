@@ -126,6 +126,11 @@ urls = api.url.URLS({
         "match": "^/api/runtime/continue$",
         "module": "url_modules.api.runtime.continue"
     },
+     "api-runtime-stepo": {
+        "url": "/api/runtime/stepo",
+        "match": "^/api/runtime/stepo$",
+        "module": "url_modules.api.runtime.stepo"
+    },
     "api-thread-switch": {
         "url": "/api/thread/switch",
         "match": "^/api/thread/switch$",
