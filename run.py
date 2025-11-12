@@ -87,8 +87,6 @@ def argHandler_terminalId(name):
     arg_config["TERMINAL_ID"] = terminal_id
 
 def argHandler_startupTheme(name):
-    global open_theme_on_startup
-
     arg_config["STARTUP_THEME"] = name
 
 def argHandler_credentials(_credentials):
