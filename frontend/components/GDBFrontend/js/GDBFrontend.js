@@ -214,7 +214,7 @@
                     data.debug.pause();
                 } else if (keycode == 119) {
                     event.preventDefault();
-                    data.debug.stepOver();                    
+                    data.debug.stepOver();
                 } else if (keycode == 120) {
                     event.preventDefault();
                     data.debug.stepInto();
