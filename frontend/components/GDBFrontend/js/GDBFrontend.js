@@ -101,6 +101,8 @@
             data.$gdbFrontend_runtimeControls_btn__n_btn = data.$gdbFrontend_runtimeControls_btn__n.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__si = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__si');
             data.$gdbFrontend_runtimeControls_btn__si_btn = data.$gdbFrontend_runtimeControls_btn__si.find('.GDBFrontend_runtimeControls_btn_btn');
+            data.$gdbFrontend_runtimeControls_btn__so = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__so');
+            data.$gdbFrontend_runtimeControls_btn__so_btn = data.$gdbFrontend_runtimeControls_btn__so.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__t = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__t');
             data.$gdbFrontend_runtimeControls_btn__t_btn = data.$gdbFrontend_runtimeControls_btn__t.find('.GDBFrontend_runtimeControls_btn_btn');
             data.$gdbFrontend_runtimeControls_btn__evaluate = data.$gdbFrontend_runtimeControls.find('.GDBFrontend_runtimeControls_btn__evaluate');
@@ -212,13 +214,16 @@
                     data.debug.pause();
                 } else if (keycode == 119) {
                     event.preventDefault();
-                    data.debug.stepOver();
+                    data.debug.stepOver();                    
                 } else if (keycode == 120) {
                     event.preventDefault();
                     data.debug.stepInto();
                 } else if (keycode == 121) {
                     event.preventDefault();
                     data.debug.stepInstruction();
+                } else if (event.shiftKey && keycode == 122) {
+                    event.preventDefault();
+                    data.debug.stepOut();
                 } else if (keycode == 122) {
                     event.preventDefault();
                     data.debug.terminate();
@@ -2530,6 +2535,22 @@
                 });
             };
             
+            data.debug.stepOut = function (parameters) {
+                $.ajax({
+                    url: 'api/runtime/stepo',
+                    cache: false,
+                    method: 'get',
+                    data: {
+                    },
+                    success: function (result_json) {
+                    },
+                    error: function () {
+                        GDBFrontend.showMessageBox({text: 'An error occured.'});
+                        console.trace('An error occured.');
+                    }
+                });
+            };
+
             data.debug.terminate = function (parameters) {
                 $.ajax({
                     url: 'api/runtime/terminate',
@@ -2568,6 +2589,10 @@
 
             data.$gdbFrontend_runtimeControls_btn__si_btn.on('click.GDBFrontend', function (event) {
                 data.debug.stepInstruction();
+            });
+
+            data.$gdbFrontend_runtimeControls_btn__so_btn.on('click.GDBFrontend', function (event) {
+                data.debug.stepOut();
             });
 
             data.$gdbFrontend_runtimeControls_btn__t_btn.on('click.GDBFrontend', function (event) {

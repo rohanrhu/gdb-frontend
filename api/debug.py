@@ -655,6 +655,11 @@ def stepInstruction():
     except gdb.error as e: print("[Error] " + str(e))
 
 @threadSafe(no_interrupt=True)
+def stepOut():
+    try: gdb.execute("finish")
+    except gdb.error as e: print("[Error] " + str(e))
+
+@threadSafe(no_interrupt=True)
 def switchThread(global_num):
     """
     Switches between threads by gdb.Thread().global_num.
